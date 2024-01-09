@@ -3,13 +3,15 @@ import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart'
 import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_controller.dart';
 import 'package:finfresh_mobile/controller/pin%20controller/pin_controller.dart';
 import 'package:finfresh_mobile/utilities/theme/theme.dart';
+import 'package:finfresh_mobile/view/kyc/Nominee%20adding/nominee%20type/screen_nominee_count.dart';
+import 'package:finfresh_mobile/view/kyc/Nominee%20adding/screen_nominee.dart';
 import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
 import 'package:finfresh_mobile/view/nominee%20id%20adding/screen_nominee_id_adding.dart';
-import 'package:finfresh_mobile/view/occupation%20Screen/occupation_screen.dart';
-import 'package:finfresh_mobile/view/pancard/screen_pan_card.dart';
+import 'package:finfresh_mobile/view/kyc/occupation%20Screen/occupation_screen.dart';
+import 'package:finfresh_mobile/view/kyc/pancard/screen_pan_card.dart';
 import 'package:finfresh_mobile/view/setting%20pin%20number/setting_pin.dart';
 import 'package:finfresh_mobile/view/splash%20Screen/splash_screen.dart';
-import 'package:finfresh_mobile/view/user%20personal%20details/screen_personal_details.dart';
+import 'package:finfresh_mobile/view/kyc/user%20personal%20details/screen_personal_details.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -48,6 +50,8 @@ class MyApp extends StatelessWidget {
           theme: isDarkMode ? AppTheme.darkTheme : AppTheme.lightTheme,
           // darkTheme: AppTheme.darkTheme,
           home: const SplashScreen(),
+          // home: const ScreenAddingNominee(),
+          // home: const ScreenNomineeCount(),
           // home: const ScreenPanCard(),
           // home: const ScreenPersonalDetails(),
           // home: const ScreenSetPinNumber(),

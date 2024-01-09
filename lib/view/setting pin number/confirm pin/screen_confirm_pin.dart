@@ -2,7 +2,7 @@ import 'package:finfresh_mobile/controller/pin%20controller/pin_controller.dart'
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
-import 'package:finfresh_mobile/view/pancard/screen_pan_card.dart';
+import 'package:finfresh_mobile/view/kyc/pancard/screen_pan_card.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';

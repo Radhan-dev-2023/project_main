@@ -1,8 +1,9 @@
 import 'dart:io';
 
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
-import 'package:finfresh_mobile/view/Nominee%20adding/screen_nominee.dart';
-import 'package:finfresh_mobile/view/joint%20holders/join_holders_screen.dart';
+import 'package:finfresh_mobile/view/kyc/Nominee%20adding/nominee%20type/screen_nominee_count.dart';
+import 'package:finfresh_mobile/view/kyc/Nominee%20adding/screen_nominee.dart';
+import 'package:finfresh_mobile/view/kyc/joint%20holders/join_holders_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -171,7 +172,7 @@ class _ScreenUploadingBankProofState extends State<ScreenUploadingBankProof> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const ScreenAddingNominee(),
+                builder: (context) => const ScreenNomineeCount(),
               ),
             );
             // Close the dialog

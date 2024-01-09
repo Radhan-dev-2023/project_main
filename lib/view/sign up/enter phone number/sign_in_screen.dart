@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:finfresh_mobile/controller/auth/auth_controller.dart';
+import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/view/otp%20screen/screen_otp.dart';
@@ -15,6 +18,7 @@ class ScreenEnterPhoneNumber extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authcontroller = Provider.of<AuthController>(context);
+    final kycController = Provider.of<KycController>(context);
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -85,6 +89,10 @@ class ScreenEnterPhoneNumber extends StatelessWidget {
           ? const LoadingButton()
           : ButtonWidget(
               onTap: () async {
+                kycController.phonenumber =
+                    authcontroller.phonenumberController.text;
+                kycController.email = authcontroller.emailController.text;
+                log('phone numb ${kycController.phonenumber} ,emial=${kycController.email}');
                 if (authcontroller.formKeyForPhone.currentState!.validate()) {
                   bool result = await authcontroller.userRegister(context);
                   if (result == true) {

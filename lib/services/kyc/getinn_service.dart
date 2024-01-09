@@ -1,15 +1,18 @@
 import 'dart:convert';
 
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
+import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:finfresh_mobile/utilities/urls/url.dart';
 import 'package:http/http.dart' as http;
 
 class GetInnService {
-  Future<bool> getInn(String phoneNumber, String panNumber) async {
+  Future<bool> getInn(String phoneNumber, String panNumber, taxStatus) async {
+    String token = await SecureStorage.readToken('token');
+    String userId = await SecureStorage.readToken('userId');
     Map<String, dynamic> payload = {
       "mobile_no": phoneNumber,
       "fh_pan": panNumber,
-      "tax_status": "01",
+      "tax_status": taxStatus,
       "hold_nature": "SI",
       "exempt_flag": "",
       "jh1_exempt_flag": "",
@@ -24,13 +27,16 @@ class GetInnService {
       http.Response response = await http.post(
         url,
         headers: {
+          'Authorization': 'Bearer $token',
+          'x-key': userId,
           'Content-Type': 'application/json',
         },
         body: jsonEncode(payload),
       );
+      logger.d('response == ${response.statusCode}');
       logger.d('response == ${response.body}');
       Map<String, dynamic> jsonResponse = json.decode(response.body);
-      if (jsonResponse['result']['status'] == 200) {
+      if (jsonResponse['status'] == 200) {
         return true;
       }
     } catch (e) {

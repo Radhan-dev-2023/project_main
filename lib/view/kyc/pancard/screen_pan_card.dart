@@ -2,7 +2,8 @@ import 'package:finfresh_mobile/controller/auth/auth_controller.dart';
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
-import 'package:finfresh_mobile/view/occupation%20Screen/occupation_screen.dart';
+import 'package:finfresh_mobile/view/kyc/occupation%20Screen/occupation_screen.dart';
+import 'package:finfresh_mobile/view/kyc/tax%20status/screen_tax_status.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +14,6 @@ class ScreenPanCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authcontroller = Provider.of<AuthController>(context);
     return Consumer<KycController>(builder: (context, kycController, child) {
       return Scaffold(
         body: SafeArea(
@@ -50,6 +50,7 @@ class ScreenPanCard extends StatelessWidget {
                   ),
                   VerticalSpacer(6.h),
                   TextFormField(
+                    controller: kycController.panController,
                     style: Theme.of(context).textTheme.labelLarge!,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
@@ -85,23 +86,27 @@ class ScreenPanCard extends StatelessWidget {
         floatingActionButton: ButtonWidget(
           onTap: () async {
             if (kycController.panformKey.currentState!.validate()) {
-              bool result = await kycController
-                  .getInn(authcontroller.phonenumberController.text);
-              if (result) {
-                // ignore: use_build_context_synchronously
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const ScreenHomeView(),
-                  ),
-                );
-              } else {
-                // ignore: use_build_context_synchronously
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const ScreenOccupation(),
-                  ),
-                );
-              }
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const ScreenTaxStatus();
+              }));
+              // bool result = await kycController
+
+              //     .getInn(authcontroller.phonenumberController.text);
+              // if (result) {
+              //   // ignore: use_build_context_synchronously
+              //   Navigator.of(context).push(
+              //     MaterialPageRoute(
+              //       builder: (context) => const ScreenHomeView(),
+              //     ),
+              //   );
+              // } else {
+              //   // ignore: use_build_context_synchronously
+              //   Navigator.of(context).push(
+              //     MaterialPageRoute(
+              //       builder: (context) => const ScreenOccupation(),
+              //     ),
+              //   );
+              // }
             }
           },
           btName: 'Continue'.toUpperCase(),
