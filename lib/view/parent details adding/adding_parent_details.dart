@@ -32,15 +32,9 @@ class ScreenAddingParentDetails extends StatelessWidget {
               TextFormField(
                 controller: kycController.motherNameCotroller,
                 style: Theme.of(context).textTheme.labelLarge!,
-                // validator: (value) {
-                //   if (value == null || value.isEmpty) {
-                //     return 'field is required';
-                //   }
-                //   return null;
-                // },
+               
                 decoration: InputDecoration(
-                    // fillColor: const Color(0xFF0E1330),
-                    // filled: true,
+                    
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
                     hintText: "Mothers's Name"),
@@ -49,15 +43,9 @@ class ScreenAddingParentDetails extends StatelessWidget {
               TextFormField(
                 controller: kycController.fatherNameController,
                 style: Theme.of(context).textTheme.labelLarge!,
-                // validator: (value) {
-                //   if (value == null || value.isEmpty) {
-                //     return 'field is required';
-                //   }
-                //   return null;
-                // },
+               
                 decoration: InputDecoration(
-                  // fillColor: const Color(0xFF0E1330),
-                  // filled: true,
+                  
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10)),
                   hintText: "Father's Name",
