@@ -25,13 +25,17 @@ class CreateCustomer {
         },
         body: jsonEncode(investorDetails.toJson()),
       );
-      logger.d('response == ${response.body}');
-      logger.d('responsestatuscode == ${response.statusCode}');
+      logger.d('responsestatuscode create customer== ${response.statusCode}');
+      logger.d('response customer creation == ${response.body}');
       Map<String, dynamic> jsonResponse = json.decode(response.body);
       if (jsonResponse['status'] == 200) {
+        log('create customer success');
         return true;
       } else if (jsonResponse['status'] == 500) {
-        log('kunjappu');
+        log('create customer failed');
+        showSnackBar(context, jsonResponse['message']);
+        return false;
+      } else {
         showSnackBar(context, jsonResponse['message']);
         return false;
       }

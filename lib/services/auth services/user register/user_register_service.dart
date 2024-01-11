@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
@@ -31,15 +32,21 @@ class UserRegisterService {
       Map<String, dynamic> jsonResponse = json.decode(response.body);
       if (jsonResponse['result']['status'] == 200) {
         // String token = jsonResponse['result']['token'];
-        // String userId = jsonResponse['result']['userId'];
+        String userId = jsonResponse['result']['userId'];
+        String refreshToken = jsonResponse['result']['refreshToken'];
         // SecureStorage.addToken('token', token);
-        // SecureStorage.addToken('userId', userId);
+        SecureStorage.addToken('userId', userId);
+        SecureStorage.addToken('refreshToken', refreshToken);
+        // logger.d('tocke ==$token');
+        logger.d('refreshToken ==$refreshToken');
         return true;
       }
       if (jsonResponse['result']['status'] == 201 ||
           jsonResponse['result']['message'].toString().toLowerCase() ==
               'user already registered but not verified') {
         showSnackBar(context, "user already registered but not verified");
+      } else {
+        showSnackBar(context, jsonResponse['result']['message']);
       }
     } on SocketException {
       showSnackBar(context, 'No Internet Connection');
@@ -54,6 +61,7 @@ class UserRegisterService {
     logger.d('calling generate otp');
     final url = Uri.parse('${ApiEndpoint.baseUrl}/v1/otp/send');
     logger.d('url===$url');
+    log('phonenumber ==$phoneNumber');
     Map<String, dynamic> payload = {
       "phoneNumber": phoneNumber,
       "userType": "customer"
@@ -69,11 +77,7 @@ class UserRegisterService {
       logger.d('response ==${response.body}');
       Map<String, dynamic> jsonResponse = json.decode(response.body);
       if (jsonResponse['result']['status'] == 200) {
-        String token = jsonResponse['result']['token'];
-        String userId = jsonResponse['result']['userId'];
-        SecureStorage.addToken('token', token);
-        SecureStorage.addToken('userId', userId);
-        logger.d('tocke ==$token');
+        log('kerriii');
         return true;
       } else if (jsonResponse['result']['status'] == 1001 &&
           jsonResponse['result']['message'] == "user not found") {

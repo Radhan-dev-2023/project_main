@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
@@ -33,13 +34,15 @@ class GetInnService {
         },
         body: jsonEncode(payload),
       );
-      logger.d('response == ${response.statusCode}');
-      logger.d('response == ${response.body}');
+      logger.d('get inn status code == ${response.statusCode}');
+      logger.d('response get inn== ${response.body}');
       Map<String, dynamic> jsonResponse = json.decode(response.body);
       if (jsonResponse['status'] == 200) {
+        log('getINN success');
         return true;
       }
     } catch (e) {
+      log('getINN failed');
       logger.d('exception in user register $e');
       return false;
     }

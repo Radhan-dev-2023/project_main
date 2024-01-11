@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:finfresh_mobile/services/auth%20services/user%20register/user_register_service.dart';
 import 'package:finfresh_mobile/services/auth%20services/verify%20otp%20service/verify_otp_service.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
@@ -36,6 +38,7 @@ class AuthController extends ChangeNotifier {
       notifyListeners();
       bool result = await userRegisterService.generateOtp(
           phonenumberControllerforlogin.text, context);
+      log('result ===$result');
       if (result == true) {
         loginClicked = false;
         notifyListeners();

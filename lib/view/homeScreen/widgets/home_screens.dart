@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:finfresh_mobile/controller/auth/auth_controller.dart';
+import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:finfresh_mobile/view/onboarding%20screen/on_boarding_view_screen.dart';
@@ -13,12 +16,16 @@ class ScreenHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Brightness platformBrightness = MediaQuery.of(context).platformBrightness;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<KycController>(context, listen: false).getusername();
+      // log('username is ${Provider.of<KycController>(context, listen: false).username}');
+    });
 
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 0.0,
         leading: const SizedBox(),
-        title: const Text('Welcome user name'),
+        title: Text('Welcome ${Provider.of<KycController>(context).username}'),
         actions: [
           IconButton(
             onPressed: () {},
@@ -31,15 +38,7 @@ class ScreenHome extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {
-              SecureStorage.clearSecureStoragevalue('token');
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const BoardingViewScreen(),
-                  ),
-                  (route) => false);
-              Provider.of<AuthController>(context, listen: false)
-                  .clearTheControllerValue();
+              showLogoutAlertDialog(context);
             },
             icon: Icon(
               Icons.logout,
@@ -416,6 +415,48 @@ class ScreenHome extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void showLogoutAlertDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Logout'),
+          content: const Text('Are you sure you want to logout?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                SecureStorage.clearSecureStoragevalue('token');
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const BoardingViewScreen(),
+                  ),
+                  (route) => false,
+                );
+                Provider.of<AuthController>(context, listen: false)
+                    .clearTheControllerValue();
+              },
+              child: Text(
+                'Yes',
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                // Dismiss the alert dialog when 'No' is pressed
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'No',
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

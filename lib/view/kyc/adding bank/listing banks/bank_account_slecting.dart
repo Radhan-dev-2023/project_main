@@ -31,11 +31,16 @@ class ScreenAddingBank extends StatelessWidget {
                 ),
                 VerticalSpacer(4.h),
                 TextFormField(
+                  readOnly: true,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: kycController.banknameController,
                   style: Theme.of(context).textTheme.labelLarge!,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'field is required';
+                    }
+                    if (!RegExp(r'^[a-zA-Z0-9\s\-&.,]+$').hasMatch(value)) {
+                      return 'Enter valid bank name';
                     }
                     return null;
                   },

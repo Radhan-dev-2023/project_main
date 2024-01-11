@@ -1,11 +1,15 @@
 import 'dart:convert';
+import 'dart:developer';
 
+import 'package:finfresh_mobile/model/bank%20details%20model/bank_details_model.dart';
 import 'package:finfresh_mobile/model/investors%20details/investors_details_model.dart';
 import 'package:finfresh_mobile/model/tax%20status%20model/tax_status_model.dart';
+import 'package:finfresh_mobile/services/get%20bank%20details/get_bank_details.dart';
 import 'package:finfresh_mobile/services/kyc/create_customer.dart';
 import 'package:finfresh_mobile/services/kyc/getinn_service.dart';
 import 'package:finfresh_mobile/services/kyc/tax_status_service.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
+import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:flutter/material.dart';
 
 class KycController extends ChangeNotifier {
@@ -21,6 +25,10 @@ class KycController extends ChangeNotifier {
   final GlobalKey<FormState> banknameFormkey = GlobalKey<FormState>();
   final GlobalKey<FormState> bankAccountnumberFormkey = GlobalKey<FormState>();
   final GlobalKey<FormState> ifscCodeFormkey = GlobalKey<FormState>();
+  final GlobalKey<FormState> addressFormkey = GlobalKey<FormState>();
+  final GlobalKey<FormState> investornameFormkey = GlobalKey<FormState>();
+  final GlobalKey<FormState> jh1Formkey = GlobalKey<FormState>();
+  final GlobalKey<FormState> jh2Formkey = GlobalKey<FormState>();
   TextEditingController panController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController dobController = TextEditingController();
@@ -56,6 +64,7 @@ class KycController extends ChangeNotifier {
   TextEditingController nominee1CountryController = TextEditingController();
   TextEditingController nominee1nameController = TextEditingController();
   TextEditingController nominee1gurdnameCotroller = TextEditingController();
+  TextEditingController nominee1panCotroller = TextEditingController();
   TextEditingController nominee1guardpanController = TextEditingController();
   TextEditingController nominee2address1Controller = TextEditingController();
   TextEditingController nominee2address2Controller = TextEditingController();
@@ -67,6 +76,7 @@ class KycController extends ChangeNotifier {
   TextEditingController nominee2nameController = TextEditingController();
   TextEditingController nominee2gurdnameCotroller = TextEditingController();
   TextEditingController nominee2guardpanController = TextEditingController();
+  TextEditingController nominee2panCotroller = TextEditingController();
   TextEditingController nominee3address1Controller = TextEditingController();
   TextEditingController nominee3address2Controller = TextEditingController();
   TextEditingController nominee3address3Controller = TextEditingController();
@@ -75,8 +85,22 @@ class KycController extends ChangeNotifier {
   TextEditingController nominee3DOBController = TextEditingController();
   TextEditingController nominee3CountryController = TextEditingController();
   TextEditingController nominee3nameController = TextEditingController();
+  TextEditingController nominee3panCotroller = TextEditingController();
   TextEditingController nominee3gurdnameCotroller = TextEditingController();
   TextEditingController nominee3guardpanController = TextEditingController();
+  TextEditingController jh1DOBController = TextEditingController();
+  TextEditingController jh1nameController = TextEditingController();
+  TextEditingController jh1panController = TextEditingController();
+  TextEditingController jh1phoneNumberCotroller = TextEditingController();
+  TextEditingController jh1emailController = TextEditingController();
+  TextEditingController jh2DOBController = TextEditingController();
+  TextEditingController jh2nameController = TextEditingController();
+  TextEditingController jh2panController = TextEditingController();
+  TextEditingController jh2phoneNumberCotroller = TextEditingController();
+  TextEditingController jh2emailController = TextEditingController();
+  TextEditingController guardpanController = TextEditingController();
+  TextEditingController guardnameCotroller = TextEditingController();
+  TextEditingController guardDOBController = TextEditingController();
   String phonenumber = '';
   String email = '';
   bool taxpageloading = false;
@@ -84,6 +108,7 @@ class KycController extends ChangeNotifier {
   String? taxcode = '';
   int? selectedIndex;
   String? selectedValue;
+  String nomineeOption = 'N';
   String stateValue = 'State';
   var stateList = [
     'State',
@@ -131,6 +156,227 @@ class KycController extends ChangeNotifier {
     "2",
     "3",
   ];
+  String guardianrelationvalue = 'Select Guradian relation';
+  String gudianvalueToBackend = '';
+  String nominee1guardRelationvalue = "Select Guradian relation";
+  String nominee2guardRelationvalue = "Select Guradian relation";
+  String nominee3guardRelationvalue = "Select Guradian relation";
+  String nom1guardrelationtobackend = '';
+  String nom2guardrelationtobackend = '';
+  String nom3guardrelationtobackend = '';
+  List<String> guardianRelation = [
+    'Select Guradian relation',
+    "Natural Guardian",
+    "Legaly Appointed Guardian",
+  ];
+  updateguardRelationValue(String? value) {
+    nominee1guardRelationvalue = value ?? '';
+    notifyListeners();
+    if (nominee1guardRelationvalue == "Natural Guardian") {
+      gudianvalueToBackend = "NG";
+    } else if (guardianrelationvalue == "Legaly Appointed Guardian") {
+      gudianvalueToBackend = "LG";
+      log('guardianrelationvalue == $gudianvalueToBackend ');
+    }
+  }
+
+  updatenom1guardRelationValue(String? value) {
+    nominee1guardRelationvalue = value ?? '';
+    notifyListeners();
+    if (nominee1guardRelationvalue == "Natural Guardian") {
+      nom1guardrelationtobackend = "NG";
+    } else if (nominee1guardRelationvalue == "Legaly Appointed Guardian") {
+      nom1guardrelationtobackend = "LG";
+      log('guardianrelationvalue == $gudianvalueToBackend ');
+    }
+  }
+
+  updatenom2guardRelationValue(String? value) {
+    nominee2guardRelationvalue = value ?? '';
+    notifyListeners();
+    if (nominee2guardRelationvalue == "Natural Guardian") {
+      nom2guardrelationtobackend = "NG";
+    } else if (nominee2guardRelationvalue == "Legaly Appointed Guardian") {
+      nom2guardrelationtobackend = "LG";
+      log('guardianrelationvalue == $gudianvalueToBackend ');
+    }
+  }
+
+  updatenom3guardRelationValue(String? value) {
+    nominee3guardRelationvalue = value ?? '';
+    notifyListeners();
+    if (nominee3guardRelationvalue == "Natural Guardian") {
+      nom3guardrelationtobackend = "NG";
+    } else if (nominee3guardRelationvalue == "Legaly Appointed Guardian") {
+      nom3guardrelationtobackend = "LG";
+      log('guardianrelationvalue == $gudianvalueToBackend ');
+    }
+  }
+
+  String mobileRation = 'Select Mobile relation';
+  String jh1MobileRelation = 'Select Mobile relation';
+  String jh2MobileRelation = 'Select Mobile relation';
+  String mobilerelationtobackend = '';
+  List<String> mobileRelation = [
+    'Select Mobile relation',
+    "Self",
+    "Spouse",
+    "Depened Children",
+    "Depened Parents",
+    "Depened Siblings",
+    "Guardian",
+    'PMS',
+    "Custodian",
+    "POA",
+  ];
+  updateMobileRelationValue(String? value) {
+    mobileRation = value ?? '';
+    notifyListeners();
+    if (mobileRation == "Self") {
+      mobilerelationtobackend = "SE";
+    } else if (mobileRation == "Spouse") {
+      mobilerelationtobackend = "SP";
+    } else if (mobileRation == "Depened Siblings") {
+      mobilerelationtobackend = "DS";
+      log('mobileRation == $mobilerelationtobackend');
+    } else if (mobileRation == "Depened Parents") {
+      mobilerelationtobackend = "DP";
+    } else if (mobileRation == "Depened Children") {
+      mobilerelationtobackend = "DC";
+    } else if (mobileRation == "Guardian") {
+      mobilerelationtobackend = "GD";
+    } else if (mobileRation == "PMS") {
+      mobilerelationtobackend = "PM";
+    } else if (mobileRation == "Custodian") {
+      mobilerelationtobackend = "CD";
+    } else if (mobileRation == "POA") {
+      mobilerelationtobackend = "PO";
+    }
+  }
+
+  String jh1MobileRelationtoBckend = '';
+  String jh2MobileRelationtoBckend = '';
+  updateJH1MobileRelationValue(String? value) {
+    jh1MobileRelation = value ?? '';
+    notifyListeners();
+    if (jh1MobileRelation == "Self") {
+      jh1MobileRelationtoBckend = "SE";
+    } else if (jh1MobileRelation == "Spouse") {
+      jh1MobileRelationtoBckend = "SP";
+    } else if (jh1MobileRelation == "Depened Siblings") {
+      jh1MobileRelationtoBckend = "DS";
+    } else if (jh1MobileRelation == "Depened Parents") {
+      jh1MobileRelationtoBckend = "DP";
+    } else if (jh1MobileRelation == "Depened Children") {
+      jh1MobileRelationtoBckend = "DC";
+    } else if (jh1MobileRelation == "Guardian") {
+      jh1MobileRelationtoBckend = "GD";
+    } else if (jh1MobileRelation == "PMS") {
+      jh1MobileRelationtoBckend = "PM";
+    } else if (jh1MobileRelation == "Custodian") {
+      jh1MobileRelationtoBckend = "CD";
+    } else if (jh1MobileRelation == "POA") {
+      jh1MobileRelationtoBckend = "PO";
+    }
+  }
+
+  updateJH2MobileRelationValue(String? value) {
+    jh2MobileRelation = value ?? '';
+    notifyListeners();
+    if (jh2MobileRelation == "Self") {
+      jh2MobileRelationtoBckend = "SE";
+    } else if (jh2MobileRelation == "Spouse") {
+      jh2MobileRelationtoBckend = "SP";
+    } else if (jh2MobileRelation == "Depened Siblings") {
+      jh2MobileRelationtoBckend = "DS";
+      log('mobileRation == $mobilerelationtobackend');
+    } else if (jh2MobileRelation == "Depened Parents") {
+      jh2MobileRelationtoBckend = "DP";
+    } else if (jh2MobileRelation == "Depened Children") {
+      jh2MobileRelationtoBckend = "DC";
+    } else if (jh2MobileRelation == "Guardian") {
+      jh2MobileRelationtoBckend = "GD";
+    } else if (jh2MobileRelation == "PMS") {
+      jh2MobileRelationtoBckend = "PM";
+    } else if (jh2MobileRelation == "Custodian") {
+      jh2MobileRelationtoBckend = "CD";
+    } else if (jh2MobileRelation == "POA") {
+      jh2MobileRelationtoBckend = "PO";
+    }
+  }
+
+  String guardEmailrelationTobacked = '';
+  String emailRation = 'Select Email relation';
+  String jh1emailRation = 'Select Email relation';
+  String jh2emailRation = 'Select Email relation';
+  List<String> emailRelation = [
+    'Select Email relation',
+    "Self",
+    "Spouse",
+    "Depened Children",
+    "Depened Parents",
+    "Depened Siblings",
+    "Guardian",
+  ];
+  String jh1EmailRelationtoBckend = '';
+  String jh2EmailRelationtoBckend = '';
+  void updatejh1EmailRelationValue(String? value) {
+    jh1emailRation = value ?? '';
+    notifyListeners();
+    if (jh1emailRation == "Self") {
+      jh1EmailRelationtoBckend = "SE";
+    } else if (jh1emailRation == "Spouse") {
+      jh1EmailRelationtoBckend = "SP";
+    } else if (jh1emailRation == "Depened Siblings") {
+      jh1EmailRelationtoBckend = "DS";
+      log('mobileRation == $guardEmailrelationTobacked');
+    } else if (jh1emailRation == "Depened Parents") {
+      jh1EmailRelationtoBckend = "DP";
+    } else if (jh1emailRation == "Depened Children") {
+      jh1EmailRelationtoBckend = "DC";
+    } else if (jh1emailRation == "Guardian") {
+      jh1EmailRelationtoBckend = "GD";
+    }
+  }
+
+  void updatejh2EmailRelationValue(String? value) {
+    jh2emailRation = value ?? '';
+    notifyListeners();
+    if (jh2emailRation == "Self") {
+      jh2EmailRelationtoBckend = "SE";
+    } else if (jh2emailRation == "Spouse") {
+      jh2EmailRelationtoBckend = "SP";
+    } else if (jh2emailRation == "Depened Siblings") {
+      jh2EmailRelationtoBckend = "DS";
+      log('mobileRation == $guardEmailrelationTobacked');
+    } else if (jh2emailRation == "Depened Parents") {
+      jh2EmailRelationtoBckend = "DP";
+    } else if (jh2emailRation == "Depened Children") {
+      jh2EmailRelationtoBckend = "DC";
+    } else if (jh2emailRation == "Guardian") {
+      jh2EmailRelationtoBckend = "GD";
+    }
+  }
+
+  void updateEmailRelationValue(String? value) {
+    emailRation = value ?? '';
+    notifyListeners();
+    if (emailRation == "Self") {
+      guardEmailrelationTobacked = "SE";
+    } else if (emailRation == "Spouse") {
+      guardEmailrelationTobacked = "SP";
+    } else if (emailRation == "Depened Siblings") {
+      guardEmailrelationTobacked = "DS";
+      log('mobileRation == $guardEmailrelationTobacked');
+    } else if (emailRation == "Depened Parents") {
+      guardEmailrelationTobacked = "DP";
+    } else if (emailRation == "Depened Children") {
+      guardEmailrelationTobacked = "DC";
+    } else if (emailRation == "Guardian") {
+      guardEmailrelationTobacked = "GD";
+    }
+  }
+
   String typevalue = "select a type";
   String typevalueNominee2 = "select a type";
   String typevalueNominee3 = "select a type";
@@ -156,6 +402,12 @@ class KycController extends ChangeNotifier {
     'Grand mother',
     'Other'
   ];
+  bool guardianSelected = false;
+  void changeGuardianSelected(bool value) {
+    guardianSelected = value;
+    notifyListeners();
+  }
+
   String nominee1stateValue = 'State';
   updateNominee1StateValue(String? value) {
     nominee1stateValue = value ?? '';
@@ -169,6 +421,12 @@ class KycController extends ChangeNotifier {
 
   void updateRelationNominee2(String? value) {
     selectRelationValueNominne2 = value ?? '';
+    notifyListeners();
+  }
+
+  void nomineeChosse(String value) {
+    log('valuee =$value');
+    nomineeOption = value;
     notifyListeners();
   }
 
@@ -203,7 +461,7 @@ class KycController extends ChangeNotifier {
   }
 
   void updateTaxValue(value) {
-    taxStatusValue = value ?? '';
+    taxStatusValue = value;
     taxcode = taxStatusValue!.taxStatusCode;
     logger.d('tax code == $taxcode');
     notifyListeners();
@@ -228,6 +486,40 @@ class KycController extends ChangeNotifier {
     'Agriculture',
     'Private Sector service',
   ];
+  String username = '';
+  getusername() async {
+    username = await SecureStorage.readToken('username');
+    notifyListeners();
+  }
+
+  void updateSelectedValue(String? value) {
+    selectedValue = value ?? '';
+    notifyListeners();
+  }
+
+  BankDeatilsModel? bankDeatilsModel;
+  bool ifscLoading = false;
+  GetBankDetailsService getBankDetailsService = GetBankDetailsService();
+  Future<bool> getbankDetailsWithIfsc(context, ifscCode) async {
+    ifscLoading = true;
+    notifyListeners();
+    try {
+      bankDeatilsModel =
+          await getBankDetailsService.getBankDetails(context, ifscCode);
+      log('bank detailsinkyc == ${bankDeatilsModel?.bankDetails!.toJson()}');
+      ifscLoading = false;
+      notifyListeners();
+      return bankDeatilsModel?.bankDetails == null ? false : true;
+    } catch (e) {
+      logger.d('Failed with an exception$e');
+      return false;
+    }
+  }
+
+  void addingbankname() {
+    banknameController.text = bankDeatilsModel?.bankDetails?.bank ?? '';
+    notifyListeners();
+  }
 
   void addingvaluetoModel() {
     investorDetails = InvestorDetails(
@@ -277,37 +569,37 @@ class KycController extends ChangeNotifier {
       accNo: accountnumberCotroller.text,
       accType: 'SB',
       ifscCode: ifscCodeController.text,
-      branchName: 'String',
-      branchAddr1: 'String',
-      branchAddr2: 'String',
+      branchName: bankDeatilsModel?.bankDetails?.branch ?? '',
+      branchAddr1: "String",
+      branchAddr2: '',
       branchAddr3: '',
-      branchCity: '',
+      branchCity: bankDeatilsModel?.bankDetails?.city ?? '',
       branchPincode: '',
       branchCountry: '',
-      jh1Name: '',
-      jh1Pan: '',
+      jh1Name: jh1nameController.text,
+      jh1Pan: jh1panController.text,
       jh1ValidPan: '',
       jh1Exemption: '',
       jh1ExemptCategory: '',
       jh1ExemptRefNo: '',
-      jh1Dob: '',
+      jh1Dob: jh1DOBController.text,
       jh1Kyc: '',
       jh1Ckyc: '',
       jh1CkycRefNo: '',
-      jh1Email: '',
-      jh1MobileNo: '',
-      jh2Name: '',
-      jh2Pan: '',
+      jh1Email: jh1emailController.text,
+      jh1MobileNo: jh1phoneNumberCotroller.text,
+      jh2Name: jh2nameController.text,
+      jh2Pan: jh2panController.text,
       jh2ValidPan: '',
       jh2Exemption: '',
       jh2ExemptCategory: '',
       jh2ExemptRefNo: '',
-      jh2Dob: '',
+      jh2Dob: jh2DOBController.text,
       jh2Kyc: '',
       jh2Ckyc: '',
       jh2CkycRefNo: '',
-      jh2Email: '',
-      jh2MobileNo: '',
+      jh2Email: jh2emailController.text,
+      jh2MobileNo: jh2phoneNumberCotroller.text,
       noOfNominee: countvalue == "select Nominee count" ? '' : countvalue,
       nominee1Type: typevalue == 'select a type ' ? '' : typevalue,
       nominee1Name: nominee1nameController.text,
@@ -345,33 +637,33 @@ class KycController extends ChangeNotifier {
       nominee3Percent: '',
       nominee3GuardName: nominee3gurdnameCotroller.text,
       nominee3GuardPan: nominee3guardpanController.text,
-      guardName: '',
-      guardPan: '',
+      guardName: guardnameCotroller.text,
+      guardPan: guardpanController.text,
       guardValidPan: '',
       guardExemption: '',
       guardExemptCategory: '',
       guardPanRefNo: '',
-      guardDob: '',
+      guardDob: guardDOBController.text,
       guardKyc: '',
       guardCkyc: '',
       guardCkycRefNo: '',
       micrNo: '',
       fdFlag: '',
       appKey: '',
-      guardianRelation: '',
-      mobileRelation: '',
-      emailRelation: '',
-      nom1Pan: '',
-      nom2Pan: '',
-      nom3Pan: '',
-      nomineeOpted: 'N',
-      jh1MobileRelation: '',
-      jh1EmailRelation: '',
-      jh2MobileRelation: '',
-      jh2EmailRelation: '',
-      nom1GuardianRelation: '',
-      nom2GuardianRelation: '',
-      nom3GuardianRelation: '',
+      guardianRelation: gudianvalueToBackend,
+      mobileRelation: mobilerelationtobackend,
+      emailRelation: guardEmailrelationTobacked,
+      nom1Pan: nominee1panCotroller.text,
+      nom2Pan: nominee2panCotroller.text,
+      nom3Pan: nominee3panCotroller.text,
+      nomineeOpted: nomineeOption,
+      jh1MobileRelation: jh1MobileRelationtoBckend,
+      jh1EmailRelation: jh1EmailRelationtoBckend,
+      jh2MobileRelation: jh2MobileRelationtoBckend,
+      jh2EmailRelation: jh2EmailRelationtoBckend,
+      nom1GuardianRelation: nom1guardrelationtobackend,
+      nom2GuardianRelation: nom2guardrelationtobackend,
+      nom3GuardianRelation: nom3guardrelationtobackend,
     );
     logger.d('model vluee ==${investorDetails.toJson()}');
     notifyListeners();
@@ -386,7 +678,8 @@ class KycController extends ChangeNotifier {
   Future<bool> createCustomer(context) async {
     bool isCreated =
         await createCustomerService.createCustomer(investorDetails, context);
-    if (isCreated) {
+    log('isCreated == $isCreated');
+    if (isCreated == true) {
       logger.d('customer created successfully');
       return true;
     } else {

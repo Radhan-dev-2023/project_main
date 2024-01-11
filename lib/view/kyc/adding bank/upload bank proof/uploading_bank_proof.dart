@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/kyc/Nominee%20adding/nominee%20type/screen_nominee_count.dart';
 import 'package:finfresh_mobile/view/kyc/Nominee%20adding/screen_nominee.dart';
+import 'package:finfresh_mobile/view/kyc/adding%20nominee%20and%20guardian/adding_nominee_guardian.dart';
 import 'package:finfresh_mobile/view/kyc/joint%20holders/join_holders_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -165,19 +166,25 @@ class _ScreenUploadingBankProofState extends State<ScreenUploadingBankProof> {
               ),
             );
           },
-          child: const Text('YES'),
+          child: Text(
+            'YES',
+            style: Theme.of(context).textTheme.labelLarge,
+          ),
         ),
         TextButton(
           onPressed: () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const ScreenNomineeCount(),
+                builder: (context) => const AddingNomineeAndGuadianScreen(),
               ),
             );
             // Close the dialog
           },
-          child: const Text('NO'),
+          child: Text(
+            'NO',
+            style: Theme.of(context).textTheme.labelLarge,
+          ),
         ),
       ],
     );

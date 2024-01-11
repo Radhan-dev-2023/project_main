@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
@@ -27,13 +28,17 @@ class VerifyOtp {
         },
         body: jsonEncode(payload),
       );
-      logger.d('response == ${response.body}');
+      logger.d('responseotp login == ${response.body}');
       Map<String, dynamic> jsonResponse = json.decode(response.body);
       if (jsonResponse['result']['status'] == 200) {
+        log('otp calling');
         String token = jsonResponse['result']['token'];
         String userId = jsonResponse['result']['userId'];
+        String refreshToken = jsonResponse['result']['refreshToken'];
         SecureStorage.addToken('token', token);
         SecureStorage.usserId('userId', userId);
+        SecureStorage.addToken('refreshToken', refreshToken);
+
         logger.d('token == $token');
         return true;
       } else if (jsonResponse['result']['status'] == 1001 ||

@@ -1,6 +1,7 @@
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/kyc/adding%20bank/ifsc%20adding/enter_ifsc_code.dart';
+import 'package:finfresh_mobile/view/kyc/adding%20bank/upload%20bank%20proof/uploading_bank_proof.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -38,7 +39,7 @@ class ScreenBankAccountNumber extends StatelessWidget {
                     if (value == null || value.isEmpty) {
                       return 'field is required';
                     }
-                    if (!RegExp(r'^\d{14}$').hasMatch(value)) {
+                    if (!RegExp(r'^\d{9,18}$').hasMatch(value)) {
                       return 'Invalid bank account number';
                     }
                     return null;
@@ -61,7 +62,7 @@ class ScreenBankAccountNumber extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const ScreenIfcAdding(),
+                builder: (context) => const ScreenUploadingBankProof(),
               ),
             );
           }

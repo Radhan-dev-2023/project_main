@@ -2,6 +2,7 @@ import 'package:finfresh_mobile/controller/auth/auth_controller.dart';
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/model/tax%20status%20model/tax_status_model.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
+import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
 import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
 import 'package:finfresh_mobile/view/kyc/occupation%20Screen/occupation_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
@@ -10,13 +11,23 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class ScreenTaxStatus extends StatelessWidget {
+class ScreenTaxStatus extends StatefulWidget {
   const ScreenTaxStatus({super.key});
+
+  @override
+  State<ScreenTaxStatus> createState() => _ScreenTaxStatusState();
+}
+
+class _ScreenTaxStatusState extends State<ScreenTaxStatus> {
+  @override
+  void initState() {
+    Provider.of<KycController>(context, listen: false).getTaxStatus();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     Brightness brightness = MediaQuery.of(context).platformBrightness;
-    Provider.of<KycController>(context, listen: false).getTaxStatus();
 
     final authcontroller = Provider.of<AuthController>(context);
 
@@ -24,8 +35,11 @@ class ScreenTaxStatus extends StatelessWidget {
       return Scaffold(
         body: SafeArea(
           child: kycController.taxpageloading == true
-              ? const Center(
-                  child: CupertinoActivityIndicator(color: Colors.white),
+              ? Center(
+                  child: CupertinoActivityIndicator(
+                      color: brightness == Brightness.dark
+                          ? Colors.white
+                          : Colors.black),
                 )
               : Container(
                   margin: const EdgeInsets.all(15),
@@ -95,11 +109,15 @@ class ScreenTaxStatus extends StatelessWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: ButtonWidget(
           onTap: () async {
+            if (kycController.taxStatusValue == null) {
+              showSnackBar(context, 'Select a Tax Status');
+              return;
+            }
             bool result = await kycController
                 .getInn(authcontroller.phonenumberController.text);
-            if (result) {
+            if (result == true) {
               // ignore: use_build_context_synchronously
-              Navigator.of(context).push(
+              Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   builder: (context) => const ScreenHomeView(),
                 ),

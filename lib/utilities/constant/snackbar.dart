@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 void showSnackBar(BuildContext context, String text) {
   ScaffoldMessenger.of(context).showSnackBar(
@@ -6,7 +7,7 @@ void showSnackBar(BuildContext context, String text) {
       content: Center(
         child: Text(
           text,
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: TextStyle(color: Colors.white, fontSize: 16.sp),
         ),
       ),
       backgroundColor: const Color(0xFF0E1330),

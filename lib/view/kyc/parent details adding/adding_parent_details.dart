@@ -1,5 +1,6 @@
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
+import 'package:finfresh_mobile/view/kyc/adding%20bank/ifsc%20adding/enter_ifsc_code.dart';
 import 'package:finfresh_mobile/view/kyc/adding%20bank/listing%20banks/bank_account_slecting.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:flutter/material.dart';
@@ -32,15 +33,29 @@ class ScreenAddingParentDetails extends StatelessWidget {
               TextFormField(
                 controller: kycController.motherNameCotroller,
                 style: Theme.of(context).textTheme.labelLarge!,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (value) {
+                  if (!RegExp(r'^[a-zA-Z ]+$').hasMatch(value!)) {
+                    return 'Enter valid name';
+                  }
+                  return null;
+                },
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    hintText: "Mothers's Name"),
+                    hintText: "Mother's Name"),
               ),
               VerticalSpacer(3.h),
               TextFormField(
                 controller: kycController.fatherNameController,
                 style: Theme.of(context).textTheme.labelLarge!,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (value) {
+                  if (!RegExp(r'^[a-zA-Z ]+$').hasMatch(value!)) {
+                    return 'Enter valid name';
+                  }
+                  return null;
+                },
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10)),
@@ -57,7 +72,7 @@ class ScreenAddingParentDetails extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const ScreenAddingBank(),
+              builder: (context) => const ScreenIfcAdding(),
             ),
           );
         },

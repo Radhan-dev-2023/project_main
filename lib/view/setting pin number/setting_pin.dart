@@ -87,22 +87,24 @@ class ScreenSetPinNumber extends StatelessWidget {
                   'Enter pin for confirmation',
                   style: TextStyle(color: Colors.grey),
                 ),
-                VerticalSpacer(3.h),
-                Pinput(
-                  validator: (value) {
-                    if (value?.length != 4 || value == null) {
-                      return 'please Enter the  4-digit pin';
-                    } else {
-                      return null;
-                    }
-                  },
-                  controller: pinController.pinController,
-                  length: 4,
-                  defaultPinTheme: defaultPinTheme,
-                  focusedPinTheme: focusedPinTheme,
-                  submittedPinTheme: submittedPinTheme,
-                  pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
-                  errorPinTheme: errorPinTheme,
+                VerticalSpacer(10.h),
+                Center(
+                  child: Pinput(
+                    validator: (value) {
+                      if (value?.length != 4 || value == null) {
+                        return 'please Enter the  4-digit pin';
+                      } else {
+                        return null;
+                      }
+                    },
+                    controller: pinController.pinController,
+                    length: 4,
+                    defaultPinTheme: defaultPinTheme,
+                    focusedPinTheme: focusedPinTheme,
+                    submittedPinTheme: submittedPinTheme,
+                    pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
+                    errorPinTheme: errorPinTheme,
+                  ),
                 ),
                 VerticalSpacer(10.h),
               ],

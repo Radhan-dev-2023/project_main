@@ -1,6 +1,7 @@
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
+import 'package:finfresh_mobile/view/kyc/adding%20nominee%20and%20guardian/adding_nominee_guardian.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -183,20 +184,45 @@ class _ScreenNominee3State extends State<ScreenNominee3> {
                 ),
                 VerticalSpacer(3.h),
                 TextFormField(
+                  controller: kycController.nominee3DOBController,
                   style: Theme.of(context).textTheme.labelLarge!,
-                  // validator: (value) {
-                  //   if (value == null || value.isEmpty) {
-                  //     return 'field is required';
-                  //   }
-                  //   return null;
-                  // },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) {
+                    if (!RegExp(r'^\d{2}-[a-zA-Z]{3}-\d{4}$')
+                        .hasMatch(value!)) {
+                      return 'Invalid DOB format(01-Jan-1950))';
+                    }
+                    return null;
+                  },
                   decoration: InputDecoration(
                     // filled: true,
                     // fillColor: const Color(0xFF0E1330),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    hintText: "Nominee3 date of birth",
+                    hintText: "Nominee3 date of birth(01-Jan-1950)",
                   ),
+                ),
+                VerticalSpacer(3.h),
+                TextFormField(
+                  controller: kycController.nominee3panCotroller,
+                  style: Theme.of(context).textTheme.labelLarge!,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    hintText: 'Enter nominee3 pan number(ABCDE1234F)',
+
+                    // labelText: 'Pan card number',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter PAN Card Number';
+                    } else if (!RegExp(r'^[A-Z]{5}[0-9]{4}[A-Z]$')
+                        .hasMatch(value)) {
+                      return 'Invalid PAN format';
+                    }
+                    return null;
+                  },
                 ),
                 VerticalSpacer(3.h),
                 TextFormField(
@@ -205,7 +231,7 @@ class _ScreenNominee3State extends State<ScreenNominee3> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    hintText: "Nominee3 guard name",
+                    hintText: "Nominee3 guardian name",
                   ),
                 ),
                 VerticalSpacer(3.h),
@@ -215,7 +241,44 @@ class _ScreenNominee3State extends State<ScreenNominee3> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    hintText: "Nominee3 guard  pan",
+                    hintText: "Nominee3 Guardian PAN",
+                  ),
+                ),
+                VerticalSpacer(3.h),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        color: brightness == Brightness.dark
+                            ? Colors.white
+                            : Colors.black),
+                    borderRadius: BorderRadius.circular(8),
+                    color: brightness == Brightness.light
+                        ? Colors.white
+                        : const Color(0xFF0E1330),
+                  ),
+                  height: 60,
+                  // width: 120,
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: DropdownButton(
+                      value: kycController.nominee3guardRelationvalue,
+                      isExpanded: true,
+                      underline: Container(
+                        height: 0,
+                      ),
+                      items: kycController.guardianRelation.map((String items) {
+                        return DropdownMenuItem(
+                          value: items,
+                          child: Text(
+                            items,
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        kycController.updatenom3guardRelationValue(value);
+                      },
+                    ),
                   ),
                 ),
                 VerticalSpacer(3.h),
@@ -227,18 +290,26 @@ class _ScreenNominee3State extends State<ScreenNominee3> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: ButtonWidget(
-        onTap: () async {
-          kycController.addingvaluetoModel();
-          bool result = await kycController.createCustomer(context);
-          if (result) {
-            // ignore: use_build_context_synchronously
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const ScreenHomeView(),
-              ),
-            );
-          }
+        onTap: () {
+          Provider.of<KycController>(context, listen: false).nomineeChosse('Y');
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AddingNomineeAndGuadianScreen(),
+            ),
+          );
+          // kycController.addingvaluetoModel();
+          // bool result = await kycController.createCustomer(context);
+          // if (result == true) {
+          //   // ignore: use_build_context_synchronously
+          //   Navigator.pushAndRemoveUntil(
+          //     context,
+          //     MaterialPageRoute(
+          //       builder: (context) => const ScreenHomeView(),
+          //     ),
+          //     (route) => false,
+          //   );
+          // }
         },
         btName: 'Confirm '.toUpperCase(),
       ),

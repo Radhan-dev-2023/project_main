@@ -84,28 +84,30 @@ class ScreenConfirmPinNumber extends StatelessWidget {
                   'Re-enter your Finfresh PIN for confirmation',
                   style: TextStyle(color: Colors.grey),
                 ),
-                VerticalSpacer(3.h),
-                Pinput(
-                  validator: (value) {
-                    logger.d('valuee==$value');
-                    if (value?.length != 4 || value == null) {
-                      return 'please Enter the  4-digit ';
-                    }
-                    if (pinController.pinController.text !=
-                        pinController.confirmPinController.text) {
-                      logger.d(
-                          'pinController.pinController.text==${pinController.pinController.text}');
-                      return 'pin does not match';
-                    }
-                    return null;
-                  },
-                  controller: pinController.confirmPinController,
-                  length: 4,
-                  defaultPinTheme: defaultPinTheme,
-                  focusedPinTheme: focusedPinTheme,
-                  submittedPinTheme: submittedPinTheme,
-                  pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
-                  errorPinTheme: errorPinTheme,
+                VerticalSpacer(10.h),
+                Center(
+                  child: Pinput(
+                    validator: (value) {
+                      logger.d('valuee==$value');
+                      if (value?.length != 4 || value == null) {
+                        return 'please Enter the  4-digit ';
+                      }
+                      if (pinController.pinController.text !=
+                          pinController.confirmPinController.text) {
+                        logger.d(
+                            'pinController.pinController.text==${pinController.pinController.text}');
+                        return 'pin does not match';
+                      }
+                      return null;
+                    },
+                    controller: pinController.confirmPinController,
+                    length: 4,
+                    defaultPinTheme: defaultPinTheme,
+                    focusedPinTheme: focusedPinTheme,
+                    submittedPinTheme: submittedPinTheme,
+                    pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
+                    errorPinTheme: errorPinTheme,
+                  ),
                 ),
                 VerticalSpacer(10.h),
               ],

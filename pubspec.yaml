@@ -49,6 +49,7 @@ dependencies:
   connectivity_plus: ^5.0.2
   syncfusion_flutter_charts: ^24.1.43+1
   syncfusion_flutter_sliders: ^24.1.43
+  image: ^4.1.3
 
 dev_dependencies:
   flutter_test:

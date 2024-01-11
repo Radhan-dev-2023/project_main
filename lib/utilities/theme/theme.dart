@@ -64,12 +64,21 @@ class AppTheme {
 
   static final ThemeData lightTheme = ThemeData(
     inputDecorationTheme: InputDecorationTheme(
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(13.sp),
+        borderSide: const BorderSide(color: Color(0xFF060B27)),
+      ),
+      errorStyle: const TextStyle(color: Color(0xFF060B27)),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(13.sp),
+        borderSide: const BorderSide(color: Color(0xFF0E1330)),
+      ),
       border: OutlineInputBorder(
         borderSide: const BorderSide(color: Colors.grey),
         borderRadius: BorderRadius.circular(10.sp),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10.sp),
+        borderRadius: BorderRadius.circular(13.sp),
         borderSide: const BorderSide(
             // color: _lightTextColorPrimary,
             // Use accentColor for focus color
@@ -111,10 +120,11 @@ class AppTheme {
         borderSide: const BorderSide(color: Colors.black),
         borderRadius: BorderRadius.circular(10.sp),
       ),
-      focusedBorder: const OutlineInputBorder(
-        borderSide:
-            BorderSide(color: Colors.grey // Use accentColor for focus color
-                ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(13.sp),
+        borderSide: const BorderSide(
+            color: Colors.grey // Use accentColor for focus color
+            ),
       ),
       // focusedBorder: UnderlineInputBorder(
       //   borderSide: BorderSide(color: Colors.white),
