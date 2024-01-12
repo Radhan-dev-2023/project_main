@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
           // home: const AddingNomineeAndGuadianScreen(),
           home: const ScreenUploadinProofs(),
           // home: ScreenBankAccountNumber(),
-          //  home: const ScreenIfcAdding(),
+          // home: const ScreenIfcAdding(),
           // home: const ScreenUploadingBankProof(),
           // home: const ScreenAddress(),
           // home: const ScreenTaxStatus(),

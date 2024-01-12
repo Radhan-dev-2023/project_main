@@ -34,10 +34,10 @@ class VerifyOtp {
         log('otp calling');
         String token = jsonResponse['result']['token'];
         String userId = jsonResponse['result']['userId'];
-        String refreshToken = jsonResponse['result']['refreshToken'];
+        // String refreshToken = jsonResponse['result']['refreshToken'];
         SecureStorage.addToken('token', token);
         SecureStorage.usserId('userId', userId);
-        SecureStorage.addToken('refreshToken', refreshToken);
+        // SecureStorage.addToken('refreshToken', refreshToken);
 
         logger.d('token == $token');
         return true;

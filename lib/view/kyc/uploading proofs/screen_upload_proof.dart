@@ -1,5 +1,8 @@
 import 'package:finfresh_mobile/controller/uploading%20proofs/uploading_proof_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
+import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
+import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
+import 'package:finfresh_mobile/view/widgets/custom_loading_button_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -144,12 +147,48 @@ class ScreenUploadinProofs extends StatelessWidget {
                                       ),
                               ),
                             ),
-                          ),
+                          )
                   ],
                 ),
               ),
             ),
           ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: uploadingproofController.bankProofUpload ==
+                      true ||
+                  uploadingproofController.proofUpload == true
+              ? const LoadingButton()
+              : ButtonWidget(
+                  btName: 'Submit'.toUpperCase(),
+                  onTap: () async {
+                    if (uploadingproofController.proofvalue == "Bank Proof") {
+                      bool result = await uploadingproofController
+                          .uploadBankProof(context);
+                      if (result == true) {
+                        // ignore: use_build_context_synchronously
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ScreenHomeView(),
+                          ),
+                        );
+                      }
+                    } else {
+                      bool result =
+                          await uploadingproofController.uploadProof(context);
+                      if (result == true) {
+                        // ignore: use_build_context_synchronously
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ScreenHomeView(),
+                          ),
+                        );
+                      }
+                    }
+                  },
+                ),
         );
       },
     );

@@ -30,6 +30,8 @@ class CreateCustomer {
       Map<String, dynamic> jsonResponse = json.decode(response.body);
       if (jsonResponse['status'] == 200) {
         log('create customer success');
+        String customerId = jsonResponse['customerId'];
+        SecureStorage.addingvaluesToStorage('customerId', customerId);
         return true;
       } else if (jsonResponse['status'] == 500) {
         log('create customer failed');

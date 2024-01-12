@@ -1,22 +1,25 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-import 'dart:typed_data';
-import 'dart:ui' as ui;
-
+import 'package:finfresh_mobile/services/upload%20proof%20service/upload_proof_service.dart';
 import 'package:flutter/material.dart';
-import 'package:image/image.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:image/image.dart' as img;
+import 'package:image_to_pdf_converter/image_to_pdf_converter.dart';
 
 class UploadingProof extends ChangeNotifier {
   File? image;
   final picker = ImagePicker();
+
+  File? imagePdfFormate;
+  UploadProofservice uploadProofservice = UploadProofservice();
   String proofvalue = "Choose your proof";
+  String vlauetoBackend = "";
+  bool proofUpload = false;
+  bool bankProofUpload = false;
   List<String> proofList = [
     "Choose your proof",
     "Aadhar Card",
     "Pan Card",
+    "Bank Proof",
     "Driving License",
     "Passport",
     "INN Physical Form",
@@ -30,6 +33,37 @@ class UploadingProof extends ChangeNotifier {
   ];
   void updateProofValue(String? value) {
     proofvalue = value ?? '';
+
+    if (proofvalue == "Aadhar Card") {
+      vlauetoBackend = "AA";
+    } else if (proofvalue == "Pan Card") {
+      vlauetoBackend = "PC";
+    } else if (proofvalue == "Driving License") {
+      vlauetoBackend = "DL";
+    } else if (proofvalue == "Passport") {
+      vlauetoBackend = "PA";
+    } else if (proofvalue == "INN Physical Form") {
+      vlauetoBackend = "IP";
+    } else if (proofvalue == "KRA Form") {
+      vlauetoBackend = "KF";
+    } else if (proofvalue == "Cheque") {
+      vlauetoBackend = "CH";
+    } else if (proofvalue == "ACH Form") {
+      vlauetoBackend = "Ac";
+    } else if (proofvalue == "POA") {
+      vlauetoBackend = "P";
+    } else if (proofvalue == "FATCA & AOF") {
+      vlauetoBackend = "AF";
+    } else if (proofvalue == "POA cheque") {
+      vlauetoBackend = "PQ";
+    } else if (proofvalue == "IMPS DOCUMENT") {
+      vlauetoBackend = "IMps";
+    } else if (proofvalue == "Bank Proof") {
+      vlauetoBackend = "B";
+    } else {
+      vlauetoBackend = "";
+    }
+
     notifyListeners();
   }
 
@@ -38,6 +72,12 @@ class UploadingProof extends ChangeNotifier {
 
     if (pickedFile != null) {
       image = File(pickedFile.path);
+
+      // img.Image image1 = img.decodeImage(Uint8List.fromList(inputBytes));
+
+      imagePdfFormate = await ImageToPdf.imageList(listOfFiles: [image]);
+      log('image path == ${imagePdfFormate}');
+
       notifyListeners(); // Notify listeners to update the UI
     }
   }
@@ -48,89 +88,66 @@ class UploadingProof extends ChangeNotifier {
 
     if (pickedFile != null) {
       image = File(pickedFile.path);
-      // name = await convertFileToBase64(image!.path);
-      convertToTiff(image);
-
+      // convertImage(pickedFile.path);
+      imagePdfFormate = await ImageToPdf.imageList(listOfFiles: [image]);
+      log('image path == ${imagePdfFormate}');
+      log('image.pah == ${image!.path}');
       notifyListeners(); // Notify listeners to update the UI
     }
   }
 
-  Future<void> convertToTiff1(String inputPath) async {
+  // Uint8List? list;
+  // void convertImage(String inputPath) {
+  //   // Read the JPEG image
+  //   File inputFile = File(inputPath);
+  //   List<int> inputBytes = inputFile.readAsBytesSync();
+  //   img.Image? image = img.decodeImage(Uint8List.fromList(inputBytes));
+
+  //   // Save the image in TIFF format
+
+  //   var value = img.encodeTiff(image!);
+  //   list = value;
+  //   // ByteData byteData = ByteData.sublistView(value);
+  //   // log('byre data == ${byteData}');
+  //   // File fileInMemory = File.fromRawPath(value.buffer.asUint8List());
+  //   // log('file in memory == ${fileInMemory}');
+  // }
+
+  Future<bool> uploadProof(context) async {
+    proofUpload = true;
+    notifyListeners();
     try {
-      File inputFile = File(inputPath);
-
-      if (await inputFile.exists()) {
-        // Load the image using the image package
-        var image = decodeImage(await inputFile.readAsBytes());
-
-        // Convert the image to PNG format
-        List<int> pngBytes = encodeTiff(image!);
-        String base64String = base64Encode(pngBytes);
-        log('tiff$base64String');
-        // Write the PNG bytes to a temporary file
-        File tempPngFile = File(inputPath);
-        await tempPngFile.writeAsBytes(pngBytes);
-
-        // Use ImageMagick to convert PNG to TIFF
-        // ProcessResult result = await Process.run(
-        //   'convert',  // ImageMagick's convert command
-        //   [tempPngFile.path, outputPath],
-        // );
-
-        // Print the result of the conversion process
-        // print(result.stdout);
-        // print(result.stderr);
-
-        // Delete the temporary PNG file
-        // await tempPngFile.delete();
-
-        print('Conversion to TIFF successful.');
+      bool result = await uploadProofservice.uploadProof(
+          imagePdfFormate!.path, vlauetoBackend, context);
+      if (result == true) {
+        proofUpload = false;
+        notifyListeners();
+        return true;
       } else {
-        throw FileSystemException("File not found", inputPath);
+        proofUpload = false;
+        notifyListeners();
+        return false;
       }
     } catch (e) {
-      print('Error converting to TIFF: $e');
+      log('failed with an exception$e');
+      proofUpload = false;
+      notifyListeners();
+      return false;
     }
   }
 
-  Future<void> convertToTiff(inputPath) async {
+  Future<bool> uploadBankProof(context) async {
     try {
-      File inputFile = File(inputPath);
-
-      if (await inputFile.exists()) {
-        // Load the image using the image package
-        // img.Image image = img.decodeImage(await inputFile.readAsBytes())!;
-
-        // Save the image as a TIFF file
-        File outputFile = File(inputPath);
-        outputFile.writeAsBytesSync(img.encodeTiff(inputPath));
-        log('output$image');
-        log('output$outputFile');
-
-        print('Conversion to TIFF successful.');
+      bool result = await uploadProofservice.uploadBankProof(
+          imagePdfFormate!.path, vlauetoBackend, context);
+      if (result == true) {
+        return true;
       } else {
-        throw FileSystemException("File not found", inputPath);
+        return false;
       }
     } catch (e) {
-      print('Error converting to TIFF: $e');
-    }
-  }
-
-  Future<String> convertFileToBase64(String filePath) async {
-    try {
-      File file = File(filePath);
-
-      if (await file.exists()) {
-        List<int> bytes = await file.readAsBytes();
-        String base64String = base64Encode(bytes);
-
-        return base64String;
-      } else {
-        throw FileSystemException("File not found", filePath);
-      }
-    } catch (e) {
-      print('Error converting file to base64: $e');
-      return '';
+      log('failed with an exception$e');
+      return false;
     }
   }
 }
