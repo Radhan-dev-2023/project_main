@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:finfresh_mobile/services/get%20bank%20code/bank_code_service.dart';
 import 'package:finfresh_mobile/services/upload%20proof%20service/upload_proof_service.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,7 +9,7 @@ import 'package:image_to_pdf_converter/image_to_pdf_converter.dart';
 class UploadingProof extends ChangeNotifier {
   File? image;
   final picker = ImagePicker();
-
+  BankCodeService bankCodeService = BankCodeService();
   File? imagePdfFormate;
   UploadProofservice uploadProofservice = UploadProofservice();
   String proofvalue = "Choose your proof";
@@ -31,6 +32,29 @@ class UploadingProof extends ChangeNotifier {
     "POA cheque",
     "IMPS DOCUMENT",
   ];
+  String pOAValue = "Please select POAFlag";
+  List<String> poaList = [
+    "Please select POAFlag",
+    'Y',
+    'N',
+  ];
+  String pOABankTypeValue = "Please select POABankType";
+  List<String> poaBankTypeList = [
+    "Please select POABankType",
+    'DPCMS',
+    'NDCPMS',
+  ];
+
+  void updatepoaBankTypeValue(String? value) {
+    pOABankTypeValue = value ?? '';
+    notifyListeners();
+  }
+
+  void updatepoaValue(String? value) {
+    pOAValue = value ?? '';
+    notifyListeners();
+  }
+
   void updateProofValue(String? value) {
     proofvalue = value ?? '';
 
@@ -136,16 +160,36 @@ class UploadingProof extends ChangeNotifier {
     }
   }
 
+  String bankCode = '';
+  void getBankCode() async {
+    bankCode = await bankCodeService.getBankCode();
+    log('bankCode=$bankCode');
+  }
+
   Future<bool> uploadBankProof(context) async {
+    bankProofUpload = true;
+    notifyListeners();
     try {
       bool result = await uploadProofservice.uploadBankProof(
-          imagePdfFormate!.path, vlauetoBackend, context);
+        imagePdfFormate!.path,
+        vlauetoBackend,
+        pOAValue,
+        pOABankTypeValue,
+        bankCode,
+        context,
+      );
       if (result == true) {
+        bankProofUpload = false;
+        notifyListeners();
         return true;
       } else {
+        bankProofUpload = false;
+        notifyListeners();
         return false;
       }
     } catch (e) {
+      bankProofUpload = false;
+      notifyListeners();
       log('failed with an exception$e');
       return false;
     }

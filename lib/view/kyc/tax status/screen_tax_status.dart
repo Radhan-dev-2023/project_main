@@ -6,6 +6,7 @@ import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
 import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
 import 'package:finfresh_mobile/view/kyc/occupation%20Screen/occupation_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
+import 'package:finfresh_mobile/view/widgets/custom_loading_button_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -107,32 +108,34 @@ class _ScreenTaxStatusState extends State<ScreenTaxStatus> {
                 ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: ButtonWidget(
-          onTap: () async {
-            if (kycController.taxStatusValue == null) {
-              showSnackBar(context, 'Select a Tax Status');
-              return;
-            }
-            bool result = await kycController
-                .getInn(authcontroller.phonenumberController.text);
-            if (result == true) {
-              // ignore: use_build_context_synchronously
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => const ScreenHomeView(),
-                ),
-              );
-            } else {
-              // ignore: use_build_context_synchronously
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const ScreenOccupation(),
-                ),
-              );
-            }
-          },
-          btName: 'Proceed'.toUpperCase(),
-        ),
+        floatingActionButton: kycController.iinLoading == true
+            ? const LoadingButton()
+            : ButtonWidget(
+                onTap: () async {
+                  if (kycController.taxStatusValue == null) {
+                    showSnackBar(context, 'Select a Tax Status');
+                    return;
+                  }
+                  bool result = await kycController
+                      .getInn(authcontroller.phonenumberController.text);
+                  if (result == true) {
+                    // ignore: use_build_context_synchronously
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => const ScreenHomeView(),
+                      ),
+                    );
+                  } else {
+                    // ignore: use_build_context_synchronously
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const ScreenOccupation(),
+                      ),
+                    );
+                  }
+                },
+                btName: 'Proceed'.toUpperCase(),
+              ),
       );
     });
   }

@@ -518,6 +518,12 @@ class KycController extends ChangeNotifier {
 
   void addingbankname() {
     banknameController.text = bankDeatilsModel?.bankDetails?.bank ?? '';
+    SecureStorage.addToken('bankName', banknameController.text);
+    notifyListeners();
+  }
+
+  void addingbankAccNumber() {
+    SecureStorage.addToken('bankAccNumber', accountnumberCotroller.text);
     notifyListeners();
   }
 
@@ -669,9 +675,14 @@ class KycController extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool iinLoading = false;
   Future<bool> getInn(String phoneNumber) async {
+    iinLoading = true;
+    notifyListeners();
     bool isVerified =
         await getInnService.getInn(phoneNumber, panController.text, taxcode);
+    iinLoading = false;
+    notifyListeners();
     return isVerified;
   }
 

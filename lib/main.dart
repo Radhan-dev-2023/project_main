@@ -1,4 +1,5 @@
 import 'package:finfresh_mobile/controller/auth/auth_controller.dart';
+import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_controller.dart';
 import 'package:finfresh_mobile/controller/pin%20controller/pin_controller.dart';
@@ -19,6 +20,8 @@ import 'package:finfresh_mobile/view/nominee%20id%20adding/screen_nominee_id_add
 import 'package:finfresh_mobile/view/kyc/occupation%20Screen/occupation_screen.dart';
 import 'package:finfresh_mobile/view/kyc/pancard/screen_pan_card.dart';
 import 'package:finfresh_mobile/view/setting%20pin%20number/setting_pin.dart';
+import 'package:finfresh_mobile/view/sign%20in/sign_in_screen.dart';
+import 'package:finfresh_mobile/view/sign%20up/enter%20phone%20number/sign_in_screen.dart';
 import 'package:finfresh_mobile/view/splash%20Screen/splash_screen.dart';
 import 'package:finfresh_mobile/view/kyc/user%20personal%20details/screen_personal_details.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +57,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => UploadingProof(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DashBoardController(),
         )
       ],
       child: ResponsiveSizer(builder: (context, orientation, screenType) {
@@ -62,9 +68,9 @@ class MyApp extends StatelessWidget {
           title: 'Flutter Demo',
           theme: isDarkMode ? AppTheme.darkTheme : AppTheme.lightTheme,
           // darkTheme: AppTheme.darkTheme,
-          // home: const SplashScreen(),
+          home: const SplashScreen(),
           // home: const AddingNomineeAndGuadianScreen(),
-          home: const ScreenUploadinProofs(),
+          // home: const ScreenUploadinProofs(),
           // home: ScreenBankAccountNumber(),
           // home: const ScreenIfcAdding(),
           // home: const ScreenUploadingBankProof(),

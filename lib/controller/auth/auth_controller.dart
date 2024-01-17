@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:finfresh_mobile/services/auth%20services/user%20register/user_register_service.dart';
 import 'package:finfresh_mobile/services/auth%20services/verify%20otp%20service/verify_otp_service.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
+import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:flutter/material.dart';
 
 class AuthController extends ChangeNotifier {
@@ -23,6 +24,8 @@ class AuthController extends ChangeNotifier {
   final GlobalKey<FormState> formKeyForPassword = GlobalKey<FormState>();
   final GlobalKey<FormState> formKeyForPinput = GlobalKey<FormState>();
   Future<bool> userRegister(context) async {
+    SecureStorage.addToken('phoneNumber', phonenumberController.text);
+
     iscliked = true;
     notifyListeners();
     bool isRegistered = await userRegisterService.userRegister(
@@ -33,6 +36,7 @@ class AuthController extends ChangeNotifier {
   }
 
   Future<bool> generateOtp(context) async {
+    SecureStorage.addToken('phoneNumber', phonenumberControllerforlogin.text);
     try {
       loginClicked = true;
       notifyListeners();

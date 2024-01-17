@@ -2,6 +2,8 @@ import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart'
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/kyc/adding%20bank/ifsc%20adding/enter_ifsc_code.dart';
 import 'package:finfresh_mobile/view/kyc/adding%20bank/upload%20bank%20proof/uploading_bank_proof.dart';
+import 'package:finfresh_mobile/view/kyc/adding%20nominee%20and%20guardian/adding_nominee_guardian.dart';
+import 'package:finfresh_mobile/view/kyc/joint%20holders/join_holders_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -59,16 +61,59 @@ class ScreenBankAccountNumber extends StatelessWidget {
       floatingActionButton: ButtonWidget(
         onTap: () {
           if (kycController.bankAccountnumberFormkey.currentState!.validate()) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const ScreenUploadingBankProof(),
-              ),
-            );
+            kycController.addingbankAccNumber();
+            showAlertDialog(context);
           }
         },
         btName: 'Continue'.toUpperCase(),
       ),
+    );
+  }
+
+  void showAlertDialog(BuildContext context) {
+    // Create the AlertDialog
+    AlertDialog alert = AlertDialog(
+      content: const Text('Do you want to add Joint Holders'),
+      actions: [
+        // You can add buttons to the alert dialog
+        TextButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ScreenJointHolders(),
+              ),
+            );
+          },
+          child: Text(
+            'YES',
+            style: Theme.of(context).textTheme.labelLarge,
+          ),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const AddingNomineeAndGuadianScreen(),
+              ),
+            );
+            // Close the dialog
+          },
+          child: Text(
+            'NO',
+            style: Theme.of(context).textTheme.labelLarge,
+          ),
+        ),
+      ],
+    );
+
+    // Show the AlertDialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

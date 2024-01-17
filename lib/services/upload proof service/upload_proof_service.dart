@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
 import 'package:finfresh_mobile/utilities/urls/url.dart';
@@ -68,12 +69,15 @@ class UploadProofservice {
     }
   }
 
-  Future<bool> uploadBankProof(String image, String imageType, context) async {
+  Future<bool> uploadBankProof(String image, String imageType, String poaFlag,
+      String poaBankType, String bankCode, context) async {
     String url = '${ApiEndpoint.baseUrl}/api/v1/uploadimage';
 
     String token = await SecureStorage.readToken('token');
     String userId = await SecureStorage.readToken('userId');
     String customerId = await SecureStorage.readToken('customerId');
+
+    String bankAccNumber = await SecureStorage.readToken('bankAccNumber');
     log(image);
     log(imageType);
     log('token===$token');
@@ -83,11 +87,13 @@ class UploadProofservice {
       'ImageType': imageType,
       "CustomerID": customerId,
       "ImageFormat": 'pdf',
-      "BankCode": "HDFC",
-      "AccNo": "",
-      "POAFlag": "",
-      "POABankType": "",
+      "BankCode": bankCode,
+      "AccNo": bankAccNumber,
+      "POAFlag": poaFlag == "Please select POAFlag" ? '' : poaFlag,
+      "POABankType":
+          poaBankType == "Please select POABankType" ? '' : poaBankType,
     };
+    logger.d('body ==$body');
     try {
       final formData = await http.MultipartRequest('POST', Uri.parse(url));
       formData.headers.addAll({

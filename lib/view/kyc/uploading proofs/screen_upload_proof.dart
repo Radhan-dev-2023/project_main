@@ -1,6 +1,7 @@
 import 'package:finfresh_mobile/controller/uploading%20proofs/uploading_proof_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
+import 'package:finfresh_mobile/view/kyc/uploading%20proofs/widgets/for_bank_proof.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_button_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,6 +14,11 @@ class ScreenUploadinProofs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<UploadingProof>(context, listen: false).getBankCode();
+      // log('username is ${Provider.of<KycController>(context, listen: false).username}');
+    });
+
     Brightness brightness = MediaQuery.of(context).platformBrightness;
     return Consumer<UploadingProof>(
       builder: (context, uploadingproofController, child) {
@@ -74,6 +80,12 @@ class ScreenUploadinProofs extends StatelessWidget {
                         ),
                       ),
                     ),
+                    uploadingproofController.proofvalue == "Bank Proof"
+                        ? VerticalSpacer(3.h)
+                        : const SizedBox(),
+                    uploadingproofController.proofvalue == "Bank Proof"
+                        ? ForBankProof(brightness: brightness)
+                        : const SizedBox(),
                     uploadingproofController.proofvalue == "ACH Form"
                         ? VerticalSpacer(3.h)
                         : const SizedBox(),
@@ -147,7 +159,8 @@ class ScreenUploadinProofs extends StatelessWidget {
                                       ),
                               ),
                             ),
-                          )
+                          ),
+                    VerticalSpacer(15.h)
                   ],
                 ),
               ),
@@ -167,11 +180,12 @@ class ScreenUploadinProofs extends StatelessWidget {
                           .uploadBankProof(context);
                       if (result == true) {
                         // ignore: use_build_context_synchronously
-                        Navigator.push(
+                        Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
                             builder: (context) => const ScreenHomeView(),
                           ),
+                          (route) => false,
                         );
                       }
                     } else {
