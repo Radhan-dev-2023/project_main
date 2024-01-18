@@ -15,6 +15,7 @@ class ScreenBankAccountNumber extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final kycController = Provider.of<KycController>(context);
+    kycController.updatePagenumber('10');
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -62,6 +63,7 @@ class ScreenBankAccountNumber extends StatelessWidget {
         onTap: () {
           if (kycController.bankAccountnumberFormkey.currentState!.validate()) {
             kycController.addingbankAccNumber();
+            kycController.addbanknameAccountnumber();
             showAlertDialog(context);
           }
         },

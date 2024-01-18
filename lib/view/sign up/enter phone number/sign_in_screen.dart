@@ -98,7 +98,9 @@ class ScreenEnterPhoneNumber extends StatelessWidget {
                 log('phone numb ${kycController.phonenumber} ,emial=${kycController.email}');
                 if (authcontroller.formKeyForPhone.currentState!.validate()) {
                   bool result = await authcontroller.userRegister(context);
+
                   if (result == true) {
+                    authcontroller.addPhonenumber();
                     // ignore: use_build_context_synchronously
                     Navigator.of(context).push(
                       MaterialPageRoute(

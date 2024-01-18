@@ -79,7 +79,7 @@ class _ScreenNominee2State extends State<ScreenNominee2> {
   @override
   Widget build(BuildContext context) {
     final kycController = Provider.of<KycController>(context);
-
+    kycController.updatePagenumber('15');
     Brightness brightness = Theme.of(context).brightness;
 
     return Scaffold(
@@ -332,6 +332,8 @@ class _ScreenNominee2State extends State<ScreenNominee2> {
       floatingActionButton: ButtonWidget(
         onTap: () {
           Provider.of<KycController>(context, listen: false).nomineeChosse('Y');
+          Provider.of<KycController>(context, listen: false).addNominee();
+
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(

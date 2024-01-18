@@ -12,6 +12,7 @@ class ScreenAddingBank extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final kycController = Provider.of<KycController>(context);
+    kycController.updatePagenumber('9');
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -59,6 +60,8 @@ class ScreenAddingBank extends StatelessWidget {
       floatingActionButton: ButtonWidget(
         onTap: () {
           if (kycController.banknameFormkey.currentState!.validate()) {
+            kycController.updatePagenumber('10');
+            kycController.addbankname();
             Navigator.push(
               context,
               MaterialPageRoute(

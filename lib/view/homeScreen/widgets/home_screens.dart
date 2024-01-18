@@ -3,14 +3,20 @@ import 'dart:developer';
 import 'package:finfresh_mobile/controller/auth/auth_controller.dart';
 import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
+import 'package:finfresh_mobile/db/model/investors_data_model.dart';
+import 'package:finfresh_mobile/routes/routes.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
+import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
+import 'package:finfresh_mobile/view/kyc/occupation%20Screen/occupation_screen.dart';
 import 'package:finfresh_mobile/view/kyc/pancard/screen_pan_card.dart';
+import 'package:finfresh_mobile/view/kyc/tax%20status/screen_tax_status.dart';
 import 'package:finfresh_mobile/view/onboarding%20screen/on_boarding_view_screen.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/stock_detail_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -494,6 +500,7 @@ class AttensionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    InvestorModel investorModel = InvestorModel();
     final dashBoardController = Provider.of<DashBoardController>(context);
     return SizedBox(
       height: 20.h,
@@ -515,11 +522,7 @@ class AttensionWidget extends StatelessWidget {
           ButtonWidget(
             btName: 'Complete Setup',
             onTap: () {
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ScreenPanCard(),
-                  ));
+              Routes.dashboardToKycPage(context);
             },
           )
         ],

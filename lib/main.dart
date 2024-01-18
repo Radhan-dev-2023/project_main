@@ -4,6 +4,7 @@ import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart'
 import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_controller.dart';
 import 'package:finfresh_mobile/controller/pin%20controller/pin_controller.dart';
 import 'package:finfresh_mobile/controller/uploading%20proofs/uploading_proof_controller.dart';
+import 'package:finfresh_mobile/db/model/investors_data_model.dart';
 import 'package:finfresh_mobile/utilities/theme/theme.dart';
 import 'package:finfresh_mobile/view/kyc/Nominee%20adding/nominee%20type/screen_nominee_count.dart';
 import 'package:finfresh_mobile/view/kyc/Nominee%20adding/screen_nominee.dart';
@@ -25,10 +26,17 @@ import 'package:finfresh_mobile/view/sign%20up/enter%20phone%20number/sign_in_sc
 import 'package:finfresh_mobile/view/splash%20Screen/splash_screen.dart';
 import 'package:finfresh_mobile/view/kyc/user%20personal%20details/screen_personal_details.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  if (!Hive.isAdapterRegistered(InvestorModelAdapter().typeId)) {
+    Hive.registerAdapter(InvestorModelAdapter());
+  }
   runApp(const MyApp());
 }
 

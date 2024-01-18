@@ -13,6 +13,7 @@ class ScreenPersonalDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final kycController = Provider.of<KycController>(context, listen: false);
+    kycController.updatePagenumber('4');
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -98,6 +99,7 @@ class ScreenPersonalDetails extends StatelessWidget {
           if (kycController.investornameFormkey.currentState!.validate()) {
             SecureStorage.addToken(
                 'username', kycController.nameController.text);
+            kycController.addnameAndDOB();
             Navigator.push(
               context,
               MaterialPageRoute(

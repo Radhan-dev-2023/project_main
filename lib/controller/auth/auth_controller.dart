@@ -1,16 +1,21 @@
 import 'dart:developer';
 
+import 'package:finfresh_mobile/db/functions/db_functions.dart';
+import 'package:finfresh_mobile/db/model/investors_data_model.dart';
 import 'package:finfresh_mobile/services/auth%20services/user%20register/user_register_service.dart';
 import 'package:finfresh_mobile/services/auth%20services/verify%20otp%20service/verify_otp_service.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class AuthController extends ChangeNotifier {
   bool iscliked = false;
   bool loginClicked = false;
   bool otploading = false;
   bool otploadingforlogin = false;
+  DbFunctions dbFunctions = DbFunctions();
+
   UserRegisterService userRegisterService = UserRegisterService();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -98,5 +103,23 @@ class AuthController extends ChangeNotifier {
     phonenumberController.clear();
     phonenumberControllerforlogin.clear();
     otpController.clear();
+  }
+
+  void addEmail() {
+    InvestorModel investorModel = InvestorModel(email: emailController.text);
+
+    dbFunctions.addTodb(investorModel);
+  }
+
+  void addPhonenumber() async {
+    final investorDb = await Hive.openBox<InvestorModel>('investor_db');
+    final retrievedValue = investorDb.get('email');
+    log('mail ===${retrievedValue?.email}');
+    InvestorModel investorModel = InvestorModel(
+      email: retrievedValue?.email,
+      mobileNo: phonenumberController.text,
+    );
+
+    dbFunctions.addTodb(investorModel);
   }
 }

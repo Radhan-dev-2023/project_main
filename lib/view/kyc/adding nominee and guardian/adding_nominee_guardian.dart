@@ -18,6 +18,8 @@ class AddingNomineeAndGuadianScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final kycController = Provider.of<KycController>(context);
+    kycController.updatePagenumber('12');
+
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -106,7 +108,7 @@ class AddingNomineeAndGuadianScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: ButtonWidget(
         onTap: () async {
-          kycController.addingvaluetoModel();
+          await kycController.addingvaluetoModel();
           bool result = await kycController.createCustomer(context);
           log('result is $result');
           if (result == true) {

@@ -81,8 +81,7 @@ class _ScreenNominee3State extends State<ScreenNominee3> {
     final kycController = Provider.of<KycController>(context);
 
     Brightness brightness = Theme.of(context).brightness;
-    String typevalue = "select a type";
-    List<String> typeList = ["select a type", "Minor", "major"];
+    kycController.updatePagenumber('16');
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -292,6 +291,7 @@ class _ScreenNominee3State extends State<ScreenNominee3> {
       floatingActionButton: ButtonWidget(
         onTap: () {
           Provider.of<KycController>(context, listen: false).nomineeChosse('Y');
+          Provider.of<KycController>(context, listen: false).addNominee();
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(

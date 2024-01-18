@@ -12,6 +12,7 @@ class ScreenNriAdress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final kycController = Provider.of<KycController>(context);
+    kycController.updatePagenumber('6');
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -162,6 +163,7 @@ class ScreenNriAdress extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: ButtonWidget(
         onTap: () {
+          kycController.addnriAccount();
           Navigator.push(
             context,
             MaterialPageRoute(

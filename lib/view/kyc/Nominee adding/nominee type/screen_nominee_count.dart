@@ -14,6 +14,7 @@ class ScreenNomineeCount extends StatelessWidget {
   Widget build(BuildContext context) {
     final kycController = Provider.of<KycController>(context);
     Brightness brightness = MediaQuery.of(context).platformBrightness;
+    kycController.updatePagenumber('13');
     return WillPopScope(
       onWillPop: () async {
         Navigator.push(

@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:finfresh_mobile/db/functions/db_functions.dart';
+import 'package:finfresh_mobile/db/model/investors_data_model.dart';
 import 'package:finfresh_mobile/model/bank%20details%20model/bank_details_model.dart';
 import 'package:finfresh_mobile/model/investors%20details/investors_details_model.dart';
 import 'package:finfresh_mobile/model/tax%20status%20model/tax_status_model.dart';
@@ -11,6 +13,8 @@ import 'package:finfresh_mobile/services/kyc/tax_status_service.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:pinput/pinput.dart';
 
 class KycController extends ChangeNotifier {
   GetInnService getInnService = GetInnService();
@@ -21,6 +25,7 @@ class KycController extends ChangeNotifier {
   CreateCustomer createCustomerService = CreateCustomer();
   TaxStatusService taxStatusService = TaxStatusService();
   List<String> taxStatusDescList = [];
+  DbFunctions dbFunctions = DbFunctions();
   final GlobalKey<FormState> panformKey = GlobalKey<FormState>();
   final GlobalKey<FormState> banknameFormkey = GlobalKey<FormState>();
   final GlobalKey<FormState> bankAccountnumberFormkey = GlobalKey<FormState>();
@@ -102,10 +107,10 @@ class KycController extends ChangeNotifier {
   TextEditingController guardnameCotroller = TextEditingController();
   TextEditingController guardDOBController = TextEditingController();
   String phonenumber = '';
-  String email = '';
+  String? email;
   bool taxpageloading = false;
   MasterDetail? taxStatusValue;
-  String? taxcode = '';
+  String? taxcode;
   int? selectedIndex;
   String? selectedValue;
   String nomineeOption = 'N';
@@ -527,43 +532,113 @@ class KycController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addingvaluetoModel() {
-    investorDetails = InvestorDetails(
-      processMode: 'P',
-      title: '',
-      invName: nameController.text,
-      pan: panController.text,
-      validPan: 'Y',
-      exemption: 'N',
-      exemptCategory: 'N',
-      exemptRefNo: '',
-      dob: dobController.text,
-      holdNature: 'SI',
+  void updatePagenumber(String number) {
+    log('page number ==$number');
+    InvestorModel investorModel = InvestorModel(pageNumber: number);
+    dbFunctions.updatePagenumber(investorModel);
+  }
+
+  void addpancardnumber() async {
+    final investorDb = await Hive.openBox<InvestorModel>('investor_db');
+    final retrievedValue = investorDb.get('email');
+    log('phonenumber${retrievedValue?.mobileNo}email=${retrievedValue?.email}');
+    InvestorModel investorModel = InvestorModel(
+        email: retrievedValue?.email,
+        mobileNo: retrievedValue?.mobileNo,
+        pan: panController.text);
+    dbFunctions.addTodb(investorModel);
+  }
+
+  void addtaxstatus() async {
+    final investorDb = await Hive.openBox<InvestorModel>('investor_db');
+    final retrievedValue = investorDb.get('email');
+    InvestorModel investorModel = InvestorModel(
+      email: retrievedValue?.email,
+      mobileNo: retrievedValue?.mobileNo,
+      pan: retrievedValue?.pan,
       taxStatus: taxcode ?? '',
-      kyc: 'Y',
-      fhCkyc: '',
-      fhCkycRefNo: '',
+    );
+    dbFunctions.addTodb(investorModel);
+  }
+
+  void addOcupation() async {
+    final investorDb = await Hive.openBox<InvestorModel>('investor_db');
+    final retrievedValue = investorDb.get('email');
+    InvestorModel investorModel = InvestorModel(
+      email: retrievedValue?.email,
+      mobileNo: retrievedValue?.mobileNo,
+      pan: retrievedValue?.pan,
+      taxStatus: retrievedValue?.taxStatus,
       occupation: selectedValue ?? '',
-      mfuCan: '',
-      dpId: '',
-      fatherName: fatherNameController.text,
-      motherName: motherNameCotroller.text,
-      trxnAcceptance: '',
+    );
+    dbFunctions.addTodb(investorModel);
+  }
+
+  void addnameAndDOB() async {
+    final investorDb = await Hive.openBox<InvestorModel>('investor_db');
+    final retrievedValue = investorDb.get('email');
+    log('phonenumber${retrievedValue?.mobileNo}email=${retrievedValue?.email} pan${retrievedValue?.pan}');
+
+    InvestorModel investorModel = InvestorModel(
+      email: retrievedValue?.email,
+      mobileNo: retrievedValue?.mobileNo,
+      pan: retrievedValue?.pan,
+      taxStatus: retrievedValue?.taxStatus,
+      occupation: retrievedValue?.occupation,
+      invName: nameController.text,
+      dob: dobController.text,
+    );
+    dbFunctions.addTodb(investorModel);
+  }
+
+  void addAddress() async {
+    final investorDb = await Hive.openBox<InvestorModel>('investor_db');
+    final retrievedValue = investorDb.get('email');
+    InvestorModel investorModel = InvestorModel(
+      email: retrievedValue?.email,
+      mobileNo: retrievedValue?.mobileNo,
+      pan: retrievedValue?.pan,
+      taxStatus: retrievedValue?.taxStatus,
+      occupation: retrievedValue?.occupation,
+      invName: retrievedValue?.invName,
+      dob: retrievedValue?.dob,
       addr1: address1Controller.text,
       addr2: address2Controller.text,
       addr3: address3Controller.text,
       city: cityController.text,
       state: stateValue,
-      // state: 'TN',
-      pincode: pinCodeController.text,
       country: countryController.text,
-      // country: "IND",
-      mobileNo: phonenumber,
+      pincode: pinCodeController.text,
       resPhone: residencenumberController.text,
       offPhone: officenumberController.text,
       resFax: residencefaxController.text,
       offFax: officefaxController.text,
-      email: email,
+    );
+    dbFunctions.addTodb(investorModel);
+  }
+
+  void addnriAccount() async {
+    final investorDb = await Hive.openBox<InvestorModel>('investor_db');
+    final retrievedValue = investorDb.get('email');
+    InvestorModel investorModel = InvestorModel(
+      email: retrievedValue?.email,
+      mobileNo: retrievedValue?.mobileNo,
+      pan: retrievedValue?.pan,
+      taxStatus: retrievedValue?.taxStatus,
+      occupation: retrievedValue?.occupation,
+      invName: retrievedValue?.invName,
+      dob: retrievedValue?.dob,
+      addr1: retrievedValue?.addr1,
+      addr2: retrievedValue?.addr2,
+      addr3: retrievedValue?.addr3,
+      city: retrievedValue?.city,
+      state: retrievedValue?.state,
+      country: retrievedValue?.country,
+      pincode: retrievedValue?.pincode,
+      resPhone: retrievedValue?.resPhone,
+      offPhone: retrievedValue?.offPhone,
+      resFax: retrievedValue?.resFax,
+      offFax: retrievedValue?.offFax,
       nriAddr1: nriaddress1Controller.text,
       nriAddr2: nriaddress2Controller.text,
       nriAddr3: nriaddress3Controller.text,
@@ -571,41 +646,194 @@ class KycController extends ChangeNotifier {
       nriState: nriStateController.text,
       nriPincode: nriPincodeController.text,
       nriCountry: nriCountryController.text,
-      bankName: banknameController.text,
-      accNo: accountnumberCotroller.text,
-      accType: 'SB',
+    );
+    dbFunctions.addTodb(investorModel);
+  }
+
+  void addParentDetails() async {
+    final investorDb = await Hive.openBox<InvestorModel>('investor_db');
+    final retrievedValue = investorDb.get('email');
+    InvestorModel investorModel = InvestorModel(
+      email: retrievedValue?.email,
+      mobileNo: retrievedValue?.mobileNo,
+      pan: retrievedValue?.pan,
+      taxStatus: retrievedValue?.taxStatus,
+      occupation: retrievedValue?.occupation,
+      invName: retrievedValue?.invName,
+      dob: retrievedValue?.dob,
+      addr1: retrievedValue?.addr1,
+      addr2: retrievedValue?.addr2,
+      addr3: retrievedValue?.addr3,
+      city: retrievedValue?.city,
+      state: retrievedValue?.state,
+      country: retrievedValue?.country,
+      pincode: retrievedValue?.pincode,
+      resPhone: retrievedValue?.resPhone,
+      offPhone: retrievedValue?.offPhone,
+      resFax: retrievedValue?.resFax,
+      offFax: retrievedValue?.offFax,
+      nriAddr1: retrievedValue?.nriAddr1,
+      nriAddr2: retrievedValue?.nriAddr2,
+      nriAddr3: retrievedValue?.nriAddr3,
+      nriCity: retrievedValue?.nriCity,
+      nriState: retrievedValue?.nriState,
+      nriPincode: retrievedValue?.nriPincode,
+      nriCountry: retrievedValue?.nriCountry,
+      fatherName: fatherNameController.text,
+      motherName: motherNameCotroller.text,
+    );
+    dbFunctions.addTodb(investorModel);
+  }
+
+  void addIfsc() async {
+    final investorDb = await Hive.openBox<InvestorModel>('investor_db');
+    final retrievedValue = investorDb.get('email');
+    InvestorModel investorModel = InvestorModel(
+      email: retrievedValue?.email,
+      mobileNo: retrievedValue?.mobileNo,
+      pan: retrievedValue?.pan,
+      taxStatus: retrievedValue?.taxStatus,
+      occupation: retrievedValue?.occupation,
+      invName: retrievedValue?.invName,
+      dob: retrievedValue?.dob,
+      addr1: retrievedValue?.addr1,
+      addr2: retrievedValue?.addr2,
+      addr3: retrievedValue?.addr3,
+      city: retrievedValue?.city,
+      state: retrievedValue?.state,
+      country: retrievedValue?.country,
+      pincode: retrievedValue?.pincode,
+      resPhone: retrievedValue?.resPhone,
+      offPhone: retrievedValue?.offPhone,
+      resFax: retrievedValue?.resFax,
+      offFax: retrievedValue?.offFax,
+      nriAddr1: retrievedValue?.nriAddr1,
+      nriAddr2: retrievedValue?.nriAddr2,
+      nriAddr3: retrievedValue?.nriAddr3,
+      nriCity: retrievedValue?.nriCity,
+      nriState: retrievedValue?.nriState,
+      nriPincode: retrievedValue?.nriPincode,
+      nriCountry: retrievedValue?.nriCountry,
+      fatherName: retrievedValue?.fatherName,
+      motherName: retrievedValue?.motherName,
       ifscCode: ifscCodeController.text,
-      branchName: bankDeatilsModel?.bankDetails?.branch ?? '',
-      branchAddr1: "String",
-      branchAddr2: '',
-      branchAddr3: '',
-      branchCity: bankDeatilsModel?.bankDetails?.city ?? '',
-      branchPincode: '',
-      branchCountry: '',
-      jh1Name: jh1nameController.text,
-      jh1Pan: jh1panController.text,
+    );
+    dbFunctions.addTodb(investorModel);
+  }
+
+  void addbankname() async {
+    final investorDb = await Hive.openBox<InvestorModel>('investor_db');
+    final retrievedValue = investorDb.get('email');
+
+    InvestorModel investorModel = InvestorModel(
+      email: retrievedValue?.email,
+      mobileNo: retrievedValue?.mobileNo,
+      pan: retrievedValue?.pan,
+      taxStatus: retrievedValue?.taxStatus,
+      occupation: retrievedValue?.occupation,
+      invName: retrievedValue?.invName,
+      dob: retrievedValue?.dob,
+      addr1: retrievedValue?.addr1,
+      addr2: retrievedValue?.addr2,
+      addr3: retrievedValue?.addr3,
+      city: retrievedValue?.city,
+      state: retrievedValue?.state,
+      country: retrievedValue?.country,
+      pincode: retrievedValue?.pincode,
+      resPhone: retrievedValue?.resPhone,
+      offPhone: retrievedValue?.offPhone,
+      resFax: retrievedValue?.resFax,
+      offFax: retrievedValue?.offFax,
+      nriAddr1: retrievedValue?.nriAddr1,
+      nriAddr2: retrievedValue?.nriAddr2,
+      nriAddr3: retrievedValue?.nriAddr3,
+      nriCity: retrievedValue?.nriCity,
+      nriState: retrievedValue?.nriState,
+      nriPincode: retrievedValue?.nriPincode,
+      nriCountry: retrievedValue?.nriCountry,
+      fatherName: retrievedValue?.fatherName,
+      motherName: retrievedValue?.motherName,
+      ifscCode: retrievedValue?.ifscCode,
+      bankName: banknameController.text,
+    );
+    dbFunctions.addTodb(investorModel);
+  }
+
+  void addNominee() async {
+    final investorDb = await Hive.openBox<InvestorModel>('investor_db');
+    final retrievedValue = investorDb.get('email');
+    InvestorModel investorModel = InvestorModel(
+      email: retrievedValue?.email,
+      mobileNo: retrievedValue?.mobileNo,
+      pan: retrievedValue?.pan,
+      taxStatus: retrievedValue?.taxStatus,
+      occupation: retrievedValue?.occupation,
+      invName: retrievedValue?.invName,
+      dob: retrievedValue?.dob,
+      addr1: retrievedValue?.addr1,
+      addr2: retrievedValue?.addr2,
+      addr3: retrievedValue?.addr3,
+      city: retrievedValue?.city,
+      state: retrievedValue?.state,
+      country: retrievedValue?.country,
+      pincode: retrievedValue?.pincode,
+      resPhone: retrievedValue?.resPhone,
+      offPhone: retrievedValue?.offPhone,
+      resFax: retrievedValue?.resFax,
+      offFax: retrievedValue?.offFax,
+      nriAddr1: retrievedValue?.nriAddr1,
+      nriAddr2: retrievedValue?.nriAddr2,
+      nriAddr3: retrievedValue?.nriAddr3,
+      nriCity: retrievedValue?.nriCity,
+      nriState: retrievedValue?.nriState,
+      nriPincode: retrievedValue?.nriPincode,
+      nriCountry: retrievedValue?.nriCountry,
+      fatherName: retrievedValue?.fatherName,
+      motherName: retrievedValue?.motherName,
+      ifscCode: retrievedValue?.ifscCode,
+      bankName: retrievedValue?.bankName,
+      accNo: retrievedValue?.accNo,
+      jh1Name: retrievedValue?.jh1Name,
+      jh1Pan: retrievedValue?.jh2Name,
       jh1ValidPan: '',
       jh1Exemption: '',
       jh1ExemptCategory: '',
       jh1ExemptRefNo: '',
-      jh1Dob: jh1DOBController.text,
+      jh1Dob: retrievedValue?.jh1Dob,
       jh1Kyc: '',
       jh1Ckyc: '',
       jh1CkycRefNo: '',
-      jh1Email: jh1emailController.text,
-      jh1MobileNo: jh1phoneNumberCotroller.text,
-      jh2Name: jh2nameController.text,
-      jh2Pan: jh2panController.text,
+      jh1Email: retrievedValue?.jh1Email,
+      jh1MobileNo: retrievedValue?.jh1MobileNo,
+      jh1MobileRelation: retrievedValue?.mobileRelation,
+      jh1EmailRelation: retrievedValue?.emailRelation,
+      jh2Name: retrievedValue?.jh2Name,
+      jh2Pan: retrievedValue?.jh2Pan,
       jh2ValidPan: '',
       jh2Exemption: '',
       jh2ExemptCategory: '',
       jh2ExemptRefNo: '',
-      jh2Dob: jh2DOBController.text,
+      jh2Dob: retrievedValue?.jh2Dob,
       jh2Kyc: '',
       jh2Ckyc: '',
       jh2CkycRefNo: '',
-      jh2Email: jh2emailController.text,
-      jh2MobileNo: jh2phoneNumberCotroller.text,
+      jh2Email: retrievedValue?.jh2Email,
+      jh2MobileNo: retrievedValue?.jh2MobileNo,
+      jh2MobileRelation: retrievedValue?.jh2MobileRelation,
+      jh2EmailRelation: retrievedValue?.jh2EmailRelation,
+      guardianRelation: retrievedValue?.guardianRelation,
+      mobileRelation: retrievedValue?.mobileRelation,
+      emailRelation: retrievedValue?.emailRelation,
+      guardName: retrievedValue?.guardName,
+      guardPan: retrievedValue?.guardPan,
+      guardValidPan: '',
+      guardExemption: '',
+      guardExemptCategory: '',
+      guardPanRefNo: '',
+      guardDob: retrievedValue?.guardDob,
+      guardKyc: '',
+      guardCkyc: '',
+      guardCkycRefNo: '',
       noOfNominee: countvalue == "select Nominee count" ? '' : countvalue,
       nominee1Type: typevalue == 'select a type ' ? '' : typevalue,
       nominee1Name: nominee1nameController.text,
@@ -643,6 +871,124 @@ class KycController extends ChangeNotifier {
       nominee3Percent: '',
       nominee3GuardName: nominee3gurdnameCotroller.text,
       nominee3GuardPan: nominee3guardpanController.text,
+      nom1Pan: nominee1panCotroller.text,
+      nom2Pan: nominee2panCotroller.text,
+      nom3Pan: nominee3panCotroller.text,
+      nom1GuardianRelation: nom1guardrelationtobackend,
+      nom2GuardianRelation: nom2guardrelationtobackend,
+      nom3GuardianRelation: nom3guardrelationtobackend,
+    );
+    dbFunctions.addTodb(investorModel);
+  }
+
+  void addGuardian() async {
+    final investorDb = await Hive.openBox<InvestorModel>('investor_db');
+    final retrievedValue = investorDb.get('email');
+    InvestorModel investorModel = InvestorModel(
+      email: retrievedValue?.email,
+      mobileNo: retrievedValue?.mobileNo,
+      pan: retrievedValue?.pan,
+      taxStatus: retrievedValue?.taxStatus,
+      occupation: retrievedValue?.occupation,
+      invName: retrievedValue?.invName,
+      dob: retrievedValue?.dob,
+      addr1: retrievedValue?.addr1,
+      addr2: retrievedValue?.addr2,
+      addr3: retrievedValue?.addr3,
+      city: retrievedValue?.city,
+      state: retrievedValue?.state,
+      country: retrievedValue?.country,
+      pincode: retrievedValue?.pincode,
+      resPhone: retrievedValue?.resPhone,
+      offPhone: retrievedValue?.offPhone,
+      resFax: retrievedValue?.resFax,
+      offFax: retrievedValue?.offFax,
+      nriAddr1: retrievedValue?.nriAddr1,
+      nriAddr2: retrievedValue?.nriAddr2,
+      nriAddr3: retrievedValue?.nriAddr3,
+      nriCity: retrievedValue?.nriCity,
+      nriState: retrievedValue?.nriState,
+      nriPincode: retrievedValue?.nriPincode,
+      nriCountry: retrievedValue?.nriCountry,
+      fatherName: retrievedValue?.fatherName,
+      motherName: retrievedValue?.motherName,
+      ifscCode: retrievedValue?.ifscCode,
+      bankName: retrievedValue?.bankName,
+      accNo: retrievedValue?.accNo,
+      jh1Name: retrievedValue?.jh1Name,
+      jh1Pan: retrievedValue?.jh2Name,
+      jh1ValidPan: '',
+      jh1Exemption: '',
+      jh1ExemptCategory: '',
+      jh1ExemptRefNo: '',
+      jh1Dob: retrievedValue?.jh1Dob,
+      jh1Kyc: '',
+      jh1Ckyc: '',
+      jh1CkycRefNo: '',
+      jh1Email: retrievedValue?.jh1Email,
+      jh1MobileNo: retrievedValue?.jh1MobileNo,
+      jh1MobileRelation: retrievedValue?.mobileRelation,
+      jh1EmailRelation: retrievedValue?.emailRelation,
+      jh2Name: retrievedValue?.jh2Name,
+      jh2Pan: retrievedValue?.jh2Pan,
+      jh2ValidPan: '',
+      jh2Exemption: '',
+      jh2ExemptCategory: '',
+      jh2ExemptRefNo: '',
+      jh2Dob: retrievedValue?.jh2Dob,
+      jh2Kyc: '',
+      jh2Ckyc: '',
+      jh2CkycRefNo: '',
+      jh2Email: retrievedValue?.jh2Email,
+      jh2MobileNo: retrievedValue?.jh2MobileNo,
+      jh2MobileRelation: retrievedValue?.jh2MobileRelation,
+      jh2EmailRelation: retrievedValue?.jh2EmailRelation,
+      noOfNominee: retrievedValue?.noOfNominee,
+      nominee1Type: retrievedValue?.nominee1Type,
+      nominee1Name: retrievedValue?.nominee1Name,
+      nominee1Dob: retrievedValue?.nominee1Dob,
+      nominee1Addr1: retrievedValue?.nominee1Addr1,
+      nominee1Addr2: retrievedValue?.nominee1Addr2,
+      nominee1Addr3: retrievedValue?.nominee1Addr3,
+      nominee1City: retrievedValue?.nominee1City,
+      nominee1State: retrievedValue?.nominee1State,
+      nominee1Pincode: retrievedValue?.nominee1Pincode,
+      nominee1Relation: '',
+      // selectRelationValue == 'Select relation' ? '' : selectRelationValue,
+      nominee1Percent: '',
+      nominee1GuardName: retrievedValue?.nominee1GuardName,
+      nominee1GuardPan: retrievedValue?.nominee1GuardPan,
+      nominee2Type: '',
+      // typevalueNominee2 == 'select a type ' ? '' : typevalueNominee2,
+      nominee2Name: retrievedValue?.nominee2Name,
+      nominee2Dob: retrievedValue?.nominee2Dob,
+      nominee2Relation: '',
+      // nominee2Relation: selectRelationValueNominne2 == 'Select relation'
+      //     ? ''
+      //     : selectRelationValueNominne2,
+      nominee2Percent: '',
+      nominee2GuardName: retrievedValue?.nominee2GuardName,
+      nominee2GuardPan: retrievedValue?.nominee2GuardPan,
+      nominee3Type: '',
+      // typevalueNominee3 == 'select a type ' ? '' : typevalueNominee3,
+      nominee3Name: retrievedValue?.nominee3Name,
+      nominee3Dob: retrievedValue?.nominee3Dob,
+      nominee3Relation: '',
+      // nominee3Relation: selectRelationValueNominne3 == 'Select relation'
+      //     ? ''
+      //     : selectRelationValueNominne3,
+      nominee3Percent: '',
+      nominee3GuardName: retrievedValue?.nominee3GuardName,
+      nominee3GuardPan: retrievedValue?.nominee3GuardPan,
+      nom1Pan: retrievedValue?.nom1Pan,
+      nom2Pan: retrievedValue?.nom2Pan,
+      nom3Pan: retrievedValue?.nom3Pan,
+      nom1GuardianRelation: retrievedValue?.nom1GuardianRelation,
+      nom2GuardianRelation: retrievedValue?.nom2GuardianRelation,
+      nom3GuardianRelation: retrievedValue?.nom3GuardianRelation,
+      guardianRelation: gudianvalueToBackend,
+      mobileRelation: mobilerelationtobackend,
+      emailRelation: guardEmailrelationTobacked,
       guardName: guardnameCotroller.text,
       guardPan: guardpanController.text,
       guardValidPan: '',
@@ -653,23 +999,408 @@ class KycController extends ChangeNotifier {
       guardKyc: '',
       guardCkyc: '',
       guardCkycRefNo: '',
+    );
+    dbFunctions.addTodb(investorModel);
+  }
+
+  void addbanknameAccountnumber() async {
+    final investorDb = await Hive.openBox<InvestorModel>('investor_db');
+    final retrievedValue = investorDb.get('email');
+    InvestorModel investorModel = InvestorModel(
+      email: retrievedValue?.email,
+      mobileNo: retrievedValue?.mobileNo,
+      pan: retrievedValue?.pan,
+      taxStatus: retrievedValue?.taxStatus,
+      occupation: retrievedValue?.occupation,
+      invName: retrievedValue?.invName,
+      dob: retrievedValue?.dob,
+      addr1: retrievedValue?.addr1,
+      addr2: retrievedValue?.addr2,
+      addr3: retrievedValue?.addr3,
+      city: retrievedValue?.city,
+      state: retrievedValue?.state,
+      country: retrievedValue?.country,
+      pincode: retrievedValue?.pincode,
+      resPhone: retrievedValue?.resPhone,
+      offPhone: retrievedValue?.offPhone,
+      resFax: retrievedValue?.resFax,
+      offFax: retrievedValue?.offFax,
+      nriAddr1: retrievedValue?.nriAddr1,
+      nriAddr2: retrievedValue?.nriAddr2,
+      nriAddr3: retrievedValue?.nriAddr3,
+      nriCity: retrievedValue?.nriCity,
+      nriState: retrievedValue?.nriState,
+      nriPincode: retrievedValue?.nriPincode,
+      nriCountry: retrievedValue?.nriCountry,
+      fatherName: retrievedValue?.fatherName,
+      motherName: retrievedValue?.motherName,
+      ifscCode: retrievedValue?.ifscCode,
+      bankName: retrievedValue?.bankName,
+      accNo: accountnumberCotroller.text,
+    );
+    dbFunctions.addTodb(investorModel);
+  }
+
+  void addJointholder1() async {
+    final investorDb = await Hive.openBox<InvestorModel>('investor_db');
+    final retrievedValue = investorDb.get('email');
+    InvestorModel investorModel = InvestorModel(
+      email: retrievedValue?.email,
+      mobileNo: retrievedValue?.mobileNo,
+      pan: retrievedValue?.pan,
+      taxStatus: retrievedValue?.taxStatus,
+      occupation: retrievedValue?.occupation,
+      invName: retrievedValue?.invName,
+      dob: retrievedValue?.dob,
+      addr1: retrievedValue?.addr1,
+      addr2: retrievedValue?.addr2,
+      addr3: retrievedValue?.addr3,
+      city: retrievedValue?.city,
+      state: retrievedValue?.state,
+      country: retrievedValue?.country,
+      pincode: retrievedValue?.pincode,
+      resPhone: retrievedValue?.resPhone,
+      offPhone: retrievedValue?.offPhone,
+      resFax: retrievedValue?.resFax,
+      offFax: retrievedValue?.offFax,
+      nriAddr1: retrievedValue?.nriAddr1,
+      nriAddr2: retrievedValue?.nriAddr2,
+      nriAddr3: retrievedValue?.nriAddr3,
+      nriCity: retrievedValue?.nriCity,
+      nriState: retrievedValue?.nriState,
+      nriPincode: retrievedValue?.nriPincode,
+      nriCountry: retrievedValue?.nriCountry,
+      fatherName: retrievedValue?.fatherName,
+      motherName: retrievedValue?.motherName,
+      ifscCode: retrievedValue?.ifscCode,
+      bankName: retrievedValue?.bankName,
+      accNo: retrievedValue?.accNo,
+      jh1Name: jh1nameController.text,
+      jh1Pan: jh1panController.text,
+      jh1ValidPan: '',
+      jh1Exemption: '',
+      jh1ExemptCategory: '',
+      jh1ExemptRefNo: '',
+      jh1Dob: jh1DOBController.text,
+      jh1Kyc: '',
+      jh1Ckyc: '',
+      jh1CkycRefNo: '',
+      jh1Email: jh1emailController.text,
+      jh1MobileNo: jh1phoneNumberCotroller.text,
+      jh1MobileRelation: jh1MobileRelationtoBckend,
+      jh1EmailRelation: jh1EmailRelationtoBckend,
+      jh2Name: jh2nameController.text,
+      jh2Pan: jh2panController.text,
+      jh2ValidPan: '',
+      jh2Exemption: '',
+      jh2ExemptCategory: '',
+      jh2ExemptRefNo: '',
+      jh2Dob: jh2DOBController.text,
+      jh2Kyc: '',
+      jh2Ckyc: '',
+      jh2CkycRefNo: '',
+      jh2Email: jh2emailController.text,
+      jh2MobileNo: jh2phoneNumberCotroller.text,
+      jh2MobileRelation: jh2MobileRelationtoBckend,
+      jh2EmailRelation: jh2EmailRelationtoBckend,
+    );
+    dbFunctions.addTodb(investorModel);
+  }
+
+  void addbanknameToController() async {
+    final investorDb = await Hive.openBox<InvestorModel>('investor_db');
+    final retrievedValue = investorDb.get('bankName');
+    banknameController.text = retrievedValue!.bankName ?? '';
+  }
+
+  Future<void> addingvaluetoModel() async {
+    // email = email == null ? investorDb.values.toList()[0].email : email;
+    final investorDb = await Hive.openBox<InvestorModel>('investor_db');
+    final retrievedValue = investorDb.get('email');
+    log('retreieve vslure===${retrievedValue?.mobileNo} email${retrievedValue?.email}');
+    investorDetails = InvestorDetails(
+      processMode: 'D',
+      title: '',
+      invName: nameController.text.isEmpty
+          ? retrievedValue?.invName
+          : nameController.text,
+      pan:
+          panController.text.isEmpty ? retrievedValue?.pan : panController.text,
+      validPan: 'Y',
+      exemption: 'N',
+      exemptCategory: 'N',
+      exemptRefNo: '',
+      dob:
+          dobController.text.isEmpty ? retrievedValue?.dob : dobController.text,
+      holdNature: 'SI',
+      taxStatus: taxcode!.isEmpty ? retrievedValue?.taxStatus : taxcode,
+      kyc: 'Y',
+      fhCkyc: '',
+      fhCkycRefNo: '',
+      occupation: selectedValue ?? retrievedValue?.occupation,
+      mfuCan: '',
+      dpId: '',
+      fatherName: fatherNameController.text.isEmpty
+          ? retrievedValue?.fatherName
+          : fatherNameController.text,
+      motherName: motherNameCotroller.text.isEmpty
+          ? retrievedValue?.motherName
+          : motherNameCotroller.text,
+      trxnAcceptance: '',
+      addr1: address1Controller.text.isEmpty
+          ? retrievedValue?.addr1
+          : address1Controller.text,
+      addr2: address2Controller.text.isEmpty
+          ? retrievedValue?.addr2
+          : address2Controller.text,
+      addr3: address3Controller.text.isEmpty
+          ? retrievedValue?.addr3
+          : address3Controller.text,
+      city: cityController.text.isEmpty
+          ? retrievedValue?.city
+          : cityController.text,
+      state: stateValue == 'State' ? retrievedValue?.state : stateValue,
+      // state: 'TN',
+      pincode: pinCodeController.text.isEmpty
+          ? retrievedValue?.pincode
+          : pinCodeController.text,
+      country: countryController.text.isEmpty
+          ? retrievedValue?.country
+          : countryController.text,
+      // country: "IND",
+      mobileNo: retrievedValue?.mobileNo,
+      resPhone: residencenumberController.text.isEmpty
+          ? retrievedValue?.resPhone
+          : residencenumberController.text,
+      offPhone: officenumberController.text.isEmpty
+          ? retrievedValue?.offPhone
+          : officenumberController.text,
+      resFax: residencefaxController.text.isEmpty
+          ? retrievedValue?.resFax
+          : residencefaxController.text,
+      offFax: officefaxController.text.isEmpty
+          ? retrievedValue?.offFax
+          : officefaxController.text,
+      email: retrievedValue?.email,
+      nriAddr1: nriaddress1Controller.text.isEmpty
+          ? retrievedValue?.nriAddr1
+          : nriaddress1Controller.text,
+      nriAddr2: nriaddress2Controller.text.isEmpty
+          ? retrievedValue?.nriAddr2
+          : nriaddress2Controller.text,
+      nriAddr3: nriaddress3Controller.text.isEmpty
+          ? retrievedValue?.nriAddr3
+          : nriaddress2Controller.text,
+      nriCity: nriCityController.text.isEmpty
+          ? retrievedValue?.nriCity
+          : nricityController.text,
+      nriState: nriStateController.text.isEmpty
+          ? retrievedValue?.nriState
+          : nriStateController.text,
+      nriPincode: nriPincodeController.text.isEmpty
+          ? retrievedValue?.nriPincode
+          : nriPincodeController.text,
+      nriCountry: nriCountryController.text.isEmpty
+          ? retrievedValue?.nriCountry
+          : nriCountryController.text,
+      bankName: banknameController.text.isEmpty
+          ? retrievedValue?.bankName
+          : banknameController.text,
+      accNo: accountnumberCotroller.text.isEmpty
+          ? retrievedValue?.accNo
+          : accountnumberCotroller.text,
+      accType: 'SB',
+      ifscCode: ifscCodeController.text.isEmpty
+          ? retrievedValue?.ifscCode
+          : ifscCodeController.text,
+      branchName: bankDeatilsModel?.bankDetails?.branch ?? '',
+      branchAddr1: "String",
+      branchAddr2: '',
+      branchAddr3: '',
+      branchCity: bankDeatilsModel?.bankDetails?.city ?? '',
+      branchPincode: '',
+      branchCountry: '',
+      jh1Name: jh1nameController.text.isEmpty
+          ? retrievedValue?.jh1Name
+          : jh1nameController.text,
+      jh1Pan: jh1panController.text.isEmpty
+          ? retrievedValue?.jh1Pan
+          : jh1panController.text,
+      jh1ValidPan: '',
+      jh1Exemption: '',
+      jh1ExemptCategory: '',
+      jh1ExemptRefNo: '',
+      jh1Dob: jh1DOBController.text.isEmpty
+          ? retrievedValue?.jh1Dob
+          : jh1DOBController.text,
+      jh1Kyc: '',
+      jh1Ckyc: '',
+      jh1CkycRefNo: '',
+      jh1Email: jh1emailController.text.isEmpty
+          ? retrievedValue?.jh1Email
+          : jh1emailController.text,
+      jh1MobileNo: jh1phoneNumberCotroller.text.isEmpty
+          ? retrievedValue?.jh1MobileNo
+          : jh1phoneNumberCotroller.text,
+      jh2Name: jh2nameController.text.isEmpty
+          ? retrievedValue?.jh2Name
+          : jh2nameController.text,
+      jh2Pan: jh2panController.text.isEmpty
+          ? retrievedValue?.jh2Pan
+          : jh2panController.text,
+      jh2ValidPan: '',
+      jh2Exemption: '',
+      jh2ExemptCategory: '',
+      jh2ExemptRefNo: '',
+      jh2Dob: jh2DOBController.text.isEmpty
+          ? retrievedValue?.jh2Dob
+          : jh2DOBController.text,
+      jh2Kyc: '',
+      jh2Ckyc: '',
+      jh2CkycRefNo: '',
+      jh2Email: jh2emailController.text.isEmpty
+          ? retrievedValue?.jh2Email
+          : jh2emailController.text,
+      jh2MobileNo: jh2phoneNumberCotroller.text.isEmpty
+          ? retrievedValue?.jh2MobileNo
+          : jh2phoneNumberCotroller.text,
+      noOfNominee: countvalue == "select Nominee count"
+          ? retrievedValue?.noOfNominee
+          : countvalue,
+      nominee1Type: typevalue == 'select a type '
+          ? retrievedValue?.nominee1Type
+          : typevalue,
+      nominee1Name: nominee1nameController.text.isEmpty
+          ? retrievedValue?.nominee1Name
+          : nominee1nameController.text,
+      nominee1Dob: nominee1DOBController.text.isEmpty
+          ? retrievedValue?.nominee1Dob
+          : nominee1DOBController.text,
+      nominee1Addr1: nominee1address1Controller.text.isEmpty
+          ? retrievedValue?.nominee1Addr1
+          : nominee1address1Controller.text,
+      nominee1Addr2: nominee1address2Controller.text.isEmpty
+          ? retrievedValue?.nominee1Addr2
+          : nominee1address2Controller.text,
+      nominee1Addr3: nominee1address3Controller.text.isEmpty
+          ? retrievedValue?.nominee1Addr3
+          : nominee1address3Controller.text,
+      nominee1City: nominee1cityController.text.isEmpty
+          ? retrievedValue?.nominee1City
+          : nominee1cityController.text,
+      nominee1State: nominee1stateValue == 'State'
+          ? retrievedValue?.nominee1State
+          : nominee1stateValue,
+      nominee1Pincode: nominee1pincodeController.text.isEmpty
+          ? retrievedValue?.nominee1Pincode
+          : nominee1pincodeController.text,
+      nominee1Relation: '',
+      // selectRelationValue == 'Select relation' ? '' : selectRelationValue,
+      nominee1Percent: '',
+      nominee1GuardName: nominee1gurdnameCotroller.text.isEmpty
+          ? retrievedValue?.nominee1GuardName
+          : nominee1gurdnameCotroller.text,
+      nominee1GuardPan: nominee1guardpanController.text.isEmpty
+          ? retrievedValue?.nominee1GuardPan
+          : nominee1guardpanController.text,
+      nominee2Type: '',
+      // typevalueNominee2 == 'select a type ' ? '' : typevalueNominee2,
+      nominee2Name: nominee2nameController.text.isEmpty
+          ? retrievedValue?.nominee2Name
+          : nominee2nameController.text,
+      nominee2Dob: nominee2DOBController.text.isEmpty
+          ? retrievedValue?.nominee2Dob
+          : nominee2DOBController.text,
+      nominee2Relation: '',
+      // nominee2Relation: selectRelationValueNominne2 == 'Select relation'
+      //     ? ''
+      //     : selectRelationValueNominne2,
+      nominee2Percent: '',
+      nominee2GuardName: nominee2gurdnameCotroller.text.isEmpty
+          ? retrievedValue?.nominee2GuardName
+          : nominee2gurdnameCotroller.text,
+      nominee2GuardPan: nominee2guardpanController.text.isEmpty
+          ? retrievedValue?.nominee2GuardPan
+          : nominee2guardpanController.text,
+      nominee3Type: '',
+      // typevalueNominee3 == 'select a type ' ? '' : typevalueNominee3,
+      nominee3Name: nominee3nameController.text.isEmpty
+          ? retrievedValue?.nominee3Name
+          : nominee3nameController.text,
+      nominee3Dob: nominee3DOBController.text.isEmpty
+          ? retrievedValue?.nominee3Dob
+          : nominee3DOBController.text,
+      nominee3Relation: '',
+      // nominee3Relation: selectRelationValueNominne3 == 'Select relation'
+      //     ? ''
+      //     : selectRelationValueNominne3,
+      nominee3Percent: '',
+      nominee3GuardName: nominee3gurdnameCotroller.text.isEmpty
+          ? retrievedValue?.nominee3GuardName
+          : nominee3gurdnameCotroller.text,
+      nominee3GuardPan: nominee3guardpanController.text.isEmpty
+          ? retrievedValue?.nominee3GuardPan
+          : nominee3guardpanController.text,
+      guardName: guardnameCotroller.text.isEmpty
+          ? retrievedValue?.guardName
+          : guardnameCotroller.text,
+      guardPan: guardpanController.text.isEmpty
+          ? retrievedValue?.guardPan
+          : guardpanController.text,
+      guardValidPan: '',
+      guardExemption: '',
+      guardExemptCategory: '',
+      guardPanRefNo: '',
+      guardDob: guardDOBController.text.isEmpty
+          ? retrievedValue?.guardDob
+          : guardDOBController.text,
+      guardKyc: '',
+      guardCkyc: '',
+      guardCkycRefNo: '',
       micrNo: '',
       fdFlag: '',
       appKey: '',
-      guardianRelation: gudianvalueToBackend,
-      mobileRelation: mobilerelationtobackend,
-      emailRelation: guardEmailrelationTobacked,
-      nom1Pan: nominee1panCotroller.text,
-      nom2Pan: nominee2panCotroller.text,
-      nom3Pan: nominee3panCotroller.text,
-      nomineeOpted: nomineeOption,
-      jh1MobileRelation: jh1MobileRelationtoBckend,
-      jh1EmailRelation: jh1EmailRelationtoBckend,
-      jh2MobileRelation: jh2MobileRelationtoBckend,
-      jh2EmailRelation: jh2EmailRelationtoBckend,
-      nom1GuardianRelation: nom1guardrelationtobackend,
-      nom2GuardianRelation: nom2guardrelationtobackend,
-      nom3GuardianRelation: nom3guardrelationtobackend,
+      guardianRelation: gudianvalueToBackend.isEmpty
+          ? retrievedValue?.guardianRelation
+          : gudianvalueToBackend,
+      mobileRelation: mobilerelationtobackend.isEmpty
+          ? retrievedValue?.mobileRelation
+          : mobilerelationtobackend,
+      emailRelation: guardEmailrelationTobacked.isEmpty
+          ? retrievedValue?.emailRelation
+          : guardEmailrelationTobacked,
+      nom1Pan: nominee1panCotroller.text.isEmpty
+          ? retrievedValue?.nom1Pan
+          : nominee1panCotroller.text,
+      nom2Pan: nominee2panCotroller.text.isEmpty
+          ? retrievedValue?.nom1Pan
+          : nominee2panCotroller.text,
+      nom3Pan: nominee3panCotroller.text.isEmpty
+          ? retrievedValue?.nom3Pan
+          : nominee3panCotroller.text,
+      nomineeOpted:
+          nomineeOption.isEmpty ? retrievedValue?.nomineeOpted : nomineeOption,
+      jh1MobileRelation: jh1MobileRelationtoBckend.isEmpty
+          ? retrievedValue?.jh1MobileRelation
+          : jh1MobileRelationtoBckend,
+      jh1EmailRelation: jh1EmailRelationtoBckend.isEmpty
+          ? retrievedValue?.jh1EmailRelation
+          : jh1EmailRelationtoBckend,
+      jh2MobileRelation: jh2MobileRelationtoBckend.isEmpty
+          ? retrievedValue?.jh2MobileRelation
+          : jh2MobileRelationtoBckend,
+      jh2EmailRelation: jh2EmailRelationtoBckend.isEmpty
+          ? retrievedValue?.jh2EmailRelation
+          : jh2EmailRelationtoBckend,
+      nom1GuardianRelation: nom1guardrelationtobackend.isEmpty
+          ? retrievedValue?.nom1GuardianRelation
+          : nom1guardrelationtobackend,
+      nom2GuardianRelation: nom2guardrelationtobackend.isEmpty
+          ? retrievedValue?.nom2GuardianRelation
+          : nom2guardrelationtobackend,
+      nom3GuardianRelation: nom3guardrelationtobackend.isEmpty
+          ? retrievedValue?.nom2GuardianRelation
+          : nom3guardrelationtobackend,
     );
     logger.d('model vluee ==${investorDetails.toJson()}');
     notifyListeners();

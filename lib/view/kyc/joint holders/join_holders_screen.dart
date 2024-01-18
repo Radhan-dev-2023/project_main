@@ -13,6 +13,7 @@ class ScreenJointHolders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final kycController = Provider.of<KycController>(context);
+    kycController.updatePagenumber('11');
     Brightness brightness = Theme.of(context).brightness;
     return Scaffold(
       body: SafeArea(
@@ -238,6 +239,7 @@ class ScreenJointHolders extends StatelessWidget {
         btName: 'Continue'.toUpperCase(),
         onTap: () {
           if (kycController.jh1Formkey.currentState!.validate()) {
+            kycController.addJointholder1();
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(

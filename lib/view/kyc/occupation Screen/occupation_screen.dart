@@ -11,6 +11,7 @@ class ScreenOccupation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<KycController>(context, listen: false).updatePagenumber('3');
     Brightness brightness = Theme.of(context).brightness;
     return Consumer<KycController>(builder: (context, kycController, child) {
       return Scaffold(
@@ -79,6 +80,7 @@ class ScreenOccupation extends StatelessWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: ButtonWidget(
           onTap: () {
+            kycController.addOcupation();
             Navigator.push(
               context,
               MaterialPageRoute(

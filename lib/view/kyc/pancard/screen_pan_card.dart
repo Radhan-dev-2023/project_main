@@ -14,6 +14,7 @@ class ScreenPanCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<KycController>(context, listen: false).updatePagenumber('1');
     return Consumer<KycController>(builder: (context, kycController, child) {
       return Scaffold(
         body: SafeArea(
@@ -86,6 +87,8 @@ class ScreenPanCard extends StatelessWidget {
         floatingActionButton: ButtonWidget(
           onTap: () async {
             if (kycController.panformKey.currentState!.validate()) {
+              kycController.addpancardnumber();
+              kycController.updatePagenumber('2');
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return const ScreenTaxStatus();
               }));

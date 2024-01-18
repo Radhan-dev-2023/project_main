@@ -216,6 +216,7 @@ class Jh2Screen extends StatelessWidget {
         btName: 'Continue'.toUpperCase(),
         onTap: () {
           if (kycController.jh2Formkey.currentState!.validate()) {
+            kycController.addJointholder1();
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(

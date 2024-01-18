@@ -1,7 +1,6 @@
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/kyc/adding%20bank/ifsc%20adding/enter_ifsc_code.dart';
-import 'package:finfresh_mobile/view/kyc/adding%20bank/listing%20banks/bank_account_slecting.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +12,7 @@ class ScreenAddingParentDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final kycController = Provider.of<KycController>(context);
+    Provider.of<KycController>(context, listen: false).updatePagenumber('7');
     return Scaffold(
       // appBar: AppBar(),
       body: SafeArea(
@@ -69,6 +69,7 @@ class ScreenAddingParentDetails extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: ButtonWidget(
         onTap: () {
+          kycController.addParentDetails();
           Navigator.push(
             context,
             MaterialPageRoute(

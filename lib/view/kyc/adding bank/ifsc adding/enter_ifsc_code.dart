@@ -1,7 +1,6 @@
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/kyc/adding%20bank/listing%20banks/bank_account_slecting.dart';
-import 'package:finfresh_mobile/view/kyc/adding%20bank/upload%20bank%20proof/uploading_bank_proof.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_button_widget.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +13,7 @@ class ScreenIfcAdding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final kycController = Provider.of<KycController>(context);
+    kycController.updatePagenumber('8');
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -66,7 +66,9 @@ class ScreenIfcAdding extends StatelessWidget {
                   bool result = await kycController.getbankDetailsWithIfsc(
                       context, kycController.ifscCodeController.text);
                   if (result == true) {
+                    kycController.addIfsc();
                     kycController.addingbankname();
+                    kycController.updatePagenumber('9');
                     // ignore: use_build_context_synchronously
                     Navigator.push(
                       context,

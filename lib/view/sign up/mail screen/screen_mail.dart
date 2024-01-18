@@ -84,6 +84,7 @@ class ScreenMail extends StatelessWidget {
       floatingActionButton: ButtonWidget(
         onTap: () {
           if (authcontroller.formKey.currentState!.validate()) {
+            authcontroller.addEmail();
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => const ScreenEnterPhoneNumber(),

@@ -1,3 +1,4 @@
+import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/controller/pin%20controller/pin_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
@@ -121,6 +122,8 @@ class ScreenConfirmPinNumber extends StatelessWidget {
         onTap: () {
           if (pinController.formKeyForConfirmPin.currentState!.validate()) {
             pinController.setPin();
+            Provider.of<KycController>(context, listen: false)
+                .updatePagenumber('1');
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(

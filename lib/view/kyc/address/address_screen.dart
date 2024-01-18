@@ -22,6 +22,7 @@ class _ScreenAddressState extends State<ScreenAddress> {
   Widget build(BuildContext context) {
     Brightness brightness = Theme.of(context).brightness;
     final kycController = Provider.of<KycController>(context);
+    kycController.updatePagenumber('5');
 
     return Scaffold(
       body: SafeArea(
@@ -289,6 +290,7 @@ class _ScreenAddressState extends State<ScreenAddress> {
                             if (kycController.addressFormkey.currentState!
                                 .validate()) {
                               if (kycController.stateValue != "State") {
+                                kycController.addAddress();
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -321,6 +323,7 @@ class _ScreenAddressState extends State<ScreenAddress> {
         onTap: () {
           if (kycController.addressFormkey.currentState!.validate()) {
             if (kycController.stateValue != "State") {
+              kycController.addAddress();
               Navigator.push(
                 context,
                 MaterialPageRoute(

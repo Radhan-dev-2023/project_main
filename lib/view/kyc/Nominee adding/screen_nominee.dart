@@ -23,10 +23,10 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
     final kycController = Provider.of<KycController>(context);
 
     Brightness brightness = Theme.of(context).brightness;
-
+    kycController.updatePagenumber('14');
     return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Container(
             margin: EdgeInsets.all(15.sp),
             child: Column(
@@ -388,6 +388,8 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
       floatingActionButton: ButtonWidget(
         onTap: () {
           Provider.of<KycController>(context, listen: false).nomineeChosse('Y');
+          Provider.of<KycController>(context, listen: false).addNominee();
+
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(

@@ -12,7 +12,7 @@ class ScreenGuardianAdding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final kycController = Provider.of<KycController>(context);
-
+    kycController.updatePagenumber('17');
     Brightness brightness = Theme.of(context).brightness;
     return Scaffold(
       body: SafeArea(
@@ -205,6 +205,7 @@ class ScreenGuardianAdding extends StatelessWidget {
       floatingActionButton: ButtonWidget(
         onTap: () {
           kycController.changeGuardianSelected(true);
+          kycController.addGuardian();
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(

@@ -23,6 +23,7 @@ class _ScreenTaxStatusState extends State<ScreenTaxStatus> {
   @override
   void initState() {
     Provider.of<KycController>(context, listen: false).getTaxStatus();
+    Provider.of<KycController>(context, listen: false).updatePagenumber('2');
     super.initState();
   }
 
@@ -126,6 +127,8 @@ class _ScreenTaxStatusState extends State<ScreenTaxStatus> {
                       ),
                     );
                   } else {
+                    kycController.updatePagenumber('3');
+                    kycController.addtaxstatus();
                     // ignore: use_build_context_synchronously
                     Navigator.of(context).push(
                       MaterialPageRoute(
