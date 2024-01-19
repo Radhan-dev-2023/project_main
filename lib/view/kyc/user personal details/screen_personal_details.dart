@@ -56,7 +56,7 @@ class ScreenPersonalDetails extends StatelessWidget {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'field is required';
+                        return 'Name is mandatory';
                       }
                       if (!RegExp(r'^[a-zA-Z ]+$').hasMatch(value)) {
                         return 'Enter valid name';
@@ -72,7 +72,7 @@ class ScreenPersonalDetails extends StatelessWidget {
                     validator: (value) {
                       if (!RegExp(r'^\d{2}-[a-zA-Z]{3}-\d{4}$')
                           .hasMatch(value!)) {
-                        return 'Invalid DOB format(01-Jan-1950))';
+                        return 'Please enter your Date of Birth(01-Jan-1950))';
                       }
                       return null;
                     },

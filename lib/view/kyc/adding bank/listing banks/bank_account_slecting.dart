@@ -60,8 +60,8 @@ class ScreenAddingBank extends StatelessWidget {
       floatingActionButton: ButtonWidget(
         onTap: () {
           if (kycController.banknameFormkey.currentState!.validate()) {
-            kycController.updatePagenumber('10');
             kycController.addbankname();
+            kycController.updatePagenumber('10');
             Navigator.push(
               context,
               MaterialPageRoute(

@@ -80,6 +80,7 @@ class ScreenBankAccountNumber extends StatelessWidget {
         // You can add buttons to the alert dialog
         TextButton(
           onPressed: () {
+            Navigator.pop(context);
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -94,6 +95,7 @@ class ScreenBankAccountNumber extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
+            Navigator.pop(context);
             Navigator.push(
               context,
               MaterialPageRoute(

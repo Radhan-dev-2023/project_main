@@ -2,12 +2,11 @@ import 'dart:developer';
 
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
-import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
-import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
 import 'package:finfresh_mobile/view/kyc/Nominee%20adding/nominee%20type/screen_nominee_count.dart';
 import 'package:finfresh_mobile/view/kyc/guardian%20screen/screen_guardian.dart';
 import 'package:finfresh_mobile/view/kyc/uploading%20proofs/screen_upload_proof.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
+import 'package:finfresh_mobile/view/widgets/custom_loading_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -44,8 +43,6 @@ class AddingNomineeAndGuadianScreen extends StatelessWidget {
                   onTap: () {
                     if (kycController.nomineeOption == 'N') {
                       showAlertDialog(context);
-                    } else {
-                      showSnackBar(context, 'Already added nominee');
                     }
                   },
                   title: Text(
@@ -80,8 +77,6 @@ class AddingNomineeAndGuadianScreen extends StatelessWidget {
                           builder: (context) => const ScreenGuardianAdding(),
                         ),
                       );
-                    } else {
-                      showSnackBar(context, 'Already added guardian');
                     }
                   },
                   title: Text(
@@ -106,24 +101,28 @@ class AddingNomineeAndGuadianScreen extends StatelessWidget {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: ButtonWidget(
-        onTap: () async {
-          await kycController.addingvaluetoModel();
-          bool result = await kycController.createCustomer(context);
-          log('result is $result');
-          if (result == true) {
-            // ignore: use_build_context_synchronously
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const ScreenUploadinProofs(),
-              ),
-              (route) => false,
-            );
-          }
-        },
-        btName: 'Submit Kyc'.toUpperCase(),
-      ),
+      floatingActionButton: kycController.loading == true ||
+              kycController.createcustomerLoading == true
+          ? const LoadingButton()
+          : ButtonWidget(
+              onTap: () async {
+                await kycController.addingvaluetoModel();
+                // ignore: use_build_context_synchronously
+                bool result = await kycController.createCustomer(context);
+                log('result is $result');
+                if (result == true) {
+                  // ignore: use_build_context_synchronously
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ScreenUploadinProofs(),
+                    ),
+                    (route) => false,
+                  );
+                }
+              },
+              btName: 'Submit Kyc'.toUpperCase(),
+            ),
     );
   }
 
@@ -136,6 +135,8 @@ class AddingNomineeAndGuadianScreen extends StatelessWidget {
         TextButton(
           onPressed: () {
             Navigator.pop(context);
+            Provider.of<KycController>(context, listen: false).countvalue =
+                'select Nominee count';
             Navigator.push(
               context,
               MaterialPageRoute(

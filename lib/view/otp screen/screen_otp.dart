@@ -87,7 +87,7 @@ class ScreenOtp extends StatelessWidget {
                 ),
                 VerticalSpacer(2.h),
                 Text(
-                  'Enter the Code send to your Number',
+                  'Enter the verification code sent to your number',
                   style: Theme.of(context)
                       .textTheme
                       .labelMedium!
@@ -103,7 +103,7 @@ class ScreenOtp extends StatelessWidget {
                     validator: (value) {
                       if (value?.length != 6 || value == null) {
                         // otpPinput.clear();
-                        return 'Wrong PIN';
+                        return 'Wrong OTP';
                       } else {
                         return null;
                       }
@@ -148,7 +148,7 @@ class ScreenOtp extends StatelessWidget {
                     );
                   } else {
                     // ignore: use_build_context_synchronously
-                    showSnackBar(context, 'Wrong otp');
+                    showSnackBar(context, 'Wrong OTP');
                   }
                   logger.d('result===$result');
 

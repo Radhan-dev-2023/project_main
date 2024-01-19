@@ -152,7 +152,7 @@ class _BoardingViewScreenState extends State<BoardingViewScreen> {
                         // Theme.of(context).buttonTheme.copyWith(buttonColor: Color(Colors.red))
                         ),
                     onPressed: () {
-                      Navigator.pushReplacement(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const ScreenMail(),
@@ -160,7 +160,7 @@ class _BoardingViewScreenState extends State<BoardingViewScreen> {
                       );
                     },
                     child: const Text(
-                      'Sign up',
+                      'Sign Up',
                       style: TextStyle(color: Colors.white),
                       // style: Theme.of(context).textTheme.bodyMedium,
                     ),

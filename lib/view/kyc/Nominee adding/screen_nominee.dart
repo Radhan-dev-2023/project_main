@@ -1,9 +1,6 @@
-import 'dart:developer';
-
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/kyc/Nominee%20adding/Nominee%202/screen_nominee_2.dart';
-import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
 import 'package:finfresh_mobile/view/kyc/adding%20nominee%20and%20guardian/adding_nominee_guardian.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +31,7 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
               children: [
                 VerticalSpacer(10.h),
                 Text(
-                  'Nominee details',
+                  'Enter Nominee 1 Details',
                   style: Theme.of(context)
                       .textTheme
                       .labelLarge!
@@ -86,7 +83,7 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
                       // fillColor: const Color(0xFF0E1330),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10)),
-                      hintText: "Nominee Name"),
+                      hintText: "Enter Name"),
                 ),
                 VerticalSpacer(3.h),
                 Container(
@@ -133,7 +130,7 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
                   validator: (value) {
                     if (!RegExp(r'^\d{2}-[a-zA-Z]{3}-\d{4}$')
                         .hasMatch(value!)) {
-                      return 'Invalid DOB format(01-Jan-1950)';
+                      return 'Please enter your Date of Birth(01-Jan-1950)';
                     }
                     return null;
                   },
@@ -142,7 +139,7 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
                     // fillColor: const Color(0xFF0E1330),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    hintText: "Nominee's date of birth(01-Jan-1950)",
+                    hintText: "Enter Date of Birth(01-Jan-1950)",
                   ),
                 ),
                 VerticalSpacer(3.h),
@@ -152,7 +149,7 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    hintText: "Nominee1 Guardian name",
+                    hintText: "Enter Guardian name",
                   ),
                 ),
                 VerticalSpacer(3.h),
@@ -162,7 +159,7 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    hintText: "Nominee Guardian PAN",
+                    hintText: "Enter Guardian PAN number",
                   ),
                 ),
                 VerticalSpacer(3.h),
@@ -207,15 +204,6 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
                   child: Column(
                     children: [
                       TextFormField(
-                        controller: kycController.nominee1address1Controller,
-                        style: Theme.of(context).textTheme.labelLarge!,
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            hintText: 'Nominee 1 Address 1'),
-                      ),
-                      VerticalSpacer(3.h),
-                      TextFormField(
                         controller: kycController.nominee1panCotroller,
                         style: Theme.of(context).textTheme.labelLarge!,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -238,6 +226,15 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
                       ),
                       VerticalSpacer(3.h),
                       TextFormField(
+                        controller: kycController.nominee1address1Controller,
+                        style: Theme.of(context).textTheme.labelLarge!,
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            hintText: 'Enter Address 1'),
+                      ),
+                      VerticalSpacer(3.h),
+                      TextFormField(
                         controller: kycController.nominee1address2Controller,
                         style: Theme.of(context).textTheme.labelLarge!,
                         decoration: InputDecoration(
@@ -245,7 +242,7 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
                             // fillColor: const Color(0xFF0E1330),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
-                            hintText: 'Nominee 1 Address 2'),
+                            hintText: 'Enter Address 2'),
                       ),
                       VerticalSpacer(3.h),
                       TextFormField(
@@ -254,7 +251,7 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
-                            hintText: 'Nominee 1 Address 3'),
+                            hintText: 'Enter Address 3'),
                       ),
                       VerticalSpacer(3.h),
                       SizedBox(
@@ -266,7 +263,7 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
                           decoration: InputDecoration(
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10)),
-                              hintText: 'Nominee 1 City'),
+                              hintText: 'Enter City'),
                         ),
                       ),
                       VerticalSpacer(3.h),
@@ -320,7 +317,7 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10)),
-                                hintText: 'Nominee 1Country',
+                                hintText: 'Enter Country',
                               ),
                             ),
                           ),
@@ -335,7 +332,7 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                hintText: 'Nominee 1 Pincode',
+                                hintText: 'Enter Pincode',
                               ),
                             ),
                           ),
@@ -378,7 +375,7 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
                           ],
                         ),
                       ),
-                VerticalSpacer(10.h)
+                VerticalSpacer(20.h)
               ],
             ),
           ),
@@ -387,7 +384,6 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: ButtonWidget(
         onTap: () {
-          Provider.of<KycController>(context, listen: false).nomineeChosse('Y');
           Provider.of<KycController>(context, listen: false).addNominee();
 
           Navigator.pushReplacement(

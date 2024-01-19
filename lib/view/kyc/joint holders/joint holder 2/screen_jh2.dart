@@ -22,6 +22,7 @@ class Jh2Screen extends StatelessWidget {
             child: Form(
               key: kycController.jh2Formkey,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   VerticalSpacer(8.h),
                   const Center(
@@ -31,14 +32,15 @@ class Jh2Screen extends StatelessWidget {
                       child: FlutterLogo(),
                     ),
                   ),
-                  VerticalSpacer(8.h),
-                  // Text(
-                  //   'Joint Holders',
-                  //   style: Theme.of(context)
-                  //       .textTheme
-                  //       .bodyMedium!
-                  //       .copyWith(fontSize: 19.sp, fontWeight: FontWeight.bold),
-                  // ),
+                  VerticalSpacer(5.h),
+                  Text(
+                    'Enter Joint holder2 details',
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelLarge!
+                        .copyWith(fontSize: 19.sp, fontWeight: FontWeight.w700),
+                  ),
+                  VerticalSpacer(2.h),
                   TextFormField(
                     style: Theme.of(context).textTheme.labelLarge!,
                     controller: kycController.jh2nameController,
@@ -52,7 +54,7 @@ class Jh2Screen extends StatelessWidget {
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10)),
-                      hintText: 'Joint holder2 name',
+                      hintText: 'Enter name',
                     ),
                   ),
                   VerticalSpacer(3.h),
@@ -70,7 +72,7 @@ class Jh2Screen extends StatelessWidget {
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10)),
-                      hintText: 'Joint holder2 PAN',
+                      hintText: 'Enter PAN number',
                     ),
                   ),
                   VerticalSpacer(3.h),
@@ -81,14 +83,14 @@ class Jh2Screen extends StatelessWidget {
                     validator: (value) {
                       if (!RegExp(r'^\d{2}-[a-zA-Z]{3}-\d{4}$')
                           .hasMatch(value!)) {
-                        return 'Invalid DOB format(01-Jan-1950))';
+                        return 'Please enter your Date of Birth(01-Jan-1950))';
                       }
                       return null;
                     },
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10)),
-                      hintText: 'Joint holder2 DOB(01-Jan-1950)',
+                      hintText: 'Enter DOB(01-Jan-1950)',
                     ),
                   ),
                   VerticalSpacer(3.h),
@@ -105,7 +107,7 @@ class Jh2Screen extends StatelessWidget {
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10)),
-                      hintText: 'Joint holder2 Phonenumber',
+                      hintText: 'Enter Phonenumber',
                     ),
                   ),
                   VerticalSpacer(3.h),
@@ -124,11 +126,10 @@ class Jh2Screen extends StatelessWidget {
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10)),
-                      hintText: 'Joint holder2 Email',
+                      hintText: 'Enter Email',
                     ),
                   ),
                   VerticalSpacer(3.h),
-
                   Container(
                     decoration: BoxDecoration(
                       border: Border.all(
@@ -165,7 +166,6 @@ class Jh2Screen extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   VerticalSpacer(3.h),
                   Container(
                     decoration: BoxDecoration(
@@ -217,7 +217,7 @@ class Jh2Screen extends StatelessWidget {
         onTap: () {
           if (kycController.jh2Formkey.currentState!.validate()) {
             kycController.addJointholder1();
-            Navigator.pushReplacement(
+            Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => const AddingNomineeAndGuadianScreen(),

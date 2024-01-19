@@ -14,67 +14,6 @@ class ScreenNominee2 extends StatefulWidget {
   State<ScreenNominee2> createState() => _ScreenNominee2State();
 }
 
-String idtype = 'Select ID type';
-bool isChecked = true;
-String selectValue = 'Select relation';
-
-List<String> relation = [
-  'Select relation',
-  'Wife',
-  'Husband',
-  'Son',
-  'Daughter',
-  'Father',
-  'Mother',
-  'Brother',
-  'Sister',
-  'Grand son',
-  'Sister',
-  'Grand daughter',
-  'Grand father',
-  'Grand mother',
-  'Other'
-];
-String stateValue = 'State';
-var stateList = [
-  'State',
-  'Andaman and Nickobar icelands',
-  'Andra Pradesh',
-  'Arunachal Pradesh',
-  'Assam',
-  'Bihar',
-  'Chandigarh',
-  'Dadra and Nagar Haveli',
-  'Daman and Diu',
-  'Delhi',
-  'Goa',
-  'Gujarat',
-  'Haryana',
-  'Himachal pradesh',
-  'Jammu and Kashmir',
-  'Karnataka',
-  'Kerala',
-  'West Bengal',
-  'Lakshadweep',
-  'Madhya Pradesh',
-  'Maharashtra',
-  // 'Maharastra',
-  'Manipur',
-  'Meghalaya',
-  'Mizoram',
-  'Nagaland',
-  'Odisha',
-  'Puducherry',
-  'Punjab',
-  'Rajasthan',
-  'Sikkim',
-  'Tamil Nadu',
-  'Telangana',
-  'Tripura',
-  'Utter Pradesh',
-  'Uttrakhand',
-];
-
 class _ScreenNominee2State extends State<ScreenNominee2> {
   @override
   Widget build(BuildContext context) {
@@ -83,8 +22,8 @@ class _ScreenNominee2State extends State<ScreenNominee2> {
     Brightness brightness = Theme.of(context).brightness;
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Container(
             margin: EdgeInsets.all(15.sp),
             child: Column(
@@ -92,7 +31,7 @@ class _ScreenNominee2State extends State<ScreenNominee2> {
               children: [
                 VerticalSpacer(10.h),
                 Text(
-                  'Nominee2 details',
+                  'Enter Nominee 2 Details',
                   style: Theme.of(context)
                       .textTheme
                       .labelLarge!
@@ -142,7 +81,7 @@ class _ScreenNominee2State extends State<ScreenNominee2> {
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10)),
-                      hintText: "Nominee2 Name"),
+                      hintText: "Enter Name"),
                 ),
                 VerticalSpacer(3.h),
                 Container(
@@ -189,14 +128,14 @@ class _ScreenNominee2State extends State<ScreenNominee2> {
                   validator: (value) {
                     if (!RegExp(r'^\d{2}-[a-zA-Z]{3}-\d{4}$')
                         .hasMatch(value!)) {
-                      return 'Invalid DOB format(DD-MMM-YYYY))';
+                      return 'Please enter your Date of Birth(DD-MMM-YYYY))';
                     }
                     return null;
                   },
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    hintText: "Nominee2 date of birth(DD-MMM-YYYY)",
+                    hintText: "Enter date of birth(DD-MMM-YYYY)",
                   ),
                 ),
                 VerticalSpacer(3.h),
@@ -207,7 +146,7 @@ class _ScreenNominee2State extends State<ScreenNominee2> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    hintText: 'Enter nominee2 pan number(ABCDE1234F)',
+                    hintText: 'Enter  pan number(ABCDE1234F)',
 
                     // labelText: 'Pan card number',
                   ),
@@ -228,7 +167,7 @@ class _ScreenNominee2State extends State<ScreenNominee2> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    hintText: "Nominee2 guard name",
+                    hintText: "Enter guardian name",
                   ),
                 ),
                 VerticalSpacer(3.h),
@@ -238,17 +177,7 @@ class _ScreenNominee2State extends State<ScreenNominee2> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    hintText: "Nominee2 guard  pan",
-                  ),
-                ),
-                VerticalSpacer(3.h),
-                TextFormField(
-                  controller: kycController.nominee1guardpanController,
-                  style: Theme.of(context).textTheme.labelLarge!,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    hintText: "Nominee2 Guardian PAN",
+                    hintText: "Enter guardian  pan",
                   ),
                 ),
                 VerticalSpacer(3.h),
@@ -331,7 +260,6 @@ class _ScreenNominee2State extends State<ScreenNominee2> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: ButtonWidget(
         onTap: () {
-          Provider.of<KycController>(context, listen: false).nomineeChosse('Y');
           Provider.of<KycController>(context, listen: false).addNominee();
 
           Navigator.pushReplacement(

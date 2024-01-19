@@ -1,6 +1,5 @@
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
-import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
 import 'package:finfresh_mobile/view/kyc/adding%20nominee%20and%20guardian/adding_nominee_guardian.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:flutter/material.dart';
@@ -14,67 +13,6 @@ class ScreenNominee3 extends StatefulWidget {
   State<ScreenNominee3> createState() => _ScreenNominee3State();
 }
 
-String idtype = 'Select ID type';
-bool isChecked = true;
-String selectValue = 'Select relation';
-
-List<String> relation = [
-  'Select relation',
-  'Wife',
-  'Husband',
-  'Son',
-  'Daughter',
-  'Father',
-  'Mother',
-  'Brother',
-  'Sister',
-  'Grand son',
-  'Sister',
-  'Grand daughter',
-  'Grand father',
-  'Grand mother',
-  'Other'
-];
-String stateValue = 'State';
-var stateList = [
-  'State',
-  'Andaman and Nickobar icelands',
-  'Andra Pradesh',
-  'Arunachal Pradesh',
-  'Assam',
-  'Bihar',
-  'Chandigarh',
-  'Dadra and Nagar Haveli',
-  'Daman and Diu',
-  'Delhi',
-  'Goa',
-  'Gujarat',
-  'Haryana',
-  'Himachal pradesh',
-  'Jammu and Kashmir',
-  'Karnataka',
-  'Kerala',
-  'West Bengal',
-  'Lakshadweep',
-  'Madhya Pradesh',
-  'Maharashtra',
-  // 'Maharastra',
-  'Manipur',
-  'Meghalaya',
-  'Mizoram',
-  'Nagaland',
-  'Odisha',
-  'Puducherry',
-  'Punjab',
-  'Rajasthan',
-  'Sikkim',
-  'Tamil Nadu',
-  'Telangana',
-  'Tripura',
-  'Utter Pradesh',
-  'Uttrakhand',
-];
-
 class _ScreenNominee3State extends State<ScreenNominee3> {
   @override
   Widget build(BuildContext context) {
@@ -83,8 +21,8 @@ class _ScreenNominee3State extends State<ScreenNominee3> {
     Brightness brightness = Theme.of(context).brightness;
     kycController.updatePagenumber('16');
     return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Container(
             margin: EdgeInsets.all(15.sp),
             child: Column(
@@ -92,7 +30,7 @@ class _ScreenNominee3State extends State<ScreenNominee3> {
               children: [
                 VerticalSpacer(10.h),
                 Text(
-                  'Nominee3 details',
+                  'Enter Nominee 3 Details',
                   style: Theme.of(context)
                       .textTheme
                       .labelLarge!
@@ -142,7 +80,7 @@ class _ScreenNominee3State extends State<ScreenNominee3> {
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10)),
-                      hintText: "Nominee3 Name"),
+                      hintText: "Enter Name"),
                 ),
                 VerticalSpacer(3.h),
                 Container(
@@ -167,7 +105,7 @@ class _ScreenNominee3State extends State<ScreenNominee3> {
                       underline: Container(
                         height: 0,
                       ),
-                      items: relation.map((String items) {
+                      items: kycController.relation.map((String items) {
                         return DropdownMenuItem(
                           value: items,
                           child: Text(
@@ -189,7 +127,7 @@ class _ScreenNominee3State extends State<ScreenNominee3> {
                   validator: (value) {
                     if (!RegExp(r'^\d{2}-[a-zA-Z]{3}-\d{4}$')
                         .hasMatch(value!)) {
-                      return 'Invalid DOB format(01-Jan-1950))';
+                      return 'Please enter your Date of Birth(01-Jan-1950))';
                     }
                     return null;
                   },
@@ -198,7 +136,7 @@ class _ScreenNominee3State extends State<ScreenNominee3> {
                     // fillColor: const Color(0xFF0E1330),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    hintText: "Nominee3 date of birth(01-Jan-1950)",
+                    hintText: "Enter date of birth(01-Jan-1950)",
                   ),
                 ),
                 VerticalSpacer(3.h),
@@ -209,7 +147,7 @@ class _ScreenNominee3State extends State<ScreenNominee3> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    hintText: 'Enter nominee3 pan number(ABCDE1234F)',
+                    hintText: 'Enter pan number(ABCDE1234F)',
 
                     // labelText: 'Pan card number',
                   ),
@@ -230,7 +168,7 @@ class _ScreenNominee3State extends State<ScreenNominee3> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    hintText: "Nominee3 guardian name",
+                    hintText: "Enter guardian name",
                   ),
                 ),
                 VerticalSpacer(3.h),
@@ -240,7 +178,7 @@ class _ScreenNominee3State extends State<ScreenNominee3> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    hintText: "Nominee3 Guardian PAN",
+                    hintText: "Enter Guardian PAN",
                   ),
                 ),
                 VerticalSpacer(3.h),
@@ -281,7 +219,7 @@ class _ScreenNominee3State extends State<ScreenNominee3> {
                   ),
                 ),
                 VerticalSpacer(3.h),
-                VerticalSpacer(10.h)
+                VerticalSpacer(20.h)
               ],
             ),
           ),
@@ -290,7 +228,6 @@ class _ScreenNominee3State extends State<ScreenNominee3> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: ButtonWidget(
         onTap: () {
-          Provider.of<KycController>(context, listen: false).nomineeChosse('Y');
           Provider.of<KycController>(context, listen: false).addNominee();
           Navigator.pushReplacement(
             context,

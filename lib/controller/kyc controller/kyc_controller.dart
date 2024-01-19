@@ -9,16 +9,17 @@ import 'package:finfresh_mobile/model/tax%20status%20model/tax_status_model.dart
 import 'package:finfresh_mobile/services/get%20bank%20details/get_bank_details.dart';
 import 'package:finfresh_mobile/services/kyc/create_customer.dart';
 import 'package:finfresh_mobile/services/kyc/getinn_service.dart';
+import 'package:finfresh_mobile/services/kyc/master_services.dart';
 import 'package:finfresh_mobile/services/kyc/tax_status_service.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:pinput/pinput.dart';
 
 class KycController extends ChangeNotifier {
   GetInnService getInnService = GetInnService();
   TaxMaster taxMaster = TaxMaster();
+  MasterService masterService = MasterService();
   List<MasterDetail> masterDetailList = [];
   List<dynamic> masterDetailsList = [];
   InvestorDetails investorDetails = InvestorDetails();
@@ -226,9 +227,9 @@ class KycController extends ChangeNotifier {
     'Select Mobile relation',
     "Self",
     "Spouse",
-    "Depened Children",
-    "Depened Parents",
-    "Depened Siblings",
+    "Dependent Children",
+    "Dependent Parents",
+    "Dependent Siblings",
     "Guardian",
     'PMS',
     "Custodian",
@@ -241,12 +242,12 @@ class KycController extends ChangeNotifier {
       mobilerelationtobackend = "SE";
     } else if (mobileRation == "Spouse") {
       mobilerelationtobackend = "SP";
-    } else if (mobileRation == "Depened Siblings") {
+    } else if (mobileRation == "Dependent Siblings") {
       mobilerelationtobackend = "DS";
       log('mobileRation == $mobilerelationtobackend');
-    } else if (mobileRation == "Depened Parents") {
+    } else if (mobileRation == "Dependent Parents") {
       mobilerelationtobackend = "DP";
-    } else if (mobileRation == "Depened Children") {
+    } else if (mobileRation == "Dependent Children") {
       mobilerelationtobackend = "DC";
     } else if (mobileRation == "Guardian") {
       mobilerelationtobackend = "GD";
@@ -268,11 +269,11 @@ class KycController extends ChangeNotifier {
       jh1MobileRelationtoBckend = "SE";
     } else if (jh1MobileRelation == "Spouse") {
       jh1MobileRelationtoBckend = "SP";
-    } else if (jh1MobileRelation == "Depened Siblings") {
+    } else if (jh1MobileRelation == "Dependent Siblings") {
       jh1MobileRelationtoBckend = "DS";
-    } else if (jh1MobileRelation == "Depened Parents") {
+    } else if (jh1MobileRelation == "Dependent Parents") {
       jh1MobileRelationtoBckend = "DP";
-    } else if (jh1MobileRelation == "Depened Children") {
+    } else if (jh1MobileRelation == "Dependent Children") {
       jh1MobileRelationtoBckend = "DC";
     } else if (jh1MobileRelation == "Guardian") {
       jh1MobileRelationtoBckend = "GD";
@@ -292,12 +293,12 @@ class KycController extends ChangeNotifier {
       jh2MobileRelationtoBckend = "SE";
     } else if (jh2MobileRelation == "Spouse") {
       jh2MobileRelationtoBckend = "SP";
-    } else if (jh2MobileRelation == "Depened Siblings") {
+    } else if (jh2MobileRelation == "Dependent Siblings") {
       jh2MobileRelationtoBckend = "DS";
       log('mobileRation == $mobilerelationtobackend');
-    } else if (jh2MobileRelation == "Depened Parents") {
+    } else if (jh2MobileRelation == "Dependent Parents") {
       jh2MobileRelationtoBckend = "DP";
-    } else if (jh2MobileRelation == "Depened Children") {
+    } else if (jh2MobileRelation == "Dependent Children") {
       jh2MobileRelationtoBckend = "DC";
     } else if (jh2MobileRelation == "Guardian") {
       jh2MobileRelationtoBckend = "GD";
@@ -318,9 +319,9 @@ class KycController extends ChangeNotifier {
     'Select Email relation',
     "Self",
     "Spouse",
-    "Depened Children",
-    "Depened Parents",
-    "Depened Siblings",
+    "Dependent Children",
+    "Dependent Parents",
+    "Dependent Siblings",
     "Guardian",
   ];
   String jh1EmailRelationtoBckend = '';
@@ -332,12 +333,12 @@ class KycController extends ChangeNotifier {
       jh1EmailRelationtoBckend = "SE";
     } else if (jh1emailRation == "Spouse") {
       jh1EmailRelationtoBckend = "SP";
-    } else if (jh1emailRation == "Depened Siblings") {
+    } else if (jh1emailRation == "Dependent Siblings") {
       jh1EmailRelationtoBckend = "DS";
       log('mobileRation == $guardEmailrelationTobacked');
-    } else if (jh1emailRation == "Depened Parents") {
+    } else if (jh1emailRation == "Dependent Parents") {
       jh1EmailRelationtoBckend = "DP";
-    } else if (jh1emailRation == "Depened Children") {
+    } else if (jh1emailRation == "Dependent Children") {
       jh1EmailRelationtoBckend = "DC";
     } else if (jh1emailRation == "Guardian") {
       jh1EmailRelationtoBckend = "GD";
@@ -351,12 +352,12 @@ class KycController extends ChangeNotifier {
       jh2EmailRelationtoBckend = "SE";
     } else if (jh2emailRation == "Spouse") {
       jh2EmailRelationtoBckend = "SP";
-    } else if (jh2emailRation == "Depened Siblings") {
+    } else if (jh2emailRation == "Dependent Siblings") {
       jh2EmailRelationtoBckend = "DS";
       log('mobileRation == $guardEmailrelationTobacked');
-    } else if (jh2emailRation == "Depened Parents") {
+    } else if (jh2emailRation == "Dependent Parents") {
       jh2EmailRelationtoBckend = "DP";
-    } else if (jh2emailRation == "Depened Children") {
+    } else if (jh2emailRation == "Dependent Children") {
       jh2EmailRelationtoBckend = "DC";
     } else if (jh2emailRation == "Guardian") {
       jh2EmailRelationtoBckend = "GD";
@@ -370,12 +371,12 @@ class KycController extends ChangeNotifier {
       guardEmailrelationTobacked = "SE";
     } else if (emailRation == "Spouse") {
       guardEmailrelationTobacked = "SP";
-    } else if (emailRation == "Depened Siblings") {
+    } else if (emailRation == "Dependent Siblings") {
       guardEmailrelationTobacked = "DS";
       log('mobileRation == $guardEmailrelationTobacked');
-    } else if (emailRation == "Depened Parents") {
+    } else if (emailRation == "Dependent Parents") {
       guardEmailrelationTobacked = "DP";
-    } else if (emailRation == "Depened Children") {
+    } else if (emailRation == "Dependent Children") {
       guardEmailrelationTobacked = "DC";
     } else if (emailRation == "Guardian") {
       guardEmailrelationTobacked = "GD";
@@ -385,7 +386,7 @@ class KycController extends ChangeNotifier {
   String typevalue = "select a type";
   String typevalueNominee2 = "select a type";
   String typevalueNominee3 = "select a type";
-  List<String> typeList = ["select a type", "Minor", "major"];
+  List<String> typeList = ["select a type", "Minor", "Major"];
   String selectRelationValue = 'Select relation';
   String selectRelationValueNominne2 = 'Select relation';
   String selectRelationValueNominne3 = 'Select relation';
@@ -467,7 +468,7 @@ class KycController extends ChangeNotifier {
 
   void updateTaxValue(value) {
     taxStatusValue = value;
-    taxcode = taxStatusValue!.taxStatusCode;
+    taxcode = taxStatusValue?.taxStatusCode;
     logger.d('tax code == $taxcode');
     notifyListeners();
   }
@@ -755,6 +756,7 @@ class KycController extends ChangeNotifier {
       motherName: retrievedValue?.motherName,
       ifscCode: retrievedValue?.ifscCode,
       bankName: banknameController.text,
+      branchName: bankDeatilsModel?.bankDetails?.branch,
     );
     dbFunctions.addTodb(investorModel);
   }
@@ -792,6 +794,7 @@ class KycController extends ChangeNotifier {
       motherName: retrievedValue?.motherName,
       ifscCode: retrievedValue?.ifscCode,
       bankName: retrievedValue?.bankName,
+      branchName: retrievedValue?.branchName,
       accNo: retrievedValue?.accNo,
       jh1Name: retrievedValue?.jh1Name,
       jh1Pan: retrievedValue?.jh2Name,
@@ -914,6 +917,7 @@ class KycController extends ChangeNotifier {
       motherName: retrievedValue?.motherName,
       ifscCode: retrievedValue?.ifscCode,
       bankName: retrievedValue?.bankName,
+      branchName: retrievedValue?.branchName,
       accNo: retrievedValue?.accNo,
       jh1Name: retrievedValue?.jh1Name,
       jh1Pan: retrievedValue?.jh2Name,
@@ -1036,6 +1040,7 @@ class KycController extends ChangeNotifier {
       motherName: retrievedValue?.motherName,
       ifscCode: retrievedValue?.ifscCode,
       bankName: retrievedValue?.bankName,
+      branchName: retrievedValue?.branchName,
       accNo: accountnumberCotroller.text,
     );
     dbFunctions.addTodb(investorModel);
@@ -1074,6 +1079,7 @@ class KycController extends ChangeNotifier {
       motherName: retrievedValue?.motherName,
       ifscCode: retrievedValue?.ifscCode,
       bankName: retrievedValue?.bankName,
+      branchName: retrievedValue?.branchName,
       accNo: retrievedValue?.accNo,
       jh1Name: jh1nameController.text,
       jh1Pan: jh1panController.text,
@@ -1113,11 +1119,15 @@ class KycController extends ChangeNotifier {
     banknameController.text = retrievedValue!.bankName ?? '';
   }
 
+  bool loading = false;
+
   Future<void> addingvaluetoModel() async {
+    loading = true;
+    notifyListeners();
     // email = email == null ? investorDb.values.toList()[0].email : email;
     final investorDb = await Hive.openBox<InvestorModel>('investor_db');
     final retrievedValue = investorDb.get('email');
-    log('retreieve vslure===${retrievedValue?.mobileNo} email${retrievedValue?.email}');
+    log('retreieve vslure===${retrievedValue?.branchName} email${retrievedValue?.email}');
     investorDetails = InvestorDetails(
       processMode: 'D',
       title: '',
@@ -1133,7 +1143,7 @@ class KycController extends ChangeNotifier {
       dob:
           dobController.text.isEmpty ? retrievedValue?.dob : dobController.text,
       holdNature: 'SI',
-      taxStatus: taxcode!.isEmpty ? retrievedValue?.taxStatus : taxcode,
+      taxStatus: taxcode ?? retrievedValue?.taxStatus,
       kyc: 'Y',
       fhCkyc: '',
       fhCkycRefNo: '',
@@ -1213,7 +1223,8 @@ class KycController extends ChangeNotifier {
       ifscCode: ifscCodeController.text.isEmpty
           ? retrievedValue?.ifscCode
           : ifscCodeController.text,
-      branchName: bankDeatilsModel?.bankDetails?.branch ?? '',
+      branchName:
+          bankDeatilsModel?.bankDetails?.branch ?? retrievedValue?.branchName,
       branchAddr1: "String",
       branchAddr2: '',
       branchAddr3: '',
@@ -1403,6 +1414,7 @@ class KycController extends ChangeNotifier {
           : nom3guardrelationtobackend,
     );
     logger.d('model vluee ==${investorDetails.toJson()}');
+    loading = false;
     notifyListeners();
   }
 
@@ -1417,19 +1429,28 @@ class KycController extends ChangeNotifier {
     return isVerified;
   }
 
+  bool createcustomerLoading = false;
   Future<bool> createCustomer(context) async {
+    createcustomerLoading = true;
+    notifyListeners();
+
     bool isCreated =
         await createCustomerService.createCustomer(investorDetails, context);
     log('isCreated == $isCreated');
     if (isCreated == true) {
+      createcustomerLoading = false;
+      notifyListeners();
       logger.d('customer created successfully');
       return true;
     } else {
       logger.d('customer creation failed');
+      createcustomerLoading = false;
+      notifyListeners();
       return false;
     }
   }
 
+  getHoldingNature() async {}
   getTaxStatus() async {
     taxpageloading = true;
 

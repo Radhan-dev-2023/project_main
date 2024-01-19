@@ -21,7 +21,7 @@ class AppTheme {
 
   static const Color _iconColor = Colors.white;
 
-  static const Color _accentColor = Color.fromRGBO(74, 24, 154, 1);
+  static const Color _accentColor = Color(0xFF4D84BD);
 
   // *****************
   // Text Style - light

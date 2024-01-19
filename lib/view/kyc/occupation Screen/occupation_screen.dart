@@ -58,7 +58,16 @@ class ScreenOccupation extends StatelessWidget {
                               ? const Color(0xFF0E1330)
                               : const Color.fromARGB(255, 240, 233, 233),
                           showCheckmark: false,
-                          label: Text(kycController.options[index]),
+                          label: Text(
+                            kycController.options[index],
+                            style: TextStyle(
+                              color: kycController.selectedIndex == index
+                                  ? Colors
+                                      .white // Set the text color for the selected chip
+                                  : Colors
+                                      .black, // Set the text color for unselected chips
+                            ),
+                          ),
                           selected: kycController.selectedIndex == index,
                           onSelected: (bool selected) {
                             kycController.selectedIndex =

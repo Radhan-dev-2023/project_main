@@ -68,6 +68,7 @@ class ScreenIfcAdding extends StatelessWidget {
                   if (result == true) {
                     kycController.addIfsc();
                     kycController.addingbankname();
+
                     kycController.updatePagenumber('9');
                     // ignore: use_build_context_synchronously
                     Navigator.push(

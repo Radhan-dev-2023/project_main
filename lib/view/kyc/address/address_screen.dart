@@ -50,7 +50,7 @@ class _ScreenAddressState extends State<ScreenAddress> {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'field is required';
+                        return 'Please enter Address 1';
                       }
                       return null;
                     },
@@ -111,7 +111,7 @@ class _ScreenAddressState extends State<ScreenAddress> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'field is required';
+                          return 'Please enter the city name';
                         }
                         return null;
                       },
@@ -173,7 +173,7 @@ class _ScreenAddressState extends State<ScreenAddress> {
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'field is required';
+                              return 'Enter the country name';
                             }
                             return null;
                           },
@@ -196,7 +196,7 @@ class _ScreenAddressState extends State<ScreenAddress> {
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'field is required';
+                              return 'Enter the pincode';
                             }
                             if (!RegExp(r'^\d{6}$').hasMatch(value)) {
                               return 'Invalid Pincode';

@@ -204,7 +204,6 @@ class ScreenGuardianAdding extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: ButtonWidget(
         onTap: () {
-          kycController.changeGuardianSelected(true);
           kycController.addGuardian();
           Navigator.pushReplacement(
             context,

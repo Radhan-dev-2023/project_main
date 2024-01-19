@@ -43,7 +43,7 @@ class ScreenPanCard extends StatelessWidget {
                   ),
                   VerticalSpacer(2.h),
                   Text(
-                    'PAN is compulsary for investing in India.',
+                    'PAN is compulsory for investing in India.',
                     style: Theme.of(context)
                         .textTheme
                         .labelMedium!
