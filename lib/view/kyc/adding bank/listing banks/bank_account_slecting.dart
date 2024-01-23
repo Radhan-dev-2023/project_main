@@ -32,7 +32,7 @@ class ScreenAddingBank extends StatelessWidget {
                 ),
                 VerticalSpacer(4.h),
                 TextFormField(
-                  readOnly: true,
+                  // readOnly: true,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: kycController.banknameController,
                   style: Theme.of(context).textTheme.labelLarge!,

@@ -13,6 +13,7 @@ class ScreenSignin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Brightness brightness = Theme.of(context).brightness;
     final authController = Provider.of<AuthController>(context);
     final biometricLoginController = Provider.of<BiometricLogin>(context);
 
@@ -24,9 +25,10 @@ class ScreenSignin extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back,
-              color: Colors.black,
+              color:
+                  brightness == Brightness.dark ? Colors.white : Colors.black,
             ),
             onPressed: () {
               authController.phonenumberControllerforlogin.clear();

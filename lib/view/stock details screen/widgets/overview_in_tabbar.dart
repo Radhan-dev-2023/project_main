@@ -1,5 +1,10 @@
+import 'dart:developer';
+
+import 'package:finfresh_mobile/controller/scheme%20details%20controller/scheme_details_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
@@ -8,202 +13,127 @@ class OverViewInTabbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> overviewName = [
-      'Experts rating',
-      'Fundamental',
-      'Financials',
-      'About',
-      'Shareholding pattern',
-      'Similar stocks'
-    ];
     return SingleChildScrollView(
-      child: Container(
-        margin: EdgeInsets.all(15.sp),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                CustomTextWidget(
-                  text: 'Performance',
-                  fontSize: 16.sp,
-                ),
-                HorizontalSpacer(4.w),
-                CircleAvatar(
-                  radius: 12.sp,
-                  backgroundColor: Colors.grey,
-                  child: Center(
-                    child: Text(
-                      '!',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium
-                          ?.copyWith(fontSize: 16.sp, color: Colors.black),
-                    ),
-                  ),
-                )
-              ],
-            ),
-            VerticalSpacer(2.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomTextWidget(
-                  text: "Today's loss",
-                  fontSize: 15.sp,
-                ),
-                CustomTextWidget(
-                  text: "Today's high",
-                  fontSize: 15.sp,
-                ),
-              ],
-            ),
-            VerticalSpacer(1.h),
-            Divider(
-              thickness: 8.sp,
-              color: Colors.green,
-            ),
-            VerticalSpacer(2.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomTextWidget(
-                  text: "52 week low",
-                  fontSize: 15.sp,
-                ),
-                CustomTextWidget(
-                  text: "52 week high",
-                  fontSize: 15.sp,
-                ),
-              ],
-            ),
-            VerticalSpacer(2.h),
-            // SfSlider(
-
-            //   // thumbIcon: Icon(Icons.arrow_back_ios),
-            //   min: 0.0,
-            //   max: 100.0,
-            //   value: 50.0, // Initial value
-            //   interval: 10.0, // Interval between values
-            //   // showLabels: true,
-            //   // showTicks: true,
-            //   enableTooltip: true,
-            //   onChanged: (newValue) {
-            //     // Handle value changes here
-            //     print('New value: $newValue');
-            //   },
-            // ),
-            Divider(
-              thickness: 8.sp,
-              color: Colors.green,
-            ),
-            VerticalSpacer(2.h),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Wrap(
+      child: Consumer<SchemeDetailsController>(
+          builder: (context, schemeController, child) {
+        return Container(
+          margin: EdgeInsets.all(15.sp),
+          child: Column(
+            children: [
+              VerticalSpacer(2.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const CustomTextWidget(
-                    text: 'Open price',
+                    text: 'Min. Investment',
                   ),
-                  HorizontalSpacer(10.w),
-                  const CustomTextWidget(
-                    text: 'Prev.close',
-                  ),
-                  HorizontalSpacer(10.w),
-                  const CustomTextWidget(
-                    text: 'Volume',
+                  CustomTextWidget(
+                    text:
+                        '₹ ${schemeController.schemeInfoModel?.minimumInvestment ?? ''}',
                   ),
                 ],
               ),
-            ),
-            VerticalSpacer(1.h),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Wrap(
+              VerticalSpacer(1.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const CustomTextWidget(
-                    text: '800.50',
+                    text: 'Min. Investment(SIP)',
                   ),
-                  HorizontalSpacer(17.w),
-                  const CustomTextWidget(
-                    text: '790.60',
-                  ),
-                  HorizontalSpacer(15.w),
-                  const CustomTextWidget(
-                    text: '97,74,420',
+                  CustomTextWidget(
+                    text:
+                        '₹ ${schemeController.schemeInfoModel?.sipMinimumAmount ?? ''}',
                   ),
                 ],
               ),
-            ),
-            VerticalSpacer(2.h),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Wrap(
+              VerticalSpacer(1.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const CustomTextWidget(
-                    text: 'Lower Circute',
+                    text: 'Exit Load',
                   ),
-                  HorizontalSpacer(5.w),
-                  const CustomTextWidget(
-                    text: 'Upper circute',
+                  CustomTextWidget(
+                    text: schemeController.schemeInfoModel?.exitLoad ?? '',
                   ),
                 ],
               ),
-            ),
-            VerticalSpacer(1.h),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Wrap(
-                children: [
-                  const CustomTextWidget(
-                    text: '711.55',
-                  ),
-                  HorizontalSpacer(17.w),
-                  const CustomTextWidget(
-                    text: '899.65',
-                  ),
-                ],
-              ),
-            ),
-            VerticalSpacer(2.h),
-            ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return SizedBox(
-                    child: Column(
+              VerticalSpacer(2.h),
+              // Icon(CupertinoIcons.chevron_up),
+              // Icon(CupertinoIcons.chevron_down),
+              SizedBox(
+                width: double.infinity.sp,
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    VerticalSpacer(3.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          overviewName[index],
-                          style:
-                              Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    fontSize: 17.sp,
-                                  ),
+                        CustomTextWidget(
+                          text: 'Holdings',
+                          fontSize: 18.sp,
                         ),
-                        Icon(
-                          Icons.arrow_forward_ios,
-                          size: 16.sp,
-                        )
+                        InkWell(
+                          onTap: () {
+                            schemeController.changeButton();
+                          },
+                          child: Icon(
+                            schemeController.changebutton == false
+                                ? CupertinoIcons.chevron_down
+                                : CupertinoIcons.chevron_up,
+                            size: 18.sp,
+                          ),
+                        ),
                       ],
                     ),
-                    VerticalSpacer(3.h),
+                    VerticalSpacer(2.h),
+                    schemeController.changebutton == true
+                        ? SizedBox(
+                            child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: schemeController
+                                    .schemeInfoModel!
+                                    .schemePortfolioList![0]
+                                    .schemePortfolioHoldings
+                                    .keys
+                                    .map((entry) => Column(
+                                          children: [
+                                            Text(entry),
+                                            VerticalSpacer(1
+                                                .h), // Adjust the height according to your needs
+                                          ],
+                                        ))
+                                    .toList(),
+                              ),
+                              Column(
+                                children: schemeController
+                                    .schemeInfoModel!
+                                    .schemePortfolioList![0]
+                                    .schemePortfolioHoldings
+                                    .values
+                                    .map((entry) => Column(
+                                          children: [
+                                            Text('$entry %'),
+                                            VerticalSpacer(1
+                                                .h), // Adjust the height according to your needs
+                                          ],
+                                        ))
+                                    .toList(),
+                              )
+                            ],
+                          ))
+                        : const SizedBox(),
                   ],
-                ));
-              },
-              separatorBuilder: (context, index) => const Divider(
-                color: Colors.grey,
-                thickness: 0.2,
+                ),
               ),
-              itemCount: overviewName.length,
-            ),
-            VerticalSpacer(10.h),
-          ],
-        ),
-      ),
+              VerticalSpacer(10.h),
+            ],
+          ),
+        );
+      }),
     );
   }
 }

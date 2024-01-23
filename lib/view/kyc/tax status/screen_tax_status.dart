@@ -1,5 +1,6 @@
 import 'package:finfresh_mobile/controller/auth/auth_controller.dart';
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
+import 'package:finfresh_mobile/model/holding%20nature%20model/holding_nature_model.dart';
 import 'package:finfresh_mobile/model/tax%20status%20model/tax_status_model.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
@@ -22,7 +23,9 @@ class ScreenTaxStatus extends StatefulWidget {
 class _ScreenTaxStatusState extends State<ScreenTaxStatus> {
   @override
   void initState() {
-    Provider.of<KycController>(context, listen: false).getTaxStatus();
+    // Provider.of<KycController>(context, listen: false).getHoldingNature();
+    // Provider.of<KycController>(context, listen: false).getTaxStatus();
+    Provider.of<KycController>(context, listen: false).callHodingAndTax();
     Provider.of<KycController>(context, listen: false).updatePagenumber('2');
     super.initState();
   }
@@ -62,7 +65,6 @@ class _ScreenTaxStatusState extends State<ScreenTaxStatus> {
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                             fontSize: 19.sp, fontWeight: FontWeight.w400),
                       ),
-                      const VerticalSpacer(4),
                       VerticalSpacer(3.h),
                       Container(
                         decoration: BoxDecoration(
@@ -104,6 +106,47 @@ class _ScreenTaxStatusState extends State<ScreenTaxStatus> {
                           ),
                         ),
                       ),
+                      VerticalSpacer(3.h),
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: brightness == Brightness.dark
+                                  ? Colors.white
+                                  : Colors.black),
+                          borderRadius: BorderRadius.circular(8),
+                          color: brightness == Brightness.light
+                              ? Colors.white
+                              : const Color(0xFF0E1330),
+                        ),
+                        height: 60,
+                        // width: 120,
+                        width: double.infinity,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: DropdownButton(
+                            hint: const Text('Select Holding Nature'),
+                            value: kycController.holdingValue,
+                            isExpanded: true,
+                            underline: Container(
+                              height: 0,
+                            ),
+                            items: kycController
+                                .holdingNatureModel?.masterDetails!
+                                .map((MasterHoldingDetail masterDetail) {
+                              return DropdownMenuItem(
+                                value: masterDetail,
+                                child: Text(
+                                  masterDetail.holdNatureDesc.toString(),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              // taxStatus = value;
+                              kycController.updateHoldingValue(value);
+                            },
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -115,6 +158,9 @@ class _ScreenTaxStatusState extends State<ScreenTaxStatus> {
                 onTap: () async {
                   if (kycController.taxStatusValue == null) {
                     showSnackBar(context, 'Select a Tax Status');
+                    return;
+                  } else if (kycController.holdingValue == null) {
+                    showSnackBar(context, 'Select a Holding Nature');
                     return;
                   }
                   bool result = await kycController

@@ -63,6 +63,7 @@ class AppTheme {
 // *****************
 
   static final ThemeData lightTheme = ThemeData(
+    iconTheme: const IconThemeData(color: Colors.black),
     inputDecorationTheme: InputDecorationTheme(
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(13.sp),
@@ -106,6 +107,14 @@ class AppTheme {
   );
 
   static final ThemeData darkTheme = ThemeData(
+    iconTheme: const IconThemeData(color: Colors.white),
+    // iconButtonTheme: IconButtonThemeData(
+    //   style: ButtonStyle(
+    //     iconColor: MaterialStateProperty.all<Color>(
+    //       Colors.white,
+    //     ), // Set your desired icon color
+    //   ),
+    // ),
     cardTheme: const CardTheme(
       color: Color(0xFF0E1330), // Set the background color for cards
     ),

@@ -7,14 +7,15 @@ import 'package:finfresh_mobile/utilities/urls/url.dart';
 import 'package:http/http.dart' as http;
 
 class GetInnService {
-  Future<bool> getInn(String phoneNumber, String panNumber, taxStatus) async {
+  Future<bool> getInn(
+      String phoneNumber, String panNumber, taxStatus, holdingNature) async {
     String token = await SecureStorage.readToken('token');
     String userId = await SecureStorage.readToken('userId');
     Map<String, dynamic> payload = {
       "mobile_no": phoneNumber,
       "fh_pan": panNumber,
       "tax_status": taxStatus,
-      "hold_nature": "SI",
+      "hold_nature": holdingNature,
       "exempt_flag": "",
       "jh1_exempt_flag": "",
       "jh1_pan": "",

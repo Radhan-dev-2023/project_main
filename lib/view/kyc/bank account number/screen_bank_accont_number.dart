@@ -1,5 +1,8 @@
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
+import 'package:finfresh_mobile/controller/uploading%20proofs/uploading_proof_controller.dart';
+import 'package:finfresh_mobile/model/account%20type%20model/account_type_model.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
+import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
 import 'package:finfresh_mobile/view/kyc/adding%20bank/ifsc%20adding/enter_ifsc_code.dart';
 import 'package:finfresh_mobile/view/kyc/adding%20bank/upload%20bank%20proof/uploading_bank_proof.dart';
 import 'package:finfresh_mobile/view/kyc/adding%20nominee%20and%20guardian/adding_nominee_guardian.dart';
@@ -9,13 +12,30 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class ScreenBankAccountNumber extends StatelessWidget {
+class ScreenBankAccountNumber extends StatefulWidget {
   const ScreenBankAccountNumber({super.key});
 
   @override
+  State<ScreenBankAccountNumber> createState() =>
+      _ScreenBankAccountNumberState();
+}
+
+class _ScreenBankAccountNumberState extends State<ScreenBankAccountNumber> {
+  @override
+  void initState() {
+    // Provider.of<KycController>(context, listen: false).getHoldingNature();
+    // Provider.of<KycController>(context, listen: false).getTaxStatus();
+    Provider.of<KycController>(context, listen: false).getAccountType();
+    Provider.of<KycController>(context, listen: false).updatePagenumber('10');
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    Brightness brightness = MediaQuery.of(context).platformBrightness;
+    // Provider.of<UploadingProof>(context, listen: false).getBankCode();
     final kycController = Provider.of<KycController>(context);
-    kycController.updatePagenumber('10');
+    // kycController.updatePagenumber('10');
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -27,11 +47,11 @@ class ScreenBankAccountNumber extends StatelessWidget {
               children: [
                 VerticalSpacer(10.h),
                 Text(
-                  'Enter your account number',
+                  'Enter your account number & account type',
                   style: Theme.of(context)
                       .textTheme
                       .labelLarge!
-                      .copyWith(fontSize: 19.sp, fontWeight: FontWeight.w700),
+                      .copyWith(fontSize: 18.sp, fontWeight: FontWeight.w700),
                 ),
                 VerticalSpacer(4.h),
                 TextFormField(
@@ -53,6 +73,46 @@ class ScreenBankAccountNumber extends StatelessWidget {
                     hintText: 'Enter account number',
                   ),
                 ),
+                VerticalSpacer(3.h),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        color: brightness == Brightness.dark
+                            ? Colors.white
+                            : Colors.black),
+                    borderRadius: BorderRadius.circular(8),
+                    color: brightness == Brightness.light
+                        ? Colors.white
+                        : const Color(0xFF0E1330),
+                  ),
+                  height: 60,
+                  // width: 120,
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: DropdownButton(
+                      hint: const Text('Select acocunt type'),
+                      value: kycController.acountypeValue,
+                      isExpanded: true,
+                      underline: Container(
+                        height: 0,
+                      ),
+                      items: kycController.accountTypeModel?.masterDetails!
+                          .map((MasterAccountDetail masterDetail) {
+                        return DropdownMenuItem(
+                          value: masterDetail,
+                          child: Text(
+                            masterDetail.description.toString(),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        // taxStatus = value;
+                        kycController.updateAccountType(value);
+                      },
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -61,6 +121,10 @@ class ScreenBankAccountNumber extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: ButtonWidget(
         onTap: () {
+          if (kycController.acountypeValue == null) {
+            showSnackBar(context, "Select a account type");
+            return;
+          }
           if (kycController.bankAccountnumberFormkey.currentState!.validate()) {
             kycController.addingbankAccNumber();
             kycController.addbanknameAccountnumber();

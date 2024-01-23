@@ -5,6 +5,7 @@ import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/db/model/investors_data_model.dart';
 import 'package:finfresh_mobile/routes/routes.dart';
+import 'package:finfresh_mobile/services/scheme%20services/scheme_services.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
@@ -27,8 +28,10 @@ class ScreenHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SchemeServices service = SchemeServices();
     Brightness platformBrightness = MediaQuery.of(context).platformBrightness;
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      service.mutualFundBasedonCategoryAndQuery();
       Provider.of<DashBoardController>(context, listen: false).getusername();
       Provider.of<DashBoardController>(context, listen: false)
           .getDashBoardDetails(context);

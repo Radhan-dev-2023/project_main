@@ -3,6 +3,7 @@ import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_controller.dart';
 import 'package:finfresh_mobile/controller/pin%20controller/pin_controller.dart';
+import 'package:finfresh_mobile/controller/scheme%20details%20controller/scheme_details_controller.dart';
 import 'package:finfresh_mobile/controller/uploading%20proofs/uploading_proof_controller.dart';
 import 'package:finfresh_mobile/db/model/investors_data_model.dart';
 import 'package:finfresh_mobile/utilities/theme/theme.dart';
@@ -68,12 +69,15 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => DashBoardController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SchemeDetailsController(),
         )
       ],
       child: ResponsiveSizer(builder: (context, orientation, screenType) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
+
           theme: isDarkMode ? AppTheme.darkTheme : AppTheme.lightTheme,
           // darkTheme: AppTheme.darkTheme,
           home: const SplashScreen(),
@@ -81,6 +85,7 @@ class MyApp extends StatelessWidget {
           // home: const ScreenUploadinProofs(),
           // home: ScreenBankAccountNumber(),
           // home: const ScreenIfcAdding(),
+          // home: ScreenBankAccountNumber(),
           // home: const ScreenUploadingBankProof(),
           // home: const ScreenAddress(),
           // home: const ScreenTaxStatus(),

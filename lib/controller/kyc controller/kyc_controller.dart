@@ -3,7 +3,9 @@ import 'dart:developer';
 
 import 'package:finfresh_mobile/db/functions/db_functions.dart';
 import 'package:finfresh_mobile/db/model/investors_data_model.dart';
+import 'package:finfresh_mobile/model/account%20type%20model/account_type_model.dart';
 import 'package:finfresh_mobile/model/bank%20details%20model/bank_details_model.dart';
+import 'package:finfresh_mobile/model/holding%20nature%20model/holding_nature_model.dart';
 import 'package:finfresh_mobile/model/investors%20details/investors_details_model.dart';
 import 'package:finfresh_mobile/model/tax%20status%20model/tax_status_model.dart';
 import 'package:finfresh_mobile/services/get%20bank%20details/get_bank_details.dart';
@@ -111,6 +113,8 @@ class KycController extends ChangeNotifier {
   String? email;
   bool taxpageloading = false;
   MasterDetail? taxStatusValue;
+  MasterHoldingDetail? holdingValue;
+  MasterAccountDetail? acountypeValue;
   String? taxcode;
   int? selectedIndex;
   String? selectedValue;
@@ -164,14 +168,14 @@ class KycController extends ChangeNotifier {
   ];
   String guardianrelationvalue = 'Select Guradian relation';
   String gudianvalueToBackend = '';
-  String nominee1guardRelationvalue = "Select Guradian relation";
-  String nominee2guardRelationvalue = "Select Guradian relation";
-  String nominee3guardRelationvalue = "Select Guradian relation";
+  String nominee1guardRelationvalue = "Select Guardian relationShip";
+  String nominee2guardRelationvalue = "Select Guardian relationShip";
+  String nominee3guardRelationvalue = "Select Guardian relationShip";
   String nom1guardrelationtobackend = '';
   String nom2guardrelationtobackend = '';
   String nom3guardrelationtobackend = '';
   List<String> guardianRelation = [
-    'Select Guradian relation',
+    'Select Guardian relationShip',
     "Natural Guardian",
     "Legaly Appointed Guardian",
   ];
@@ -473,6 +477,28 @@ class KycController extends ChangeNotifier {
     notifyListeners();
   }
 
+  String? holdingValuetoBackend;
+  void updateHoldingValue(value) {
+    holdingValue = value;
+    holdingValuetoBackend = holdingValue?.holdNatureCode;
+
+    // taxcode = taxStatusValue?.taxStatusCode;
+    logger.d('holdingNatureCode == $holdingValuetoBackend');
+    notifyListeners();
+  }
+
+  String? accountypeToBackend;
+  void updateAccountType(value) {
+    acountypeValue = value;
+    accountypeToBackend = acountypeValue?.accType;
+    notifyListeners();
+  }
+
+  callHodingAndTax() async {
+    await getTaxStatus();
+    await getHoldingNature();
+  }
+
   setselectedIndex(int index) {
     selectedIndex = index;
     notifyListeners();
@@ -558,6 +584,7 @@ class KycController extends ChangeNotifier {
       mobileNo: retrievedValue?.mobileNo,
       pan: retrievedValue?.pan,
       taxStatus: taxcode ?? '',
+      holdNature: holdingValuetoBackend ?? '',
     );
     dbFunctions.addTodb(investorModel);
   }
@@ -570,6 +597,7 @@ class KycController extends ChangeNotifier {
       mobileNo: retrievedValue?.mobileNo,
       pan: retrievedValue?.pan,
       taxStatus: retrievedValue?.taxStatus,
+      holdNature: retrievedValue?.holdNature,
       occupation: selectedValue ?? '',
     );
     dbFunctions.addTodb(investorModel);
@@ -585,6 +613,7 @@ class KycController extends ChangeNotifier {
       mobileNo: retrievedValue?.mobileNo,
       pan: retrievedValue?.pan,
       taxStatus: retrievedValue?.taxStatus,
+      holdNature: retrievedValue?.holdNature,
       occupation: retrievedValue?.occupation,
       invName: nameController.text,
       dob: dobController.text,
@@ -600,6 +629,7 @@ class KycController extends ChangeNotifier {
       mobileNo: retrievedValue?.mobileNo,
       pan: retrievedValue?.pan,
       taxStatus: retrievedValue?.taxStatus,
+      holdNature: retrievedValue?.holdNature,
       occupation: retrievedValue?.occupation,
       invName: retrievedValue?.invName,
       dob: retrievedValue?.dob,
@@ -626,6 +656,7 @@ class KycController extends ChangeNotifier {
       mobileNo: retrievedValue?.mobileNo,
       pan: retrievedValue?.pan,
       taxStatus: retrievedValue?.taxStatus,
+      holdNature: retrievedValue?.holdNature,
       occupation: retrievedValue?.occupation,
       invName: retrievedValue?.invName,
       dob: retrievedValue?.dob,
@@ -659,6 +690,7 @@ class KycController extends ChangeNotifier {
       mobileNo: retrievedValue?.mobileNo,
       pan: retrievedValue?.pan,
       taxStatus: retrievedValue?.taxStatus,
+      holdNature: retrievedValue?.holdNature,
       occupation: retrievedValue?.occupation,
       invName: retrievedValue?.invName,
       dob: retrievedValue?.dob,
@@ -694,6 +726,7 @@ class KycController extends ChangeNotifier {
       mobileNo: retrievedValue?.mobileNo,
       pan: retrievedValue?.pan,
       taxStatus: retrievedValue?.taxStatus,
+      holdNature: retrievedValue?.holdNature,
       occupation: retrievedValue?.occupation,
       invName: retrievedValue?.invName,
       dob: retrievedValue?.dob,
@@ -731,6 +764,7 @@ class KycController extends ChangeNotifier {
       mobileNo: retrievedValue?.mobileNo,
       pan: retrievedValue?.pan,
       taxStatus: retrievedValue?.taxStatus,
+      holdNature: retrievedValue?.holdNature,
       occupation: retrievedValue?.occupation,
       invName: retrievedValue?.invName,
       dob: retrievedValue?.dob,
@@ -769,6 +803,7 @@ class KycController extends ChangeNotifier {
       mobileNo: retrievedValue?.mobileNo,
       pan: retrievedValue?.pan,
       taxStatus: retrievedValue?.taxStatus,
+      holdNature: retrievedValue?.holdNature,
       occupation: retrievedValue?.occupation,
       invName: retrievedValue?.invName,
       dob: retrievedValue?.dob,
@@ -794,8 +829,10 @@ class KycController extends ChangeNotifier {
       motherName: retrievedValue?.motherName,
       ifscCode: retrievedValue?.ifscCode,
       bankName: retrievedValue?.bankName,
+
       branchName: retrievedValue?.branchName,
       accNo: retrievedValue?.accNo,
+      accType: retrievedValue?.accType,
       jh1Name: retrievedValue?.jh1Name,
       jh1Pan: retrievedValue?.jh2Name,
       jh1ValidPan: '',
@@ -892,6 +929,7 @@ class KycController extends ChangeNotifier {
       mobileNo: retrievedValue?.mobileNo,
       pan: retrievedValue?.pan,
       taxStatus: retrievedValue?.taxStatus,
+      holdNature: retrievedValue?.holdNature,
       occupation: retrievedValue?.occupation,
       invName: retrievedValue?.invName,
       dob: retrievedValue?.dob,
@@ -919,6 +957,7 @@ class KycController extends ChangeNotifier {
       bankName: retrievedValue?.bankName,
       branchName: retrievedValue?.branchName,
       accNo: retrievedValue?.accNo,
+      accType: retrievedValue?.accType,
       jh1Name: retrievedValue?.jh1Name,
       jh1Pan: retrievedValue?.jh2Name,
       jh1ValidPan: '',
@@ -1015,6 +1054,7 @@ class KycController extends ChangeNotifier {
       mobileNo: retrievedValue?.mobileNo,
       pan: retrievedValue?.pan,
       taxStatus: retrievedValue?.taxStatus,
+      holdNature: retrievedValue?.holdNature,
       occupation: retrievedValue?.occupation,
       invName: retrievedValue?.invName,
       dob: retrievedValue?.dob,
@@ -1042,6 +1082,7 @@ class KycController extends ChangeNotifier {
       bankName: retrievedValue?.bankName,
       branchName: retrievedValue?.branchName,
       accNo: accountnumberCotroller.text,
+      accType: accountypeToBackend ?? 'SB',
     );
     dbFunctions.addTodb(investorModel);
   }
@@ -1054,6 +1095,7 @@ class KycController extends ChangeNotifier {
       mobileNo: retrievedValue?.mobileNo,
       pan: retrievedValue?.pan,
       taxStatus: retrievedValue?.taxStatus,
+      holdNature: retrievedValue?.holdNature,
       occupation: retrievedValue?.occupation,
       invName: retrievedValue?.invName,
       dob: retrievedValue?.dob,
@@ -1081,6 +1123,7 @@ class KycController extends ChangeNotifier {
       bankName: retrievedValue?.bankName,
       branchName: retrievedValue?.branchName,
       accNo: retrievedValue?.accNo,
+      accType: retrievedValue?.accType,
       jh1Name: jh1nameController.text,
       jh1Pan: jh1panController.text,
       jh1ValidPan: '',
@@ -1142,7 +1185,7 @@ class KycController extends ChangeNotifier {
       exemptRefNo: '',
       dob:
           dobController.text.isEmpty ? retrievedValue?.dob : dobController.text,
-      holdNature: 'SI',
+      holdNature: holdingValuetoBackend ?? retrievedValue?.holdNature,
       taxStatus: taxcode ?? retrievedValue?.taxStatus,
       kyc: 'Y',
       fhCkyc: '',
@@ -1219,7 +1262,7 @@ class KycController extends ChangeNotifier {
       accNo: accountnumberCotroller.text.isEmpty
           ? retrievedValue?.accNo
           : accountnumberCotroller.text,
-      accType: 'SB',
+      accType: accountypeToBackend ?? retrievedValue?.accType,
       ifscCode: ifscCodeController.text.isEmpty
           ? retrievedValue?.ifscCode
           : ifscCodeController.text,
@@ -1422,8 +1465,8 @@ class KycController extends ChangeNotifier {
   Future<bool> getInn(String phoneNumber) async {
     iinLoading = true;
     notifyListeners();
-    bool isVerified =
-        await getInnService.getInn(phoneNumber, panController.text, taxcode);
+    bool isVerified = await getInnService.getInn(
+        phoneNumber, panController.text, taxcode, holdingValuetoBackend);
     iinLoading = false;
     notifyListeners();
     return isVerified;
@@ -1450,10 +1493,25 @@ class KycController extends ChangeNotifier {
     }
   }
 
-  getHoldingNature() async {}
+  HoldingNatureModel? holdingNatureModel;
+
+  getHoldingNature() async {
+    taxpageloading = true;
+    holdingNatureModel = await masterService.fetchData();
+    // logger.d('holding nature response == $holdingResponse');
+    if (holdingNatureModel != null) {
+      // Map<String, dynamic> jsonResponse = json.decode(holdingResponse);
+
+      taxpageloading = false;
+      notifyListeners();
+    } else {
+      logger.d('tax status fetched failed');
+      taxpageloading = false;
+    }
+  }
+
   getTaxStatus() async {
     taxpageloading = true;
-
     String? taxStatusResponse = await taxStatusService.getTaxStatus();
     logger.d('tax status response == $taxStatusResponse');
     if (taxStatusResponse != null) {
@@ -1472,6 +1530,22 @@ class KycController extends ChangeNotifier {
       logger.d('tax status fetched failed');
       taxpageloading = false;
       notifyListeners();
+    }
+  }
+
+  AccountTypeModel? accountTypeModel;
+  getAccountType() async {
+    taxpageloading = true;
+    accountTypeModel = await masterService.fetchAccountType();
+    // logger.d('holding nature response == $holdingResponse');
+    if (accountTypeModel != null) {
+      // Map<String, dynamic> jsonResponse = json.decode(holdingResponse);
+
+      taxpageloading = false;
+      notifyListeners();
+    } else {
+      logger.d('account type fetched failed');
+      taxpageloading = false;
     }
   }
 }

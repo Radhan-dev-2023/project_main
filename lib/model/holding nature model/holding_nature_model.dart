@@ -13,7 +13,7 @@ String holdingNatureModelToJson(HoldingNatureModel data) =>
 class HoldingNatureModel {
   int? status;
   String? message;
-  List<MasterDetail>? masterDetails;
+  List<MasterHoldingDetail>? masterDetails;
 
   HoldingNatureModel({
     this.status,
@@ -25,8 +25,8 @@ class HoldingNatureModel {
       HoldingNatureModel(
         status: json["status"],
         message: json["message"],
-        masterDetails: List<MasterDetail>.from(
-            json["masterDetails"].map((x) => MasterDetail.fromJson(x))),
+        masterDetails: List<MasterHoldingDetail>.from(
+            json["masterDetails"].map((x) => MasterHoldingDetail.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -37,18 +37,19 @@ class HoldingNatureModel {
       };
 }
 
-class MasterDetail {
+class MasterHoldingDetail {
   String? holdNatureCode;
   String? holdNatureDesc;
   String? lastModifiedDate;
 
-  MasterDetail({
+  MasterHoldingDetail({
     this.holdNatureCode,
     this.holdNatureDesc,
     this.lastModifiedDate,
   });
 
-  factory MasterDetail.fromJson(Map<String, dynamic> json) => MasterDetail(
+  factory MasterHoldingDetail.fromJson(Map<String, dynamic> json) =>
+      MasterHoldingDetail(
         holdNatureCode: json["HOLD_NATURE_CODE"],
         holdNatureDesc: json["HOLD_NATURE_DESC"],
         lastModifiedDate: json["LAST_MODIFIED_DATE"],
