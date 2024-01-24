@@ -1,10 +1,7 @@
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
-import 'package:finfresh_mobile/controller/uploading%20proofs/uploading_proof_controller.dart';
 import 'package:finfresh_mobile/model/account%20type%20model/account_type_model.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
-import 'package:finfresh_mobile/view/kyc/adding%20bank/ifsc%20adding/enter_ifsc_code.dart';
-import 'package:finfresh_mobile/view/kyc/adding%20bank/upload%20bank%20proof/uploading_bank_proof.dart';
 import 'package:finfresh_mobile/view/kyc/adding%20nominee%20and%20guardian/adding_nominee_guardian.dart';
 import 'package:finfresh_mobile/view/kyc/joint%20holders/join_holders_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
@@ -25,6 +22,7 @@ class _ScreenBankAccountNumberState extends State<ScreenBankAccountNumber> {
   void initState() {
     // Provider.of<KycController>(context, listen: false).getHoldingNature();
     // Provider.of<KycController>(context, listen: false).getTaxStatus();
+    Provider.of<KycController>(context, listen: false).acountypeValue = null;
     Provider.of<KycController>(context, listen: false).getAccountType();
     Provider.of<KycController>(context, listen: false).updatePagenumber('10');
     super.initState();
@@ -37,6 +35,15 @@ class _ScreenBankAccountNumberState extends State<ScreenBankAccountNumber> {
     final kycController = Provider.of<KycController>(context);
     // kycController.updatePagenumber('10');
     return Scaffold(
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            kycController.accountnumberCotroller.clear();
+            Navigator.pop(context);
+          },
+          child: const Icon(Icons.arrow_back),
+        ),
+      ),
       body: SafeArea(
         child: Container(
           margin: EdgeInsets.all(15.sp),
@@ -45,7 +52,7 @@ class _ScreenBankAccountNumberState extends State<ScreenBankAccountNumber> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                VerticalSpacer(10.h),
+                VerticalSpacer(7.h),
                 Text(
                   'Enter your account number & account type',
                   style: Theme.of(context)

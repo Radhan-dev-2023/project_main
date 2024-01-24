@@ -16,6 +16,15 @@ class ScreenJointHolders extends StatelessWidget {
     kycController.updatePagenumber('11');
     Brightness brightness = Theme.of(context).brightness;
     return Scaffold(
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            kycController.clearJH1value();
+            Navigator.pop(context);
+          },
+          child: const Icon(Icons.arrow_back),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -25,7 +34,7 @@ class ScreenJointHolders extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  VerticalSpacer(8.h),
+                  VerticalSpacer(5.h),
                   const Center(
                     child: SizedBox(
                       height: 50,

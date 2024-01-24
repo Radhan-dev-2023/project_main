@@ -14,6 +14,14 @@ class ScreenAddingBank extends StatelessWidget {
     final kycController = Provider.of<KycController>(context);
     kycController.updatePagenumber('9');
     return Scaffold(
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const Icon(Icons.arrow_back),
+        ),
+      ),
       body: SafeArea(
         child: Container(
           margin: EdgeInsets.all(15.sp),
@@ -22,7 +30,7 @@ class ScreenAddingBank extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                VerticalSpacer(10.h),
+                VerticalSpacer(7.h),
                 Text(
                   'Choose your bank',
                   style: Theme.of(context)

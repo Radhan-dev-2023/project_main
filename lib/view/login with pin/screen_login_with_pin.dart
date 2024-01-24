@@ -2,11 +2,8 @@ import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_co
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
-import 'package:finfresh_mobile/view/setting%20pin%20number/setting_pin.dart';
 import 'package:finfresh_mobile/view/sign%20in/sign_in_screen.dart';
-
 import 'package:flutter/material.dart';
-
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';

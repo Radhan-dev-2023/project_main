@@ -1,6 +1,5 @@
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
-import 'package:finfresh_mobile/view/kyc/Nominee%20adding/nominee%20type/screen_nominee_count.dart';
 import 'package:finfresh_mobile/view/kyc/adding%20nominee%20and%20guardian/adding_nominee_guardian.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +14,15 @@ class Jh2Screen extends StatelessWidget {
     final kycController = Provider.of<KycController>(context);
     Brightness brightness = Theme.of(context).brightness;
     return Scaffold(
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            kycController.clearJh2Value();
+            Navigator.pop(context);
+          },
+          child: const Icon(Icons.arrow_back),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -24,7 +32,7 @@ class Jh2Screen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  VerticalSpacer(8.h),
+                  VerticalSpacer(5.h),
                   const Center(
                     child: SizedBox(
                       height: 50,

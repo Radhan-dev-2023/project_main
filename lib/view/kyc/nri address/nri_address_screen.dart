@@ -14,6 +14,15 @@ class ScreenNriAdress extends StatelessWidget {
     final kycController = Provider.of<KycController>(context);
     kycController.updatePagenumber('6');
     return Scaffold(
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            kycController.clearValueinNri();
+            Navigator.pop(context);
+          },
+          child: const Icon(Icons.arrow_back),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -21,7 +30,7 @@ class ScreenNriAdress extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                VerticalSpacer(10.h),
+                VerticalSpacer(7.h),
                 Text(
                   'Enter your NRI Address',
                   style: Theme.of(context)

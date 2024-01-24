@@ -15,6 +15,15 @@ class ScreenIfcAdding extends StatelessWidget {
     final kycController = Provider.of<KycController>(context);
     kycController.updatePagenumber('8');
     return Scaffold(
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            kycController.ifscCodeController.clear();
+            Navigator.pop(context);
+          },
+          child: const Icon(Icons.arrow_back),
+        ),
+      ),
       body: SafeArea(
         child: Container(
           margin: EdgeInsets.all(15.sp),
@@ -23,7 +32,7 @@ class ScreenIfcAdding extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                VerticalSpacer(10.h),
+                VerticalSpacer(7.h),
                 Text(
                   'Enter your IFSC number',
                   style: Theme.of(context)

@@ -166,7 +166,7 @@ class KycController extends ChangeNotifier {
     "2",
     "3",
   ];
-  String guardianrelationvalue = 'Select Guradian relation';
+  String guardianrelationvalue = 'Select Guardian relationShip';
   String gudianvalueToBackend = '';
   String nominee1guardRelationvalue = "Select Guardian relationShip";
   String nominee2guardRelationvalue = "Select Guardian relationShip";
@@ -485,6 +485,99 @@ class KycController extends ChangeNotifier {
     // taxcode = taxStatusValue?.taxStatusCode;
     logger.d('holdingNatureCode == $holdingValuetoBackend');
     notifyListeners();
+  }
+
+  void clearValueinAdress() {
+    address1Controller.clear();
+    address2Controller.clear();
+    address3Controller.clear();
+    cityController.clear();
+    countryController.clear();
+    pinCodeController.clear();
+    stateValue = "State";
+    residencenumberController.clear();
+    officenumberController.clear();
+    residencefaxController.clear();
+    officefaxController.clear();
+  }
+
+  void clearValueinNri() {
+    nriCityController.clear();
+    nriCountryController.clear();
+    nriStateController.clear();
+    nriPincodeController.clear();
+    nriaddress1Controller.clear();
+    nriaddress2Controller.clear();
+    nriaddress3Controller.clear();
+  }
+
+  void clearJH1value() {
+    jh1DOBController.clear();
+    jh1MobileRelation = 'Select Mobile relation';
+    jh1emailController.clear();
+    jh1phoneNumberCotroller.clear();
+    jh1emailRation = 'Select Email relation';
+    jh1nameController.clear();
+    jh1panController.clear();
+  }
+
+  void clearJh2Value() {
+    jh2DOBController.clear();
+    jh2MobileRelation = 'Select Mobile relation';
+    jh2emailRation = 'Select Email relation';
+    jh2emailController.clear();
+    jh2panController.clear();
+    jh2phoneNumberCotroller.clear();
+    jh2panController.clear();
+  }
+
+  void clearNom1vlaue() {
+    nominee1CountryController.clear();
+    nominee1DOBController.clear();
+    nominee1cityController.clear();
+    nominee1address1Controller.clear();
+    nominee1address2Controller.clear();
+    nominee1address3Controller.clear();
+    nominee1pincodeController.clear();
+    nominee1gurdnameCotroller.clear();
+    nominee1guardpanController.clear();
+    nominee1pincodeController.clear();
+    nominee1panCotroller.clear();
+    typevalue = "select a type";
+    selectRelationValue = 'Select relation';
+    nominee1guardRelationvalue = "Select Guardian relationShip";
+    nominee1stateValue = 'State';
+  }
+
+  void clearnom2Value() {
+    typevalueNominee2 = "select a type";
+    selectRelationValueNominne2 = 'Select relation';
+    nominee2guardRelationvalue = "Select Guardian relationShip";
+    nominee2guardpanController.clear();
+    nominee2gurdnameCotroller.clear();
+    nominee2panCotroller.clear();
+    nominee2DOBController.clear();
+    nominee2nameController.clear();
+  }
+
+  void clearnom3Value() {
+    typevalueNominee3 = "select a type";
+    selectRelationValueNominne3 = 'Select relation';
+    nominee3guardRelationvalue = "Select Guardian relationShip";
+    nominee3guardpanController.clear();
+    nominee3gurdnameCotroller.clear();
+    nominee3panCotroller.clear();
+    nominee3DOBController.clear();
+    nominee3nameController.clear();
+  }
+
+  void clearGuardianValue() {
+    guardDOBController.clear();
+    guardnameCotroller.clear();
+    guardpanController.clear();
+    mobileRation = 'Select Mobile relation';
+    guardianrelationvalue = 'Select Guardian relationShip';
+    emailRation = 'Select Email relation';
   }
 
   String? accountypeToBackend;

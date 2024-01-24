@@ -60,6 +60,15 @@ class ScreenOtp extends StatelessWidget {
           border: Border.all(color: Colors.red)),
     );
     return Scaffold(
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            authController.otpController.clear();
+            Navigator.pop(context);
+          },
+          child: const Icon(Icons.arrow_back),
+        ),
+      ),
       body: SafeArea(
         child: Container(
           margin: EdgeInsets.all(15.sp),
@@ -69,7 +78,7 @@ class ScreenOtp extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               // mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                VerticalSpacer(8.h),
+                VerticalSpacer(5.h),
                 const Center(
                   child: SizedBox(
                     height: 50,
@@ -146,6 +155,7 @@ class ScreenOtp extends StatelessWidget {
                             : const ScreenHomeView(),
                       ),
                     );
+                    authController.otpController.clear();
                   } else {
                     // ignore: use_build_context_synchronously
                     showSnackBar(context, 'Wrong OTP');

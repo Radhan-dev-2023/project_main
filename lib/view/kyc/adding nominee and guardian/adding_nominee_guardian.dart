@@ -17,15 +17,27 @@ class AddingNomineeAndGuadianScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final kycController = Provider.of<KycController>(context);
+    Brightness brightness = MediaQuery.of(context).platformBrightness;
     kycController.updatePagenumber('12');
 
     return Scaffold(
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back,
+            color: brightness == Brightness.dark ? Colors.white : Colors.black,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: Container(
           margin: EdgeInsets.all(15.sp),
           child: Column(
             children: [
-              VerticalSpacer(8.h),
+              VerticalSpacer(5.h),
               const Center(
                 child: SizedBox(
                   height: 50,

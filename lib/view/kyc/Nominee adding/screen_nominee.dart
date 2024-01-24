@@ -22,6 +22,18 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
     Brightness brightness = Theme.of(context).brightness;
     kycController.updatePagenumber('14');
     return Scaffold(
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            kycController.clearNom1vlaue();
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back,
+            color: brightness == Brightness.dark ? Colors.white : Colors.black,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -29,7 +41,7 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                VerticalSpacer(10.h),
+                // VerticalSpacer(10.h),
                 Text(
                   'Enter Nominee 1 Details',
                   style: Theme.of(context)

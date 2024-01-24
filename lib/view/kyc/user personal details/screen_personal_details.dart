@@ -15,6 +15,14 @@ class ScreenPersonalDetails extends StatelessWidget {
     final kycController = Provider.of<KycController>(context, listen: false);
     kycController.updatePagenumber('4');
     return Scaffold(
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const Icon(Icons.arrow_back),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -24,7 +32,7 @@ class ScreenPersonalDetails extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  VerticalSpacer(8.h),
+                  VerticalSpacer(5.h),
                   const Center(
                     child: SizedBox(
                       height: 50,

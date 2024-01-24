@@ -56,6 +56,15 @@ class ScreenConfirmPinNumber extends StatelessWidget {
     );
 
     return Scaffold(
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            pinController.confirmPinController.clear();
+            Navigator.pop(context);
+          },
+          child: const Icon(Icons.arrow_back),
+        ),
+      ),
       body: SafeArea(
         child: Container(
           margin: EdgeInsets.all(15.sp),
@@ -64,7 +73,7 @@ class ScreenConfirmPinNumber extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                VerticalSpacer(8.h),
+                VerticalSpacer(5.h),
                 const Center(
                   child: SizedBox(
                     height: 50,
@@ -124,7 +133,7 @@ class ScreenConfirmPinNumber extends StatelessWidget {
             pinController.setPin();
             Provider.of<KycController>(context, listen: false)
                 .updatePagenumber('1');
-            Navigator.pushReplacement(
+            Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => const ScreenPanCard(),

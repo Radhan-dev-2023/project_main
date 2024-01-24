@@ -14,14 +14,21 @@ class ScreenAddingParentDetails extends StatelessWidget {
     final kycController = Provider.of<KycController>(context);
     Provider.of<KycController>(context, listen: false).updatePagenumber('7');
     return Scaffold(
-      // appBar: AppBar(),
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const Icon(Icons.arrow_back),
+        ),
+      ),
       body: SafeArea(
         child: Container(
           margin: EdgeInsets.all(15.sp),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              VerticalSpacer(10.h),
+              VerticalSpacer(7.h),
               Text(
                 'Details required to finish KYC',
                 style: Theme.of(context)

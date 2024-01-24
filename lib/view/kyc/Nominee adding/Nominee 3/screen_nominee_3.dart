@@ -21,6 +21,19 @@ class _ScreenNominee3State extends State<ScreenNominee3> {
     Brightness brightness = Theme.of(context).brightness;
     kycController.updatePagenumber('16');
     return Scaffold(
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            kycController.clearnom3Value();
+
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back,
+            color: brightness == Brightness.dark ? Colors.white : Colors.black,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -28,7 +41,6 @@ class _ScreenNominee3State extends State<ScreenNominee3> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                VerticalSpacer(10.h),
                 Text(
                   'Enter Nominee 3 Details',
                   style: Theme.of(context)

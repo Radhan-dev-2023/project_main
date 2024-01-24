@@ -90,7 +90,7 @@ class AppTheme {
     scaffoldBackgroundColor: _lightPrimaryColor,
     appBarTheme: const AppBarTheme(
       color: _appbarColorLight,
-      iconTheme: IconThemeData(color: _iconColor),
+      iconTheme: IconThemeData(color: Colors.black),
     ),
     colorScheme: ColorScheme.light(
         primary: _lightOnPrimaryColor,
@@ -142,7 +142,9 @@ class AppTheme {
     useMaterial3: true,
     scaffoldBackgroundColor: _darkPrimaryColor,
     appBarTheme: const AppBarTheme(
-        color: _appbarColorDark, iconTheme: IconThemeData(color: _iconColor)),
+      color: _appbarColorDark,
+      iconTheme: IconThemeData(color: _iconColor),
+    ),
     colorScheme: ColorScheme.dark(
       primary: _darkPrimaryColor,
       secondary: _accentColor,

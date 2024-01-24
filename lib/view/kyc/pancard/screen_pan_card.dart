@@ -1,8 +1,5 @@
-import 'package:finfresh_mobile/controller/auth/auth_controller.dart';
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
-import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
-import 'package:finfresh_mobile/view/kyc/occupation%20Screen/occupation_screen.dart';
 import 'package:finfresh_mobile/view/kyc/tax%20status/screen_tax_status.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +14,15 @@ class ScreenPanCard extends StatelessWidget {
     Provider.of<KycController>(context, listen: false).updatePagenumber('1');
     return Consumer<KycController>(builder: (context, kycController, child) {
       return Scaffold(
+        appBar: AppBar(
+          leading: InkWell(
+            onTap: () {
+              kycController.panController.clear();
+              Navigator.pop(context);
+            },
+            child: const Icon(Icons.arrow_back),
+          ),
+        ),
         body: SafeArea(
           child: Container(
             margin: EdgeInsets.all(15.sp),
@@ -25,7 +31,7 @@ class ScreenPanCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  VerticalSpacer(8.h),
+                  VerticalSpacer(5.h),
                   const Center(
                     child: SizedBox(
                       height: 50,

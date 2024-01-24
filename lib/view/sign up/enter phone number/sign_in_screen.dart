@@ -25,6 +25,15 @@ class ScreenEnterPhoneNumber extends StatelessWidget {
         authcontroller.phonenumberController.clear();
       },
       child: Scaffold(
+        appBar: AppBar(
+          leading: InkWell(
+            onTap: () {
+              authcontroller.phonenumberController.clear();
+              Navigator.pop(context);
+            },
+            child: const Icon(Icons.arrow_back),
+          ),
+        ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Container(
@@ -34,7 +43,7 @@ class ScreenEnterPhoneNumber extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    VerticalSpacer(8.h),
+                    VerticalSpacer(5.h),
                     const Center(
                       child: SizedBox(
                         height: 50,

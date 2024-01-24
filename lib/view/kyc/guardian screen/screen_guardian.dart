@@ -15,6 +15,18 @@ class ScreenGuardianAdding extends StatelessWidget {
     kycController.updatePagenumber('17');
     Brightness brightness = Theme.of(context).brightness;
     return Scaffold(
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            kycController.clearGuardianValue();
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back,
+            color: brightness == Brightness.dark ? Colors.white : Colors.black,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: Container(
           margin: EdgeInsets.all(15.sp),
@@ -22,7 +34,7 @@ class ScreenGuardianAdding extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                VerticalSpacer(10.h),
+                // VerticalSpacer(10.h),
                 Text(
                   'Guardian details',
                   style: Theme.of(context)
@@ -195,7 +207,7 @@ class ScreenGuardianAdding extends StatelessWidget {
                     ),
                   ),
                 ),
-                VerticalSpacer(10.h),
+                VerticalSpacer(20.h),
               ],
             ),
           ),

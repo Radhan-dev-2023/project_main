@@ -22,6 +22,18 @@ class _ScreenNominee2State extends State<ScreenNominee2> {
     Brightness brightness = Theme.of(context).brightness;
 
     return Scaffold(
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            kycController.clearnom2Value();
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back,
+            color: brightness == Brightness.dark ? Colors.white : Colors.black,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -29,7 +41,7 @@ class _ScreenNominee2State extends State<ScreenNominee2> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                VerticalSpacer(10.h),
+                // VerticalSpacer(10.h),
                 Text(
                   'Enter Nominee 2 Details',
                   style: Theme.of(context)
@@ -251,7 +263,7 @@ class _ScreenNominee2State extends State<ScreenNominee2> {
                           ],
                         ),
                       ),
-                VerticalSpacer(10.h)
+                VerticalSpacer(20.h)
               ],
             ),
           ),

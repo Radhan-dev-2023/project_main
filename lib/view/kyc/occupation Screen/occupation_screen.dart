@@ -15,13 +15,22 @@ class ScreenOccupation extends StatelessWidget {
     Brightness brightness = Theme.of(context).brightness;
     return Consumer<KycController>(builder: (context, kycController, child) {
       return Scaffold(
+        appBar: AppBar(
+          leading: InkWell(
+            onTap: () {
+              kycController.selectedIndex = null;
+              Navigator.pop(context);
+            },
+            child: const Icon(Icons.arrow_back),
+          ),
+        ),
         body: SingleChildScrollView(
           child: Container(
             margin: EdgeInsets.all(18.sp),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                VerticalSpacer(15.h),
+                VerticalSpacer(5.h),
                 const Center(
                   child: SizedBox(
                     height: 50,

@@ -25,6 +25,15 @@ class _ScreenAddressState extends State<ScreenAddress> {
     kycController.updatePagenumber('5');
 
     return Scaffold(
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            kycController.clearValueinAdress();
+            Navigator.pop(context);
+          },
+          child: const Icon(Icons.arrow_back),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -35,7 +44,7 @@ class _ScreenAddressState extends State<ScreenAddress> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  VerticalSpacer(10.h),
+                  VerticalSpacer(7.h),
                   Text(
                     'Enter your address',
                     style: Theme.of(context)

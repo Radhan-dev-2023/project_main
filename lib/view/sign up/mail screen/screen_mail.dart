@@ -19,6 +19,14 @@ class ScreenMail extends StatelessWidget {
         authcontroller.emailController.clear();
       },
       child: Scaffold(
+        appBar: AppBar(
+          leading: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: const Icon(Icons.arrow_back),
+          ),
+        ),
         body: SafeArea(
           child: Container(
             margin: EdgeInsets.all(15.sp),
@@ -27,7 +35,7 @@ class ScreenMail extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  VerticalSpacer(8.h),
+                  VerticalSpacer(5.h),
                   const Center(
                     child: SizedBox(
                       height: 50,

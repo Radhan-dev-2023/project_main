@@ -25,7 +25,10 @@ class _ScreenTaxStatusState extends State<ScreenTaxStatus> {
   void initState() {
     // Provider.of<KycController>(context, listen: false).getHoldingNature();
     // Provider.of<KycController>(context, listen: false).getTaxStatus();
+    Provider.of<KycController>(context, listen: false).taxStatusValue = null;
+    Provider.of<KycController>(context, listen: false).holdingValue = null;
     Provider.of<KycController>(context, listen: false).callHodingAndTax();
+
     Provider.of<KycController>(context, listen: false).updatePagenumber('2');
     super.initState();
   }
@@ -38,6 +41,14 @@ class _ScreenTaxStatusState extends State<ScreenTaxStatus> {
 
     return Consumer<KycController>(builder: (context, kycController, child) {
       return Scaffold(
+        appBar: AppBar(
+          leading: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: const Icon(Icons.arrow_back),
+          ),
+        ),
         body: SafeArea(
           child: kycController.taxpageloading == true
               ? Center(
@@ -51,7 +62,7 @@ class _ScreenTaxStatusState extends State<ScreenTaxStatus> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      VerticalSpacer(8.h),
+                      VerticalSpacer(5.h),
                       const Center(
                         child: SizedBox(
                           height: 50,
