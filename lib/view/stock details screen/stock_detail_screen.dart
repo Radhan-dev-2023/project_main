@@ -80,229 +80,265 @@ class _StockDetailsScreenState extends State<StockDetailsScreen>
       builder: (builder) {
         return Consumer<SchemeDetailsController>(
           builder: (context, schemeController, child) {
-            return Container(
-              margin: EdgeInsets.all(15.sp),
-              color: Colors.transparent,
+            return SingleChildScrollView(
               child: Container(
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10.0),
-                    topRight: Radius.circular(10.0),
+                margin: EdgeInsets.all(15.sp),
+                color: Colors.transparent,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10.0),
+                      topRight: Radius.circular(10.0),
+                    ),
                   ),
-                ),
-                child: Column(
-                  children: [
-                    VerticalSpacer(2.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Invest',
+                  child: Column(
+                    children: [
+                      VerticalSpacer(2.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Invest',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Icon(Icons.close),
+                          ),
+                        ],
+                      ),
+                      VerticalSpacer(2.h),
+                      SizedBox(
+                        child: Text(
+                          schemeController.schemeInfoModel?.schemeName ?? '',
                           style:
                               Theme.of(context).textTheme.bodyMedium!.copyWith(
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.w500,
                                   ),
                         ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Icon(Icons.close),
-                        ),
-                      ],
-                    ),
-                    VerticalSpacer(2.h),
-                    SizedBox(
-                      child: Text(
-                        schemeController.schemeInfoModel?.schemeName ?? '',
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
                       ),
-                    ),
-                    VerticalSpacer(2.h),
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: brightness == Brightness.dark
-                              ? Colors.white
-                              : Colors.black,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                        color: brightness == Brightness.light
-                            ? Colors.transparent
-                            : const Color(0xFF0E1330),
-                      ),
-                      height: 60,
-                      width: double.infinity,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: DropdownButton(
-                          value: schemeController.selectedValue,
-                          isExpanded: true,
-                          underline: Container(
-                            height: 0,
+                      VerticalSpacer(2.h),
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: brightness == Brightness.dark
+                                ? Colors.white
+                                : Colors.black,
                           ),
-                          items: schemeController.investmentType
-                              .map((String items) {
-                            return DropdownMenuItem(
-                              value: items,
-                              child: Text(items),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            Provider.of<SchemeDetailsController>(context,
-                                    listen: false)
-                                .updateSelectedValue(value);
-                          },
+                          borderRadius: BorderRadius.circular(8),
+                          color: brightness == Brightness.light
+                              ? Colors.transparent
+                              : const Color(0xFF0E1330),
+                        ),
+                        height: 60,
+                        width: double.infinity,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: DropdownButton(
+                            value: schemeController.selectedValue,
+                            isExpanded: true,
+                            underline: Container(
+                              height: 0,
+                            ),
+                            items: schemeController.investmentType
+                                .map((String items) {
+                              return DropdownMenuItem(
+                                value: items,
+                                child: Text(items),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              Provider.of<SchemeDetailsController>(context,
+                                      listen: false)
+                                  .updateSelectedValue(value);
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                    VerticalSpacer(2.h),
-                    schemeController.selectedValue != 'Investment type'
-                        ? SizedBox(
-                            child: Column(
-                              children: [
-                                TextFormField(
-                                  // readOnly: true,
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  // controller: kycController.banknameController,
-                                  style:
-                                      Theme.of(context).textTheme.labelLarge!,
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'field is required';
-                                    }
-                                    // if (!RegExp(r'^[a-zA-Z0-9\s\-&.,]+$').hasMatch(value)) {
-                                    //   return 'Enter valid bank name';
-                                    // }
-                                    return null;
-                                  },
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
+                      VerticalSpacer(2.h),
+                      schemeController.selectedValue != 'Investment type'
+                          ? SizedBox(
+                              child: Column(
+                                children: [
+                                  TextFormField(
+                                    // readOnly: true,
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    // controller: kycController.banknameController,
+                                    style:
+                                        Theme.of(context).textTheme.labelLarge!,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'field is required';
+                                      }
+                                      // if (!RegExp(r'^[a-zA-Z0-9\s\-&.,]+$').hasMatch(value)) {
+                                      //   return 'Enter valid bank name';
+                                      // }
+                                      return null;
+                                    },
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      hintText: 'Enter Installment Amount',
+                                    ),
+                                  ),
+                                  VerticalSpacer(2.h),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      SizedBox(
+                                          width: 45.w,
+                                          child: TextFormField(
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge!,
+                                            decoration: InputDecoration(
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              hintText: 'Date',
+                                            ),
+                                          )),
+                                      HorizontalSpacer(2.w),
+
+                                      SizedBox(
+                                          width: 45.w,
+                                          child: TextFormField(
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge!,
+                                            decoration: InputDecoration(
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              hintText: 'Duration',
+                                            ),
+                                          )),
+                                      // Container(
+                                      //   decoration: BoxDecoration(
+                                      //     border: Border.all(
+                                      //       color: brightness == Brightness.dark
+                                      //           ? Colors.white
+                                      //           : Colors.black,
+                                      //     ),
+                                      //     borderRadius: BorderRadius.circular(8),
+                                      //     color: brightness == Brightness.light
+                                      //         ? Colors.transparent
+                                      //         : const Color(0xFF0E1330),
+                                      //   ),
+                                      //   height: 60,
+                                      //   width: 45.w,
+                                      //   child: Padding(
+                                      //     padding: const EdgeInsets.all(8.0),
+                                      //     child: DropdownButton(
+                                      //       value: schemeController.selectedValue,
+                                      //       isExpanded: true,
+                                      //       underline: Container(
+                                      //         height: 0,
+                                      //       ),
+                                      //       items: schemeController.investmentType
+                                      //           .map((String items) {
+                                      //         return DropdownMenuItem(
+                                      //           value: items,
+                                      //           child: Text(items),
+                                      //         );
+                                      //       }).toList(),
+                                      //       onChanged: (value) {
+                                      //         Provider.of<SchemeDetailsController>(
+                                      //                 context,
+                                      //                 listen: false)
+                                      //             .updateSelectedValue(value);
+                                      //       },
+                                      //     ),
+                                      //   ),
+                                      // ),
+                                      // HorizontalSpacer(2.w),
+                                      // Container(
+                                      //   decoration: BoxDecoration(
+                                      //     border: Border.all(
+                                      //       color: brightness == Brightness.dark
+                                      //           ? Colors.white
+                                      //           : Colors.black,
+                                      //     ),
+                                      //     borderRadius: BorderRadius.circular(8),
+                                      //     color: brightness == Brightness.light
+                                      //         ? Colors.transparent
+                                      //         : const Color(0xFF0E1330),
+                                      //   ),
+                                      //   height: 60,
+                                      //   width: 45.w,
+                                      //   child: Padding(
+                                      //     padding: const EdgeInsets.all(8.0),
+                                      //     child: DropdownButton(
+                                      //       value: schemeController.selectedValue,
+                                      //       isExpanded: true,
+                                      //       underline: Container(
+                                      //         height: 0,
+                                      //       ),
+                                      //       items: schemeController.investmentType
+                                      //           .map((String items) {
+                                      //         return DropdownMenuItem(
+                                      //           value: items,
+                                      //           child: Text(items),
+                                      //         );
+                                      //       }).toList(),
+                                      //       onChanged: (value) {
+                                      //         Provider.of<SchemeDetailsController>(
+                                      //                 context,
+                                      //                 listen: false)
+                                      //             .updateSelectedValue(value);
+                                      //       },
+                                      //     ),
+                                      //   ),
+                                      // ),
+                                    ],
+                                  ),
+                                  VerticalSpacer(2.h),
+                                  InkWell(
+                                    onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ScreenPayment(),
+                                      ),
+                                    ),
+                                    child: Container(
+                                      height: 6.h,
+                                      width: 40.w,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFF4D84BD),
                                         borderRadius:
-                                            BorderRadius.circular(10)),
-                                    hintText: 'Enter Installment Amount',
-                                  ),
-                                ),
-                                VerticalSpacer(2.h),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: brightness == Brightness.dark
-                                              ? Colors.white
-                                              : Colors.black,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                        color: brightness == Brightness.light
-                                            ? Colors.transparent
-                                            : const Color(0xFF0E1330),
+                                            BorderRadius.circular(15.sp),
                                       ),
-                                      height: 60,
-                                      width: 45.w,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: DropdownButton(
-                                          value: schemeController.selectedValue,
-                                          isExpanded: true,
-                                          underline: Container(
-                                            height: 0,
-                                          ),
-                                          items: schemeController.investmentType
-                                              .map((String items) {
-                                            return DropdownMenuItem(
-                                              value: items,
-                                              child: Text(items),
-                                            );
-                                          }).toList(),
-                                          onChanged: (value) {
-                                            Provider.of<SchemeDetailsController>(
-                                                    context,
-                                                    listen: false)
-                                                .updateSelectedValue(value);
-                                          },
+                                      child: const Center(
+                                        child: Text(
+                                          'Invest',
+                                          style: TextStyle(color: Colors.white),
                                         ),
-                                      ),
-                                    ),
-                                    HorizontalSpacer(2.w),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: brightness == Brightness.dark
-                                              ? Colors.white
-                                              : Colors.black,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                        color: brightness == Brightness.light
-                                            ? Colors.transparent
-                                            : const Color(0xFF0E1330),
-                                      ),
-                                      height: 60,
-                                      width: 45.w,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: DropdownButton(
-                                          value: schemeController.selectedValue,
-                                          isExpanded: true,
-                                          underline: Container(
-                                            height: 0,
-                                          ),
-                                          items: schemeController.investmentType
-                                              .map((String items) {
-                                            return DropdownMenuItem(
-                                              value: items,
-                                              child: Text(items),
-                                            );
-                                          }).toList(),
-                                          onChanged: (value) {
-                                            Provider.of<SchemeDetailsController>(
-                                                    context,
-                                                    listen: false)
-                                                .updateSelectedValue(value);
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                VerticalSpacer(2.h),
-                                InkWell(
-                                  onTap: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ScreenPayment(),
-                                    ),
-                                  ),
-                                  child: Container(
-                                    height: 6.h,
-                                    width: 40.w,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFF4D84BD),
-                                      borderRadius:
-                                          BorderRadius.circular(15.sp),
-                                    ),
-                                    child: const Center(
-                                      child: Text(
-                                        'Invest',
-                                        style: TextStyle(color: Colors.white),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          )
-                        : const SizedBox()
-                  ],
+                                ],
+                              ),
+                            )
+                          : const SizedBox(),
+                      VerticalSpacer(30.h),
+                    ],
+                  ),
                 ),
               ),
             );

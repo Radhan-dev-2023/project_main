@@ -67,7 +67,7 @@ class _ScreenBankAccountNumberState extends State<ScreenBankAccountNumber> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'field is required';
+                      return 'Please Enter Account Number';
                     }
                     if (!RegExp(r'^\d{9,18}$').hasMatch(value)) {
                       return 'Invalid bank account number';
@@ -98,7 +98,7 @@ class _ScreenBankAccountNumberState extends State<ScreenBankAccountNumber> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: DropdownButton(
-                      hint: const Text('Select acocunt type'),
+                      hint: const Text('Select account type'),
                       value: kycController.acountypeValue,
                       isExpanded: true,
                       underline: Container(
@@ -146,11 +146,19 @@ class _ScreenBankAccountNumberState extends State<ScreenBankAccountNumber> {
   void showAlertDialog(BuildContext context) {
     // Create the AlertDialog
     AlertDialog alert = AlertDialog(
-      content: const Text('Do you want to add Joint Holders'),
+      content: Text(
+        'Do you want to add Joint Holders ?',
+        style:
+            Theme.of(context).textTheme.labelMedium!.copyWith(fontSize: 16.sp),
+      ),
+      // shape: RoundedRectangleBorder(
+      //   borderRadius:
+      //       BorderRadius.circular(10), // Set your desired borderRadius here
+      // ),
       actions: [
         // You can add buttons to the alert dialog
-        TextButton(
-          onPressed: () {
+        InkWell(
+          onTap: () {
             Navigator.pop(context);
             Navigator.push(
               context,
@@ -159,27 +167,45 @@ class _ScreenBankAccountNumberState extends State<ScreenBankAccountNumber> {
               ),
             );
           },
-          child: Text(
-            'YES',
-            style: Theme.of(context).textTheme.labelLarge,
-          ),
-        ),
-        TextButton(
-          onPressed: () {
-            Navigator.pop(context);
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const AddingNomineeAndGuadianScreen(),
+          child: Container(
+            height: 4.h,
+            width: 13.w,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.sp),
+              color: const Color(0xFF4D84BD),
+            ),
+            child: const Center(
+              child: Text(
+                'YES',
+                style: TextStyle(color: Colors.white),
               ),
-            );
-            // Close the dialog
-          },
-          child: Text(
-            'NO',
-            style: Theme.of(context).textTheme.labelLarge,
+            ),
           ),
         ),
+        InkWell(
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AddingNomineeAndGuadianScreen(),
+                ),
+              );
+            },
+            child: Container(
+              height: 4.h,
+              width: 13.w,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.sp),
+                color: const Color(0xFF4D84BD),
+              ),
+              child: const Center(
+                child: Text(
+                  'NO',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ))
       ],
     );
 

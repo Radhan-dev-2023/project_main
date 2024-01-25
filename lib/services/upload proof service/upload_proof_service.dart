@@ -19,10 +19,12 @@ class UploadProofservice {
     log(imageType);
     log('token===$token');
     log('userId===$userId');
+    log('customer id =$customerId');
     Map<String, String> body = {
       'ImageType': imageType,
-      "CustomerID": customerId,
-      "ImageFormat": 'pdf',
+      // "CustomerID": customerId,
+      "CustomerID": '5014122071',
+      "ImageFormat": 'TIFF',
     };
     try {
       final formData = await http.MultipartRequest('POST', Uri.parse(url));
@@ -41,6 +43,7 @@ class UploadProofservice {
       log("=====================");
       log(responseData.body);
       Map<String, dynamic> jsonResponse = json.decode(responseData.body);
+      log('jsonresponse===$jsonResponse');
       if (jsonResponse['result']['status'] == 200) {
         log(responseData.body);
         // final jsonData = jsonDecode(responseData.body) as Map<String, dynamic>;
@@ -57,7 +60,7 @@ class UploadProofservice {
         //scaffoldMessengerMethods(context, appgreen," uploaded successfully");
         return true;
       } else {
-        print("somthing went wrong");
+        showSnackBar(context, jsonResponse['result']['message']);
         return false;
       }
     } on SocketException {
@@ -78,15 +81,17 @@ class UploadProofservice {
     String customerId = await SecureStorage.readToken('customerId');
 
     String bankAccNumber = await SecureStorage.readToken('bankAccNumber');
+
     log(image);
     log(imageType);
     log('token===$token');
     log('userId===$userId');
     log('bank prooodf');
+
     Map<String, String> body = {
       'ImageType': imageType,
       "CustomerID": customerId,
-      "ImageFormat": 'pdf',
+      "ImageFormat": 'TIFF',
       "BankCode": bankCode,
       "AccNo": bankAccNumber,
       "POAFlag": poaFlag == "Please select POAFlag" ? '' : poaFlag,
@@ -106,11 +111,14 @@ class UploadProofservice {
 
       final response = await formData.send();
       final responseData = await http.Response.fromStream(response);
+      Map<String, dynamic> jsonResponse = json.decode(responseData.body);
+      log('========================');
+      log('jsonresponse===$jsonResponse');
       log("=====================");
       log(response.statusCode.toString());
       log("=====================");
       log(responseData.body);
-      Map<String, dynamic> jsonResponse = json.decode(responseData.body);
+
       if (jsonResponse['result']['status'] == 200) {
         log(responseData.body);
         // final jsonData = jsonDecode(responseData.body) as Map<String, dynamic>;
@@ -126,7 +134,8 @@ class UploadProofservice {
         return true;
         //scaffoldMessengerMethods(context, appgreen," uploaded successfully");
       } else {
-        print("somthing went wrong");
+        showSnackBar(context, jsonResponse['result']['message']);
+
         return false;
       }
     } on SocketException {

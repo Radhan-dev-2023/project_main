@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
 
           theme: isDarkMode ? AppTheme.darkTheme : AppTheme.lightTheme,
           // darkTheme: AppTheme.darkTheme,
-          home: const SplashScreen(),
+          // home: const SplashScreen(),
           // home: const AddingNomineeAndGuadianScreen(),
           // home: const ScreenUploadinProofs(),
           // home: ScreenBankAccountNumber(),
@@ -95,7 +95,7 @@ class MyApp extends StatelessWidget {
           // home: const ScreenPanCard(),
           // home: const ScreenPersonalDetails(),
           // home: const ScreenSetPinNumber(),
-          // home: const ScreenHomeView(),
+          home: const ScreenHomeView(),
           // home: const ScreenOccupation(),
         );
       }),

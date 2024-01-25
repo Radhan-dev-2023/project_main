@@ -44,7 +44,7 @@ class ScreenJointHolders extends StatelessWidget {
                   ),
                   VerticalSpacer(5.h),
                   Text(
-                    'Enter Joint holder1 details',
+                    'Enter Joint Holder 1 details',
                     style: Theme.of(context)
                         .textTheme
                         .labelLarge!
@@ -64,7 +64,7 @@ class ScreenJointHolders extends StatelessWidget {
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10)),
-                      hintText: 'Enter name',
+                      hintText: 'Enter Name',
                     ),
                   ),
                   VerticalSpacer(3.h),

@@ -53,9 +53,11 @@ class AddingNomineeAndGuadianScreen extends StatelessWidget {
                 ),
                 child: ListTile(
                   onTap: () {
-                    if (kycController.nomineeOption == 'N') {
-                      showAlertDialog(context);
-                    }
+                    showAlertDialog(context);
+
+                    // if (kycController.nomineeOption == 'N') {
+                    //   showAlertDialog(context);
+                    // }
                   },
                   title: Text(
                     'Nominee',
@@ -141,36 +143,61 @@ class AddingNomineeAndGuadianScreen extends StatelessWidget {
   void showAlertDialog(BuildContext context) {
     // Create the AlertDialog
     AlertDialog alert = AlertDialog(
-      content: const Text('Do you want to add Nominee'),
+      content: Text(
+        'Do you want to add Nominee ?',
+        style:
+            Theme.of(context).textTheme.labelMedium!.copyWith(fontSize: 16.sp),
+      ),
       actions: [
         // You can add buttons to the alert dialog
-        TextButton(
-          onPressed: () {
-            Navigator.pop(context);
-            Provider.of<KycController>(context, listen: false).countvalue =
-                'select Nominee count';
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const ScreenNomineeCount(),
+        Container(
+          height: 4.h,
+          width: 13.w,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.sp),
+            color: const Color(0xFF4D84BD),
+          ),
+          child: Center(
+            child: TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                Provider.of<KycController>(context, listen: false).countvalue =
+                    'select Nominee count';
+                Provider.of<KycController>(context, listen: false)
+                    .nomineeChosse('Y');
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ScreenNomineeCount(),
+                  ),
+                );
+              },
+              child: const Text(
+                'YES',
+                style: TextStyle(color: Colors.white),
               ),
-            );
-          },
-          child: Text(
-            'YES',
-            style: Theme.of(context).textTheme.labelLarge,
+            ),
           ),
         ),
-        TextButton(
-          onPressed: () {
-            Provider.of<KycController>(context, listen: false)
-                .nomineeChosse('N');
-            Navigator.pop(context);
-            // Close the dialog
-          },
-          child: Text(
-            'NO',
-            style: Theme.of(context).textTheme.labelLarge,
+        Container(
+          height: 4.h,
+          width: 13.w,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.sp),
+            color: const Color(0xFF4D84BD),
+          ),
+          child: TextButton(
+            onPressed: () {
+              Provider.of<KycController>(context, listen: false)
+                  .nomineeChosse('N');
+              Navigator.pop(context);
+              // Close the dialog
+            },
+            child: const Text(
+              'NO',
+              style: TextStyle(color: Colors.white),
+            ),
           ),
         ),
       ],

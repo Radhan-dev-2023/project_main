@@ -50,8 +50,8 @@ class _ScreenPaymentState extends State<ScreenPayment> {
                     DropdownButtonFormField<String>(
                       style: Theme.of(context).textTheme.labelLarge!,
                       value: selectedItem,
-                      decoration: const InputDecoration(
-                          labelText: 'Select Item', hintText: 'Select Item'),
+                      decoration:
+                          const InputDecoration(hintText: 'Select Item'),
                       onChanged: (String? newValue) {
                         setState(() {
                           selectedItem = newValue;

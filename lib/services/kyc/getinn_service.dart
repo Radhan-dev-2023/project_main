@@ -39,6 +39,8 @@ class GetInnService {
       logger.d('response get inn== ${response.body}');
       Map<String, dynamic> jsonResponse = json.decode(response.body);
       if (jsonResponse['status'] == 200) {
+        String customerId = jsonResponse['customerId'];
+        SecureStorage.addingvaluesToStorage('customerId', customerId);
         log('getINN success');
         return true;
       }

@@ -12,6 +12,7 @@ import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:finfresh_mobile/view/kyc/occupation%20Screen/occupation_screen.dart';
 import 'package:finfresh_mobile/view/kyc/pancard/screen_pan_card.dart';
 import 'package:finfresh_mobile/view/kyc/tax%20status/screen_tax_status.dart';
+import 'package:finfresh_mobile/view/kyc/uploading%20proofs/screen_upload_proof.dart';
 import 'package:finfresh_mobile/view/onboarding%20screen/on_boarding_view_screen.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/stock_detail_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
@@ -84,12 +85,62 @@ class ScreenHome extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // VerticalSpacer(3.h),
-                dashBoardController.dashBoardModel?.result?.data
-                            ?.activationStatus?.statusCode ==
-                        'S01'
-                    ? const AttensionWidget()
-                    : const SizedBox(),
-                // VerticalSpacer(3.h),
+                // dashBoardController.dashBoardModel?.result?.data
+                //             ?.activationStatus?.statusCode ==
+                //         'S01'
+                //     ? const AttensionWidget()
+                //     : const SizedBox(),
+                // // VerticalSpacer(3.h),
+                // // dashBoardController.dashBoardModel?.result?.data
+                // //             ?.activationStatus?.statusCode ==
+                // //
+                // //        'S01'
+                // dashBoardController.dashBoardModel?.result?.data
+                //             ?.activationStatus?.statusCode ==
+                //         'S03'
+                //     ? SizedBox(
+                //         height: 28.h,
+                //         width: double.infinity,
+                //         child: Card(
+                //           child: Column(
+                //             mainAxisAlignment: MainAxisAlignment.center,
+                //             children: [
+                //               VerticalSpacer(1.h),
+                //               Icon(
+                //                 Icons.warning_outlined,
+                //                 color: Colors.red,
+                //                 size: 5.h,
+                //               ),
+                //               Text(
+                //                 'Attention required!',
+                //                 style: Theme.of(context)
+                //                     .textTheme
+                //                     .bodyMedium!
+                //                     .copyWith(
+                //                       fontSize: 17.sp,
+                //                       fontWeight: FontWeight.bold,
+                //                     ),
+                //                 // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
+                //               ),
+                //               VerticalSpacer(1.h),
+                //               const Text('Upload Your Proof'),
+                //               VerticalSpacer(2.h),
+                //               ButtonWidget(
+                //                 btName: 'Upload Proof',
+                //                 onTap: () {
+                //                   Navigator.push(
+                //                       context,
+                //                       MaterialPageRoute(
+                //                         builder: (context) =>
+                //                             const ScreenUploadinProofs(),
+                //                       ));
+                //                 },
+                //               )
+                //             ],
+                //           ),
+                //         ),
+                //       )
+                //     : const SizedBox(),
                 Text(
                   'Collections',
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(

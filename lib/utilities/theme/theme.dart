@@ -69,11 +69,11 @@ class AppTheme {
         borderRadius: BorderRadius.circular(13.sp),
         borderSide: const BorderSide(color: Color(0xFF060B27)),
       ),
-      errorStyle: const TextStyle(color: Color(0xFF060B27)),
-      errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(13.sp),
-        borderSide: const BorderSide(color: Color(0xFF0E1330)),
-      ),
+      // errorStyle: const TextStyle(color: Color(0xFF060B27)),
+      // errorBorder: OutlineInputBorder(
+      //   borderRadius: BorderRadius.circular(13.sp),
+      //   borderSide: const BorderSide(color: Color(0xFF0E1330)),
+      // ),
       border: OutlineInputBorder(
         borderSide: const BorderSide(color: Colors.grey),
         borderRadius: BorderRadius.circular(10.sp),

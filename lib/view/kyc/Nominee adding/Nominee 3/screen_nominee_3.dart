@@ -25,7 +25,6 @@ class _ScreenNominee3State extends State<ScreenNominee3> {
         leading: InkWell(
           onTap: () {
             kycController.clearnom3Value();
-
             Navigator.pop(context);
           },
           child: Icon(

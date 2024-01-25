@@ -30,7 +30,7 @@ class Routes {
 
       switch (pageNumber) {
         case 1:
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => const ScreenPanCard(),
@@ -38,7 +38,7 @@ class Routes {
           );
           break;
         case 2:
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => const ScreenTaxStatus(),
@@ -46,7 +46,7 @@ class Routes {
           );
           break;
         case 3:
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => const ScreenOccupation(),
@@ -54,7 +54,7 @@ class Routes {
           );
           break;
         case 4:
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => const ScreenPersonalDetails(),
@@ -62,7 +62,7 @@ class Routes {
           );
           break;
         case 5:
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => const ScreenAddress(),
@@ -70,7 +70,7 @@ class Routes {
           );
           break;
         case 6:
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => const ScreenNriAdress(),
@@ -78,7 +78,7 @@ class Routes {
           );
           break;
         case 7:
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => const ScreenAddingParentDetails(),
@@ -86,7 +86,7 @@ class Routes {
           );
           break;
         case 8:
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => const ScreenIfcAdding(),
@@ -94,7 +94,7 @@ class Routes {
           );
           break;
         case 9:
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => const ScreenIfcAdding(),
@@ -102,7 +102,7 @@ class Routes {
           );
           break;
         case 10:
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => const ScreenBankAccountNumber(),
@@ -110,7 +110,7 @@ class Routes {
           );
           break;
         case 11:
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => const ScreenJointHolders(),
@@ -118,7 +118,7 @@ class Routes {
           );
           break;
         case 12:
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => const AddingNomineeAndGuadianScreen(),
@@ -126,7 +126,7 @@ class Routes {
           );
           break;
         case 13:
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => const ScreenNomineeCount(),
@@ -134,7 +134,7 @@ class Routes {
           );
           break;
         case 14:
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => const ScreenAddingNominee(),
@@ -142,7 +142,7 @@ class Routes {
           );
           break;
         case 15:
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => const ScreenNominee2(),
@@ -150,7 +150,7 @@ class Routes {
           );
           break;
         case 16:
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => const ScreenNominee3(),
@@ -158,7 +158,7 @@ class Routes {
           );
           break;
         case 17:
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => const ScreenGuardianAdding(),
@@ -166,7 +166,7 @@ class Routes {
           );
           break;
         default:
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => const ScreenPanCard(),

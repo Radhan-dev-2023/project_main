@@ -42,7 +42,7 @@ class Jh2Screen extends StatelessWidget {
                   ),
                   VerticalSpacer(5.h),
                   Text(
-                    'Enter Joint holder2 details',
+                    'Enter Joint Holder 2 details',
                     style: Theme.of(context)
                         .textTheme
                         .labelLarge!
@@ -62,7 +62,7 @@ class Jh2Screen extends StatelessWidget {
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10)),
-                      hintText: 'Enter name',
+                      hintText: 'Enter Name',
                     ),
                   ),
                   VerticalSpacer(3.h),

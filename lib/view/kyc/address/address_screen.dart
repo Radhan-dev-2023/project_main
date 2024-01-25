@@ -226,7 +226,7 @@ class _ScreenAddressState extends State<ScreenAddress> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Do you want to add office number'),
+                      const Text('Do you want to add office number ?'),
                       Checkbox(
                         checkColor: brightness == Brightness.light
                             ? Colors.black
@@ -293,7 +293,7 @@ class _ScreenAddressState extends State<ScreenAddress> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Do you want to add NRI address'),
+                      const Text('Do you want to add NRI address ?'),
                       TextButton(
                           onPressed: () {
                             if (kycController.addressFormkey.currentState!
@@ -311,10 +311,12 @@ class _ScreenAddressState extends State<ScreenAddress> {
                                 showSnackBar(context,
                                     'Enter the All The Mandatory Fields');
                               }
+                            } else {
+                              showAlertDialog(context);
                             }
                           },
                           child: Text(
-                            'Click',
+                            'Yes',
                             style: Theme.of(context).textTheme.labelLarge!,
                           ))
                     ],
@@ -346,6 +348,45 @@ class _ScreenAddressState extends State<ScreenAddress> {
         },
         btName: 'Continue'.toUpperCase(),
       ),
+    );
+  }
+
+  void showAlertDialog(BuildContext context) {
+    // Create the AlertDialog
+    AlertDialog alert = AlertDialog(
+      content: Text(
+        'Please fill the address details before adding NRI address',
+        style: Theme.of(context)
+            .textTheme
+            .labelLarge!
+            .copyWith(fontSize: 16.sp, fontWeight: FontWeight.w500),
+      ),
+      actions: [
+        // You can add buttons to the alert dialog
+
+        Container(
+          height: 5.h,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.sp),
+            color: const Color(0xFF4D84BD),
+          ),
+          child: TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              // Close the dialog
+            },
+            child: const Text('OK', style: TextStyle(color: Colors.white)),
+          ),
+        ),
+      ],
+    );
+
+    // Show the AlertDialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }
