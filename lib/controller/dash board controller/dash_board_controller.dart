@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:finfresh_mobile/model/dash%20Board%20Model/dash_board_model.dart';
 import 'package:finfresh_mobile/services/dash%20board%20Services/dash_board_services.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
@@ -19,6 +17,11 @@ class DashBoardController extends ChangeNotifier {
 
       logger.d(
           'dassss=${dashBoardModel?.result?.data?.activationStatus!.statusCode}');
+      SecureStorage.addToken(
+          'bankAccNumber', dashBoardModel?.result?.data?.bank?.accNo);
+      SecureStorage.addToken(
+          'bankcode', dashBoardModel?.result?.data?.bank?.bankName);
+      SecureStorage.addToken('customerId', dashBoardModel?.result?.data?.iin);
       loadingDashboard = false;
       notifyListeners();
     } catch (e) {

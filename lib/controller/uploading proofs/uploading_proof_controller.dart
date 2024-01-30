@@ -1,15 +1,15 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-import 'dart:typed_data';
+
 import 'package:finfresh_mobile/services/get%20bank%20code/bank_code_service.dart';
 import 'package:finfresh_mobile/services/upload%20proof%20service/upload_proof_service.dart';
+import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image/image.dart';
-import 'dart:ui' as ui;
+import 'dart:math' as Math;
 import 'package:image/src/image/image.dart' as img;
+import 'package:path_provider/path_provider.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:image_to_pdf_converter/image_to_pdf_converter.dart';
 
 class UploadingProof extends ChangeNotifier {
   File? image;
@@ -25,7 +25,6 @@ class UploadingProof extends ChangeNotifier {
     "Choose your proof",
     "Aadhar Card",
     "Pan Card",
-    "Bank Proof",
     "Driving License",
     "Passport",
     "INN Physical Form",
@@ -37,11 +36,12 @@ class UploadingProof extends ChangeNotifier {
     "POA cheque",
     "IMPS DOCUMENT",
   ];
+
   String pOAValue = "Please select POAFlag";
   List<String> poaList = [
     "Please select POAFlag",
-    'Y',
-    'N',
+    'Yes',
+    'No',
   ];
   String pOABankTypeValue = "Please select POABankType";
   List<String> poaBankTypeList = [
@@ -87,8 +87,6 @@ class UploadingProof extends ChangeNotifier {
       vlauetoBackend = "PQ";
     } else if (proofvalue == "IMPS DOCUMENT") {
       vlauetoBackend = "IMps";
-    } else if (proofvalue == "Bank Proof") {
-      vlauetoBackend = "B";
     } else {
       vlauetoBackend = "";
     }
@@ -101,106 +99,57 @@ class UploadingProof extends ChangeNotifier {
 
     if (pickedFile != null) {
       image = File(pickedFile.path);
-
-      // img.Image image1 = img.decodeImage(Uint8List.fromList(inputBytes));
-
-      imagePdfFormate = await ImageToPdf.imageList(listOfFiles: [image]);
-      log('image path == ${imagePdfFormate}');
-
-      notifyListeners(); // Notify listeners to update the UI
+      jpgTOpng(image!.path);
+      // imagePdfFormate = await ImageToPdf.imageList(listOfFiles: [image]);
+      // log('image path == ${imagePdfFormate}');
+      notifyListeners();
     }
   }
 
   img.Image? image1;
   String? name;
+  String? modifiedFilePath;
   Future<void> getImageFromGallery() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       image = File(pickedFile.path);
-      // convertImage(pickedFile.path);
-      // image1 = convertTiff(image!.path);
-      // log('image1===$image1');
-      // Uint8List img2 = encodeTiff(image1!);
-      // var img4 = decodeTiff(img2);
-      // String resultString = String.fromCharCodes(img2);
-      // String base64String = base64Encode(img2);
-      // log('resultString$resultString');
-      // List<int> decodedBytes = base64.decode(base64String);
-      // String result = utf8.decode(decodedBytes);
-
-      // Convert the decoded bytes to a regular string
-      // String resultString = utf8.decode(decodedBytes);
-      // log('resultend string ===$result');
-      // log('img4===$img4');
-      imagePdfFormate = await ImageToPdf.imageList(listOfFiles: [image]);
-      log('image path == ${imagePdfFormate}');
+      jpgTOpng(image!.path);
+      notifyListeners();
       log('image.pah == ${image!.path}');
-      notifyListeners(); // Notify listeners to update the UI
     }
   }
 
-  // img.Image convertTiff(String imagePath) {
-  //   // Read the bytes of the TIFF file
-  //   Uint8List tiffBytes = File(imagePath).readAsBytesSync();
+  String? bankUpload;
+  bool loadingPick = false;
+  File? compressedImage;
+  Future<void> jpgTOpng(path) async {
+    loadingPick = true;
+    notifyListeners();
+    log('loadig ==$loadingPick');
+    File imagePath = File(path);
+    //get temporary directory
+    final tempDir = await getTemporaryDirectory();
+    int rand = Math.Random().nextInt(10000);
+    //reading jpg image
+    img.Image? image = decodeImage(imagePath.readAsBytesSync());
+    //decreasing the size of image- optional
+    img.Image smallerImage = copyResize(image!, width: 800);
+    //get converting and saving in file
+    compressedImage = File('${tempDir.path}/img_$rand.png')
+      ..writeAsBytesSync(encodePng(smallerImage, level: 8));
 
-  //   // Decode the TIFF bytes using the image package
-  //   img.Image? image = decodeImage(tiffBytes);
-
-  //   // Return the img.Image object
-  //   return image!;
-  // }
-
-  // img.Image convertToImage(Uint8List tiffBytes) {
-  //   // Decode the TIFF bytes using the image package
-  //   img.Image? image = decodeImage(tiffBytes);
-
-  //   // Return the img.Image object
-  //   return image!;
-  // }
-  // void convertTiff(image1) {
-  //   // Image image = image; // Filling with a white color for example
-  //   img.Image image =convertTiff(image1);
-  //   // Encode the image to TIFF format
-  //   Uint8List tiffBytes = encodeTiff(image);
-
-  //   // Get a temporary directory
-  //   String tempDir = Directory.systemTemp.path;
-
-  //   // Create a temporary file with a .tiff extension
-  //   File tempFile = File('$tempDir/temp_image.tiff');
-
-  //   // Write the TIFF-encoded bytes to the temporary file
-  //   tempFile.writeAsBytesSync(tiffBytes, flush: true);
-
-  //   // Get the path of the temporary file
-  //   String tiffFilePath = tempFile.path;
-
-  //   log('Temporary TIFF file path: $tiffFilePath');
-  // }
-  // Uint8List? list;
-  // void convertImage(String inputPath) {
-  //   // Read the JPEG image
-  //   File inputFile = File(inputPath);
-  //   List<int> inputBytes = inputFile.readAsBytesSync();
-  //   img.Image? image = img.decodeImage(Uint8List.fromList(inputBytes));
-
-  //   // Save the image in TIFF format
-
-  //   var value = img.encodeTiff(image!);
-  //   list = value;
-  //   // ByteData byteData = ByteData.sublistView(value);
-  //   // log('byre data == ${byteData}');
-  //   // File fileInMemory = File.fromRawPath(value.buffer.asUint8List());
-  //   // log('file in memory == ${fileInMemory}');
-  // }
+    log('compressed path${compressedImage!.path}');
+    loadingPick = false;
+    notifyListeners();
+  }
 
   Future<bool> uploadProof(context) async {
     proofUpload = true;
     notifyListeners();
     try {
       bool result = await uploadProofservice.uploadProof(
-          imagePdfFormate!.path, vlauetoBackend, context);
+          compressedImage!.path, vlauetoBackend, context);
       if (result == true) {
         proofUpload = false;
         notifyListeners();
@@ -225,15 +174,15 @@ class UploadingProof extends ChangeNotifier {
   }
 
   Future<bool> uploadBankProof(context) async {
+    String bankcode = await SecureStorage.readToken('bankcode');
     bankProofUpload = true;
     notifyListeners();
     try {
       bool result = await uploadProofservice.uploadBankProof(
-        imagePdfFormate!.path,
-        vlauetoBackend,
+        compressedImage!.path,
         pOAValue,
         pOABankTypeValue,
-        bankCode,
+        bankCode.isEmpty ? bankcode : bankCode,
         context,
       );
       if (result == true) {

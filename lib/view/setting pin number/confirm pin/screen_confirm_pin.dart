@@ -1,4 +1,5 @@
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
+import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_controller.dart';
 import 'package:finfresh_mobile/controller/pin%20controller/pin_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
@@ -16,6 +17,7 @@ class ScreenConfirmPinNumber extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pinController = Provider.of<PinController>(context);
+    final biometricLoginController = Provider.of<BiometricLogin>(context);
     Brightness brightness = MediaQuery.of(context).platformBrightness;
     final defaultPinTheme = PinTheme(
       width: 56,
@@ -136,7 +138,10 @@ class ScreenConfirmPinNumber extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const ScreenPanCard(),
+                builder: (context) =>
+                    biometricLoginController.buttonEnabled == true
+                        ? const ScreenHomeView()
+                        : const ScreenPanCard(),
               ),
             );
           }

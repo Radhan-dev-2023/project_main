@@ -12,16 +12,19 @@ import 'package:finfresh_mobile/services/get%20bank%20details/get_bank_details.d
 import 'package:finfresh_mobile/services/kyc/create_customer.dart';
 import 'package:finfresh_mobile/services/kyc/getinn_service.dart';
 import 'package:finfresh_mobile/services/kyc/master_services.dart';
+import 'package:finfresh_mobile/services/kyc/non_individual_service.dart';
 import 'package:finfresh_mobile/services/kyc/tax_status_service.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path/path.dart';
 
 class KycController extends ChangeNotifier {
   GetInnService getInnService = GetInnService();
   TaxMaster taxMaster = TaxMaster();
   MasterService masterService = MasterService();
+  NonIndividualService nonIndividualService = NonIndividualService();
   List<MasterDetail> masterDetailList = [];
   List<dynamic> masterDetailsList = [];
   InvestorDetails investorDetails = InvestorDetails();
@@ -587,8 +590,8 @@ class KycController extends ChangeNotifier {
     notifyListeners();
   }
 
-  callHodingAndTax() async {
-    await getTaxStatus();
+  callHodingAndTax(context) async {
+    await getTaxStatus(context);
     await getHoldingNature();
   }
 
@@ -676,6 +679,8 @@ class KycController extends ChangeNotifier {
       email: retrievedValue?.email,
       mobileNo: retrievedValue?.mobileNo,
       pan: retrievedValue?.pan,
+      invName: retrievedValue?.invName,
+      dob: retrievedValue?.dob,
       taxStatus: taxcode ?? '',
       holdNature: holdingValuetoBackend ?? '',
     );
@@ -691,6 +696,8 @@ class KycController extends ChangeNotifier {
       pan: retrievedValue?.pan,
       taxStatus: retrievedValue?.taxStatus,
       holdNature: retrievedValue?.holdNature,
+      invName: retrievedValue?.invName,
+      dob: retrievedValue?.dob,
       occupation: selectedValue ?? '',
     );
     dbFunctions.addTodb(investorModel);
@@ -705,9 +712,9 @@ class KycController extends ChangeNotifier {
       email: retrievedValue?.email,
       mobileNo: retrievedValue?.mobileNo,
       pan: retrievedValue?.pan,
-      taxStatus: retrievedValue?.taxStatus,
-      holdNature: retrievedValue?.holdNature,
-      occupation: retrievedValue?.occupation,
+      // taxStatus: retrievedValue?.taxStatus,
+      // holdNature: retrievedValue?.holdNature,
+      // occupation: retrievedValue?.occupation,
       invName: nameController.text,
       dob: dobController.text,
     );
@@ -1554,8 +1561,31 @@ class KycController extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<bool> getNonIndividualTax(context) async {
+    iinLoading = true;
+    notifyListeners();
+    try {
+      bool result = await nonIndividualService.getNonindividualTax(
+        phonenumber,
+        panController.text,
+        nameController.text,
+        taxcode,
+        context,
+      );
+      iinLoading = false;
+      notifyListeners();
+      return result;
+    } catch (e) {
+      logger.d('non individual failsed with an exception$e');
+      iinLoading = false;
+      notifyListeners();
+      return false;
+    }
+  }
+
   bool iinLoading = false;
-  Future<bool> getInn(String phoneNumber) async {
+  Future<bool> getInn() async {
+    String phoneNumber = await SecureStorage.readToken('phoneNumber');
     iinLoading = true;
     notifyListeners();
     bool isVerified = await getInnService.getInn(
@@ -1603,9 +1633,9 @@ class KycController extends ChangeNotifier {
     }
   }
 
-  getTaxStatus() async {
+  getTaxStatus(context) async {
     taxpageloading = true;
-    String? taxStatusResponse = await taxStatusService.getTaxStatus();
+    String? taxStatusResponse = await taxStatusService.getTaxStatus(context);
     logger.d('tax status response == $taxStatusResponse');
     if (taxStatusResponse != null) {
       Map<String, dynamic> jsonResponse = json.decode(taxStatusResponse);

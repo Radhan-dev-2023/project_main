@@ -101,7 +101,7 @@ class ScreenSetPinNumber extends StatelessWidget {
                   child: Pinput(
                     validator: (value) {
                       if (value?.length != 4 || value == null) {
-                        return 'please Enter the  4-digit pin';
+                        return 'Please enter the 4-digit pin';
                       } else {
                         return null;
                       }

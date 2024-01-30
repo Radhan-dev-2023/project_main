@@ -2,6 +2,7 @@ import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart'
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:finfresh_mobile/view/kyc/address/address_screen.dart';
+import 'package:finfresh_mobile/view/kyc/tax%20status/screen_tax_status.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -111,7 +112,7 @@ class ScreenPersonalDetails extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const ScreenAddress(),
+                builder: (context) => const ScreenTaxStatus(),
               ),
             );
           }

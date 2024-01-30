@@ -1,5 +1,6 @@
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
+import 'package:finfresh_mobile/view/kyc/address/address_screen.dart';
 import 'package:finfresh_mobile/view/kyc/user%20personal%20details/screen_personal_details.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:flutter/material.dart';
@@ -104,7 +105,7 @@ class ScreenOccupation extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const ScreenPersonalDetails(),
+                builder: (context) => const ScreenAddress(),
               ),
             );
           },

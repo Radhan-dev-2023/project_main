@@ -105,7 +105,9 @@ class AuthController extends ChangeNotifier {
     otpController.clear();
   }
 
-  void addEmail() {
+  void addEmail() async {
+    // final investorDb = await Hive.openBox<InvestorModel>('investor_db');
+    // final retrievedValue = investorDb.get('email');
     InvestorModel investorModel = InvestorModel(email: emailController.text);
 
     dbFunctions.addTodb(investorModel);

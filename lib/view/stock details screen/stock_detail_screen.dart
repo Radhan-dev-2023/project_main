@@ -9,7 +9,8 @@ import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class StockDetailsScreen extends StatefulWidget {
-  const StockDetailsScreen({Key? key}) : super(key: key);
+  const StockDetailsScreen({Key? key, required this.scheme}) : super(key: key);
+  final String scheme;
 
   @override
   State<StockDetailsScreen> createState() => _StockDetailsScreenState();
@@ -29,9 +30,13 @@ class _StockDetailsScreenState extends State<StockDetailsScreen>
   Widget build(BuildContext context) {
     List<Widget> widgetList = [
       SliverlistWidget(
-          currentIndex: _currentIndex, tabController: _tabController),
+          currentIndex: _currentIndex,
+          tabController: _tabController,
+          scheme: widget.scheme),
       SliverlistWidget(
-          currentIndex: _currentIndex, tabController: _tabController),
+          currentIndex: _currentIndex,
+          tabController: _tabController,
+          scheme: widget.scheme),
     ];
     return Scaffold(
       body: widgetList[_currentIndex],

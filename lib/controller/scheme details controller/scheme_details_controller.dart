@@ -24,13 +24,13 @@ class SchemeDetailsController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getSchemeInfo(context) async {
+  Future<void> getSchemeInfo(context, String scheme) async {
     detailScreenLoading = true;
     // notifyListeners();
     holding.clear();
     value.clear();
     try {
-      schemeInfoModel = await schemeService.schemeInfo(context);
+      schemeInfoModel = await schemeService.schemeInfo(context, scheme);
       holding = schemeInfoModel!.schemePortfolioList!
           .map((e) => e.schemePortfolioHoldings.keys)
           .toList();
@@ -47,12 +47,15 @@ class SchemeDetailsController extends ChangeNotifier {
     }
   }
 
-  Future<void> getChartValue(context) async {
+  Future<void> getChartValue(context, String scheme) async {
     detailScreenLoading = true;
     // notifyListeners();
     try {
       historicalNavModel = await schemeService.historicalNav(
-          schemeInfoModel!.schemeInceptionDate!, context);
+        schemeInfoModel!.schemeInceptionDate!,
+        context,
+        scheme,
+      );
       detailScreenLoading = false;
       notifyListeners();
     } catch (e) {
@@ -62,8 +65,8 @@ class SchemeDetailsController extends ChangeNotifier {
     }
   }
 
-  Future<void> callingFunctionDetailScreen(context) async {
-    await getSchemeInfo(context);
-    await getChartValue(context);
+  Future<void> callingFunctionDetailScreen(context, String scheme) async {
+    await getSchemeInfo(context, scheme);
+    await getChartValue(context, scheme);
   }
 }

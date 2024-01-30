@@ -13,8 +13,10 @@ import 'package:finfresh_mobile/view/kyc/occupation%20Screen/occupation_screen.d
 import 'package:finfresh_mobile/view/kyc/pancard/screen_pan_card.dart';
 import 'package:finfresh_mobile/view/kyc/tax%20status/screen_tax_status.dart';
 import 'package:finfresh_mobile/view/kyc/uploading%20proofs/screen_upload_proof.dart';
+import 'package:finfresh_mobile/view/kyc/uploading%20proofs/upload%20bank%20proof/upload_bank_proof.dart';
 import 'package:finfresh_mobile/view/onboarding%20screen/on_boarding_view_screen.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/stock_detail_screen.dart';
+import 'package:finfresh_mobile/view/top%20funds/top_funds.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +31,7 @@ class ScreenHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // GlobalKey<ScaffoldState> drawerkey = GlobalKey();
     SchemeServices service = SchemeServices();
     Brightness platformBrightness = MediaQuery.of(context).platformBrightness;
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -39,11 +42,20 @@ class ScreenHome extends StatelessWidget {
     });
 
     return Scaffold(
+      drawer: const DrawerWidget(),
+      // key: drawerkey,
       appBar: AppBar(
-        leadingWidth: 0.0,
-        leading: const SizedBox(),
-        title: Text(
-            'Welcome ${Provider.of<DashBoardController>(context, listen: false).username}'),
+        centerTitle: true,
+        // leadingWidth: 0.0,
+        // leading: const SizedBox(),
+        title: Text(Provider.of<DashBoardController>(context, listen: false)
+                    .dashBoardModel
+                    ?.result
+                    ?.data
+                    ?.name ==
+                null
+            ? 'Welcome ${Provider.of<DashBoardController>(context, listen: false).username}'
+            : 'Welcome ${Provider.of<DashBoardController>(context, listen: false).dashBoardModel?.result?.data?.name}'),
         actions: [
           IconButton(
             onPressed: () {},
@@ -85,62 +97,129 @@ class ScreenHome extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // VerticalSpacer(3.h),
-                // dashBoardController.dashBoardModel?.result?.data
-                //             ?.activationStatus?.statusCode ==
-                //         'S01'
-                //     ? const AttensionWidget()
-                //     : const SizedBox(),
-                // // VerticalSpacer(3.h),
-                // // dashBoardController.dashBoardModel?.result?.data
-                // //             ?.activationStatus?.statusCode ==
-                // //
-                // //        'S01'
-                // dashBoardController.dashBoardModel?.result?.data
-                //             ?.activationStatus?.statusCode ==
-                //         'S03'
-                //     ? SizedBox(
-                //         height: 28.h,
-                //         width: double.infinity,
-                //         child: Card(
-                //           child: Column(
-                //             mainAxisAlignment: MainAxisAlignment.center,
-                //             children: [
-                //               VerticalSpacer(1.h),
-                //               Icon(
-                //                 Icons.warning_outlined,
-                //                 color: Colors.red,
-                //                 size: 5.h,
-                //               ),
-                //               Text(
-                //                 'Attention required!',
-                //                 style: Theme.of(context)
-                //                     .textTheme
-                //                     .bodyMedium!
-                //                     .copyWith(
-                //                       fontSize: 17.sp,
-                //                       fontWeight: FontWeight.bold,
-                //                     ),
-                //                 // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
-                //               ),
-                //               VerticalSpacer(1.h),
-                //               const Text('Upload Your Proof'),
-                //               VerticalSpacer(2.h),
-                //               ButtonWidget(
-                //                 btName: 'Upload Proof',
-                //                 onTap: () {
-                //                   Navigator.push(
-                //                       context,
-                //                       MaterialPageRoute(
-                //                         builder: (context) =>
-                //                             const ScreenUploadinProofs(),
-                //                       ));
-                //                 },
-                //               )
-                //             ],
-                //           ),
-                //         ),
-                //       )
-                //     : const SizedBox(),
+                dashBoardController.dashBoardModel?.result?.data
+                            ?.activationStatus?.statusCode ==
+                        'S01'
+                    ? const AttensionWidget()
+                    : const SizedBox(),
+
+                dashBoardController.dashBoardModel?.result?.data
+                            ?.activationStatus?.statusCode ==
+                        'S02'
+                    ? SizedBox(
+                        height: 28.h,
+                        width: double.infinity,
+                        child: Card(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              VerticalSpacer(1.h),
+                              Icon(
+                                Icons.warning_outlined,
+                                color: Colors.red,
+                                size: 5.h,
+                              ),
+                              Text(
+                                'Attention required!',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      fontSize: 17.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
+                              ),
+                              VerticalSpacer(1.h),
+                              const Text('Upload Your Proof'),
+                              VerticalSpacer(2.h),
+                              ButtonWidget(
+                                btName: 'Upload Proof',
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ScreenUploadinProofs(),
+                                      ));
+                                },
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    : const SizedBox(),
+                dashBoardController.dashBoardModel?.result?.data
+                            ?.activationStatus?.statusCode ==
+                        'S03'
+                    ? SizedBox(
+                        height: 28.h,
+                        width: double.infinity,
+                        child: Card(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              VerticalSpacer(1.h),
+                              Icon(
+                                Icons.warning_outlined,
+                                color: Colors.red,
+                                size: 5.h,
+                              ),
+                              Text(
+                                'Attention required!',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      fontSize: 17.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
+                              ),
+                              VerticalSpacer(1.h),
+                              const Text('Upload Your Bank Proof'),
+                              VerticalSpacer(2.h),
+                              ButtonWidget(
+                                btName: 'Upload Bank Proof',
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ScreenBankProofs(),
+                                      ));
+                                },
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    : const SizedBox(),
+                dashBoardController.dashBoardModel?.result?.data
+                            ?.activationStatus?.statusCode ==
+                        'S07'
+                    ? SizedBox(
+                        height: 20.h,
+                        width: double.infinity,
+                        child: Card(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              VerticalSpacer(1.h),
+                              Padding(
+                                padding: EdgeInsets.all(10.0.sp),
+                                child: Text(
+                                  '${dashBoardController.dashBoardModel?.result?.data?.activationStatus?.message}',
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                  textAlign: TextAlign.center,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    : const SizedBox(),
+                VerticalSpacer(2.h),
                 Text(
                   'Collections',
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -252,12 +331,12 @@ class ScreenHome extends StatelessWidget {
                     children: [
                       InkWell(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const StockDetailsScreen(),
-                            ),
-                          );
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => const StockDetailsScreen(),
+                          //   ),
+                          // );
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(
@@ -543,6 +622,56 @@ class ScreenHome extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+}
+
+class DrawerWidget extends StatelessWidget {
+  const DrawerWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          const DrawerHeader(
+            decoration: BoxDecoration(
+              color: Color(0xFF060B27),
+            ),
+            child: Text(
+              'Name',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+          ListTile(
+            title: Text(
+              'Top Mutual Funds',
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ScreenTopFunds(),
+                ),
+              );
+            },
+          ),
+          // ListTile(
+          //   title: Text('Item 2'),
+          //   onTap: () {
+          //     // Add your logic here for Item 2
+          //   },
+          // ),
+          // Add more ListTile widgets for additional items
+        ],
+      ),
     );
   }
 }

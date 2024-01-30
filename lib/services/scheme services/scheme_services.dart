@@ -29,16 +29,17 @@ class SchemeServices {
   MutualFundModel mutualFundModel = MutualFundModel();
   List<dynamic> portfolioList = [];
   // List<Map<String, double>> holdings = [];
-  Future<SchemeInfoModel?> schemeInfo(context) async {
+  Future<SchemeInfoModel?> schemeInfo(context, String scheme) async {
     log('calling');
+    //HDFC Top 100 Fund - Growth Option - Regular Plan
     String url =
-        'http://mfapi.advisorkhoj.com/getSchemeInfoFinfreshWealth?key=44aaa594-8ebd-4b0f-b3e2-80bc279d0163&scheme=HDFC Top 100 Fund - Growth Option - Regular Plan';
+        'http://mfapi.advisorkhoj.com/getSchemeInfoFinfreshWealth?key=44aaa594-8ebd-4b0f-b3e2-80bc279d0163&scheme=$scheme';
     try {
       log('try');
       http.Response response = await http.get(
         Uri.parse(url),
       );
-      logger.d('Scheme info service == ${response.body}');
+      log('Scheme info service == ${response.body}');
       Map<String, dynamic> jsonResponse = json.decode(response.body);
       if (jsonResponse['status'] == 200) {
         infoModel = SchemeInfoModel.fromJson(jsonResponse);
@@ -84,7 +85,7 @@ class SchemeServices {
     }
   }
 
-  Future<void> schemeAllCategory() async {
+  Future<SchemeAllCategoryModel?> schemeAllCategory(context) async {
     log('calling');
     String url =
         'https://mfapi.advisorkhoj.com/getAllSchemeCategories?key=44aaa594-8ebd-4b0f-b3e2-80bc279d0163';
@@ -98,39 +99,50 @@ class SchemeServices {
       Map<String, dynamic> jsonResponse = json.decode(response.body);
       if (jsonResponse['status'] == 200) {
         allCategoryModel = SchemeAllCategoryModel.fromJson(jsonResponse);
+        return allCategoryModel;
       } else if (jsonResponse['status'] == 500) {
         // showSnackBar(context, jsonResponse['result']['message']);
       }
     } on SocketException {
-      // showSnackBar(context, 'No Internet Connection');
+      showSnackBar(context, 'No Internet Connection');
+      return null;
     } catch (e) {
       logger.d('exception in scheme info $e');
+      return null;
     }
+    return null;
   }
 
-  Future<void> topPerformingMutualFund() async {
+  Future<TopPerformingMutualFundModel?> topPerformingMutualFund(
+      context, String category) async {
     log('calling');
     String url =
-        'https://mfapi.advisorkhoj.com/getSchemePerformanceReturnsNew?key=44aaa594-8ebd-4b0f-b3e2-80bc279d0163&category=Hybrid: Aggressive&period=1m';
+        'https://mfapi.advisorkhoj.com/getSchemePerformanceReturnsNew?key=44aaa594-8ebd-4b0f-b3e2-80bc279d0163&category=$category&period=1m';
     try {
       log('try');
       http.Response response = await http.get(
         Uri.parse(url),
       );
-      log('completed');
-      logger.d('Scheme info service == ${response.body}');
+      log('completed $category');
+      log('Scheme topperforming == ${response.body}');
       Map<String, dynamic> jsonResponse = json.decode(response.body);
       if (jsonResponse['status'] == 200) {
+        log('completed in top p');
         topPerformingMutualFundModel =
             TopPerformingMutualFundModel.fromJson(jsonResponse);
+        // log(topPerformingMutualFundModel.toString());
+        return topPerformingMutualFundModel;
       } else if (jsonResponse['status'] == 500) {
         // showSnackBar(context, jsonResponse['result']['message']);
       }
     } on SocketException {
-      // showSnackBar(context, 'No Internet Connection');
+      showSnackBar(context, 'No Internet Connection');
+      return null;
     } catch (e) {
-      logger.d('exception in scheme info $e');
+      logger.d('exception itop performing $e');
+      return null;
     }
+    return null;
   }
 
   Future<void> latestNav() async {
@@ -157,10 +169,11 @@ class SchemeServices {
     }
   }
 
-  Future<HistoricalNavModel?> historicalNav(String startDate, context) async {
+  Future<HistoricalNavModel?> historicalNav(
+      String startDate, context, String scheme) async {
     log('calling');
     String url =
-        'https://mfapi.advisorkhoj.com/getHistoricalNav?key=44aaa594-8ebd-4b0f-b3e2-80bc279d0163&scheme=HDFC Liquid Fund - Growth Plan&startdate=19-12-2022&enddate=19-12-2023';
+        'https://mfapi.advisorkhoj.com/getHistoricalNav?key=44aaa594-8ebd-4b0f-b3e2-80bc279d0163&scheme=$scheme&startdate=19-12-2022&enddate=19-12-2023';
     try {
       log('try');
       http.Response response = await http.get(
@@ -186,7 +199,6 @@ class SchemeServices {
       logger.d('exception in historical nav $e');
       return null;
     }
-    return null;
   }
 
   Future<void> topSIPbasedonCategory() async {

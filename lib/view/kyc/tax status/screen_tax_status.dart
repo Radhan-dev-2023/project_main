@@ -23,11 +23,10 @@ class ScreenTaxStatus extends StatefulWidget {
 class _ScreenTaxStatusState extends State<ScreenTaxStatus> {
   @override
   void initState() {
-    // Provider.of<KycController>(context, listen: false).getHoldingNature();
-    // Provider.of<KycController>(context, listen: false).getTaxStatus();
     Provider.of<KycController>(context, listen: false).taxStatusValue = null;
     Provider.of<KycController>(context, listen: false).holdingValue = null;
-    Provider.of<KycController>(context, listen: false).callHodingAndTax();
+    Provider.of<KycController>(context, listen: false)
+        .callHodingAndTax(context);
 
     Provider.of<KycController>(context, listen: false).updatePagenumber('2');
     super.initState();
@@ -174,24 +173,46 @@ class _ScreenTaxStatusState extends State<ScreenTaxStatus> {
                     showSnackBar(context, 'Select a Holding Nature');
                     return;
                   }
-                  bool result = await kycController
-                      .getInn(authcontroller.phonenumberController.text);
-                  if (result == true) {
-                    // ignore: use_build_context_synchronously
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => const ScreenHomeView(),
-                      ),
-                    );
+
+                  if (kycController.taxcode != '01') {
+                    bool result =
+                        await kycController.getNonIndividualTax(context);
+                    if (result == true) {
+                      // ignore: use_build_context_synchronously
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => const ScreenHomeView(),
+                        ),
+                      );
+                    } else {
+                      kycController.updatePagenumber('3');
+                      kycController.addtaxstatus();
+                      // ignore: use_build_context_synchronously
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const ScreenOccupation(),
+                        ),
+                      );
+                    }
                   } else {
-                    kycController.updatePagenumber('3');
-                    kycController.addtaxstatus();
-                    // ignore: use_build_context_synchronously
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const ScreenOccupation(),
-                      ),
-                    );
+                    bool result = await kycController.getInn();
+                    if (result == true) {
+                      // ignore: use_build_context_synchronously
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => const ScreenHomeView(),
+                        ),
+                      );
+                    } else {
+                      kycController.updatePagenumber('3');
+                      kycController.addtaxstatus();
+                      // ignore: use_build_context_synchronously
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const ScreenOccupation(),
+                        ),
+                      );
+                    }
                   }
                 },
                 btName: 'Proceed'.toUpperCase(),

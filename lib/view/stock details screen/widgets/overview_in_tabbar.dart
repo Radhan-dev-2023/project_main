@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class OverViewInTabbar extends StatelessWidget {
   const OverViewInTabbar({super.key});

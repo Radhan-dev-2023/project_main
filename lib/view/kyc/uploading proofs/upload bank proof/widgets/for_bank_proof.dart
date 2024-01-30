@@ -55,7 +55,7 @@ class ForBankProof extends StatelessWidget {
             ),
           ),
           VerticalSpacer(3.h),
-          uploadingproofController.pOAValue == 'Y'
+          uploadingproofController.pOAValue == 'Yes'
               ? Container(
                   decoration: BoxDecoration(
                     border: Border.all(

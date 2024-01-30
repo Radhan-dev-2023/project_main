@@ -4,6 +4,8 @@ import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart'
 import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_controller.dart';
 import 'package:finfresh_mobile/controller/pin%20controller/pin_controller.dart';
 import 'package:finfresh_mobile/controller/scheme%20details%20controller/scheme_details_controller.dart';
+import 'package:finfresh_mobile/controller/top%20MFs%20controller/top_mfs_controller.dart';
+import 'package:finfresh_mobile/controller/top%20fund%20controller/top_fund_controller.dart';
 import 'package:finfresh_mobile/controller/uploading%20proofs/uploading_proof_controller.dart';
 import 'package:finfresh_mobile/db/model/investors_data_model.dart';
 import 'package:finfresh_mobile/utilities/theme/theme.dart';
@@ -18,6 +20,7 @@ import 'package:finfresh_mobile/view/kyc/bank%20account%20number/screen_bank_acc
 import 'package:finfresh_mobile/view/kyc/joint%20holders/join_holders_screen.dart';
 import 'package:finfresh_mobile/view/kyc/tax%20status/screen_tax_status.dart';
 import 'package:finfresh_mobile/view/kyc/uploading%20proofs/screen_upload_proof.dart';
+import 'package:finfresh_mobile/view/kyc/uploading%20proofs/upload%20bank%20proof/upload_bank_proof.dart';
 import 'package:finfresh_mobile/view/nominee%20id%20adding/screen_nominee_id_adding.dart';
 import 'package:finfresh_mobile/view/kyc/occupation%20Screen/occupation_screen.dart';
 import 'package:finfresh_mobile/view/kyc/pancard/screen_pan_card.dart';
@@ -72,6 +75,12 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => SchemeDetailsController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => TopFundController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => TopMFsController(),
         )
       ],
       child: ResponsiveSizer(builder: (context, orientation, screenType) {
@@ -80,7 +89,8 @@ class MyApp extends StatelessWidget {
 
           theme: isDarkMode ? AppTheme.darkTheme : AppTheme.lightTheme,
           // darkTheme: AppTheme.darkTheme,
-          // home: const SplashScreen(),
+          home: const SplashScreen(),
+          // home: ScreenBankProofs(),
           // home: const AddingNomineeAndGuadianScreen(),
           // home: const ScreenUploadinProofs(),
           // home: ScreenBankAccountNumber(),
@@ -95,7 +105,7 @@ class MyApp extends StatelessWidget {
           // home: const ScreenPanCard(),
           // home: const ScreenPersonalDetails(),
           // home: const ScreenSetPinNumber(),
-          home: const ScreenHomeView(),
+          // home: const ScreenHomeView(),
           // home: const ScreenOccupation(),
         );
       }),

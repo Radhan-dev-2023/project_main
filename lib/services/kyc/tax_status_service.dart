@@ -1,13 +1,15 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:finfresh_mobile/model/tax%20status%20model/tax_status_model.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
+import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
 import 'package:finfresh_mobile/utilities/urls/url.dart';
 import 'package:http/http.dart' as http;
 
 class TaxStatusService {
   TaxMaster taxMaster = TaxMaster();
-  Future<String?> getTaxStatus() async {
+  Future<String?> getTaxStatus(context) async {
     Map<String, dynamic> payload = {"methodname": "tax"};
     final url = Uri.parse('${ApiEndpoint.baseUrl}/v1/master');
     try {
@@ -28,6 +30,8 @@ class TaxStatusService {
         logger.d('taxmasterList====${taxMaster.masterDetails}');
         return response.body;
       }
+    } on SocketException {
+      showSnackBar(context, 'No Internet Connection');
     } catch (e) {
       logger.d('exception in user register $e');
       return null;

@@ -15,9 +15,10 @@ class SliverlistWidget extends StatelessWidget {
     super.key,
     required int currentIndex,
     required TabController tabController,
+    required this.scheme,
   })  : _currentIndex = currentIndex,
         _tabController = tabController;
-
+  final String scheme;
   final int _currentIndex;
   final TabController _tabController;
 
@@ -25,7 +26,7 @@ class SliverlistWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Brightness brightness = Theme.of(context).brightness;
     Provider.of<SchemeDetailsController>(context, listen: false)
-        .callingFunctionDetailScreen(context);
+        .callingFunctionDetailScreen(context, scheme);
 
     // final GlobalKey sliverListKey = GlobalKey();
     final ScrollController _scrollController = ScrollController();
@@ -128,8 +129,8 @@ class SliverlistWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SliverToBoxAdapter(
-                      child: ChartWidget(),
+                    SliverToBoxAdapter(
+                      child: ChartWidget(scheme: scheme),
                     ),
                     const SliverToBoxAdapter(
                       child: SizedBox(

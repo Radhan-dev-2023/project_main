@@ -11,12 +11,13 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 class ChartWidget extends StatelessWidget {
   const ChartWidget({
     super.key,
+    required this.scheme,
   });
-
+  final String scheme;
   @override
   Widget build(BuildContext context) {
-    Provider.of<SchemeDetailsController>(context, listen: false)
-        .getChartValue(context);
+    // Provider.of<SchemeDetailsController>(context, listen: false)
+    //     .getChartValue(context, scheme);
     // final schemeController = Provider.of<SchemeDetailsController>(context);
 
     return Consumer<SchemeDetailsController>(

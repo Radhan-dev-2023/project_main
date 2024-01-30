@@ -22,8 +22,8 @@ class UploadProofservice {
     log('customer id =$customerId');
     Map<String, String> body = {
       'ImageType': imageType,
-      // "CustomerID": customerId,
-      "CustomerID": '5014122071',
+      "CustomerID": customerId,
+      // "CustomerID": '5014060638',
       "ImageFormat": 'TIFF',
     };
     try {
@@ -72,8 +72,8 @@ class UploadProofservice {
     }
   }
 
-  Future<bool> uploadBankProof(String image, String imageType, String poaFlag,
-      String poaBankType, String bankCode, context) async {
+  Future<bool> uploadBankProof(String image, String poaFlag, String poaBankType,
+      String bankCode, context) async {
     String url = '${ApiEndpoint.baseUrl}/api/v1/uploadimage';
 
     String token = await SecureStorage.readToken('token');
@@ -83,18 +83,18 @@ class UploadProofservice {
     String bankAccNumber = await SecureStorage.readToken('bankAccNumber');
 
     log(image);
-    log(imageType);
+    // log(imageType);
     log('token===$token');
     log('userId===$userId');
     log('bank prooodf');
 
     Map<String, String> body = {
-      'ImageType': imageType,
+      'ImageType': 'B',
       "CustomerID": customerId,
       "ImageFormat": 'TIFF',
       "BankCode": bankCode,
       "AccNo": bankAccNumber,
-      "POAFlag": poaFlag == "Please select POAFlag" ? '' : poaFlag,
+      "POAFlag": poaFlag == "Please select POAFlag" ? 'N' : poaFlag,
       "POABankType":
           poaBankType == "Please select POABankType" ? '' : poaBankType,
     };
