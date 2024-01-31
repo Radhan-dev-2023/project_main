@@ -58,7 +58,7 @@ class _BoardingViewScreenState extends State<BoardingViewScreen> {
   List<String> condentList = [
     'The best app for invest international stocks \n with as little',
     "Invest in the world's top leading brands & \n unlock amazing return of investment",
-    "You don't want to buy a whole share .\n You can buy a fraction",
+    "You don't want to buy a whole share.\n You can buy a fraction",
     "Your bockerage account is maintained by \n interactive Brockers LLC.",
     'No commission ever,just invest free and  \n maximize your returns',
     "No spreads, all trades execute of the\n international best bid &offer",

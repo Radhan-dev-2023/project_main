@@ -63,7 +63,7 @@ class ScreenSignin extends StatelessWidget {
                     ),
                     VerticalSpacer(2.h),
                     Text(
-                      'A Verification code will be sent to this  number',
+                      'A verification code will be sent to this number',
                       style: Theme.of(context)
                           .textTheme
                           .labelMedium!

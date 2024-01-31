@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
+import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
 import 'package:finfresh_mobile/view/kyc/Nominee%20adding/nominee%20type/screen_nominee_count.dart';
 import 'package:finfresh_mobile/view/kyc/guardian%20screen/screen_guardian.dart';
 import 'package:finfresh_mobile/view/kyc/uploading%20proofs/screen_upload_proof.dart';
@@ -129,7 +130,11 @@ class AddingNomineeAndGuadianScreen extends StatelessWidget {
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const ScreenUploadinProofs(),
+                      builder: (context) => kycController.createCustomerService
+                                  .customerResponseModel.newCustomer ==
+                              true
+                          ? const ScreenUploadinProofs()
+                          : const ScreenHomeView(),
                     ),
                     (route) => false,
                   );

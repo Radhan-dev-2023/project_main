@@ -170,10 +170,10 @@ class SchemeServices {
   }
 
   Future<HistoricalNavModel?> historicalNav(
-      String startDate, context, String scheme) async {
+      String startDate, context, String scheme, String lastdate) async {
     log('calling');
     String url =
-        'https://mfapi.advisorkhoj.com/getHistoricalNav?key=44aaa594-8ebd-4b0f-b3e2-80bc279d0163&scheme=$scheme&startdate=19-12-2022&enddate=19-12-2023';
+        'https://mfapi.advisorkhoj.com/getHistoricalNav?key=44aaa594-8ebd-4b0f-b3e2-80bc279d0163&scheme=$scheme&startdate=$startDate&enddate=$lastdate';
     try {
       log('try');
       http.Response response = await http.get(

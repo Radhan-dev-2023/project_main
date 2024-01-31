@@ -52,8 +52,15 @@ class OverViewInTabbar extends StatelessWidget {
                   const CustomTextWidget(
                     text: 'Exit Load',
                   ),
-                  CustomTextWidget(
-                    text: schemeController.schemeInfoModel?.exitLoad ?? '',
+                  SizedBox(
+                    width: 50.w,
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        schemeController.schemeInfoModel?.exitLoad ?? '',
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -154,6 +161,7 @@ class CustomTextWidget extends StatelessWidget {
       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             fontSize: fontSize,
           ),
+      // overflow: TextOverflow.ellipsis,
     );
   }
 }

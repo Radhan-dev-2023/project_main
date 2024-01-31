@@ -187,6 +187,7 @@ class _ScreenAddressState extends State<ScreenAddress> {
                             return null;
                           },
                           decoration: InputDecoration(
+                            helperText: '',
                             // filled: true,
                             // fillColor: const Color(0xFF0E1330),
                             border: OutlineInputBorder(
@@ -213,6 +214,7 @@ class _ScreenAddressState extends State<ScreenAddress> {
                             return null;
                           },
                           decoration: InputDecoration(
+                              helperText: '',
                               // filled: true,
                               // fillColor: const Color(0xFF0E1330),
                               border: OutlineInputBorder(

@@ -108,7 +108,7 @@ class ScreenConfirmPinNumber extends StatelessWidget {
                           pinController.confirmPinController.text) {
                         logger.d(
                             'pinController.pinController.text==${pinController.pinController.text}');
-                        return 'pin does not match';
+                        return 'PIN does not match';
                       }
                       return null;
                     },

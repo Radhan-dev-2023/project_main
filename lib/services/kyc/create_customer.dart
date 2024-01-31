@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:finfresh_mobile/model/customer%20response%20model/customer_response_model.dart';
 import 'package:finfresh_mobile/model/investors%20details/investors_details_model.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
@@ -10,6 +11,7 @@ import 'package:finfresh_mobile/utilities/urls/url.dart';
 import 'package:http/http.dart' as http;
 
 class CreateCustomer {
+  CustomerResponseModel customerResponseModel = CustomerResponseModel();
   Future<bool> createCustomer(InvestorDetails investorDetails, context) async {
     String token = await SecureStorage.readToken('token');
     String userId = await SecureStorage.readToken('userId');
@@ -32,6 +34,7 @@ class CreateCustomer {
         log('create customer success');
         String customerId = jsonResponse['customerId'];
         SecureStorage.addingvaluesToStorage('customerId', customerId);
+        customerResponseModel = CustomerResponseModel.fromJson(jsonResponse);
         return true;
       } else if (jsonResponse['status'] == 500) {
         log('create customer failed');

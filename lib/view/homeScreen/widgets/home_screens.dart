@@ -1,26 +1,17 @@
-import 'dart:developer';
-
 import 'package:finfresh_mobile/controller/auth/auth_controller.dart';
 import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
-import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
-import 'package:finfresh_mobile/db/model/investors_data_model.dart';
-import 'package:finfresh_mobile/routes/routes.dart';
 import 'package:finfresh_mobile/services/scheme%20services/scheme_services.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
-import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
-import 'package:finfresh_mobile/view/kyc/occupation%20Screen/occupation_screen.dart';
-import 'package:finfresh_mobile/view/kyc/pancard/screen_pan_card.dart';
-import 'package:finfresh_mobile/view/kyc/tax%20status/screen_tax_status.dart';
+import 'package:finfresh_mobile/view/homeScreen/widgets/attension_widget.dart';
+import 'package:finfresh_mobile/view/homeScreen/widgets/collection_widget.dart';
+import 'package:finfresh_mobile/view/homeScreen/widgets/drawer_widget.dart';
 import 'package:finfresh_mobile/view/kyc/uploading%20proofs/screen_upload_proof.dart';
 import 'package:finfresh_mobile/view/kyc/uploading%20proofs/upload%20bank%20proof/upload_bank_proof.dart';
 import 'package:finfresh_mobile/view/onboarding%20screen/on_boarding_view_screen.dart';
-import 'package:finfresh_mobile/view/stock%20details%20screen/stock_detail_screen.dart';
-import 'package:finfresh_mobile/view/top%20funds/top_funds.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -48,14 +39,13 @@ class ScreenHome extends StatelessWidget {
         centerTitle: true,
         // leadingWidth: 0.0,
         // leading: const SizedBox(),
-        title: Text(Provider.of<DashBoardController>(context, listen: false)
-                    .dashBoardModel
-                    ?.result
-                    ?.data
-                    ?.name ==
-                null
-            ? 'Welcome ${Provider.of<DashBoardController>(context, listen: false).username}'
-            : 'Welcome ${Provider.of<DashBoardController>(context, listen: false).dashBoardModel?.result?.data?.name}'),
+        title: Consumer<DashBoardController>(
+            builder: (context, dashBoardController, child) {
+          return Text(dashBoardController.dashBoardModel?.result?.data?.name ==
+                  null
+              ? 'Welcome ${dashBoardController.username}'
+              : 'Welcome ${dashBoardController.dashBoardModel?.result?.data?.name}');
+        }),
         actions: [
           IconButton(
             onPressed: () {},
@@ -626,122 +616,8 @@ class ScreenHome extends StatelessWidget {
   }
 }
 
-class DrawerWidget extends StatelessWidget {
-  const DrawerWidget({
-    super.key,
-  });
 
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(
-              color: Color(0xFF060B27),
-            ),
-            child: Text(
-              'Name',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ),
-          ListTile(
-            title: Text(
-              'Top Mutual Funds',
-              style: Theme.of(context).textTheme.labelLarge,
-            ),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ScreenTopFunds(),
-                ),
-              );
-            },
-          ),
-          // ListTile(
-          //   title: Text('Item 2'),
-          //   onTap: () {
-          //     // Add your logic here for Item 2
-          //   },
-          // ),
-          // Add more ListTile widgets for additional items
-        ],
-      ),
-    );
-  }
-}
 
-class AttensionWidget extends StatelessWidget {
-  const AttensionWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    // InvestorModel investorModel = InvestorModel();
-    final dashBoardController = Provider.of<DashBoardController>(context);
-    return SizedBox(
-      height: 28.h,
-      width: double.infinity,
-      child: Card(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            VerticalSpacer(1.h),
-            Icon(
-              Icons.warning_outlined,
-              color: Colors.red,
-              size: 5.h,
-            ),
-            Text(
-              'Attention required!',
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    fontSize: 17.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
-              // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
-            ),
-            VerticalSpacer(1.h),
-            Text(
-                'Your KYC details are  ${dashBoardController.dashBoardModel?.result?.data?.activationStatus?.message}'),
-            VerticalSpacer(2.h),
-            ButtonWidget(
-              btName: 'Complete KYC',
-              onTap: () {
-                Routes.dashboardToKycPage(context);
-              },
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class Collectionwidget extends StatelessWidget {
-  final String image;
-  const Collectionwidget({
-    super.key,
-    required this.image,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 7.h,
-      width: 15.w,
-      child: Image.asset(
-        image,
-        fit: BoxFit.fill,
-      ),
-    );
-  }
-}
 
 // class ShimmerEffect extends StatelessWidget {
 //   const ShimmerEffect({super.key});

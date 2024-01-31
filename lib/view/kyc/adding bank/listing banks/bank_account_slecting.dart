@@ -39,26 +39,43 @@ class ScreenAddingBank extends StatelessWidget {
                       .copyWith(fontSize: 19.sp, fontWeight: FontWeight.w700),
                 ),
                 VerticalSpacer(4.h),
-                TextFormField(
-                  // readOnly: true,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  controller: kycController.banknameController,
+                DropdownButtonFormField<String>(
                   style: Theme.of(context).textTheme.labelLarge!,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'field is required';
-                    }
-                    if (!RegExp(r'^[a-zA-Z0-9\s\-&.,]+$').hasMatch(value)) {
-                      return 'Enter valid bank name';
-                    }
-                    return null;
+                  value: kycController.banknameController.text,
+                  decoration: const InputDecoration(hintText: 'Bank name'),
+                  onChanged: (String? newValue) {
+                    kycController.banknameController.text = newValue!;
                   },
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    hintText: 'Enter bank name',
-                  ),
+                  items: kycController.bankDeatilsModel?.bankDetails?.bank
+                      ?.map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(
+                        value,
+                      ),
+                    );
+                  }).toList(),
                 ),
+                // TextFormField(
+                //   // readOnly: true,
+                //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                //   controller: kycController.banknameController,
+                //   style: Theme.of(context).textTheme.labelLarge!,
+                //   validator: (value) {
+                //     if (value == null || value.isEmpty) {
+                //       return 'field is required';
+                //     }
+                //     if (!RegExp(r'^[a-zA-Z0-9\s\-&.,]+$').hasMatch(value)) {
+                //       return 'Enter valid bank name';
+                //     }
+                //     return null;
+                //   },
+                //   decoration: InputDecoration(
+                //     border: OutlineInputBorder(
+                //         borderRadius: BorderRadius.circular(10)),
+                //     hintText: 'Enter bank name',
+                //   ),
+                // ),
               ],
             ),
           ),

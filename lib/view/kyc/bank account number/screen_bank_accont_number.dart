@@ -20,8 +20,6 @@ class ScreenBankAccountNumber extends StatefulWidget {
 class _ScreenBankAccountNumberState extends State<ScreenBankAccountNumber> {
   @override
   void initState() {
-    // Provider.of<KycController>(context, listen: false).getHoldingNature();
-    // Provider.of<KycController>(context, listen: false).getTaxStatus();
     Provider.of<KycController>(context, listen: false).acountypeValue = null;
     Provider.of<KycController>(context, listen: false).getAccountType();
     Provider.of<KycController>(context, listen: false).updatePagenumber('10');
@@ -31,7 +29,7 @@ class _ScreenBankAccountNumberState extends State<ScreenBankAccountNumber> {
   @override
   Widget build(BuildContext context) {
     Brightness brightness = MediaQuery.of(context).platformBrightness;
-    // Provider.of<UploadingProof>(context, listen: false).getBankCode();
+    // Provider.of<KycController>(context, listen: false).getAccountType();
     final kycController = Provider.of<KycController>(context);
     // kycController.updatePagenumber('10');
     return Scaffold(

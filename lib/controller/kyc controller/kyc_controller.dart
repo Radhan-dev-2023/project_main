@@ -645,7 +645,7 @@ class KycController extends ChangeNotifier {
   }
 
   void addingbankname() {
-    banknameController.text = bankDeatilsModel?.bankDetails?.bank ?? '';
+    banknameController.text = bankDeatilsModel?.bankDetails?.bank?[0] ?? '';
     SecureStorage.addToken('bankName', banknameController.text);
     notifyListeners();
   }
