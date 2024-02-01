@@ -15,14 +15,18 @@ class ScreenAddress extends StatefulWidget {
   State<ScreenAddress> createState() => _ScreenAddressState();
 }
 
-bool _isChecked = false;
-
 class _ScreenAddressState extends State<ScreenAddress> {
+  @override
+  void initState() {
+    Provider.of<KycController>(context, listen: false).updatePagenumber('5');
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     Brightness brightness = Theme.of(context).brightness;
     final kycController = Provider.of<KycController>(context);
-    kycController.updatePagenumber('5');
 
     return Scaffold(
       appBar: AppBar(
@@ -228,21 +232,20 @@ class _ScreenAddressState extends State<ScreenAddress> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Do you want to add office number ?'),
+                      const Text('Do you want to add phone number ?'),
                       Checkbox(
+                        activeColor: Colors.transparent,
                         checkColor: brightness == Brightness.light
                             ? Colors.black
                             : Colors.white,
-                        value: _isChecked,
+                        value: kycController.isChecked,
                         onChanged: (bool? value) {
-                          setState(() {
-                            _isChecked = value ?? false;
-                          });
+                          kycController.updateChecked(value!);
                         },
                       ),
                     ],
                   ),
-                  _isChecked == false
+                  kycController.isChecked == false
                       ? const SizedBox()
                       : SizedBox(
                           child: Column(
@@ -265,7 +268,7 @@ class _ScreenAddressState extends State<ScreenAddress> {
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10)),
-                                  hintText: 'office phone number',
+                                  hintText: 'Office phone number',
                                 ),
                               ),
                               VerticalSpacer(3.h),
@@ -276,7 +279,7 @@ class _ScreenAddressState extends State<ScreenAddress> {
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10)),
-                                  hintText: 'Residence Fax',
+                                  hintText: 'Residence fax',
                                 ),
                               ),
                               VerticalSpacer(3.h),
@@ -356,13 +359,14 @@ class _ScreenAddressState extends State<ScreenAddress> {
   void showAlertDialog(BuildContext context) {
     // Create the AlertDialog
     AlertDialog alert = AlertDialog(
-      content: Text(
+      title: Text(
         'Please fill the address details before adding NRI address',
         style: Theme.of(context)
             .textTheme
             .labelLarge!
-            .copyWith(fontSize: 16.sp, fontWeight: FontWeight.w500),
+            .copyWith(fontSize: 17.sp, fontWeight: FontWeight.w500),
       ),
+      content: VerticalSpacer(2.h),
       actions: [
         // You can add buttons to the alert dialog
 

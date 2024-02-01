@@ -1,4 +1,3 @@
-import 'package:finfresh_mobile/controller/auth/auth_controller.dart';
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/model/holding%20nature%20model/holding_nature_model.dart';
 import 'package:finfresh_mobile/model/tax%20status%20model/tax_status_model.dart';
@@ -36,7 +35,7 @@ class _ScreenTaxStatusState extends State<ScreenTaxStatus> {
   Widget build(BuildContext context) {
     Brightness brightness = MediaQuery.of(context).platformBrightness;
 
-    final authcontroller = Provider.of<AuthController>(context);
+    // final authcontroller = Provider.of<AuthController>(context);
 
     return Consumer<KycController>(builder: (context, kycController, child) {
       return Scaffold(

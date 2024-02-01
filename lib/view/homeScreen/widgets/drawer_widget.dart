@@ -27,14 +27,16 @@ class DrawerWidget extends StatelessWidget {
                 children: [
                   VerticalSpacer(7.h),
                   Text(
-                    '${dashBoardController.dashBoardModel?.result?.data?.name}',
+                    '${dashBoardController.dashBoardModel?.result?.data?.name ?? ''}',
                     style: const TextStyle(
                       color: Colors.white,
                     ),
                   ),
                   VerticalSpacer(.5.h),
                   Text(
-                    '${dashBoardController.dashBoardModel?.result?.data?.phoneNumber}',
+                    dashBoardController
+                            .dashBoardModel?.result?.data?.phoneNumber ??
+                        '',
                     style: const TextStyle(
                       color: Colors.white,
                     ),

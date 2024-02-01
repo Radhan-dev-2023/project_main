@@ -7,12 +7,23 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class ScreenPanCard extends StatelessWidget {
+class ScreenPanCard extends StatefulWidget {
   const ScreenPanCard({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<ScreenPanCard> createState() => _ScreenPanCardState();
+}
+
+class _ScreenPanCardState extends State<ScreenPanCard> {
+  @override
+  void initState() {
     Provider.of<KycController>(context, listen: false).updatePagenumber('1');
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Consumer<KycController>(builder: (context, kycController, child) {
       return Scaffold(
         appBar: AppBar(

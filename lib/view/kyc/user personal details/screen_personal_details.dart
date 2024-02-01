@@ -1,20 +1,34 @@
+import 'dart:developer';
+
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
-import 'package:finfresh_mobile/view/kyc/address/address_screen.dart';
 import 'package:finfresh_mobile/view/kyc/tax%20status/screen_tax_status.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class ScreenPersonalDetails extends StatelessWidget {
+class ScreenPersonalDetails extends StatefulWidget {
   const ScreenPersonalDetails({super.key});
+
+  @override
+  State<ScreenPersonalDetails> createState() => _ScreenPersonalDetailsState();
+}
+
+class _ScreenPersonalDetailsState extends State<ScreenPersonalDetails> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<KycController>(context, listen: false).updatePagenumber('4');
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final kycController = Provider.of<KycController>(context, listen: false);
-    kycController.updatePagenumber('4');
+
     return Scaffold(
       appBar: AppBar(
         leading: InkWell(
@@ -75,6 +89,21 @@ class ScreenPersonalDetails extends StatelessWidget {
                   ),
                   VerticalSpacer(3.h),
                   TextFormField(
+                    onTap: () async {
+                      DateTime? picked = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime.now(),
+                      );
+                      if (picked != null) {
+                        String selectdate =
+                            DateFormat('dd-MMM-yyyy').format(picked);
+                        log('selected date ===$selectdate');
+                        kycController.dobController.text = selectdate;
+                      }
+                    },
+                    readOnly: true,
                     style: Theme.of(context).textTheme.labelLarge!,
                     // maxLength: 10,
                     controller: kycController.dobController,

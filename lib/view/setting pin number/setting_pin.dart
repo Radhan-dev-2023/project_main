@@ -1,6 +1,8 @@
+import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_controller.dart';
 import 'package:finfresh_mobile/controller/pin%20controller/pin_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
+import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
 import 'package:finfresh_mobile/view/setting%20pin%20number/confirm%20pin/screen_confirm_pin.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:flutter/material.dart';
@@ -51,8 +53,9 @@ class ScreenSetPinNumber extends StatelessWidget {
     );
     final errorPinTheme = defaultPinTheme.copyWith(
       decoration: defaultPinTheme.decoration?.copyWith(
-          // color: Colors.red,
-          border: Border.all(color: Colors.red)),
+        // color: Colors.red,
+        border: Border.all(color: Colors.red),
+      ),
     );
 
     return Scaffold(
@@ -70,6 +73,7 @@ class ScreenSetPinNumber extends StatelessWidget {
           margin: EdgeInsets.all(15.sp),
           child: Form(
             key: pinController.formKeyForPin,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -84,8 +88,8 @@ class ScreenSetPinNumber extends StatelessWidget {
                 VerticalSpacer(8.h),
                 Text(
                   biometricLoginController.buttonEnabled == true
-                      ? 'Reset Finfresh pin'
-                      : 'Enter your Finfresh pin ',
+                      ? 'Reset Finfresh PIN'
+                      : 'Enter Finfresh PIN',
                   style: Theme.of(context)
                       .textTheme
                       .labelLarge!
@@ -93,15 +97,18 @@ class ScreenSetPinNumber extends StatelessWidget {
                 ),
                 VerticalSpacer(1.h),
                 const Text(
-                  'Enter pin for confirmation',
+                  'Enter PIN for confirmation',
                   style: TextStyle(color: Colors.grey),
                 ),
                 VerticalSpacer(10.h),
                 Center(
                   child: Pinput(
+                    forceErrorState: false,
                     validator: (value) {
                       if (value?.length != 4 || value == null) {
-                        return 'Please enter the 4-digit pin';
+                        return 'Please enter the 4-digit PIN';
+                      } else if (value.isEmpty) {
+                        return 'Please enter the 4-digit PIN';
                       } else {
                         return null;
                       }
@@ -113,8 +120,11 @@ class ScreenSetPinNumber extends StatelessWidget {
                     submittedPinTheme: submittedPinTheme,
                     pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
                     errorPinTheme: errorPinTheme,
+                    errorTextStyle:
+                        TextStyle(color: Colors.red, fontSize: 15.sp),
                   ),
                 ),
+                VerticalSpacer(1.h),
                 VerticalSpacer(10.h),
               ],
             ),
@@ -132,6 +142,8 @@ class ScreenSetPinNumber extends StatelessWidget {
                 builder: (context) => const ScreenConfirmPinNumber(),
               ),
             );
+          } else if (pinController.pinController.text.length < 4) {
+            showSnackBar(context, 'Please enter the 4-digit PIN');
           }
           // setState(() {
           //   clicked = !clicked;

@@ -7,13 +7,25 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class ScreenIfcAdding extends StatelessWidget {
+class ScreenIfcAdding extends StatefulWidget {
   const ScreenIfcAdding({super.key});
+
+  @override
+  State<ScreenIfcAdding> createState() => _ScreenIfcAddingState();
+}
+
+class _ScreenIfcAddingState extends State<ScreenIfcAdding> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<KycController>(context, listen: false).updatePagenumber('8');
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final kycController = Provider.of<KycController>(context);
-    kycController.updatePagenumber('8');
+
     return Scaffold(
       appBar: AppBar(
         leading: InkWell(

@@ -8,7 +8,7 @@ import 'package:finfresh_mobile/utilities/urls/url.dart';
 import 'package:http/http.dart' as http;
 
 class RefershTokenService {
-  Future<void> postRefershTocken(context) async {
+  Future<bool> postRefershTocken(context) async {
     String userId = await SecureStorage.readToken('userId');
     String refreshToken = await SecureStorage.readToken('refreshToken');
     Map<String, dynamic> payload = {
@@ -23,7 +23,7 @@ class RefershTokenService {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: payload,
+        body: jsonEncode(payload),
       );
       logger.d('response of refersh token == ${response.body}');
       Map<String, dynamic> jsonResponse = json.decode(response.body);
@@ -31,11 +31,15 @@ class RefershTokenService {
         SecureStorage.addToken('token', jsonResponse['result']['token']);
         SecureStorage.addToken(
             'refreshToken', jsonResponse['result']['refreshToken']);
+        return true;
       }
     } on SocketException {
       showSnackBar(context, 'No Internet Connection');
+      return false;
     } catch (e) {
       logger.d('exception in token refresh $e');
+      return false;
     }
+    return false;
   }
 }

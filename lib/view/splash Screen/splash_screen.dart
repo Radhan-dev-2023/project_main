@@ -1,5 +1,5 @@
+import 'package:finfresh_mobile/services/refersh%20token/refersh_token.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
-import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
 import 'package:finfresh_mobile/view/login%20with%20pin/screen_login_with_pin.dart';
 import 'package:finfresh_mobile/view/onboarding%20screen/on_boarding_view_screen.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigateToOnboarding() async {
+    RefershTokenService refershTokenService = RefershTokenService();
     String token = await SecureStorage.readToken('token');
 
     await Future.delayed(
@@ -41,11 +42,15 @@ class _SplashScreenState extends State<SplashScreen> {
       bool isTokenExpired = JwtDecoder.isExpired(token);
       if (isTokenExpired) {
         // ignore: use_build_context_synchronously
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const BoardingViewScreen(),
-            ));
+        bool result = await refershTokenService.postRefershTocken(context);
+        if (result == true) {
+          // ignore: use_build_context_synchronously
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const PinEnterForLoginScreen(),
+              ));
+        }
       } else {
         // ignore: use_build_context_synchronously
         Navigator.pushReplacement(

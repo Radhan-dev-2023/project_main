@@ -113,6 +113,12 @@ class KycController extends ChangeNotifier {
   TextEditingController guardnameCotroller = TextEditingController();
   TextEditingController guardDOBController = TextEditingController();
   String phonenumber = '';
+  bool isChecked = false;
+  void updateChecked(bool value) {
+    isChecked = value;
+    notifyListeners();
+  }
+
   String? email;
   bool taxpageloading = false;
   MasterDetail? taxStatusValue;
@@ -161,24 +167,24 @@ class KycController extends ChangeNotifier {
     'Utter Pradesh',
     'Uttrakhand',
   ];
-  String countvalue = "select Nominee count";
+  String countvalue = "Select Nominee Count";
 
   List<String> countList = [
-    "select Nominee count",
+    "Select Nominee Count",
     "1",
     "2",
     "3",
   ];
-  String guardianrelationvalue = 'Select Guardian relationShip';
+  String guardianrelationvalue = 'Select Guardian relationship';
   String gudianvalueToBackend = '';
-  String nominee1guardRelationvalue = "Select Guardian relationShip";
-  String nominee2guardRelationvalue = "Select Guardian relationShip";
-  String nominee3guardRelationvalue = "Select Guardian relationShip";
+  String nominee1guardRelationvalue = "Select Guardian relationship";
+  String nominee2guardRelationvalue = "Select Guardian relationship";
+  String nominee3guardRelationvalue = "Select Guardian relationship";
   String nom1guardrelationtobackend = '';
   String nom2guardrelationtobackend = '';
   String nom3guardrelationtobackend = '';
   List<String> guardianRelation = [
-    'Select Guardian relationShip',
+    'Select Guardian relationship',
     "Natural Guardian",
     "Legaly Appointed Guardian",
   ];
@@ -390,10 +396,10 @@ class KycController extends ChangeNotifier {
     }
   }
 
-  String typevalue = "select a type";
-  String typevalueNominee2 = "select a type";
-  String typevalueNominee3 = "select a type";
-  List<String> typeList = ["select a type", "Minor", "Major"];
+  String typevalue = "Select a type";
+  String typevalueNominee2 = "Select a type";
+  String typevalueNominee3 = "Select a type";
+  List<String> typeList = ["Select a type", "Minor", "Major"];
   String selectRelationValue = 'Select relation';
   String selectRelationValueNominne2 = 'Select relation';
   String selectRelationValueNominne3 = 'Select relation';
@@ -1656,19 +1662,20 @@ class KycController extends ChangeNotifier {
     }
   }
 
+  bool accounttypeLoading = false;
   AccountTypeModel? accountTypeModel;
   getAccountType() async {
-    taxpageloading = true;
+    accounttypeLoading = true;
     accountTypeModel = await masterService.fetchAccountType();
     // logger.d('holding nature response == $holdingResponse');
     if (accountTypeModel != null) {
       // Map<String, dynamic> jsonResponse = json.decode(holdingResponse);
 
-      taxpageloading = false;
+      accounttypeLoading = false;
       notifyListeners();
     } else {
       logger.d('account type fetched failed');
-      taxpageloading = false;
+      accounttypeLoading = false;
     }
   }
 }

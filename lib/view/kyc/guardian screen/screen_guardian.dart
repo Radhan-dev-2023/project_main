@@ -1,18 +1,32 @@
+import 'dart:developer';
+
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/kyc/adding%20nominee%20and%20guardian/adding_nominee_guardian.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class ScreenGuardianAdding extends StatelessWidget {
+class ScreenGuardianAdding extends StatefulWidget {
   const ScreenGuardianAdding({super.key});
+
+  @override
+  State<ScreenGuardianAdding> createState() => _ScreenGuardianAddingState();
+}
+
+class _ScreenGuardianAddingState extends State<ScreenGuardianAdding> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<KycController>(context, listen: false).updatePagenumber('17');
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final kycController = Provider.of<KycController>(context);
-    kycController.updatePagenumber('17');
     Brightness brightness = Theme.of(context).brightness;
     return Scaffold(
       appBar: AppBar(
@@ -56,6 +70,21 @@ class ScreenGuardianAdding extends StatelessWidget {
                 ),
                 VerticalSpacer(3.h),
                 TextFormField(
+                  onTap: () async {
+                    DateTime? picked = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1900),
+                      lastDate: DateTime.now(),
+                    );
+                    if (picked != null) {
+                      String selectdate =
+                          DateFormat('dd-MMM-yyyy').format(picked);
+                      log('selected date ===$selectdate');
+                      kycController.guardDOBController.text = selectdate;
+                    }
+                  },
+                  readOnly: true,
                   style: Theme.of(context).textTheme.labelLarge!,
                   controller: kycController.guardDOBController,
                   autovalidateMode: AutovalidateMode.onUserInteraction,

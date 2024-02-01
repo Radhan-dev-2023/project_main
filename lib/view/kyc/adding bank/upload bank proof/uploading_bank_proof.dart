@@ -139,12 +139,6 @@ class _ScreenUploadingBankProofState extends State<ScreenUploadingBankProof> {
           : ButtonWidget(
               onTap: () {
                 showAlertDialog(context);
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => const ScreenAddingNominee(),
-                //   ),
-                // );
               },
               btName: 'Continue'.toUpperCase(),
             ),
@@ -155,8 +149,8 @@ class _ScreenUploadingBankProofState extends State<ScreenUploadingBankProof> {
     // Create the AlertDialog
     AlertDialog alert = AlertDialog(
       content: const Text('Do you want to add Joint Holders'),
+      title: VerticalSpacer(4.h),
       actions: [
-        // You can add buttons to the alert dialog
         TextButton(
           onPressed: () {
             Navigator.push(

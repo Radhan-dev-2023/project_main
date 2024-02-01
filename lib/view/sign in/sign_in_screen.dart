@@ -56,7 +56,7 @@ class ScreenSignin extends StatelessWidget {
                     VerticalSpacer(7.h),
                     Text(
                       biometricLoginController.buttonEnabled == true
-                          ? 'Enter phone number for reset pin'
+                          ? 'Enter phone number for reset PIN'
                           : 'Enter phone number',
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                           fontSize: 19.sp, fontWeight: FontWeight.w400),
@@ -112,7 +112,7 @@ class ScreenSignin extends StatelessWidget {
                     bool result = await authController.generateOtp(context);
                     if (result == true) {
                       // ignore: use_build_context_synchronously
-                      Navigator.of(context).pushReplacement(
+                      Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => const ScreenOtp(title: 'login'),
                         ),

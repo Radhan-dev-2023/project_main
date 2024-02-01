@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/kyc/Nominee%20adding/Nominee%203/screen_nominee_3.dart';
 import 'package:finfresh_mobile/view/kyc/adding%20nominee%20and%20guardian/adding_nominee_guardian.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -16,9 +19,14 @@ class ScreenNominee2 extends StatefulWidget {
 
 class _ScreenNominee2State extends State<ScreenNominee2> {
   @override
+  void initState() {
+    super.initState();
+    Provider.of<KycController>(context, listen: false).updatePagenumber('15');
+  }
+
+  @override
   Widget build(BuildContext context) {
     final kycController = Provider.of<KycController>(context);
-    kycController.updatePagenumber('15');
     Brightness brightness = Theme.of(context).brightness;
 
     return Scaffold(
@@ -134,6 +142,21 @@ class _ScreenNominee2State extends State<ScreenNominee2> {
                 ),
                 VerticalSpacer(3.h),
                 TextFormField(
+                  onTap: () async {
+                    DateTime? picked = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1900),
+                      lastDate: DateTime.now(),
+                    );
+                    if (picked != null) {
+                      String selectdate =
+                          DateFormat('dd-MMM-yyyy').format(picked);
+                      log('selected date ===$selectdate');
+                      kycController.nominee2DOBController.text = selectdate;
+                    }
+                  },
+                  readOnly: true,
                   controller: kycController.nominee2DOBController,
                   style: Theme.of(context).textTheme.labelLarge!,
                   autovalidateMode: AutovalidateMode.onUserInteraction,

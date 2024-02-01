@@ -7,12 +7,23 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class ScreenOccupation extends StatelessWidget {
+class ScreenOccupation extends StatefulWidget {
   const ScreenOccupation({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<ScreenOccupation> createState() => _ScreenOccupationState();
+}
+
+class _ScreenOccupationState extends State<ScreenOccupation> {
+  @override
+  void initState() {
     Provider.of<KycController>(context, listen: false).updatePagenumber('3');
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     Brightness brightness = Theme.of(context).brightness;
     return Consumer<KycController>(builder: (context, kycController, child) {
       return Scaffold(

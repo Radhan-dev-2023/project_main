@@ -6,8 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class ScreenAddingBank extends StatelessWidget {
+class ScreenAddingBank extends StatefulWidget {
   const ScreenAddingBank({super.key});
+
+  @override
+  State<ScreenAddingBank> createState() => _ScreenAddingBankState();
+}
+
+class _ScreenAddingBankState extends State<ScreenAddingBank> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<KycController>(context, listen: false).updatePagenumber('9');
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

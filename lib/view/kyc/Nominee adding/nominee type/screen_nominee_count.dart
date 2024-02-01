@@ -6,14 +6,24 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class ScreenNomineeCount extends StatelessWidget {
+class ScreenNomineeCount extends StatefulWidget {
   const ScreenNomineeCount({super.key});
+
+  @override
+  State<ScreenNomineeCount> createState() => _ScreenNomineeCountState();
+}
+
+class _ScreenNomineeCountState extends State<ScreenNomineeCount> {
+  @override
+  void initState() {
+    Provider.of<KycController>(context, listen: false).updatePagenumber('13');
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final kycController = Provider.of<KycController>(context);
     Brightness brightness = MediaQuery.of(context).platformBrightness;
-    kycController.updatePagenumber('13');
     return Scaffold(
       appBar: AppBar(
         leading: InkWell(

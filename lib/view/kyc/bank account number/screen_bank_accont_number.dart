@@ -5,6 +5,7 @@ import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
 import 'package:finfresh_mobile/view/kyc/adding%20nominee%20and%20guardian/adding_nominee_guardian.dart';
 import 'package:finfresh_mobile/view/kyc/joint%20holders/join_holders_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
+import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -95,27 +96,30 @@ class _ScreenBankAccountNumberState extends State<ScreenBankAccountNumber> {
                   width: double.infinity,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: DropdownButton(
-                      hint: const Text('Select account type'),
-                      value: kycController.acountypeValue,
-                      isExpanded: true,
-                      underline: Container(
-                        height: 0,
-                      ),
-                      items: kycController.accountTypeModel?.masterDetails!
-                          .map((MasterAccountDetail masterDetail) {
-                        return DropdownMenuItem(
-                          value: masterDetail,
-                          child: Text(
-                            masterDetail.description.toString(),
+                    child: kycController.accounttypeLoading == true
+                        ? const LoadingWidget()
+                        : DropdownButton(
+                            hint: const Text('Select account type'),
+                            value: kycController.acountypeValue,
+                            isExpanded: true,
+                            underline: Container(
+                              height: 0,
+                            ),
+                            items: kycController
+                                .accountTypeModel?.masterDetails!
+                                .map((MasterAccountDetail masterDetail) {
+                              return DropdownMenuItem(
+                                value: masterDetail,
+                                child: Text(
+                                  masterDetail.description.toString(),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              // taxStatus = value;
+                              kycController.updateAccountType(value);
+                            },
                           ),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        // taxStatus = value;
-                        kycController.updateAccountType(value);
-                      },
-                    ),
                   ),
                 ),
               ],
@@ -144,11 +148,14 @@ class _ScreenBankAccountNumberState extends State<ScreenBankAccountNumber> {
   void showAlertDialog(BuildContext context) {
     // Create the AlertDialog
     AlertDialog alert = AlertDialog(
-      content: Text(
+      title: Text(
         'Do you want to add Joint Holders ?',
-        style:
-            Theme.of(context).textTheme.labelMedium!.copyWith(fontSize: 16.sp),
+        style: Theme.of(context)
+            .textTheme
+            .labelLarge!
+            .copyWith(fontSize: 17.sp, fontWeight: FontWeight.w500),
       ),
+      content: VerticalSpacer(2.h),
       // shape: RoundedRectangleBorder(
       //   borderRadius:
       //       BorderRadius.circular(10), // Set your desired borderRadius here

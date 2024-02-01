@@ -6,8 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class ScreenNriAdress extends StatelessWidget {
+class ScreenNriAdress extends StatefulWidget {
   const ScreenNriAdress({super.key});
+
+  @override
+  State<ScreenNriAdress> createState() => _ScreenNriAdressState();
+}
+
+class _ScreenNriAdressState extends State<ScreenNriAdress> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<KycController>(context, listen: false).updatePagenumber('6');
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

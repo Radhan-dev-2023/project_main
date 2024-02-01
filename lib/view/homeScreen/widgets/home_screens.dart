@@ -1,5 +1,6 @@
 import 'package:finfresh_mobile/controller/auth/auth_controller.dart';
 import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
+import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_controller.dart';
 import 'package:finfresh_mobile/services/scheme%20services/scheme_services.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
@@ -23,10 +24,8 @@ class ScreenHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // GlobalKey<ScaffoldState> drawerkey = GlobalKey();
-    SchemeServices service = SchemeServices();
     Brightness platformBrightness = MediaQuery.of(context).platformBrightness;
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      service.mutualFundBasedonCategoryAndQuery();
       Provider.of<DashBoardController>(context, listen: false).getusername();
       Provider.of<DashBoardController>(context, listen: false)
           .getDashBoardDetails(context);
@@ -41,10 +40,15 @@ class ScreenHome extends StatelessWidget {
         // leading: const SizedBox(),
         title: Consumer<DashBoardController>(
             builder: (context, dashBoardController, child) {
-          return Text(dashBoardController.dashBoardModel?.result?.data?.name ==
-                  null
-              ? 'Welcome ${dashBoardController.username}'
-              : 'Welcome ${dashBoardController.dashBoardModel?.result?.data?.name}');
+          return Text(
+            dashBoardController.dashBoardModel?.result?.data?.name == null
+                ? dashBoardController.username
+                : '${dashBoardController.dashBoardModel?.result?.data?.name}',
+            style: Theme.of(context)
+                .textTheme
+                .labelLarge!
+                .copyWith(fontSize: 17.sp, fontWeight: FontWeight.w500),
+          );
         }),
         actions: [
           IconButton(
@@ -584,6 +588,8 @@ class ScreenHome extends StatelessWidget {
             TextButton(
               onPressed: () {
                 SecureStorage.clearSecureStoragevalue('token');
+                Provider.of<BiometricLogin>(context, listen: false)
+                    .changeButtonEnabled(false);
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(

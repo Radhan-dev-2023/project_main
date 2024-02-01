@@ -44,17 +44,19 @@ class UserRegisterService {
       if (jsonResponse['result']['status'] == 201 ||
           jsonResponse['result']['message'].toString().toLowerCase() ==
               'user already registered but not verified') {
-        showSnackBar(context, "user already registered but not verified");
+        return true;
+        // showSnackBar(context, "user already registered but not verified");
       } else {
         showSnackBar(context, jsonResponse['result']['message']);
+        return false;
       }
     } on SocketException {
       showSnackBar(context, 'No Internet Connection');
+      return false;
     } catch (e) {
       logger.d('exception in user register $e');
       return false;
     }
-    return false;
   }
 
   Future<bool> generateOtp(String phoneNumber, context) async {

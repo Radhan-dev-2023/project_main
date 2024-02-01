@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/kyc/adding%20nominee%20and%20guardian/adding_nominee_guardian.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -85,6 +88,21 @@ class Jh2Screen extends StatelessWidget {
                   ),
                   VerticalSpacer(3.h),
                   TextFormField(
+                    onTap: () async {
+                      DateTime? picked = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime.now(),
+                      );
+                      if (picked != null) {
+                        String selectdate =
+                            DateFormat('dd-MMM-yyyy').format(picked);
+                        log('selected date ===$selectdate');
+                        kycController.jh2DOBController.text = selectdate;
+                      }
+                    },
+                    readOnly: true,
                     style: Theme.of(context).textTheme.labelLarge!,
                     controller: kycController.jh2DOBController,
                     autovalidateMode: AutovalidateMode.onUserInteraction,

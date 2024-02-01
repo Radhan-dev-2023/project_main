@@ -122,12 +122,12 @@ class PinEnterForLoginScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         const Text(
-                          'Wrong Pin',
+                          'Incorrect PIN',
                           style: TextStyle(color: Colors.red),
                         ),
                         TextButton(
                           onPressed: () {
-                            Navigator.pushReplacement(
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => const ScreenSignin(),

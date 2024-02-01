@@ -18,12 +18,14 @@ import 'package:finfresh_mobile/view/kyc/adding%20nominee%20and%20guardian/addin
 import 'package:finfresh_mobile/view/kyc/address/address_screen.dart';
 import 'package:finfresh_mobile/view/kyc/bank%20account%20number/screen_bank_accont_number.dart';
 import 'package:finfresh_mobile/view/kyc/joint%20holders/join_holders_screen.dart';
+import 'package:finfresh_mobile/view/kyc/parent%20details%20adding/adding_parent_details.dart';
 import 'package:finfresh_mobile/view/kyc/tax%20status/screen_tax_status.dart';
 import 'package:finfresh_mobile/view/kyc/uploading%20proofs/screen_upload_proof.dart';
 import 'package:finfresh_mobile/view/kyc/uploading%20proofs/upload%20bank%20proof/upload_bank_proof.dart';
 import 'package:finfresh_mobile/view/nominee%20id%20adding/screen_nominee_id_adding.dart';
 import 'package:finfresh_mobile/view/kyc/occupation%20Screen/occupation_screen.dart';
 import 'package:finfresh_mobile/view/kyc/pancard/screen_pan_card.dart';
+import 'package:finfresh_mobile/view/otp%20screen/screen_otp.dart';
 import 'package:finfresh_mobile/view/setting%20pin%20number/setting_pin.dart';
 import 'package:finfresh_mobile/view/sign%20in/sign_in_screen.dart';
 import 'package:finfresh_mobile/view/sign%20up/enter%20phone%20number/sign_in_screen.dart';
@@ -91,6 +93,8 @@ class MyApp extends StatelessWidget {
           // darkTheme: AppTheme.darkTheme,
           home: const SplashScreen(),
           // home: ScreenBankProofs(),
+          // home: ScreenAddingParentDetails(),
+          // home: ScreenOtp(title: 'sign up'),
           // home: const AddingNomineeAndGuadianScreen(),
           // home: const ScreenUploadinProofs(),
           // home: ScreenBankAccountNumber(),
@@ -100,7 +104,7 @@ class MyApp extends StatelessWidget {
           // home: const ScreenAddress(),
           // home: const ScreenTaxStatus(),
           // home: const ScreenJointHolders(),
-          //  home: const ScreenAddingNominee(),
+          // home: const ScreenAddingNominee(),
           // home: const ScreenNomineeCount(),
           // home: const ScreenPanCard(),
           // home: const ScreenPersonalDetails(),

@@ -110,9 +110,12 @@ class ScreenOtp extends StatelessWidget {
                 Center(
                   child: Pinput(
                     validator: (value) {
-                      if (value?.length != 6 || value == null) {
+                      if (value!.isEmpty) {
+                        return 'Enter the OTP';
+                      }
+                      if (value.length != 6) {
                         // otpPinput.clear();
-                        return 'Wrong OTP';
+                        return 'Incorrect OTP';
                       } else {
                         return null;
                       }
@@ -124,6 +127,8 @@ class ScreenOtp extends StatelessWidget {
                     submittedPinTheme: submittedPinTheme,
                     pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
                     errorPinTheme: errorPinTheme,
+                    errorTextStyle:
+                        TextStyle(color: Colors.red, fontSize: 15.sp),
                   ),
                 ),
               ],
@@ -158,7 +163,7 @@ class ScreenOtp extends StatelessWidget {
                     authController.otpController.clear();
                   } else {
                     // ignore: use_build_context_synchronously
-                    showSnackBar(context, 'Wrong OTP');
+                    showSnackBar(context, 'Incorrect OTP');
                   }
                   logger.d('result===$result');
 
@@ -169,6 +174,8 @@ class ScreenOtp extends StatelessWidget {
                   //     builder: (context) => const ScreenPassword(),
                   //   ),
                   // );
+                } else if (authController.otpController.text.length < 4) {
+                  showSnackBar(context, 'Enter the OTP');
                 }
               },
               btName: 'Verify OTP'.toUpperCase(),

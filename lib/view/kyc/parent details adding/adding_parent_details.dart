@@ -6,13 +6,26 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class ScreenAddingParentDetails extends StatelessWidget {
+class ScreenAddingParentDetails extends StatefulWidget {
   const ScreenAddingParentDetails({super.key});
+
+  @override
+  State<ScreenAddingParentDetails> createState() =>
+      _ScreenAddingParentDetailsState();
+}
+
+class _ScreenAddingParentDetailsState extends State<ScreenAddingParentDetails> {
+  @override
+  void initState() {
+    Provider.of<KycController>(context, listen: false).updatePagenumber('7');
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final kycController = Provider.of<KycController>(context);
-    Provider.of<KycController>(context, listen: false).updatePagenumber('7');
+
     return Scaffold(
       appBar: AppBar(
         leading: InkWell(
@@ -30,7 +43,7 @@ class ScreenAddingParentDetails extends StatelessWidget {
             children: [
               VerticalSpacer(7.h),
               Text(
-                'Details required to finish KYC',
+                'Enter other details',
                 style: Theme.of(context)
                     .textTheme
                     .labelLarge!

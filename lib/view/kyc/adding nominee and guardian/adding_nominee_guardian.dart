@@ -12,14 +12,27 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class AddingNomineeAndGuadianScreen extends StatelessWidget {
+class AddingNomineeAndGuadianScreen extends StatefulWidget {
   const AddingNomineeAndGuadianScreen({super.key});
+
+  @override
+  State<AddingNomineeAndGuadianScreen> createState() =>
+      _AddingNomineeAndGuadianScreenState();
+}
+
+class _AddingNomineeAndGuadianScreenState
+    extends State<AddingNomineeAndGuadianScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<KycController>(context, listen: false).updatePagenumber('12');
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final kycController = Provider.of<KycController>(context);
     Brightness brightness = MediaQuery.of(context).platformBrightness;
-    kycController.updatePagenumber('12');
 
     return Scaffold(
       appBar: AppBar(
@@ -148,11 +161,14 @@ class AddingNomineeAndGuadianScreen extends StatelessWidget {
   void showAlertDialog(BuildContext context) {
     // Create the AlertDialog
     AlertDialog alert = AlertDialog(
-      content: Text(
+      title: Text(
         'Do you want to add Nominee ?',
-        style:
-            Theme.of(context).textTheme.labelMedium!.copyWith(fontSize: 16.sp),
+        style: Theme.of(context)
+            .textTheme
+            .labelLarge!
+            .copyWith(fontSize: 17.sp, fontWeight: FontWeight.w500),
       ),
+      content: VerticalSpacer(2.h),
       actions: [
         // You can add buttons to the alert dialog
         Container(
@@ -167,7 +183,7 @@ class AddingNomineeAndGuadianScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
                 Provider.of<KycController>(context, listen: false).countvalue =
-                    'select Nominee count';
+                    'Select Nominee Count';
                 Provider.of<KycController>(context, listen: false)
                     .nomineeChosse('Y');
 
