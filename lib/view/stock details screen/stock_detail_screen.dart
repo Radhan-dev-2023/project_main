@@ -1,10 +1,14 @@
+import 'dart:developer';
+
 import 'package:finfresh_mobile/controller/scheme%20details%20controller/scheme_details_controller.dart';
+import 'package:finfresh_mobile/services/transaction%20service/transaction_service.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/payment%20Screen/payment_screen.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/widgets/overview_in_tabbar.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/widgets/sliver_list_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -47,33 +51,6 @@ class _StockDetailsScreenState extends State<StockDetailsScreen>
           modalBottomSheetMenu(context);
         },
       ),
-      // floatingActionButton: Row(
-      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      //   children: [
-      //     // Container(
-      //     //   height: 6.h,
-      //     //   width: 40.w,
-      //     //   decoration: BoxDecoration(
-      //     //     color: Colors.red,
-      //     //     borderRadius: BorderRadius.circular(15.sp),
-      //     //   ),
-      //     //   child: const Center(
-      //     //     child: Text('SELL'),
-      //     //   ),
-      //     // ),
-      //     // Container(
-      //     //   height: 6.h,
-      //     //   width: 40.w,
-      //     //   decoration: BoxDecoration(
-      //     //     color: Colors.green,
-      //     //     borderRadius: BorderRadius.circular(15.sp),
-      //     //   ),
-      //     //   child: const Center(
-      //     //     child: Text('Buy'),
-      //     //   ),
-      //     // ),
-      //   ],
-      // ),
     );
   }
 
@@ -115,6 +92,12 @@ class _StockDetailsScreenState extends State<StockDetailsScreen>
                           InkWell(
                             onTap: () {
                               Navigator.pop(context);
+                              schemeController.selectedValue =
+                                  'Investment type';
+                              schemeController.durationValue =
+                                  'Until Cancelled';
+                              schemeController.dateController.clear();
+                              schemeController.installmentController.clear();
                             },
                             child: const Icon(Icons.close),
                           ),
@@ -175,6 +158,8 @@ class _StockDetailsScreenState extends State<StockDetailsScreen>
                               child: Column(
                                 children: [
                                   TextFormField(
+                                    controller:
+                                        schemeController.installmentController,
                                     // readOnly: true,
                                     autovalidateMode:
                                         AutovalidateMode.onUserInteraction,
@@ -206,6 +191,58 @@ class _StockDetailsScreenState extends State<StockDetailsScreen>
                                       SizedBox(
                                           width: 45.w,
                                           child: TextFormField(
+                                            controller:
+                                                schemeController.dateController,
+                                            readOnly: true,
+                                            onTap: () async {
+                                              DateTime? picked =
+                                                  await showDatePicker(
+                                                context: context,
+                                                initialDate: DateTime.now(),
+                                                firstDate: DateTime(1900),
+                                                lastDate: DateTime(2100),
+                                                builder: (context, child) {
+                                                  return Theme(
+                                                    data: Theme.of(context)
+                                                        .copyWith(
+                                                      primaryTextTheme: TextTheme(
+                                                          bodyMedium: TextStyle(
+                                                              fontSize: 15.sp),
+                                                          bodyLarge: TextStyle(
+                                                              fontSize: 15.sp)),
+                                                      colorScheme:
+                                                          const ColorScheme
+                                                              .light(
+                                                        primary: Color(
+                                                            0xFF4D84BD), // header background color
+                                                        onPrimary: Colors
+                                                            .white, // header text color
+                                                        onSurface: Colors
+                                                            .black, // body text color
+                                                      ),
+                                                      textButtonTheme:
+                                                          TextButtonThemeData(
+                                                        style: TextButton
+                                                            .styleFrom(
+                                                          foregroundColor:
+                                                              const Color(
+                                                                  0xFF4D84BD), // button text color
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    child: child!,
+                                                  );
+                                                },
+                                              );
+                                              if (picked != null) {
+                                                String selectdate =
+                                                    DateFormat('dd-MMM-yyyy')
+                                                        .format(picked);
+                                                log('selected date ===$selectdate');
+                                                schemeController.dateController
+                                                    .text = selectdate;
+                                              }
+                                            },
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .labelLarge!,
@@ -218,109 +255,47 @@ class _StockDetailsScreenState extends State<StockDetailsScreen>
                                             ),
                                           )),
                                       HorizontalSpacer(2.w),
-
                                       SizedBox(
-                                          width: 45.w,
-                                          child: TextFormField(
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelLarge!,
-                                            decoration: InputDecoration(
+                                        width: 45.w,
+                                        child: DropdownButtonFormField<String>(
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelLarge!,
+                                          value: schemeController.durationValue,
+                                          decoration: InputDecoration(
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           10)),
-                                              hintText: 'Duration',
-                                            ),
-                                          )),
-                                      // Container(
-                                      //   decoration: BoxDecoration(
-                                      //     border: Border.all(
-                                      //       color: brightness == Brightness.dark
-                                      //           ? Colors.white
-                                      //           : Colors.black,
-                                      //     ),
-                                      //     borderRadius: BorderRadius.circular(8),
-                                      //     color: brightness == Brightness.light
-                                      //         ? Colors.transparent
-                                      //         : const Color(0xFF0E1330),
-                                      //   ),
-                                      //   height: 60,
-                                      //   width: 45.w,
-                                      //   child: Padding(
-                                      //     padding: const EdgeInsets.all(8.0),
-                                      //     child: DropdownButton(
-                                      //       value: schemeController.selectedValue,
-                                      //       isExpanded: true,
-                                      //       underline: Container(
-                                      //         height: 0,
-                                      //       ),
-                                      //       items: schemeController.investmentType
-                                      //           .map((String items) {
-                                      //         return DropdownMenuItem(
-                                      //           value: items,
-                                      //           child: Text(items),
-                                      //         );
-                                      //       }).toList(),
-                                      //       onChanged: (value) {
-                                      //         Provider.of<SchemeDetailsController>(
-                                      //                 context,
-                                      //                 listen: false)
-                                      //             .updateSelectedValue(value);
-                                      //       },
-                                      //     ),
-                                      //   ),
-                                      // ),
-                                      // HorizontalSpacer(2.w),
-                                      // Container(
-                                      //   decoration: BoxDecoration(
-                                      //     border: Border.all(
-                                      //       color: brightness == Brightness.dark
-                                      //           ? Colors.white
-                                      //           : Colors.black,
-                                      //     ),
-                                      //     borderRadius: BorderRadius.circular(8),
-                                      //     color: brightness == Brightness.light
-                                      //         ? Colors.transparent
-                                      //         : const Color(0xFF0E1330),
-                                      //   ),
-                                      //   height: 60,
-                                      //   width: 45.w,
-                                      //   child: Padding(
-                                      //     padding: const EdgeInsets.all(8.0),
-                                      //     child: DropdownButton(
-                                      //       value: schemeController.selectedValue,
-                                      //       isExpanded: true,
-                                      //       underline: Container(
-                                      //         height: 0,
-                                      //       ),
-                                      //       items: schemeController.investmentType
-                                      //           .map((String items) {
-                                      //         return DropdownMenuItem(
-                                      //           value: items,
-                                      //           child: Text(items),
-                                      //         );
-                                      //       }).toList(),
-                                      //       onChanged: (value) {
-                                      //         Provider.of<SchemeDetailsController>(
-                                      //                 context,
-                                      //                 listen: false)
-                                      //             .updateSelectedValue(value);
-                                      //       },
-                                      //     ),
-                                      //   ),
-                                      // ),
+                                              hintText: 'Select Item'),
+                                          onChanged: (String? newValue) {
+                                            schemeController
+                                                .updateDuration(newValue);
+                                          },
+                                          items: schemeController.duration
+                                              .map((String value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(
+                                                value,
+                                              ),
+                                            );
+                                          }).toList(),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                   VerticalSpacer(2.h),
                                   InkWell(
-                                    onTap: () => Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ScreenPayment(),
-                                      ),
-                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ScreenPayment(),
+                                        ),
+                                      );
+                                    },
                                     child: Container(
                                       height: 6.h,
                                       width: 40.w,

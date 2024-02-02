@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
@@ -11,6 +12,8 @@ class RefershTokenService {
   Future<bool> postRefershTocken(context) async {
     String userId = await SecureStorage.readToken('userId');
     String refreshToken = await SecureStorage.readToken('refreshToken');
+    log('refresh tocke  $refreshToken');
+
     Map<String, dynamic> payload = {
       "userId": userId,
       "refreshToken": refreshToken,

@@ -90,11 +90,45 @@ class _ScreenPersonalDetailsState extends State<ScreenPersonalDetails> {
                   VerticalSpacer(3.h),
                   TextFormField(
                     onTap: () async {
+                      // DateTime? picked = await showDatePicker(
+                      //   context: context,
+                      //   initialDate: DateTime.now(),
+                      //   firstDate: DateTime(1900),
+                      //   lastDate: DateTime.now(),
+                      // );
+                      // if (picked != null) {
+                      //   String selectdate =
+                      //       DateFormat('dd-MMM-yyyy').format(picked);
+                      //   log('selected date ===$selectdate');
+                      //   kycController.dobController.text = selectdate;
+                      // }
                       DateTime? picked = await showDatePicker(
                         context: context,
                         initialDate: DateTime.now(),
                         firstDate: DateTime(1900),
                         lastDate: DateTime.now(),
+                        builder: (context, child) {
+                          return Theme(
+                            data: Theme.of(context).copyWith(
+                              primaryTextTheme: TextTheme(
+                                  bodyMedium: TextStyle(fontSize: 15.sp),
+                                  bodyLarge: TextStyle(fontSize: 15.sp)),
+                              colorScheme: const ColorScheme.light(
+                                primary: Color(
+                                    0xFF4D84BD), // header background color
+                                onPrimary: Colors.white, // header text color
+                                onSurface: Colors.black, // body text color
+                              ),
+                              textButtonTheme: TextButtonThemeData(
+                                style: TextButton.styleFrom(
+                                  foregroundColor: const Color(
+                                      0xFF4D84BD), // button text color
+                                ),
+                              ),
+                            ),
+                            child: child!,
+                          );
+                        },
                       );
                       if (picked != null) {
                         String selectdate =

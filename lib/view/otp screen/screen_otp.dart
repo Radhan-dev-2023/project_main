@@ -174,9 +174,10 @@ class ScreenOtp extends StatelessWidget {
                   //     builder: (context) => const ScreenPassword(),
                   //   ),
                   // );
-                } else if (authController.otpController.text.length < 4) {
-                  showSnackBar(context, 'Enter the OTP');
                 }
+                // } else if (authController.otpController.text.length < 4) {
+                //   showSnackBar(context, 'Enter the OTP');
+                // }
               },
               btName: 'Verify OTP'.toUpperCase(),
             ),

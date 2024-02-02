@@ -142,9 +142,10 @@ class ScreenSetPinNumber extends StatelessWidget {
                 builder: (context) => const ScreenConfirmPinNumber(),
               ),
             );
-          } else if (pinController.pinController.text.length < 4) {
-            showSnackBar(context, 'Please enter the 4-digit PIN');
           }
+          // } else if (pinController.pinController.text.length < 4) {
+          //   showSnackBar(context, 'Please enter the 4-digit PIN');
+          // }
           // setState(() {
           //   clicked = !clicked;
           // }

@@ -12,7 +12,7 @@ class DashBoardController extends ChangeNotifier {
   RefershTokenService refershTokenService = RefershTokenService();
 
   Future<void> getDashBoardDetails(context) async {
-    refershTokenService.postRefershTocken(context);
+    // refershTokenService.postRefershTocken(context);
     loadingDashboard = true;
     notifyListeners();
     try {

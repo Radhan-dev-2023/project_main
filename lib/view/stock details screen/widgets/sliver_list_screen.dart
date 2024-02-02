@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class SliverlistWidget extends StatelessWidget {
+class SliverlistWidget extends StatefulWidget {
   const SliverlistWidget({
     super.key,
     required int currentIndex,
@@ -23,10 +23,20 @@ class SliverlistWidget extends StatelessWidget {
   final TabController _tabController;
 
   @override
+  State<SliverlistWidget> createState() => _SliverlistWidgetState();
+}
+
+class _SliverlistWidgetState extends State<SliverlistWidget> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<SchemeDetailsController>(context, listen: false)
+        .callingFunctionDetailScreen(context, widget.scheme);
+  }
+
+  @override
   Widget build(BuildContext context) {
     Brightness brightness = Theme.of(context).brightness;
-    Provider.of<SchemeDetailsController>(context, listen: false)
-        .callingFunctionDetailScreen(context, scheme);
 
     // final GlobalKey sliverListKey = GlobalKey();
     final ScrollController _scrollController = ScrollController();
@@ -130,7 +140,7 @@ class SliverlistWidget extends StatelessWidget {
                       ),
                     ),
                     SliverToBoxAdapter(
-                      child: ChartWidget(scheme: scheme),
+                      child: ChartWidget(scheme: widget.scheme),
                     ),
                     const SliverToBoxAdapter(
                       child: SizedBox(
@@ -142,7 +152,7 @@ class SliverlistWidget extends StatelessWidget {
                         TabBar(
                           padding: const EdgeInsets.all(7),
                           indicatorSize: TabBarIndicatorSize.tab,
-                          controller: _tabController,
+                          controller: widget._tabController,
                           tabs: const [
                             Tab(text: 'Overview'),
                             Tab(text: 'Events'),
@@ -166,7 +176,7 @@ class SliverlistWidget extends StatelessWidget {
                   ];
                 },
                 body: TabBarView(
-                  controller: _tabController,
+                  controller: widget._tabController,
                   children: const [
                     OverViewInTabbar(),
                     ScreenEventinTabBar(),

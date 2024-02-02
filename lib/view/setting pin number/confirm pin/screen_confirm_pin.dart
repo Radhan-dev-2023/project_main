@@ -3,7 +3,6 @@ import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_co
 import 'package:finfresh_mobile/controller/pin%20controller/pin_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
-import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
 import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
 import 'package:finfresh_mobile/view/kyc/pancard/screen_pan_card.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
@@ -147,9 +146,10 @@ class ScreenConfirmPinNumber extends StatelessWidget {
                         : const ScreenPanCard(),
               ),
             );
-          } else if (pinController.confirmPinController.text.length < 4) {
-            showSnackBar(context, 'Please enter the 4-digit PIN');
           }
+          // } else if (pinController.confirmPinController.text.length < 4) {
+          //   showSnackBar(context, 'Please enter the 4-digit PIN');
+          // }
         },
       ),
     );

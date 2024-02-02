@@ -99,7 +99,7 @@ class MyApp extends StatelessWidget {
           // home: const ScreenUploadinProofs(),
           // home: ScreenBankAccountNumber(),
           // home: const ScreenIfcAdding(),
-          // home: ScreenBankAccountNumber(),
+          //  home: ScreenBankAccountNumber(),
           // home: const ScreenUploadingBankProof(),
           // home: const ScreenAddress(),
           // home: const ScreenTaxStatus(),

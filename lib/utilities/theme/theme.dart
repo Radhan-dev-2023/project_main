@@ -7,7 +7,7 @@ class AppTheme {
 
   static const Color _lightPrimaryColor = Colors.white;
   static final Color _lightPrimaryVariantColor = Colors.blueGrey.shade800;
-  // static final Color _lightOnPrimaryColor = Colors.blueGrey.shade200;
+  static final Color _lightOnPrimaryColor = Colors.blueGrey.shade200;
   static const Color _lightTextColorPrimary = Colors.black;
   static const Color _appbarColorLight = Colors.white;
 // 0E1330
@@ -34,7 +34,7 @@ class AppTheme {
 
   static final TextStyle _lightBodyText = GoogleFonts.poppins(
     color: _lightTextColorPrimary,
-    fontStyle: FontStyle.italic,
+    // fontStyle: FontStyle.italic,
     fontWeight: FontWeight.bold,
     fontSize: 16,
   );
@@ -93,8 +93,8 @@ class AppTheme {
       iconTheme: IconThemeData(color: Colors.black),
     ),
     colorScheme: ColorScheme.light(
-      // primary: _lightOnPrimaryColor,
-      // onPrimary: _lightOnPrimaryColor,
+      primary: _lightOnPrimaryColor,
+      onPrimary: _lightOnPrimaryColor,
       secondary: _accentColor,
       primaryContainer: _lightPrimaryVariantColor,
     ),
