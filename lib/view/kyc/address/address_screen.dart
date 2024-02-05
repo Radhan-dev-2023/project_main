@@ -347,7 +347,7 @@ class _ScreenAddressState extends State<ScreenAddress> {
                 ),
               );
             } else {
-              showSnackBar(context, 'Enter the All The Mandatory Fields');
+              showSnackBar(context, 'Please select a state');
             }
           }
         },

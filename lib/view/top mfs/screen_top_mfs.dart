@@ -76,6 +76,13 @@ class TopMfsScreen extends StatelessWidget {
                                           child: Text(
                                             '${topMfsController.topPerformingMutualFundModel?.list?[index].schemeAmfi}',
                                             overflow: TextOverflow.visible,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .copyWith(
+                                                  fontSize: 17.sp,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                           ),
                                         ),
                                       ],

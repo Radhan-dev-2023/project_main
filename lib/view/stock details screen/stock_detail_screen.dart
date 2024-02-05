@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:finfresh_mobile/controller/scheme%20details%20controller/scheme_details_controller.dart';
 import 'package:finfresh_mobile/services/transaction%20service/transaction_service.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
+import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
 import 'package:finfresh_mobile/view/payment%20Screen/payment_screen.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/widgets/overview_in_tabbar.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/widgets/sliver_list_screen.dart';
@@ -95,7 +96,7 @@ class _StockDetailsScreenState extends State<StockDetailsScreen>
                               schemeController.selectedValue =
                                   'Investment type';
                               schemeController.durationValue =
-                                  'Until Cancelled';
+                                  'Select Duration';
                               schemeController.dateController.clear();
                               schemeController.installmentController.clear();
                             },
@@ -179,7 +180,7 @@ class _StockDetailsScreenState extends State<StockDetailsScreen>
                                       border: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10)),
-                                      hintText: 'Enter Installment Amount',
+                                      hintText: '₹ Enter Installment Amount',
                                     ),
                                   ),
                                   VerticalSpacer(2.h),
@@ -199,7 +200,7 @@ class _StockDetailsScreenState extends State<StockDetailsScreen>
                                                   await showDatePicker(
                                                 context: context,
                                                 initialDate: DateTime.now(),
-                                                firstDate: DateTime(1900),
+                                                firstDate: DateTime.now(),
                                                 lastDate: DateTime(2100),
                                                 builder: (context, child) {
                                                   return Theme(
@@ -288,13 +289,17 @@ class _StockDetailsScreenState extends State<StockDetailsScreen>
                                   VerticalSpacer(2.h),
                                   InkWell(
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const ScreenPayment(),
-                                        ),
-                                      );
+                                      bool result =
+                                          schemeController.validator(context);
+                                      if (result == true) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const ScreenPayment(),
+                                          ),
+                                        );
+                                      } else {}
                                     },
                                     child: Container(
                                       height: 6.h,

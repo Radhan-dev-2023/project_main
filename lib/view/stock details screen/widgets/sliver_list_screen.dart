@@ -169,6 +169,7 @@ class _SliverlistWidgetState extends State<SliverlistWidget> {
                             color: Colors.grey.withOpacity(0.5),
                             borderRadius: BorderRadius.circular(20),
                           ),
+                          dividerColor: const Color(0xFF0E1330),
                         ),
                       ),
                       pinned: true,

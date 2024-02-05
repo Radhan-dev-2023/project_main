@@ -1,13 +1,15 @@
 import 'dart:developer';
-
-import 'package:finfresh_mobile/model/dash%20Board%20Model/dash_board_model.dart';
 import 'package:finfresh_mobile/model/historical%20nav%20model/historical_nav_model.dart';
 import 'package:finfresh_mobile/model/scheme%20model/scehem_information_model.dart';
+import 'package:finfresh_mobile/services/refersh%20token/refersh_token.dart';
 import 'package:finfresh_mobile/services/scheme%20services/scheme_services.dart';
 import 'package:finfresh_mobile/services/transaction%20service/transaction_service.dart';
+import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
+import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 class SchemeDetailsController extends ChangeNotifier {
   SchemeServices schemeService = SchemeServices();
@@ -25,9 +27,9 @@ class SchemeDetailsController extends ChangeNotifier {
   bool changebutton = false;
   String selectValueForChart = 'ALL';
   List<String> monthvalue = ['3M', '6M', '1Y', '2Y', '5Y', '10Y', 'ALL'];
-  String durationValue = 'Until Cancelled';
+  String durationValue = 'Select Duration';
   List<String> duration = [
-    'Until Cancelled',
+    'Select Duration',
     '1 Year',
     '2 Year',
     '3 Year',
@@ -202,7 +204,11 @@ class SchemeDetailsController extends ChangeNotifier {
     await getChartValue(context, scheme);
   }
 
-  Future<bool> transction() async {
+  RefershTokenService refershTokenService = RefershTokenService();
+  bool loadingTransButton = false;
+  Future<bool> transction(context) async {
+    loadingTransButton = true;
+    notifyListeners();
     String purchasedate = dateController.text;
     String year = durationValue.trim().split(' ')[0];
     log(year);
@@ -211,19 +217,63 @@ class SchemeDetailsController extends ChangeNotifier {
     DateTime date = selcetdate.add(Duration(days: yearConvetToint * 365));
     String duedate = DateFormat('dd-MMM-yyyy').format(date);
     log('duedate ===$duedate');
-
-    bool result = await transactionService.transcationService(
+    String token = await SecureStorage.readToken('token');
+    bool isTokenExpired = JwtDecoder.isExpired(token);
+    if (isTokenExpired) {
+      await refershTokenService.postRefershTocken(context);
+      bool result = await transactionService.transcationService(
         paymenMode: paymentvalueTobackent ?? '',
         accountNumber: accountnumberController.text,
         ifscCode: ifscCodde,
         instalmentAmount: installmentController.text,
         fromdate: dateController.text,
         duedate: duedate,
-        date: dateController.text);
-    if (result == true) {
-      return true;
+        date: dateController.text,
+        context: context,
+      );
+      if (result == true) {
+        loadingTransButton = false;
+        notifyListeners();
+        return true;
+      } else {
+        loadingTransButton = false;
+        notifyListeners();
+        return false;
+      }
     } else {
+      bool result = await transactionService.transcationService(
+          paymenMode: paymentvalueTobackent ?? '',
+          accountNumber: accountnumberController.text,
+          ifscCode: ifscCodde,
+          instalmentAmount: installmentController.text,
+          fromdate: dateController.text,
+          duedate: duedate,
+          date: dateController.text,
+          context: context);
+      if (result == true) {
+        loadingTransButton = false;
+        notifyListeners();
+        return true;
+      } else {
+        loadingTransButton = false;
+        notifyListeners();
+        return false;
+      }
+    }
+  }
+
+  bool validator(context) {
+    if (installmentController.text.isEmpty) {
+      showFlushbar(context, 'Please enter amount');
       return false;
+    } else if (durationValue == 'Select Duration') {
+      showFlushbar(context, 'Please select a duration');
+      return false;
+    } else if (dateController.text.isEmpty) {
+      showFlushbar(context, 'Please select a date');
+      return false;
+    } else {
+      return true;
     }
   }
 }

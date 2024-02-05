@@ -4,6 +4,7 @@ import 'package:finfresh_mobile/services/refersh%20token/refersh_token.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 class DashBoardController extends ChangeNotifier {
   DasBoardService dashBoardService = DasBoardService();
@@ -13,20 +14,39 @@ class DashBoardController extends ChangeNotifier {
 
   Future<void> getDashBoardDetails(context) async {
     // refershTokenService.postRefershTocken(context);
-    loadingDashboard = true;
-    notifyListeners();
-    try {
-      dashBoardModel = await dashBoardService.getDashBoardDetails(context);
 
-      logger.d(
-          'dassss=${dashBoardModel?.result?.data?.activationStatus!.statusCode}');
-      SecureStorage.addToken(
-          'bankAccNumber', dashBoardModel?.result?.data?.bank?.accNo);
-      SecureStorage.addToken(
-          'bankcode', dashBoardModel?.result?.data?.bank?.bankName);
-      SecureStorage.addToken('customerId', dashBoardModel?.result?.data?.iin);
-      loadingDashboard = false;
-      notifyListeners();
+    loadingDashboard = true;
+
+    notifyListeners();
+    String token = await SecureStorage.readToken('token');
+    bool isTokenExpired = JwtDecoder.isExpired(token);
+    try {
+      if (isTokenExpired) {
+        await refershTokenService.postRefershTocken(context);
+        dashBoardModel = await dashBoardService.getDashBoardDetails(context);
+
+        logger.d(
+            'dassss=${dashBoardModel?.result?.data?.activationStatus!.statusCode}');
+        SecureStorage.addToken(
+            'bankAccNumber', dashBoardModel?.result?.data?.bank?.accNo);
+        SecureStorage.addToken(
+            'bankcode', dashBoardModel?.result?.data?.bank?.bankName);
+        SecureStorage.addToken('customerId', dashBoardModel?.result?.data?.iin);
+        loadingDashboard = false;
+        notifyListeners();
+      } else {
+        dashBoardModel = await dashBoardService.getDashBoardDetails(context);
+
+        logger.d(
+            'dassss=${dashBoardModel?.result?.data?.activationStatus!.statusCode}');
+        SecureStorage.addToken(
+            'bankAccNumber', dashBoardModel?.result?.data?.bank?.accNo);
+        SecureStorage.addToken(
+            'bankcode', dashBoardModel?.result?.data?.bank?.bankName);
+        SecureStorage.addToken('customerId', dashBoardModel?.result?.data?.iin);
+        loadingDashboard = false;
+        notifyListeners();
+      }
     } catch (e) {
       logger.d('get dashboard failed with an exception$e');
       loadingDashboard = false;

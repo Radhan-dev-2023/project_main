@@ -140,47 +140,51 @@ class ScreenOtp extends StatelessWidget {
       floatingActionButton: authController.otploading == true ||
               authController.otploadingforlogin == true
           ? const LoadingButton()
-          : ButtonWidget(
-              onTap: () async {
-                if (authController.formKeyForPinput.currentState!.validate()) {
-                  bool result = title == 'signup'
-                      // ignore: use_build_context_synchronously
-                      ? await authController.otpVerfy(context)
-                      // ignore: use_build_context_synchronously
-                      : await authController.otpVerifyForLogin(context);
-                  logger.d('resultotp===$result');
-                  if (result == true) {
-                    // ignore: use_build_context_synchronously
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => title == 'signup' ||
-                                biometricLoginController.buttonEnabled == true
-                            ? const ScreenSetPinNumber()
-                            : const ScreenHomeView(),
-                      ),
-                    );
-                    authController.otpController.clear();
-                  } else {
-                    // ignore: use_build_context_synchronously
-                    showSnackBar(context, 'Incorrect OTP');
-                  }
-                  logger.d('result===$result');
+          : authController.otpController.text.length < 6
+              ? const ButtonWidget(btName: 'Verify OTP')
+              : ButtonWidget(
+                  onTap: () async {
+                    if (authController.formKeyForPinput.currentState!
+                        .validate()) {
+                      bool result = title == 'signup'
+                          // ignore: use_build_context_synchronously
+                          ? await authController.otpVerfy(context)
+                          // ignore: use_build_context_synchronously
+                          : await authController.otpVerifyForLogin(context);
+                      logger.d('resultotp===$result');
+                      if (result == true) {
+                        // ignore: use_build_context_synchronously
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => title == 'signup' ||
+                                    biometricLoginController.buttonEnabled ==
+                                        true
+                                ? const ScreenSetPinNumber()
+                                : const ScreenHomeView(),
+                          ),
+                        );
+                        authController.otpController.clear();
+                      } else {
+                        // ignore: use_build_context_synchronously
+                        showSnackBar(context, 'Incorrect OTP');
+                      }
+                      logger.d('result===$result');
 
-                  // Navigator.push
-                  // Replacement(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => const ScreenPassword(),
-                  //   ),
-                  // );
-                }
-                // } else if (authController.otpController.text.length < 4) {
-                //   showSnackBar(context, 'Enter the OTP');
-                // }
-              },
-              btName: 'Verify OTP'.toUpperCase(),
-            ),
+                      // Navigator.push
+                      // Replacement(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => const ScreenPassword(),
+                      //   ),
+                      // );
+                    }
+                    // } else if (authController.otpController.text.length < 4) {
+                    //   showSnackBar(context, 'Enter the OTP');
+                    // }
+                  },
+                  btName: 'Verify OTP'.toUpperCase(),
+                ),
     );
   }
 }

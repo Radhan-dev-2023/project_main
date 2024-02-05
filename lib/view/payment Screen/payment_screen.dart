@@ -3,6 +3,7 @@ import 'package:finfresh_mobile/controller/scheme%20details%20controller/scheme_
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
+import 'package:finfresh_mobile/view/widgets/custom_loading_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -36,6 +37,8 @@ class _ScreenPaymentState extends State<ScreenPayment> {
             ?.data
             ?.bank
             ?.ifscCode;
+    Provider.of<SchemeDetailsController>(context, listen: false).paymentMode =
+        'Select a payment mode';
   }
 
   @override
@@ -117,22 +120,25 @@ class _ScreenPaymentState extends State<ScreenPayment> {
                             )
                           : const SizedBox(),
                       VerticalSpacer(2.h),
-                      ButtonWidget(
-                        btName: 'PAY NOW',
-                        onTap: () async {
-                          if (schemeController.paymentMode ==
-                              'Select a payment mode') {
-                            showSnackBar(
-                                context, 'Please select a payment mode');
-                          } else {
-                            bool result = await schemeController.transction();
-                            if (result == true) {
-                              // ignore: use_build_context_synchronously
-                              showAlertDialog(context);
-                            }
-                          }
-                        },
-                      )
+                      schemeController.loadingTransButton == true
+                          ? const LoadingButton()
+                          : ButtonWidget(
+                              btName: 'PAY NOW',
+                              onTap: () async {
+                                if (schemeController.paymentMode ==
+                                    'Select a payment mode') {
+                                  showSnackBar(
+                                      context, 'Please select a payment mode');
+                                } else {
+                                  bool result = await schemeController
+                                      .transction(context);
+                                  if (result == true) {
+                                    // ignore: use_build_context_synchronously
+                                    showAlertDialog(context);
+                                  }
+                                }
+                              },
+                            )
                     ],
                   ),
                 ),
@@ -148,6 +154,10 @@ class _ScreenPaymentState extends State<ScreenPayment> {
         .paymentResponseModel
         .result!
         .paymentlink!;
+
+    // String encodedUrl = Uri.encodeFull(url);
+    // String url =
+    // "https://www.nsenmf.com/Transactions/MFDMakePayment.aspx?jIwetlJvdmuCHfF2aGi1cDMmhu6ih%2ffz66GFrBf3PBlLz72vitR132eTdqneGQyyNmvCREwgt4opcxcrtet%2fDjgkPQxzXnAEAUQzJFw6d8RGJ8HaxA9zJyFW2zXLhL1oldvYA2%2brhP2EbVUdiFUEN0y5%2fP2MVYSHQt%2fr631OM%2ffIOWWDsLOarjZyXyNBo49xGvzqU0caxGk34C3GCqq0fF9hR0S6Ty1lrTCOmsvrwG6%2fzkRPxp7DWyhDzxO4FAEVYZsqzdvk5qLb3SSo6TmnMI5qlhHIOhkWyTA94A8n98Brk6xm6dvxSpcHvq8VTvu7UszM%2bLFqG70N%2btSJm1crCgD0st39eBFpRk6x1HKcLmA%3d'&gt;https://www.nsenmf.com/Transactions/MFDMakePayment.aspx?jIwetlJvdmuCHfF2aGi1cDMmhu6ih%2ffz66GFrBf3PBlLz72vitR132eTdqneGQyyNmvCREwgt4opcxcrtet%2fDjgkPQxzXnAEAUQzJFw6d8RGJ8HaxA9zJyFW2zXLhL1oldvYA2%2brhP2EbVUdiFUEN0y5%2fP2MVYSHQt%2fr631OM%2ffIOWWDsLOarjZyXyNBo49xGvzqU0caxGk34C3GCqq0fF9hR0S6Ty1lrTCOmsvrwG6%2fzkRPxp7DWyhDzxO4FAEVYZsqzdvk5qLb3SSo6TmnMI5qlhHIOhkWyTA94A8n98Brk6xm6dvxSpcHvq8VTvu7UszM%2bLFqG70N%2btSJm1crCgD0st39eBFpRk6x1HKcLmA%3d&lt;/a&gt";
     // Create the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text(
@@ -165,7 +175,12 @@ class _ScreenPaymentState extends State<ScreenPayment> {
       actions: [
         // You can add buttons to the alert dialog
         InkWell(
-          onTap: () async {},
+          onTap: () async {
+            if (await canLaunchUrl(Uri.parse(url))) {
+              await launchUrl(Uri.parse(url));
+            }
+            // canLaunchUrl(Uri.parse(url));
+          },
           child: Container(
             height: 5.h,
             width: 15.w,

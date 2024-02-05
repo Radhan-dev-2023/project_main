@@ -130,28 +130,31 @@ class ScreenConfirmPinNumber extends StatelessWidget {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: ButtonWidget(
-        btName: 'CONFIRM PIN',
-        onTap: () {
-          if (pinController.formKeyForConfirmPin.currentState!.validate()) {
-            pinController.setPin();
-            Provider.of<KycController>(context, listen: false)
-                .updatePagenumber('1');
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    biometricLoginController.buttonEnabled == true
-                        ? const ScreenHomeView()
-                        : const ScreenPanCard(),
-              ),
-            );
-          }
-          // } else if (pinController.confirmPinController.text.length < 4) {
-          //   showSnackBar(context, 'Please enter the 4-digit PIN');
-          // }
-        },
-      ),
+      floatingActionButton: pinController.confirmPinController.text.length < 4
+          ? const ButtonWidget(btName: 'CONFIRM PIN')
+          : ButtonWidget(
+              btName: 'CONFIRM PIN',
+              onTap: () {
+                if (pinController.formKeyForConfirmPin.currentState!
+                    .validate()) {
+                  pinController.setPin();
+                  Provider.of<KycController>(context, listen: false)
+                      .updatePagenumber('1');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          biometricLoginController.buttonEnabled == true
+                              ? const ScreenHomeView()
+                              : const ScreenPanCard(),
+                    ),
+                  );
+                }
+                // } else if (pinController.confirmPinController.text.length < 4) {
+                //   showSnackBar(context, 'Please enter the 4-digit PIN');
+                // }
+              },
+            ),
     );
   }
 }

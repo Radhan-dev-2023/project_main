@@ -132,25 +132,27 @@ class ScreenSetPinNumber extends StatelessWidget {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: ButtonWidget(
-        btName: 'VERIFY',
-        onTap: () {
-          if (pinController.formKeyForPin.currentState!.validate()) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const ScreenConfirmPinNumber(),
-              ),
-            );
-          }
-          // } else if (pinController.pinController.text.length < 4) {
-          //   showSnackBar(context, 'Please enter the 4-digit PIN');
-          // }
-          // setState(() {
-          //   clicked = !clicked;
-          // }
-        },
-      ),
+      floatingActionButton: pinController.pinController.text.length < 4
+          ? const ButtonWidget(btName: 'VERIFY')
+          : ButtonWidget(
+              btName: 'VERIFY',
+              onTap: () {
+                if (pinController.formKeyForPin.currentState!.validate()) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ScreenConfirmPinNumber(),
+                    ),
+                  );
+                }
+                // } else if (pinController.pinController.text.length < 4) {
+                //   showSnackBar(context, 'Please enter the 4-digit PIN');
+                // }
+                // setState(() {
+                //   clicked = !clicked;
+                // }
+              },
+            ),
     );
   }
 }
