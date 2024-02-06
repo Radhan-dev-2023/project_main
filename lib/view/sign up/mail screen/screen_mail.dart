@@ -2,6 +2,7 @@ import 'package:finfresh_mobile/controller/auth/auth_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/sign%20up/enter%20phone%20number/sign_in_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
+import 'package:finfresh_mobile/view/widgets/log_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -35,14 +36,8 @@ class ScreenMail extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  VerticalSpacer(5.h),
-                  const Center(
-                    child: SizedBox(
-                      height: 50,
-                      width: 50,
-                      child: FlutterLogo(),
-                    ),
-                  ),
+                  // VerticalSpacer(5.h),
+                  const LogoWidget(),
                   VerticalSpacer(8.h),
 
                   Text(

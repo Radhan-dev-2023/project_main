@@ -7,6 +7,7 @@ import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
 import 'package:finfresh_mobile/view/kyc/occupation%20Screen/occupation_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_button_widget.dart';
+import 'package:finfresh_mobile/view/widgets/log_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -60,14 +61,7 @@ class _ScreenTaxStatusState extends State<ScreenTaxStatus> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      VerticalSpacer(5.h),
-                      const Center(
-                        child: SizedBox(
-                          height: 50,
-                          width: 50,
-                          child: FlutterLogo(),
-                        ),
-                      ),
+                      const LogoWidget(),
                       VerticalSpacer(8.h),
                       Text(
                         'Select A Tax Status',

@@ -9,6 +9,8 @@ import 'package:finfresh_mobile/controller/top%20fund%20controller/top_fund_cont
 import 'package:finfresh_mobile/controller/uploading%20proofs/uploading_proof_controller.dart';
 import 'package:finfresh_mobile/db/model/investors_data_model.dart';
 import 'package:finfresh_mobile/utilities/theme/theme.dart';
+import 'package:finfresh_mobile/view/kyc/Nominee%20adding/Nominee%202/screen_nominee_2.dart';
+import 'package:finfresh_mobile/view/kyc/Nominee%20adding/Nominee%203/screen_nominee_3.dart';
 import 'package:finfresh_mobile/view/kyc/Nominee%20adding/nominee%20type/screen_nominee_count.dart';
 import 'package:finfresh_mobile/view/kyc/Nominee%20adding/screen_nominee.dart';
 import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
@@ -18,6 +20,7 @@ import 'package:finfresh_mobile/view/kyc/adding%20nominee%20and%20guardian/addin
 import 'package:finfresh_mobile/view/kyc/address/address_screen.dart';
 import 'package:finfresh_mobile/view/kyc/bank%20account%20number/screen_bank_accont_number.dart';
 import 'package:finfresh_mobile/view/kyc/joint%20holders/join_holders_screen.dart';
+import 'package:finfresh_mobile/view/kyc/nri%20address/nri_address_screen.dart';
 import 'package:finfresh_mobile/view/kyc/parent%20details%20adding/adding_parent_details.dart';
 import 'package:finfresh_mobile/view/kyc/tax%20status/screen_tax_status.dart';
 import 'package:finfresh_mobile/view/kyc/uploading%20proofs/screen_upload_proof.dart';
@@ -92,8 +95,10 @@ class MyApp extends StatelessWidget {
           theme: isDarkMode ? AppTheme.darkTheme : AppTheme.lightTheme,
           // darkTheme: AppTheme.darkTheme,
           home: const SplashScreen(),
+          // home: ScreenNriAdress(),
           // home: ScreenBankProofs(),
           // home: ScreenAddingParentDetails(),
+          // home: ScreenJointHolders(),
           // home: ScreenOtp(title: 'sign up'),
           // home: const AddingNomineeAndGuadianScreen(),
           // home: const ScreenUploadinProofs(),
@@ -105,6 +110,7 @@ class MyApp extends StatelessWidget {
           // home: const ScreenTaxStatus(),
           // home: const ScreenJointHolders(),
           // home: const ScreenAddingNominee(),
+          // home: ScreenAddingNominee(),
           // home: const ScreenNomineeCount(),
           // home: const ScreenPanCard(),
           // home: const ScreenPersonalDetails(),

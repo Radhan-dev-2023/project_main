@@ -4,6 +4,7 @@ import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
 import 'package:finfresh_mobile/view/kyc/nri%20address/nri_address_screen.dart';
 import 'package:finfresh_mobile/view/kyc/parent%20details%20adding/adding_parent_details.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
+import 'package:finfresh_mobile/view/widgets/log_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -48,7 +49,8 @@ class _ScreenAddressState extends State<ScreenAddress> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  VerticalSpacer(7.h),
+                  const LogoWidget(),
+                  VerticalSpacer(5.h),
                   Text(
                     'Enter your address',
                     style: Theme.of(context)

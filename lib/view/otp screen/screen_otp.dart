@@ -7,6 +7,7 @@ import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
 import 'package:finfresh_mobile/view/setting%20pin%20number/setting_pin.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_button_widget.dart';
+import 'package:finfresh_mobile/view/widgets/log_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
@@ -78,14 +79,7 @@ class ScreenOtp extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               // mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                VerticalSpacer(5.h),
-                const Center(
-                  child: SizedBox(
-                    height: 50,
-                    width: 50,
-                    child: FlutterLogo(),
-                  ),
-                ),
+                const LogoWidget(),
                 VerticalSpacer(8.h),
                 Text(
                   'Verification ',

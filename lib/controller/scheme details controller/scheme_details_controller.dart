@@ -4,7 +4,6 @@ import 'package:finfresh_mobile/model/scheme%20model/scehem_information_model.da
 import 'package:finfresh_mobile/services/refersh%20token/refersh_token.dart';
 import 'package:finfresh_mobile/services/scheme%20services/scheme_services.dart';
 import 'package:finfresh_mobile/services/transaction%20service/transaction_service.dart';
-import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +16,7 @@ class SchemeDetailsController extends ChangeNotifier {
   TextEditingController installmentController = TextEditingController();
   TextEditingController accountnumberController = TextEditingController();
   TransactionService transactionService = TransactionService();
-
+  GlobalKey<FormState> formKeyForbtmSheet = GlobalKey<FormState>();
   SchemeInfoModel? schemeInfoModel;
   HistoricalNavModel? historicalNavModel;
   String? paymentvalueTobackent;
@@ -65,8 +64,6 @@ class SchemeDetailsController extends ChangeNotifier {
   String paymentMode = 'Select a payment mode';
   List<String> paymentList = [
     'Select a payment mode',
-    'Cheque',
-    'Demand Draft',
     'Debit Mandate',
     'Online',
     'RTGS/NEFT',
@@ -75,11 +72,7 @@ class SchemeDetailsController extends ChangeNotifier {
   void updatePaymentMode(String? value) {
     paymentMode = value ?? '';
     notifyListeners();
-    if (paymentMode == 'Cheque') {
-      paymentvalueTobackent = 'Q';
-    } else if (paymentMode == 'Demand Draft') {
-      paymentvalueTobackent = 'D';
-    } else if (paymentMode == 'Debit Mandate') {
+    if (paymentMode == 'Debit Mandate') {
       paymentvalueTobackent = 'M';
     } else if (paymentMode == 'Online') {
       paymentvalueTobackent = 'OL';
@@ -259,21 +252,6 @@ class SchemeDetailsController extends ChangeNotifier {
         notifyListeners();
         return false;
       }
-    }
-  }
-
-  bool validator(context) {
-    if (installmentController.text.isEmpty) {
-      showFlushbar(context, 'Please enter amount');
-      return false;
-    } else if (durationValue == 'Select Duration') {
-      showFlushbar(context, 'Please select a duration');
-      return false;
-    } else if (dateController.text.isEmpty) {
-      showFlushbar(context, 'Please select a date');
-      return false;
-    } else {
-      return true;
     }
   }
 }

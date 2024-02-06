@@ -5,6 +5,7 @@ import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:finfresh_mobile/view/kyc/tax%20status/screen_tax_status.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
+import 'package:finfresh_mobile/view/widgets/log_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -47,14 +48,7 @@ class _ScreenPersonalDetailsState extends State<ScreenPersonalDetails> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  VerticalSpacer(5.h),
-                  const Center(
-                    child: SizedBox(
-                      height: 50,
-                      width: 50,
-                      child: FlutterLogo(),
-                    ),
-                  ),
+                  const LogoWidget(),
                   VerticalSpacer(8.h),
                   Text(
                     'Enter your personal details',

@@ -5,6 +5,7 @@ import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/kyc/Nominee%20adding/Nominee%203/screen_nominee_3.dart';
 import 'package:finfresh_mobile/view/kyc/adding%20nominee%20and%20guardian/adding_nominee_guardian.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
+import 'package:finfresh_mobile/view/widgets/log_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -50,6 +51,8 @@ class _ScreenNominee2State extends State<ScreenNominee2> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // VerticalSpacer(10.h),
+                const LogoWidget(),
+                VerticalSpacer(3.h),
                 Text(
                   'Enter Nominee 2 Details',
                   style: Theme.of(context)

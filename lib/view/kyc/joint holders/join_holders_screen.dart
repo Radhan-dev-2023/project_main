@@ -5,6 +5,7 @@ import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/kyc/adding%20nominee%20and%20guardian/adding_nominee_guardian.dart';
 import 'package:finfresh_mobile/view/kyc/joint%20holders/joint%20holder%202/screen_jh2.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
+import 'package:finfresh_mobile/view/widgets/log_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -49,14 +50,7 @@ class _ScreenJointHoldersState extends State<ScreenJointHolders> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  VerticalSpacer(5.h),
-                  const Center(
-                    child: SizedBox(
-                      height: 50,
-                      width: 50,
-                      child: FlutterLogo(),
-                    ),
-                  ),
+                  const LogoWidget(),
                   VerticalSpacer(5.h),
                   Text(
                     'Enter Joint Holder 1 details',

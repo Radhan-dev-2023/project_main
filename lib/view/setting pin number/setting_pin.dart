@@ -5,6 +5,7 @@ import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
 import 'package:finfresh_mobile/view/setting%20pin%20number/confirm%20pin/screen_confirm_pin.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
+import 'package:finfresh_mobile/view/widgets/log_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
@@ -77,14 +78,7 @@ class ScreenSetPinNumber extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                VerticalSpacer(5.h),
-                const Center(
-                  child: SizedBox(
-                    height: 50,
-                    width: 50,
-                    child: FlutterLogo(),
-                  ),
-                ),
+                const LogoWidget(),
                 VerticalSpacer(8.h),
                 Text(
                   biometricLoginController.buttonEnabled == true

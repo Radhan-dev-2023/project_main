@@ -6,6 +6,7 @@ import 'package:finfresh_mobile/view/kyc/adding%20nominee%20and%20guardian/addin
 import 'package:finfresh_mobile/view/kyc/joint%20holders/join_holders_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
+import 'package:finfresh_mobile/view/widgets/log_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -51,7 +52,8 @@ class _ScreenBankAccountNumberState extends State<ScreenBankAccountNumber> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                VerticalSpacer(7.h),
+                const LogoWidget(),
+                VerticalSpacer(5.h),
                 Text(
                   'Enter your account number & account type',
                   style: Theme.of(context)

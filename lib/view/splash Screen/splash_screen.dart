@@ -50,6 +50,14 @@ class _SplashScreenState extends State<SplashScreen> {
               MaterialPageRoute(
                 builder: (context) => const PinEnterForLoginScreen(),
               ));
+        } else {
+          // ignore: use_build_context_synchronously
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const BoardingViewScreen(),
+            ),
+          );
         }
       } else {
         // ignore: use_build_context_synchronously

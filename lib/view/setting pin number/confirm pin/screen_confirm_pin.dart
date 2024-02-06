@@ -6,6 +6,7 @@ import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
 import 'package:finfresh_mobile/view/kyc/pancard/screen_pan_card.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
+import 'package:finfresh_mobile/view/widgets/log_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
@@ -75,14 +76,7 @@ class ScreenConfirmPinNumber extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                VerticalSpacer(5.h),
-                const Center(
-                  child: SizedBox(
-                    height: 50,
-                    width: 50,
-                    child: FlutterLogo(),
-                  ),
-                ),
+                const LogoWidget(),
                 VerticalSpacer(8.h),
                 Text(
                   'Confirm Finfresh PIN',

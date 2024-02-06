@@ -178,6 +178,9 @@ class _ScreenPaymentState extends State<ScreenPayment> {
           onTap: () async {
             if (await canLaunchUrl(Uri.parse(url))) {
               await launchUrl(Uri.parse(url));
+            } else {
+              // ignore: use_build_context_synchronously
+              showSnackBar(context, 'Failed');
             }
             // canLaunchUrl(Uri.parse(url));
           },
