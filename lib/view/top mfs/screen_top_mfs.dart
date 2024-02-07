@@ -44,8 +44,14 @@ class TopMfsScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => StockDetailsScreen(
-                                      scheme:
-                                          '${topMfsController.topPerformingMutualFundModel?.list?[index].schemeAmfi}'),
+                                    scheme:
+                                        '${topMfsController.topPerformingMutualFundModel?.list?[index].schemeAmfi}',
+                                    isinNumber: topMfsController
+                                            .topPerformingMutualFundModel
+                                            ?.list?[index]
+                                            .isinNo ??
+                                        '',
+                                  ),
                                 ),
                               );
                             },

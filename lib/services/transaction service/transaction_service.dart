@@ -12,15 +12,18 @@ import 'package:http/http.dart' as http;
 
 class TransactionService {
   PaymentResponseModel paymentResponseModel = PaymentResponseModel();
-  Future<bool> transcationService(
-      {required String paymenMode,
-      required String accountNumber,
-      required String ifscCode,
-      required String instalmentAmount,
-      required String fromdate,
-      required String duedate,
-      required String date,
-      required BuildContext context}) async {
+  Future<bool> transcationService({
+    required String paymenMode,
+    required String accountNumber,
+    required String ifscCode,
+    required String instalmentAmount,
+    required String fromdate,
+    required String duedate,
+    required String date,
+    required String amc,
+    required String productCode,
+    required BuildContext context,
+  }) async {
     String token = await SecureStorage.readToken('token');
     String userId = await SecureStorage.readToken('userId');
     String phoneNumber = await SecureStorage.readToken('phoneNumber');
@@ -189,14 +192,14 @@ class TransactionService {
         "channel_type": "NET"
       },
       "childtrans": {
-        "amc": "H",
+        "amc": amc,
         "folio": "",
-        "product_code": "HRDHR",
+        "product_code": productCode,
         "ft_acc_no": "",
         "reinvest": "Z",
-        "amount": "100",
-        "sip_from_date": "",
-        "sip_end_date": "",
+        "amount": instalmentAmount,
+        "sip_from_date": date,
+        "sip_end_date": duedate,
         "sip_freq": "",
         "sip_amount": "",
         "sip_period_day": "",
@@ -213,7 +216,7 @@ class TransactionService {
         "FREEDOM_SCHEME_OPTION": "A"
       }
     };
-    log('payload === $payload');
+    log('payload === ${jsonEncode(payload)}');
     try {
       http.Response response = await http.post(
         Uri.parse(url),

@@ -2,6 +2,7 @@ import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart'
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/kyc/bank%20account%20number/screen_bank_accont_number.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
+import 'package:finfresh_mobile/view/widgets/log_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -42,7 +43,8 @@ class _ScreenAddingBankState extends State<ScreenAddingBank> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                VerticalSpacer(7.h),
+                const LogoWidget(),
+                VerticalSpacer(5.h),
                 Text(
                   'Choose your bank',
                   style: Theme.of(context)

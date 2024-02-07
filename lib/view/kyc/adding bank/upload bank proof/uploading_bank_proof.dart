@@ -95,10 +95,7 @@ class _ScreenUploadingBankProofState extends State<ScreenUploadingBankProof> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // TextButton(
-              //   child: Text('Select Image'),
-              //   onPressed: ,
-              // ),
+              
               VerticalSpacer(6.h),
               Text(
                 'Add your bank proof',

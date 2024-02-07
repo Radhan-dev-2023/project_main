@@ -1,6 +1,8 @@
 import 'dart:developer';
 import 'package:finfresh_mobile/model/historical%20nav%20model/historical_nav_model.dart';
+import 'package:finfresh_mobile/model/product%20code%20model/product_code_model.dart';
 import 'package:finfresh_mobile/model/scheme%20model/scehem_information_model.dart';
+import 'package:finfresh_mobile/services/kyc/master_services.dart';
 import 'package:finfresh_mobile/services/refersh%20token/refersh_token.dart';
 import 'package:finfresh_mobile/services/scheme%20services/scheme_services.dart';
 import 'package:finfresh_mobile/services/transaction%20service/transaction_service.dart';
@@ -12,11 +14,14 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 
 class SchemeDetailsController extends ChangeNotifier {
   SchemeServices schemeService = SchemeServices();
+  MasterService masterService = MasterService();
   TextEditingController dateController = TextEditingController();
   TextEditingController installmentController = TextEditingController();
   TextEditingController accountnumberController = TextEditingController();
   TransactionService transactionService = TransactionService();
   GlobalKey<FormState> formKeyForbtmSheet = GlobalKey<FormState>();
+
+  ProductCodeModel? productCodeModel;
   SchemeInfoModel? schemeInfoModel;
   HistoricalNavModel? historicalNavModel;
   String? paymentvalueTobackent;
@@ -191,6 +196,10 @@ class SchemeDetailsController extends ChangeNotifier {
     }
   }
 
+  Future<void> getProductCode(String inisinumber) async {
+    productCodeModel = await masterService.getProductCode(inisinumber);
+  }
+
   String ifscCodde = '';
   Future<void> callingFunctionDetailScreen(context, String scheme) async {
     await getSchemeInfo(context, scheme);
@@ -222,6 +231,8 @@ class SchemeDetailsController extends ChangeNotifier {
         fromdate: dateController.text,
         duedate: duedate,
         date: dateController.text,
+        amc: productCodeModel?.product?.amcCode ?? '',
+        productCode: productCodeModel?.product?.productCode ?? '',
         context: context,
       );
       if (result == true) {
@@ -235,14 +246,17 @@ class SchemeDetailsController extends ChangeNotifier {
       }
     } else {
       bool result = await transactionService.transcationService(
-          paymenMode: paymentvalueTobackent ?? '',
-          accountNumber: accountnumberController.text,
-          ifscCode: ifscCodde,
-          instalmentAmount: installmentController.text,
-          fromdate: dateController.text,
-          duedate: duedate,
-          date: dateController.text,
-          context: context);
+        paymenMode: paymentvalueTobackent ?? '',
+        accountNumber: accountnumberController.text,
+        ifscCode: ifscCodde,
+        instalmentAmount: installmentController.text,
+        fromdate: dateController.text,
+        duedate: duedate,
+        date: dateController.text,
+        amc: productCodeModel?.product?.amcCode ?? '',
+        productCode: productCodeModel?.product?.productCode ?? '',
+        context: context,
+      );
       if (result == true) {
         loadingTransButton = false;
         notifyListeners();

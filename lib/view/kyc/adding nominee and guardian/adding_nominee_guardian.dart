@@ -8,6 +8,7 @@ import 'package:finfresh_mobile/view/kyc/guardian%20screen/screen_guardian.dart'
 import 'package:finfresh_mobile/view/kyc/uploading%20proofs/screen_upload_proof.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_button_widget.dart';
+import 'package:finfresh_mobile/view/widgets/log_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -51,14 +52,7 @@ class _AddingNomineeAndGuadianScreenState
           margin: EdgeInsets.all(15.sp),
           child: Column(
             children: [
-              VerticalSpacer(5.h),
-              const Center(
-                child: SizedBox(
-                  height: 50,
-                  width: 50,
-                  child: FlutterLogo(),
-                ),
-              ),
+             const LogoWidget(),
               VerticalSpacer(8.h),
               Container(
                 decoration: BoxDecoration(

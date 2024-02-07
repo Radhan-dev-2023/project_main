@@ -14,8 +14,11 @@ import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class StockDetailsScreen extends StatefulWidget {
-  const StockDetailsScreen({Key? key, required this.scheme}) : super(key: key);
+  const StockDetailsScreen(
+      {Key? key, required this.scheme, required this.isinNumber})
+      : super(key: key);
   final String scheme;
+  final String isinNumber;
 
   @override
   State<StockDetailsScreen> createState() => _StockDetailsScreenState();
@@ -28,6 +31,9 @@ class _StockDetailsScreenState extends State<StockDetailsScreen>
   @override
   void initState() {
     _tabController = TabController(length: 4, vsync: this);
+    Provider.of<SchemeDetailsController>(context, listen: false)
+        .getProductCode(widget.isinNumber);
+    debugPrint('infnumbrer=${widget.isinNumber}');
     super.initState();
   }
 
