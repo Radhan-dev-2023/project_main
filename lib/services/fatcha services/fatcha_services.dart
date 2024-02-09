@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
@@ -83,6 +84,9 @@ class FatchaServices {
       logger.d('fatchaa respone =${response.statusCode}');
       logger.d('Fatcha response.body =${response.body}');
       Map<String, dynamic> jsonResponse = json.decode(response.body);
+      if (jsonResponse["status"] == 200) {}
+    } on SocketException {
+      logger.d('No network');
     } catch (e) {
       logger.d('Fatcha registration failed with an exception $e');
     }
