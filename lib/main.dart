@@ -1,5 +1,6 @@
 import 'package:finfresh_mobile/controller/auth/auth_controller.dart';
 import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
+import 'package:finfresh_mobile/controller/fatcha%20registration/fatcha_registration.dart';
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_controller.dart';
 import 'package:finfresh_mobile/controller/pin%20controller/pin_controller.dart';
@@ -9,6 +10,8 @@ import 'package:finfresh_mobile/controller/top%20fund%20controller/top_fund_cont
 import 'package:finfresh_mobile/controller/uploading%20proofs/uploading_proof_controller.dart';
 import 'package:finfresh_mobile/db/model/investors_data_model.dart';
 import 'package:finfresh_mobile/utilities/theme/theme.dart';
+import 'package:finfresh_mobile/view/fatcha%20registration/fatcha_registeration.dart';
+import 'package:finfresh_mobile/view/fatcha%20registration/upload%20fatcha%20proof/screen.upload_fatcha_proof.dart';
 import 'package:finfresh_mobile/view/kyc/Nominee%20adding/Nominee%202/screen_nominee_2.dart';
 import 'package:finfresh_mobile/view/kyc/Nominee%20adding/Nominee%203/screen_nominee_3.dart';
 import 'package:finfresh_mobile/view/kyc/Nominee%20adding/nominee%20type/screen_nominee_count.dart';
@@ -36,6 +39,7 @@ import 'package:finfresh_mobile/view/splash%20Screen/splash_screen.dart';
 import 'package:finfresh_mobile/view/kyc/user%20personal%20details/screen_personal_details.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:image/image.dart';
 
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -86,7 +90,10 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => TopMFsController(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (context) => FatchaRegistrationController(),
+        ),
       ],
       child: ResponsiveSizer(builder: (context, orientation, screenType) {
         return MaterialApp(
@@ -95,6 +102,8 @@ class MyApp extends StatelessWidget {
           theme: isDarkMode ? AppTheme.darkTheme : AppTheme.lightTheme,
           // darkTheme: AppTheme.darkTheme,
           home: const SplashScreen(),
+          // home: const ScreenFatchaProof(),
+          // home: ScreenFatchaRegistration(),
           // home: ScreenNriAdress(),
           // home: ScreenBankProofs(),
           // home: ScreenAddingParentDetails(),
