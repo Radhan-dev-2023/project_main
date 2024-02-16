@@ -29,6 +29,8 @@ class FatchaServices {
     required String uboHoldingPercentage,
     required String uboidentitytype,
     required String uboTinNumber,
+    required String addresvalue,
+    required String pepVlaue,
     required BuildContext context,
   }) async {
     String token = await SecureStorage.readToken('token');
@@ -44,13 +46,13 @@ class FatchaServices {
         "net_worth_sign": networthsign, //required for non individual
         "net_worth": networth, //required for non individual
         "net_worth_date": networthdate,
-        "pep": "N",
+        "pep": pepVlaue,
         "source_wealth": sourcewealth, //refer SourceWealth master
         "corp_servs":
             "" //refer transaction API document applicable for non individual
       },
       "fatca": {
-        "addr_type": "2", //refer transaction API document
+        "addr_type": addresvalue, //refer transaction API document
         "data_src": "E",
         "country_of_birth": countryofbirth,
         "place_birth": countryofbirth,

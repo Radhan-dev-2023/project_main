@@ -35,7 +35,6 @@ class ScreenHome extends StatelessWidget {
       drawer: const DrawerWidget(),
       // key: drawerkey,
       appBar: AppBar(
-        centerTitle: true,
         // leadingWidth: 0.0,
         // leading: const SizedBox(),
         title: Consumer<DashBoardController>(

@@ -121,7 +121,7 @@ class MyApp extends StatelessWidget {
           // home: const ScreenAddingNominee(),
           // home: ScreenAddingNominee(),
           // home: const ScreenNomineeCount(),
-          // home: const ScreenPanCard(),
+          //  home: const ScreenPanCard(),
           // home: const ScreenPersonalDetails(),
           // home: const ScreenSetPinNumber(),
           // home: const ScreenHomeView(),

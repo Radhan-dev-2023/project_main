@@ -70,57 +70,59 @@ class ScreenSetPinNumber extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: Container(
-          margin: EdgeInsets.all(15.sp),
-          child: Form(
-            key: pinController.formKeyForPin,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const LogoWidget(),
-                VerticalSpacer(8.h),
-                Text(
-                  biometricLoginController.buttonEnabled == true
-                      ? 'Reset Finfresh PIN'
-                      : 'Enter Finfresh PIN',
-                  style: Theme.of(context)
-                      .textTheme
-                      .labelLarge!
-                      .copyWith(fontSize: 20.sp, fontWeight: FontWeight.bold),
-                ),
-                VerticalSpacer(1.h),
-                const Text(
-                  'Enter PIN for confirmation',
-                  style: TextStyle(color: Colors.grey),
-                ),
-                VerticalSpacer(10.h),
-                Center(
-                  child: Pinput(
-                    forceErrorState: false,
-                    validator: (value) {
-                      if (value?.length != 4 || value == null) {
-                        return 'Please enter the 4-digit PIN';
-                      } else if (value.isEmpty) {
-                        return 'Please enter the 4-digit PIN';
-                      } else {
-                        return null;
-                      }
-                    },
-                    controller: pinController.pinController,
-                    length: 4,
-                    defaultPinTheme: defaultPinTheme,
-                    focusedPinTheme: focusedPinTheme,
-                    submittedPinTheme: submittedPinTheme,
-                    pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
-                    errorPinTheme: errorPinTheme,
-                    errorTextStyle:
-                        TextStyle(color: Colors.red, fontSize: 15.sp),
+        child: SingleChildScrollView(
+          child: Container(
+            margin: EdgeInsets.all(15.sp),
+            child: Form(
+              key: pinController.formKeyForPin,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const LogoWidget(),
+                  VerticalSpacer(8.h),
+                  Text(
+                    biometricLoginController.buttonEnabled == true
+                        ? 'Reset Finfresh PIN'
+                        : 'Enter Finfresh PIN',
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelLarge!
+                        .copyWith(fontSize: 20.sp, fontWeight: FontWeight.bold),
                   ),
-                ),
-                VerticalSpacer(1.h),
-                VerticalSpacer(10.h),
-              ],
+                  VerticalSpacer(1.h),
+                  const Text(
+                    'Enter PIN for confirmation',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                  VerticalSpacer(10.h),
+                  Center(
+                    child: Pinput(
+                      forceErrorState: false,
+                      validator: (value) {
+                        if (value?.length != 4 || value == null) {
+                          return 'Please enter the 4-digit PIN';
+                        } else if (value.isEmpty) {
+                          return 'Please enter the 4-digit PIN';
+                        } else {
+                          return null;
+                        }
+                      },
+                      controller: pinController.pinController,
+                      length: 4,
+                      defaultPinTheme: defaultPinTheme,
+                      focusedPinTheme: focusedPinTheme,
+                      submittedPinTheme: submittedPinTheme,
+                      pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
+                      errorPinTheme: errorPinTheme,
+                      errorTextStyle:
+                          TextStyle(color: Colors.red, fontSize: 15.sp),
+                    ),
+                  ),
+                  VerticalSpacer(1.h),
+                  VerticalSpacer(20.h),
+                ],
+              ),
             ),
           ),
         ),

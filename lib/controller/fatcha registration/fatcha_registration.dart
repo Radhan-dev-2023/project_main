@@ -28,6 +28,7 @@ class FatchaRegistrationController extends ChangeNotifier {
   TextEditingController netWorthController = TextEditingController();
   TextEditingController networthdate = TextEditingController();
   TextEditingController panController = TextEditingController();
+  final GlobalKey<FormState> formKeyforfatca = GlobalKey<FormState>();
   MasterService masterService = MasterService();
   FatchaServices fatchaServices = FatchaServices();
   UboModel? uboModel;
@@ -48,7 +49,21 @@ class FatchaRegistrationController extends ChangeNotifier {
   List<String> genderlist = ['Male', 'Female', 'Other'];
   List<String> stockList = ['BSE', 'NSE', 'Others'];
   String identitytoBackend = '';
-  List<String> ffiList = ['Y', "N"];
+  List<String> ffiList = ['Yes', "No"];
+  List<String> countryList = ["India", "Foreign Nationals"];
+  String? contryValue;
+  String? countryvalueTobackend;
+  void updatecountryvalue(value) {
+    contryValue = value;
+    notifyListeners();
+    if (contryValue == 'India') {
+      countryvalueTobackend = 'IND';
+    } else if (contryValue == 'Foreign Nationals') {
+      countryvalueTobackend = 'NRI';
+      log(countryvalueTobackend.toString());
+    }
+  }
+
   List<String> identityList = [
     "Passport",
     'Election ID Card',
@@ -64,8 +79,8 @@ class FatchaRegistrationController extends ChangeNotifier {
     "US GIIN",
     "Global Entity Identification Number",
   ];
-  List<String> pepList = ['N', 'Y', 'R'];
-  List<String> taxresidency = ['N', 'Y'];
+  List<String> pepList = ['No', 'Yes', 'Related To PEP'];
+  List<String> taxresidency = ['No', 'Yes'];
   String? sponservalue;
   String? taxresidencyValue;
 
@@ -96,9 +111,33 @@ class FatchaRegistrationController extends ChangeNotifier {
     notifyListeners();
   }
 
+  String? sponservaluetobackend;
   void updateSponser(value) {
     sponservalue = value;
     notifyListeners();
+    if (sponservalue == 'No') {
+      sponservaluetobackend = 'N';
+    } else if (sponservalue == 'Yes') {
+      sponservaluetobackend = 'Y';
+    }
+  }
+
+  void clear() {
+    stockvalue = null;
+    sponservalue = null;
+    gendervalue = null;
+    pepvalue = null;
+    identityValue = null;
+    uboIdentity = null;
+    taxresidencyValue = null;
+    addressvalue = null;
+    contryValue = null;
+    uboCountryController.clear();
+    ubocountrybirthController.clear();
+    holdingPercentageController.clear();
+    netWorthController.clear();
+    networthdate.clear();
+    networthsignController.clear();
   }
 
   void updateIncomeValue(value) {
@@ -115,9 +154,20 @@ class FatchaRegistrationController extends ChangeNotifier {
     notifyListeners();
   }
 
+  String? pepValuetobackend;
   void updatePepValue(value) {
     pepvalue = value;
     notifyListeners();
+    if (pepvalue == 'Yes') {
+      log('value === $pepvalue');
+      pepValuetobackend = "Y";
+    } else if (pepvalue == 'No') {
+      log('value === $pepvalue');
+      pepValuetobackend = "N";
+    } else if (pepvalue == 'Related To PEP') {
+      log('value === $pepvalue');
+      pepValuetobackend = "R";
+    }
   }
 
   void updatetheIdentitytype(value) {
@@ -185,9 +235,15 @@ class FatchaRegistrationController extends ChangeNotifier {
     }
   }
 
+  String? taxresidencyValuetobackend;
   void updateTaxresidencyValue(value) {
     taxresidencyValue = value;
     notifyListeners();
+    if (taxresidencyValue == 'Yes') {
+      taxresidencyValuetobackend = 'Y';
+    } else if (taxresidencyValue == 'No') {
+      taxresidencyValuetobackend = 'N';
+    }
   }
 
   Future<void> fetchSourceWealth() async {
@@ -211,6 +267,31 @@ class FatchaRegistrationController extends ChangeNotifier {
     notifyListeners();
   }
 
+  String? addrevaluetobackend;
+  String? addressvalue;
+  List<String> addressList = [
+    "Residential or Business",
+    "Residential",
+    "Business",
+    "Registered office",
+    "Unspecified"
+  ];
+  void updateaddressvalue(value) {
+    addressvalue = value;
+    notifyListeners();
+    if (addressvalue == 'Residential or Business') {
+      addrevaluetobackend = '1';
+    } else if (addressvalue == 'Residential') {
+      addrevaluetobackend = '2';
+    } else if (addressvalue == 'Business') {
+      addrevaluetobackend = '3';
+    } else if (addressvalue == 'Registered office') {
+      addrevaluetobackend = '4';
+    } else if (addressvalue == "Unspecified") {
+      addrevaluetobackend = '5';
+    }
+  }
+
   void updateCountryvalue(value) {
     countryMasterDetail = value;
     countryCode = countryMasterDetail?.countryCode;
@@ -228,6 +309,7 @@ class FatchaRegistrationController extends ChangeNotifier {
   Future<bool> fatchRegistration(context) async {
     loading = true;
     notifyListeners();
+    log('Pepvalue $pepValuetobackend');
     try {
       bool result = await fatchaServices.fatchaRegister(
         appincomeCode: incomeCode ?? '',
@@ -235,12 +317,12 @@ class FatchaRegistrationController extends ChangeNotifier {
         networth: netWorthController.text,
         networthdate: networthdate.text,
         sourcewealth: wealthCode ?? '',
-        countryofbirth: countryCode ?? '',
+        countryofbirth: countryvalueTobackend ?? '',
         placeofbirth: stateCode ?? '',
-        taxresidence: taxresidencyValue ?? '',
+        taxresidence: taxresidencyValuetobackend ?? '',
         identitytype: identitytoBackend,
         stockexchange: stockvalue ?? '',
-        sponseravailability: sponservalue ?? '',
+        sponseravailability: sponservaluetobackend ?? '',
         ubomastercode: ubocode ?? '',
         ubobirthCountry: ubocountrybirthController.text,
         ubocountry: uboCountryController.text,
@@ -248,6 +330,8 @@ class FatchaRegistrationController extends ChangeNotifier {
         uboHoldingPercentage: holdingPercentageController.text,
         uboidentitytype: uboidentytobakend,
         uboTinNumber: ubotinnumberController.text,
+        addresvalue: addrevaluetobackend ?? '',
+        pepVlaue: pepValuetobackend ?? '',
         context: context,
       );
       if (result == true) {

@@ -71,61 +71,64 @@ class ScreenOtp extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: Container(
-          margin: EdgeInsets.all(15.sp),
-          child: Form(
-            key: authController.formKeyForPinput,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              // mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const LogoWidget(),
-                VerticalSpacer(8.h),
-                Text(
-                  'Verification ',
-                  style: Theme.of(context)
-                      .textTheme
-                      .labelLarge!
-                      .copyWith(fontSize: 20.sp, fontWeight: FontWeight.bold),
-                ),
-                VerticalSpacer(2.h),
-                Text(
-                  'Enter the verification code sent to your number',
-                  style: Theme.of(context)
-                      .textTheme
-                      .labelMedium!
-                      .copyWith(color: Colors.grey, fontSize: 15.sp),
-                ),
-                // VerticalSpacer(6.h),
-                // SizedBox(
-                //   child: Image.asset('assets/images/otp.jpg'),
-                // ),
-                VerticalSpacer(6.h),
-                Center(
-                  child: Pinput(
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Enter the OTP';
-                      }
-                      if (value.length != 6) {
-                        // otpPinput.clear();
-                        return 'Incorrect OTP';
-                      } else {
-                        return null;
-                      }
-                    },
-                    controller: authController.otpController,
-                    length: 6,
-                    defaultPinTheme: defaultPinTheme,
-                    focusedPinTheme: focusedPinTheme,
-                    submittedPinTheme: submittedPinTheme,
-                    pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
-                    errorPinTheme: errorPinTheme,
-                    errorTextStyle:
-                        TextStyle(color: Colors.red, fontSize: 15.sp),
+        child: SingleChildScrollView(
+          child: Container(
+            margin: EdgeInsets.all(15.sp),
+            child: Form(
+              key: authController.formKeyForPinput,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                // mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const LogoWidget(),
+                  VerticalSpacer(8.h),
+                  Text(
+                    'Verification ',
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelLarge!
+                        .copyWith(fontSize: 20.sp, fontWeight: FontWeight.bold),
                   ),
-                ),
-              ],
+                  VerticalSpacer(2.h),
+                  Text(
+                    'Enter the verification code sent to your number',
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelMedium!
+                        .copyWith(color: Colors.grey, fontSize: 15.sp),
+                  ),
+                  // VerticalSpacer(6.h),
+                  // SizedBox(
+                  //   child: Image.asset('assets/images/otp.jpg'),
+                  // ),
+                  VerticalSpacer(6.h),
+                  Center(
+                    child: Pinput(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Enter the OTP';
+                        }
+                        if (value.length != 6) {
+                          // otpPinput.clear();
+                          return 'Incorrect OTP';
+                        } else {
+                          return null;
+                        }
+                      },
+                      controller: authController.otpController,
+                      length: 6,
+                      defaultPinTheme: defaultPinTheme,
+                      focusedPinTheme: focusedPinTheme,
+                      submittedPinTheme: submittedPinTheme,
+                      pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
+                      errorPinTheme: errorPinTheme,
+                      errorTextStyle:
+                          TextStyle(color: Colors.red, fontSize: 15.sp),
+                    ),
+                  ),
+                  VerticalSpacer(20.h),
+                ],
+              ),
             ),
           ),
         ),

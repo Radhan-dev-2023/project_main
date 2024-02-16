@@ -63,7 +63,7 @@ class DrawerWidget extends StatelessWidget {
           ),
           ListTile(
             title: Text(
-              'Fatcha Registration',
+              'FATCA Registration',
               style: Theme.of(context).textTheme.labelLarge,
             ),
             onTap: () {
