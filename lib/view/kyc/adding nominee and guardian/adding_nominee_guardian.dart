@@ -6,6 +6,7 @@ import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
 import 'package:finfresh_mobile/view/kyc/Nominee%20adding/nominee%20type/screen_nominee_count.dart';
 import 'package:finfresh_mobile/view/kyc/guardian%20screen/screen_guardian.dart';
 import 'package:finfresh_mobile/view/kyc/uploading%20proofs/screen_upload_proof.dart';
+import 'package:finfresh_mobile/view/showing%20animation%20screen/screen_showing_animation.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/log_widget.dart';
@@ -52,7 +53,7 @@ class _AddingNomineeAndGuadianScreenState
           margin: EdgeInsets.all(15.sp),
           child: Column(
             children: [
-             const LogoWidget(),
+              const LogoWidget(),
               VerticalSpacer(8.h),
               Container(
                 decoration: BoxDecoration(
@@ -141,7 +142,7 @@ class _AddingNomineeAndGuadianScreenState
                                   .customerResponseModel.newCustomer ==
                               true
                           ? const ScreenUploadinProofs()
-                          : const ScreenHomeView(),
+                          : const ScreenCompletedScreen(),
                     ),
                     (route) => false,
                   );
@@ -166,8 +167,8 @@ class _AddingNomineeAndGuadianScreenState
       actions: [
         // You can add buttons to the alert dialog
         Container(
-          height: 4.h,
-          width: 13.w,
+          height: 5.h,
+          width: 15.w,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.sp),
             color: const Color(0xFF4D84BD),
@@ -196,8 +197,8 @@ class _AddingNomineeAndGuadianScreenState
           ),
         ),
         Container(
-          height: 4.h,
-          width: 13.w,
+          height: 5.h,
+          width: 15.w,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.sp),
             color: const Color(0xFF4D84BD),

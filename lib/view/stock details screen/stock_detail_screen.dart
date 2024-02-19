@@ -50,14 +50,24 @@ class _StockDetailsScreenState extends State<StockDetailsScreen>
           scheme: widget.scheme),
     ];
     return Scaffold(
-      body: widgetList[_currentIndex],
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: ButtonWidget(
-        btName: 'INVEST',
-        onTap: () {
-          modalBottomSheetMenu(context);
-        },
+      body: Column(
+        children: [
+          Expanded(child: widgetList[_currentIndex]),
+          ButtonWidget(
+            btName: 'INVEST',
+            onTap: () {
+              modalBottomSheetMenu(context);
+            },
+          )
+        ],
       ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: ButtonWidget(
+      //   btName: 'INVEST',
+      //   onTap: () {
+      //     modalBottomSheetMenu(context);
+      //   },
+      // ),
     );
   }
 
@@ -103,8 +113,7 @@ class _StockDetailsScreenState extends State<StockDetailsScreen>
                                 Navigator.pop(context);
                                 schemeController.selectedValue =
                                     'Investment type';
-                                schemeController.durationValue =
-                                    'Select Duration';
+                                schemeController.durationValue = '25 Year';
                                 schemeController.dateController.clear();
                                 schemeController.installmentController.clear();
                               },
@@ -198,133 +207,150 @@ class _StockDetailsScreenState extends State<StockDetailsScreen>
                                       ),
                                     ),
                                     VerticalSpacer(2.h),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        SizedBox(
-                                            width: 45.w,
-                                            child: TextFormField(
-                                              autovalidateMode: AutovalidateMode
-                                                  .onUserInteraction,
-                                              validator: (value) {
-                                                if (value!.isEmpty) {
-                                                  return 'Please select a date';
-                                                }
-                                                return null;
-                                              },
-                                              controller: schemeController
-                                                  .dateController,
-                                              readOnly: true,
-                                              onTap: () async {
-                                                DateTime? picked =
-                                                    await showDatePicker(
-                                                  context: context,
-                                                  initialDate: DateTime.now(),
-                                                  firstDate: DateTime.now(),
-                                                  lastDate: DateTime(2100),
-                                                  builder: (context, child) {
-                                                    return Theme(
-                                                      data: Theme.of(context)
-                                                          .copyWith(
-                                                        primaryTextTheme: TextTheme(
-                                                            bodyMedium:
-                                                                TextStyle(
-                                                                    fontSize:
-                                                                        15.sp),
-                                                            bodyLarge:
-                                                                TextStyle(
-                                                                    fontSize:
-                                                                        15.sp)),
-                                                        colorScheme:
-                                                            const ColorScheme
-                                                                .light(
-                                                          primary: Color(
-                                                              0xFF4D84BD), // header background color
-                                                          onPrimary: Colors
-                                                              .white, // header text color
-                                                          onSurface: Colors
-                                                              .black, // body text color
-                                                        ),
-                                                        textButtonTheme:
-                                                            TextButtonThemeData(
-                                                          style: TextButton
-                                                              .styleFrom(
-                                                            foregroundColor:
-                                                                const Color(
-                                                                    0xFF4D84BD), // button text color
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      child: child!,
-                                                    );
+                                    schemeController.selectedValue == 'SIP'
+                                        ? Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              SizedBox(
+                                                  width: 45.w,
+                                                  child: TextFormField(
+                                                    autovalidateMode:
+                                                        AutovalidateMode
+                                                            .onUserInteraction,
+                                                    validator: (value) {
+                                                      if (value!.isEmpty) {
+                                                        return 'Please select a date';
+                                                      }
+                                                      return null;
+                                                    },
+                                                    controller: schemeController
+                                                        .dateController,
+                                                    readOnly: true,
+                                                    onTap: () async {
+                                                      DateTime? picked =
+                                                          await showDatePicker(
+                                                        context: context,
+                                                        initialDate:
+                                                            DateTime.now(),
+                                                        firstDate:
+                                                            DateTime.now(),
+                                                        lastDate:
+                                                            DateTime(2100),
+                                                        builder:
+                                                            (context, child) {
+                                                          return Theme(
+                                                            data: Theme.of(
+                                                                    context)
+                                                                .copyWith(
+                                                              primaryTextTheme: TextTheme(
+                                                                  bodyMedium:
+                                                                      TextStyle(
+                                                                          fontSize: 15
+                                                                              .sp),
+                                                                  bodyLarge: TextStyle(
+                                                                      fontSize:
+                                                                          15.sp)),
+                                                              colorScheme:
+                                                                  const ColorScheme
+                                                                      .light(
+                                                                primary: Color(
+                                                                    0xFF4D84BD), // header background color
+                                                                onPrimary: Colors
+                                                                    .white, // header text color
+                                                                onSurface: Colors
+                                                                    .black, // body text color
+                                                              ),
+                                                              textButtonTheme:
+                                                                  TextButtonThemeData(
+                                                                style: TextButton
+                                                                    .styleFrom(
+                                                                  foregroundColor:
+                                                                      const Color(
+                                                                          0xFF4D84BD), // button text color
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            child: child!,
+                                                          );
+                                                        },
+                                                      );
+                                                      if (picked != null) {
+                                                        String selectdate =
+                                                            DateFormat(
+                                                                    'dd-MMM-yyyy')
+                                                                .format(picked);
+                                                        log('selected date ===$selectdate');
+                                                        schemeController
+                                                            .dateController
+                                                            .text = selectdate;
+                                                      }
+                                                    },
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .labelLarge!,
+                                                    decoration: InputDecoration(
+                                                      helperText: '',
+                                                      border:
+                                                          OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10)),
+                                                      hintText: 'Date',
+                                                    ),
+                                                  )),
+                                              HorizontalSpacer(2.w),
+                                              SizedBox(
+                                                width: 45.w,
+                                                child: DropdownButtonFormField<
+                                                    String>(
+                                                  autovalidateMode:
+                                                      AutovalidateMode
+                                                          .onUserInteraction,
+                                                  validator: (value) {
+                                                    if (value == null) {
+                                                      return 'Please select a duration';
+                                                    }
+                                                    return null;
                                                   },
-                                                );
-                                                if (picked != null) {
-                                                  String selectdate =
-                                                      DateFormat('dd-MMM-yyyy')
-                                                          .format(picked);
-                                                  log('selected date ===$selectdate');
-                                                  schemeController
-                                                      .dateController
-                                                      .text = selectdate;
-                                                }
-                                              },
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .labelLarge!,
-                                              decoration: InputDecoration(
-                                                helperText: '',
-                                                border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10)),
-                                                hintText: 'Date',
-                                              ),
-                                            )),
-                                        HorizontalSpacer(2.w),
-                                        SizedBox(
-                                          width: 45.w,
-                                          child:
-                                              DropdownButtonFormField<String>(
-                                            autovalidateMode: AutovalidateMode
-                                                .onUserInteraction,
-                                            validator: (value) {
-                                              if (value == 'Select Duration') {
-                                                return 'Please select a duration';
-                                              }
-                                              return null;
-                                            },
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelLarge!,
-                                            value:
-                                                schemeController.durationValue,
-                                            decoration: InputDecoration(
-                                                helperText: '',
-                                                border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10)),
-                                                hintText: 'Select Item'),
-                                            onChanged: (String? newValue) {
-                                              schemeController
-                                                  .updateDuration(newValue);
-                                            },
-                                            items: schemeController.duration
-                                                .map((String value) {
-                                              return DropdownMenuItem<String>(
-                                                value: value,
-                                                child: Text(
-                                                  value,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .labelLarge!,
+                                                  value: schemeController
+                                                      .durationValue,
+                                                  decoration: InputDecoration(
+                                                      helperText: '',
+                                                      border:
+                                                          OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10)),
+                                                      hintText: 'Select Item'),
+                                                  onChanged:
+                                                      (String? newValue) {
+                                                    schemeController
+                                                        .updateDuration(
+                                                            newValue);
+                                                  },
+                                                  items: schemeController
+                                                      .duration
+                                                      .map((String value) {
+                                                    return DropdownMenuItem<
+                                                        String>(
+                                                      value: value,
+                                                      child: Text(
+                                                        value,
+                                                      ),
+                                                    );
+                                                  }).toList(),
                                                 ),
-                                              );
-                                            }).toList(),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                              ),
+                                            ],
+                                          )
+                                        : const SizedBox(),
                                     VerticalSpacer(2.h),
                                     InkWell(
                                       onTap: () {

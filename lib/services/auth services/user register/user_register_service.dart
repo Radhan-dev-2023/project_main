@@ -2,10 +2,13 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:finfresh_mobile/utilities/constant/alert_dialogue.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
 import 'package:finfresh_mobile/utilities/urls/url.dart';
+import 'package:finfresh_mobile/view/sign%20in/sign_in_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class UserRegisterService {
@@ -46,6 +49,10 @@ class UserRegisterService {
               'user already registered but not verified') {
         return true;
         // showSnackBar(context, "user already registered but not verified");
+      } else if (jsonResponse['result']['status'] == 1001) {
+        showAlertDialog(context);
+
+        return false;
       } else {
         showSnackBar(context, jsonResponse['result']['message']);
         return false;

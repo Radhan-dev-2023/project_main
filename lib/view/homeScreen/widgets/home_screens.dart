@@ -1,6 +1,7 @@
 import 'package:finfresh_mobile/controller/auth/auth_controller.dart';
 import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
 import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_controller.dart';
+import 'package:finfresh_mobile/controller/top%20MFs%20controller/top_mfs_controller.dart';
 import 'package:finfresh_mobile/services/scheme%20services/scheme_services.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
@@ -10,6 +11,8 @@ import 'package:finfresh_mobile/view/homeScreen/widgets/drawer_widget.dart';
 import 'package:finfresh_mobile/view/kyc/uploading%20proofs/screen_upload_proof.dart';
 import 'package:finfresh_mobile/view/kyc/uploading%20proofs/upload%20bank%20proof/upload_bank_proof.dart';
 import 'package:finfresh_mobile/view/onboarding%20screen/on_boarding_view_screen.dart';
+import 'package:finfresh_mobile/view/top%20funds/top_funds.dart';
+import 'package:finfresh_mobile/view/top%20mfs/screen_top_mfs.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
 import 'package:flutter/material.dart';
@@ -233,30 +236,72 @@ class ScreenHome extends StatelessWidget {
                           children: [
                             Column(
                               children: [
-                                const Collectionwidget(
-                                    image: 'assets/images/1.png'),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const TopMfsScreen(
+                                          category: 'Hybrid: Aggressive',
+                                          appbarname: 'Aggressive',
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: const Collectionwidget(
+                                      image: 'assets/images/1.png'),
+                                ),
                                 VerticalSpacer(3.h),
                                 Text(
-                                  'High return',
+                                  'Aggressive',
                                   style: TextStyle(fontSize: 15.sp),
                                 )
                               ],
                             ),
                             Column(
                               children: [
-                                const Collectionwidget(
-                                    image: 'assets/images/2.png'),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const TopMfsScreen(
+                                          category: 'Equity: Flexi Cap',
+                                          appbarname: "Flexi Cap",
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: const Collectionwidget(
+                                      image: 'assets/images/2.png'),
+                                ),
                                 VerticalSpacer(3.h),
-                                Text('SIP with 100',
+                                Text('Flexi Cap',
                                     style: TextStyle(fontSize: 15.sp))
                               ],
                             ),
                             Column(
                               children: [
-                                const Collectionwidget(
-                                    image: 'assets/images/3.png'),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const TopMfsScreen(
+                                          category: 'Equity: Multi Cap',
+                                          appbarname: 'Multi Cap',
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: const Collectionwidget(
+                                      image: 'assets/images/3.png'),
+                                ),
                                 VerticalSpacer(3.h),
-                                Text('Tax Saving',
+                                Text('Multi Cap',
                                     style: TextStyle(fontSize: 15.sp))
                               ],
                             ),
@@ -268,8 +313,24 @@ class ScreenHome extends StatelessWidget {
                           children: [
                             Column(
                               children: [
-                                const Collectionwidget(
-                                    image: 'assets/images/4.png'),
+                                InkWell(
+                                  onTap: () {
+                                    //                              Provider.of<TopMFsController>(context, listen: false)
+                                    // .getTopMfs(context, 'Eguity:Large Cap');
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const TopMfsScreen(
+                                          category: 'Equity: Large Cap',
+                                          appbarname: 'Large Cap',
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: const Collectionwidget(
+                                      image: 'assets/images/4.png'),
+                                ),
                                 VerticalSpacer(3.h),
                                 Text('Large cap',
                                     style: TextStyle(fontSize: 15.sp))
@@ -277,8 +338,22 @@ class ScreenHome extends StatelessWidget {
                             ),
                             Column(
                               children: [
-                                const Collectionwidget(
-                                    image: 'assets/images/5.png'),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const TopMfsScreen(
+                                          category: 'Equity: Mid Cap',
+                                          appbarname: 'Mid Cap',
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: const Collectionwidget(
+                                      image: 'assets/images/5.png'),
+                                ),
                                 VerticalSpacer(3.h),
                                 Text('Mid Cap',
                                     style: TextStyle(fontSize: 15.sp))
@@ -286,8 +361,22 @@ class ScreenHome extends StatelessWidget {
                             ),
                             Column(
                               children: [
-                                const Collectionwidget(
-                                  image: 'assets/images/6.png',
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const TopMfsScreen(
+                                          category: 'Equity: Small Cap',
+                                          appbarname: 'Small Cap',
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: const Collectionwidget(
+                                    image: 'assets/images/6.png',
+                                  ),
                                 ),
                                 VerticalSpacer(3.h),
                                 Text('Small Cap',

@@ -1,8 +1,8 @@
 import 'package:finfresh_mobile/controller/uploading%20proofs/uploading_proof_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
-import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
 import 'package:finfresh_mobile/view/kyc/uploading%20proofs/upload%20bank%20proof/widgets/for_bank_proof.dart';
+import 'package:finfresh_mobile/view/showing%20animation%20screen/screen_showing_animation.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_button_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -113,7 +113,8 @@ class _ScreenBankProofsState extends State<ScreenBankProofs> {
                             Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const ScreenHomeView(),
+                                builder: (context) =>
+                                    const ScreenCompletedScreen(),
                               ),
                               (route) => false,
                             );

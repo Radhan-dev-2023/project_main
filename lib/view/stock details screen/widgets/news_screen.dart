@@ -21,7 +21,7 @@ class NewsinTabBar extends StatelessWidget {
                         ?.copyWith(color: Colors.grey),
                   ),
                   VerticalSpacer(1.h),
-                  const Text('Mixed decemnber-While vodafone,idea sales rise'),
+                  const Text('Mixed december-While vodafone,idea sales rise'),
                 ],
               ),
             ),

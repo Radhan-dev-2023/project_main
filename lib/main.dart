@@ -33,6 +33,7 @@ import 'package:finfresh_mobile/view/kyc/occupation%20Screen/occupation_screen.d
 import 'package:finfresh_mobile/view/kyc/pancard/screen_pan_card.dart';
 import 'package:finfresh_mobile/view/otp%20screen/screen_otp.dart';
 import 'package:finfresh_mobile/view/setting%20pin%20number/setting_pin.dart';
+import 'package:finfresh_mobile/view/showing%20animation%20screen/screen_showing_animation.dart';
 import 'package:finfresh_mobile/view/sign%20in/sign_in_screen.dart';
 import 'package:finfresh_mobile/view/sign%20up/enter%20phone%20number/sign_in_screen.dart';
 import 'package:finfresh_mobile/view/splash%20Screen/splash_screen.dart';
@@ -102,6 +103,7 @@ class MyApp extends StatelessWidget {
           theme: isDarkMode ? AppTheme.darkTheme : AppTheme.lightTheme,
           // darkTheme: AppTheme.darkTheme,
           home: const SplashScreen(),
+          // home: ScreenCompletedScreen(),
           // home: const ScreenFatchaProof(),
           // home: ScreenFatchaRegistration(),
           // home: ScreenNriAdress(),

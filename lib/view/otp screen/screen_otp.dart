@@ -126,7 +126,7 @@ class ScreenOtp extends StatelessWidget {
                           TextStyle(color: Colors.red, fontSize: 15.sp),
                     ),
                   ),
-                  VerticalSpacer(20.h),
+                  VerticalSpacer(30.h),
                 ],
               ),
             ),

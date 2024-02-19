@@ -37,54 +37,57 @@ class _ScreenAddingParentDetailsState extends State<ScreenAddingParentDetails> {
         ),
       ),
       body: SafeArea(
-        child: Container(
-          margin: EdgeInsets.all(15.sp),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const LogoWidget(),
-              VerticalSpacer(7.h),
-              Text(
-                'Enter other details',
-                style: Theme.of(context)
-                    .textTheme
-                    .labelLarge!
-                    .copyWith(fontSize: 19.sp, fontWeight: FontWeight.w700),
-              ),
-              VerticalSpacer(4.h),
-              TextFormField(
-                controller: kycController.motherNameCotroller,
-                style: Theme.of(context).textTheme.labelLarge!,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                validator: (value) {
-                  if (!RegExp(r'^[a-zA-Z ]+$').hasMatch(value!)) {
-                    return 'Enter valid name';
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
+        child: SingleChildScrollView(
+          child: Container(
+            margin: EdgeInsets.all(15.sp),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const LogoWidget(),
+                VerticalSpacer(7.h),
+                Text(
+                  'Enter other details',
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelLarge!
+                      .copyWith(fontSize: 19.sp, fontWeight: FontWeight.w700),
+                ),
+                VerticalSpacer(4.h),
+                TextFormField(
+                  controller: kycController.motherNameCotroller,
+                  style: Theme.of(context).textTheme.labelLarge!,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) {
+                    if (!RegExp(r'^[a-zA-Z ]+$').hasMatch(value!)) {
+                      return 'Enter valid name';
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      hintText: "Mother's Name"),
+                ),
+                VerticalSpacer(3.h),
+                TextFormField(
+                  controller: kycController.fatherNameController,
+                  style: Theme.of(context).textTheme.labelLarge!,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) {
+                    if (!RegExp(r'^[a-zA-Z ]+$').hasMatch(value!)) {
+                      return 'Enter valid name';
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    hintText: "Mother's Name"),
-              ),
-              VerticalSpacer(3.h),
-              TextFormField(
-                controller: kycController.fatherNameController,
-                style: Theme.of(context).textTheme.labelLarge!,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                validator: (value) {
-                  if (!RegExp(r'^[a-zA-Z ]+$').hasMatch(value!)) {
-                    return 'Enter valid name';
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  hintText: "Father's Name",
+                    hintText: "Father's Name",
+                  ),
                 ),
-              ),
-            ],
+                VerticalSpacer(30.h),
+              ],
+            ),
           ),
         ),
       ),

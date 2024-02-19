@@ -198,63 +198,76 @@ class _ScreenNominee2State extends State<ScreenNominee2> {
                     return null;
                   },
                 ),
-                VerticalSpacer(3.h),
-                TextFormField(
-                  controller: kycController.nominee2gurdnameCotroller,
-                  style: Theme.of(context).textTheme.labelLarge!,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    hintText: "Enter guardian name",
-                  ),
-                ),
-                VerticalSpacer(3.h),
-                TextFormField(
-                  controller: kycController.nominee2guardpanController,
-                  style: Theme.of(context).textTheme.labelLarge!,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    hintText: "Enter guardian  pan",
-                  ),
-                ),
-                VerticalSpacer(3.h),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        color: brightness == Brightness.dark
-                            ? Colors.white
-                            : Colors.black),
-                    borderRadius: BorderRadius.circular(8),
-                    color: brightness == Brightness.light
-                        ? Colors.white
-                        : const Color(0xFF0E1330),
-                  ),
-                  height: 60,
-                  // width: 120,
-                  width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: DropdownButton(
-                      value: kycController.nominee2guardRelationvalue,
-                      isExpanded: true,
-                      underline: Container(
-                        height: 0,
+                kycController.typevalueNominee2 == 'Major'
+                    ? const SizedBox()
+                    : VerticalSpacer(3.h),
+                kycController.typevalueNominee2 == 'Major'
+                    ? const SizedBox()
+                    : TextFormField(
+                        controller: kycController.nominee2gurdnameCotroller,
+                        style: Theme.of(context).textTheme.labelLarge!,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          hintText: "Enter guardian name",
+                        ),
                       ),
-                      items: kycController.guardianRelation.map((String items) {
-                        return DropdownMenuItem(
-                          value: items,
-                          child: Text(
-                            items,
+                kycController.typevalueNominee2 == 'Major'
+                    ? const SizedBox()
+                    : VerticalSpacer(3.h),
+                kycController.typevalueNominee2 == 'Major'
+                    ? const SizedBox()
+                    : TextFormField(
+                        controller: kycController.nominee2guardpanController,
+                        style: Theme.of(context).textTheme.labelLarge!,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          hintText: "Enter guardian  pan",
+                        ),
+                      ),
+                kycController.typevalueNominee2 == 'Major'
+                    ? const SizedBox()
+                    : VerticalSpacer(3.h),
+                kycController.typevalueNominee2 == 'Major'
+                    ? const SizedBox()
+                    : Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: brightness == Brightness.dark
+                                  ? Colors.white
+                                  : Colors.black),
+                          borderRadius: BorderRadius.circular(8),
+                          color: brightness == Brightness.light
+                              ? Colors.white
+                              : const Color(0xFF0E1330),
+                        ),
+                        height: 60,
+                        // width: 120,
+                        width: double.infinity,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: DropdownButton(
+                            value: kycController.nominee2guardRelationvalue,
+                            isExpanded: true,
+                            underline: Container(
+                              height: 0,
+                            ),
+                            items: kycController.guardianRelation
+                                .map((String items) {
+                              return DropdownMenuItem(
+                                value: items,
+                                child: Text(
+                                  items,
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              kycController.updatenom2guardRelationValue(value);
+                            },
                           ),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        kycController.updatenom2guardRelationValue(value);
-                      },
-                    ),
-                  ),
-                ),
+                        ),
+                      ),
                 VerticalSpacer(3.h),
                 kycController.countvalue == '2'
                     ? const SizedBox()

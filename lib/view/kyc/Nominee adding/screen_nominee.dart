@@ -155,6 +155,28 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
                       initialDate: DateTime.now(),
                       firstDate: DateTime(1900),
                       lastDate: DateTime.now(),
+                      builder: (context, child) {
+                        return Theme(
+                          data: Theme.of(context).copyWith(
+                            primaryTextTheme: TextTheme(
+                                bodyMedium: TextStyle(fontSize: 15.sp),
+                                bodyLarge: TextStyle(fontSize: 15.sp)),
+                            colorScheme: const ColorScheme.light(
+                              primary:
+                                  Color(0xFF4D84BD), // header background color
+                              onPrimary: Colors.white, // header text color
+                              onSurface: Colors.black, // body text color
+                            ),
+                            textButtonTheme: TextButtonThemeData(
+                              style: TextButton.styleFrom(
+                                foregroundColor: const Color(
+                                    0xFF4D84BD), // button text color
+                              ),
+                            ),
+                          ),
+                          child: child!,
+                        );
+                      },
                     );
                     if (picked != null) {
                       String selectdate =
@@ -182,63 +204,76 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
                     hintText: "Enter Date of Birth(01-Jan-1950)",
                   ),
                 ),
-                VerticalSpacer(3.h),
-                TextFormField(
-                  controller: kycController.nominee1gurdnameCotroller,
-                  style: Theme.of(context).textTheme.labelLarge!,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    hintText: "Enter Guardian name",
-                  ),
-                ),
-                VerticalSpacer(3.h),
-                TextFormField(
-                  controller: kycController.nominee1guardpanController,
-                  style: Theme.of(context).textTheme.labelLarge!,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    hintText: "Enter Guardian PAN number",
-                  ),
-                ),
-                VerticalSpacer(3.h),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        color: brightness == Brightness.dark
-                            ? Colors.white
-                            : Colors.black),
-                    borderRadius: BorderRadius.circular(8),
-                    color: brightness == Brightness.light
-                        ? Colors.white
-                        : const Color(0xFF0E1330),
-                  ),
-                  height: 60,
-                  // width: 120,
-                  width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: DropdownButton(
-                      value: kycController.nominee1guardRelationvalue,
-                      isExpanded: true,
-                      underline: Container(
-                        height: 0,
+                kycController.typevalue == 'Major'
+                    ? const SizedBox()
+                    : VerticalSpacer(3.h),
+                kycController.typevalue == 'Major'
+                    ? const SizedBox()
+                    : TextFormField(
+                        controller: kycController.nominee1gurdnameCotroller,
+                        style: Theme.of(context).textTheme.labelLarge!,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          hintText: "Enter Guardian name",
+                        ),
                       ),
-                      items: kycController.guardianRelation.map((String items) {
-                        return DropdownMenuItem(
-                          value: items,
-                          child: Text(
-                            items,
+                kycController.typevalue == 'Major'
+                    ? const SizedBox()
+                    : VerticalSpacer(3.h),
+                kycController.typevalue == 'Major'
+                    ? const SizedBox()
+                    : TextFormField(
+                        controller: kycController.nominee1guardpanController,
+                        style: Theme.of(context).textTheme.labelLarge!,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          hintText: "Enter Guardian PAN number",
+                        ),
+                      ),
+                kycController.typevalue == 'Major'
+                    ? const SizedBox()
+                    : VerticalSpacer(3.h),
+                kycController.typevalue == 'Major'
+                    ? const SizedBox()
+                    : Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: brightness == Brightness.dark
+                                  ? Colors.white
+                                  : Colors.black),
+                          borderRadius: BorderRadius.circular(8),
+                          color: brightness == Brightness.light
+                              ? Colors.white
+                              : const Color(0xFF0E1330),
+                        ),
+                        height: 60,
+                        // width: 120,
+                        width: double.infinity,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: DropdownButton(
+                            value: kycController.nominee1guardRelationvalue,
+                            isExpanded: true,
+                            underline: Container(
+                              height: 0,
+                            ),
+                            items: kycController.guardianRelation
+                                .map((String items) {
+                              return DropdownMenuItem(
+                                value: items,
+                                child: Text(
+                                  items,
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              kycController.updatenom1guardRelationValue(value);
+                            },
                           ),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        kycController.updatenom1guardRelationValue(value);
-                      },
-                    ),
-                  ),
-                ),
+                        ),
+                      ),
                 VerticalSpacer(3.h),
                 SizedBox(
                   child: Column(
@@ -264,7 +299,24 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
                           return null;
                         },
                       ),
-                      VerticalSpacer(3.h),
+                      // VerticalSpacer(3.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                              'Do you want to add address same as investor?'),
+                          Checkbox(
+                            activeColor: Colors.transparent,
+                            checkColor: brightness == Brightness.light
+                                ? Colors.black
+                                : Colors.white,
+                            value: kycController.isChecked,
+                            onChanged: (bool? value) {
+                              kycController.addAress(value!);
+                            },
+                          ),
+                        ],
+                      ),
                       TextFormField(
                         controller: kycController.nominee1address1Controller,
                         style: Theme.of(context).textTheme.labelLarge!,
@@ -366,6 +418,7 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
                             height: 60,
                             width: 37.w,
                             child: TextFormField(
+                              style: Theme.of(context).textTheme.labelLarge!,
                               controller:
                                   kycController.nominee1pincodeController,
                               decoration: InputDecoration(

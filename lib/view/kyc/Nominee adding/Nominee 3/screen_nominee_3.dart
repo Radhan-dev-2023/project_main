@@ -198,63 +198,76 @@ class _ScreenNominee3State extends State<ScreenNominee3> {
                     return null;
                   },
                 ),
-                VerticalSpacer(3.h),
-                TextFormField(
-                  controller: kycController.nominee3gurdnameCotroller,
-                  style: Theme.of(context).textTheme.labelLarge!,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    hintText: "Enter guardian name",
-                  ),
-                ),
-                VerticalSpacer(3.h),
-                TextFormField(
-                  controller: kycController.nominee3guardpanController,
-                  style: Theme.of(context).textTheme.labelLarge!,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    hintText: "Enter Guardian PAN",
-                  ),
-                ),
-                VerticalSpacer(3.h),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        color: brightness == Brightness.dark
-                            ? Colors.white
-                            : Colors.black),
-                    borderRadius: BorderRadius.circular(8),
-                    color: brightness == Brightness.light
-                        ? Colors.white
-                        : const Color(0xFF0E1330),
-                  ),
-                  height: 60,
-                  // width: 120,
-                  width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: DropdownButton(
-                      value: kycController.nominee3guardRelationvalue,
-                      isExpanded: true,
-                      underline: Container(
-                        height: 0,
+                kycController.typevalueNominee3 == 'Major'
+                    ? const SizedBox()
+                    : VerticalSpacer(3.h),
+                kycController.typevalueNominee3 == 'Major'
+                    ? const SizedBox()
+                    : TextFormField(
+                        controller: kycController.nominee3gurdnameCotroller,
+                        style: Theme.of(context).textTheme.labelLarge!,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          hintText: "Enter guardian name",
+                        ),
                       ),
-                      items: kycController.guardianRelation.map((String items) {
-                        return DropdownMenuItem(
-                          value: items,
-                          child: Text(
-                            items,
+                kycController.typevalueNominee3 == 'Major'
+                    ? const SizedBox()
+                    : VerticalSpacer(3.h),
+                kycController.typevalueNominee3 == 'Major'
+                    ? const SizedBox()
+                    : TextFormField(
+                        controller: kycController.nominee3guardpanController,
+                        style: Theme.of(context).textTheme.labelLarge!,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          hintText: "Enter Guardian PAN",
+                        ),
+                      ),
+                kycController.typevalueNominee3 == 'Major'
+                    ? const SizedBox()
+                    : VerticalSpacer(3.h),
+                kycController.typevalueNominee3 == 'Major'
+                    ? const SizedBox()
+                    : Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: brightness == Brightness.dark
+                                  ? Colors.white
+                                  : Colors.black),
+                          borderRadius: BorderRadius.circular(8),
+                          color: brightness == Brightness.light
+                              ? Colors.white
+                              : const Color(0xFF0E1330),
+                        ),
+                        height: 60,
+                        // width: 120,
+                        width: double.infinity,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: DropdownButton(
+                            value: kycController.nominee3guardRelationvalue,
+                            isExpanded: true,
+                            underline: Container(
+                              height: 0,
+                            ),
+                            items: kycController.guardianRelation
+                                .map((String items) {
+                              return DropdownMenuItem(
+                                value: items,
+                                child: Text(
+                                  items,
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              kycController.updatenom3guardRelationValue(value);
+                            },
                           ),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        kycController.updatenom3guardRelationValue(value);
-                      },
-                    ),
-                  ),
-                ),
+                        ),
+                      ),
                 VerticalSpacer(3.h),
                 VerticalSpacer(20.h)
               ],

@@ -31,9 +31,8 @@ class SchemeDetailsController extends ChangeNotifier {
   bool changebutton = false;
   String selectValueForChart = 'ALL';
   List<String> monthvalue = ['3M', '6M', '1Y', '2Y', '5Y', '10Y', 'ALL'];
-  String durationValue = 'Select Duration';
+  String durationValue = '25 Year';
   List<String> duration = [
-    'Select Duration',
     '1 Year',
     '2 Year',
     '3 Year',

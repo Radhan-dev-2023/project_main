@@ -119,6 +119,31 @@ class KycController extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addAress(bool value) async {
+    isChecked = value;
+    notifyListeners();
+    if (value == true) {
+      final investorDb = await Hive.openBox<InvestorModel>('investor_db');
+      final retrievedValue = investorDb.get('email');
+      log('rette=${retrievedValue?.addr1}');
+      nominee1address1Controller.text = retrievedValue?.addr1 ?? '';
+      nominee1address2Controller.text = retrievedValue?.addr2 ?? '';
+      nominee1cityController.text = retrievedValue?.city ?? '';
+      nominee1stateValue = retrievedValue?.state ?? 'State';
+      nominee1CountryController.text = retrievedValue?.country ?? '';
+      nominee1pincodeController.text = retrievedValue?.pincode ?? '';
+      notifyListeners();
+    } else if (value == false) {
+      nominee1address1Controller.clear();
+      nominee1address2Controller.clear();
+      nominee1cityController.clear();
+      nominee1stateValue = 'State';
+      nominee1CountryController.clear();
+      nominee1pincodeController.clear();
+      notifyListeners();
+    }
+  }
+
   String? email;
   bool taxpageloading = false;
   MasterDetail? taxStatusValue;
