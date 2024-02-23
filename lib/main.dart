@@ -32,12 +32,14 @@ import 'package:finfresh_mobile/view/nominee%20id%20adding/screen_nominee_id_add
 import 'package:finfresh_mobile/view/kyc/occupation%20Screen/occupation_screen.dart';
 import 'package:finfresh_mobile/view/kyc/pancard/screen_pan_card.dart';
 import 'package:finfresh_mobile/view/otp%20screen/screen_otp.dart';
+import 'package:finfresh_mobile/view/payment%20Screen/payment_screen.dart';
 import 'package:finfresh_mobile/view/setting%20pin%20number/setting_pin.dart';
 import 'package:finfresh_mobile/view/showing%20animation%20screen/screen_showing_animation.dart';
 import 'package:finfresh_mobile/view/sign%20in/sign_in_screen.dart';
 import 'package:finfresh_mobile/view/sign%20up/enter%20phone%20number/sign_in_screen.dart';
 import 'package:finfresh_mobile/view/splash%20Screen/splash_screen.dart';
 import 'package:finfresh_mobile/view/kyc/user%20personal%20details/screen_personal_details.dart';
+import 'package:finfresh_mobile/view/webview/screen_webview.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image/image.dart';
@@ -103,6 +105,7 @@ class MyApp extends StatelessWidget {
           theme: isDarkMode ? AppTheme.darkTheme : AppTheme.lightTheme,
           // darkTheme: AppTheme.darkTheme,
           home: const SplashScreen(),
+          // home: ScreenPayment(),
           // home: ScreenCompletedScreen(),
           // home: const ScreenFatchaProof(),
           // home: ScreenFatchaRegistration(),

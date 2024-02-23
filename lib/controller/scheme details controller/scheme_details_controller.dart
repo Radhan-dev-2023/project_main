@@ -129,6 +129,7 @@ class SchemeDetailsController extends ChangeNotifier {
     }
   }
 
+  dynamic value1;
   Future<void> getChartValue(context, String scheme) async {
     detailScreenLoading = true;
     DateTime? today;

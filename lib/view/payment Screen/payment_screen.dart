@@ -2,6 +2,7 @@ import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_
 import 'package:finfresh_mobile/controller/scheme%20details%20controller/scheme_details_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
+import 'package:finfresh_mobile/view/webview/screen_webview.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_button_widget.dart';
 import 'package:flutter/material.dart';
@@ -22,21 +23,22 @@ class _ScreenPaymentState extends State<ScreenPayment> {
   void initState() {
     super.initState();
     Provider.of<SchemeDetailsController>(context, listen: false)
-            .accountnumberController
-            .text =
-        Provider.of<DashBoardController>(context, listen: false)
+        .accountnumberController
+        .text = Provider.of<DashBoardController>(context, listen: false)
             .dashBoardModel
             ?.result
             ?.data
             ?.bank
-            ?.accNo;
+            ?.accNo ??
+        '';
     Provider.of<SchemeDetailsController>(context, listen: false).ifscCodde =
         Provider.of<DashBoardController>(context, listen: false)
-            .dashBoardModel
-            ?.result
-            ?.data
-            ?.bank
-            ?.ifscCode;
+                .dashBoardModel
+                ?.result
+                ?.data
+                ?.bank
+                ?.ifscCode ??
+            '';
     Provider.of<SchemeDetailsController>(context, listen: false).paymentMode =
         'Select a payment mode';
   }
@@ -129,6 +131,10 @@ class _ScreenPaymentState extends State<ScreenPayment> {
                                     'Select a payment mode') {
                                   showSnackBar(
                                       context, 'Please select a payment mode');
+                                } else if (schemeController
+                                    .accountnumberController.text.isEmpty) {
+                                  showSnackBar(
+                                      context, 'Account number cannot be null');
                                 } else {
                                   bool result = await schemeController
                                       .transction(context);
@@ -176,12 +182,12 @@ class _ScreenPaymentState extends State<ScreenPayment> {
         // You can add buttons to the alert dialog
         InkWell(
           onTap: () async {
-            if (await canLaunchUrl(Uri.parse(url))) {
-              await launchUrl(Uri.parse(url));
-            } else {
-              // ignore: use_build_context_synchronously
-              showSnackBar(context, 'Failed');
-            }
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ScreenWebview(url: url),
+              ),
+            );
             // canLaunchUrl(Uri.parse(url));
           },
           child: Container(

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:finfresh_mobile/model/account%20type%20model/account_type_model.dart';
 import 'package:finfresh_mobile/model/country%20model/country_model.dart';
 import 'package:finfresh_mobile/model/holding%20nature%20model/holding_nature_model.dart';
+import 'package:finfresh_mobile/model/occupation%20model/occupation.dart';
 import 'package:finfresh_mobile/model/product%20code%20model/product_code_model.dart';
 import 'package:finfresh_mobile/model/source%20wealth%20model/source_wealth_model.dart';
 import 'package:finfresh_mobile/model/state%20model/state_model.dart';
@@ -248,6 +249,33 @@ class MasterService {
       if (jsonResponse['status'] == 200) {
         stateModel = StateModel.fromJson(jsonResponse);
         return stateModel;
+      }
+    } catch (e) {
+      logger.d('exception in fetchData $e');
+      return null;
+    }
+    return null;
+  }
+
+  OccupationModel occupationModel = OccupationModel();
+  Future<OccupationModel?> fetchOccupation() async {
+    Map<String, dynamic> payload = {"methodname": "occupation"};
+    final url = Uri.parse('${ApiEndpoint.baseUrl}/v1/master');
+    try {
+      http.Response response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(payload),
+      );
+      logger.d('response == ${response.statusCode}');
+      logger.d('response holding == ${response.body}');
+      Map<String, dynamic> jsonResponse = json.decode(response.body);
+      logger.d('jsonResponse == ${jsonResponse['status']}');
+      if (jsonResponse['status'] == 200) {
+        occupationModel = OccupationModel.fromJson(jsonResponse);
+        return occupationModel;
       }
     } catch (e) {
       logger.d('exception in fetchData $e');

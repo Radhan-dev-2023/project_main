@@ -15,12 +15,13 @@ class HistoricalNavModel {
     List<dynamic> navListData = json['list'];
     List<NavDetails> navDetails =
         navListData.map((nav) => NavDetails.fromJson(nav)).toList();
+    List<NavDetails> reversedNAv = navDetails.reversed.toList();
 
     return HistoricalNavModel(
       status: json['status'],
       statusMsg: json['status_msg'],
       msg: json['msg'],
-      navList: navDetails,
+      navList: reversedNAv,
     );
   }
 

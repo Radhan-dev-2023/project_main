@@ -169,6 +169,8 @@ class SchemeServices {
     }
   }
 
+  // dynamic value1;
+  // dynamic value2;
   Future<HistoricalNavModel?> historicalNav(
       String startDate, context, String scheme, String lastdate) async {
     log('calling');
@@ -180,10 +182,11 @@ class SchemeServices {
         Uri.parse(url),
       );
       log('completed');
-      logger.d('Scheme nav == ${response.body}');
+      log('Scheme nav == ${response.body}');
       Map<String, dynamic> jsonResponse = json.decode(response.body);
       if (jsonResponse['status'] == 200) {
         historicalNavModel = HistoricalNavModel.fromJson(jsonResponse);
+
         return historicalNavModel;
       } else if (jsonResponse['status'] == 500) {
         // showSnackBar(context, jsonResponse['result']['message']);

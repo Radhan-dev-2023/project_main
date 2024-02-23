@@ -64,6 +64,7 @@ class AuthController extends ChangeNotifier {
     return false;
   }
 
+  bool succuss = false;
   Future<bool> otpVerfy(context) async {
     logger.d('otpcontroller.text ===${otpController.text}');
     otploading = true;
@@ -72,10 +73,12 @@ class AuthController extends ChangeNotifier {
     if (result == true) {
       bool isVerified = await VerifyOtp.verifyOtp(
           phonenumberController.text, otpController.text, context);
+      succuss = true;
       otploading = false;
       notifyListeners();
       return isVerified;
     }
+    succuss = false;
     otploading = false;
     notifyListeners();
     return false;

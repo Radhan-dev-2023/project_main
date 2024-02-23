@@ -1,8 +1,10 @@
+import 'package:finfresh_mobile/controller/auth/auth_controller.dart';
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_controller.dart';
 import 'package:finfresh_mobile/controller/pin%20controller/pin_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
+import 'package:finfresh_mobile/view/onboarding%20screen/on_boarding_view_screen.dart';
 import 'package:finfresh_mobile/view/setting%20pin%20number/confirm%20pin/screen_confirm_pin.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/log_widget.dart';
@@ -64,7 +66,19 @@ class ScreenSetPinNumber extends StatelessWidget {
         leading: InkWell(
           onTap: () {
             pinController.pinController.clear();
-            Navigator.pop(context);
+            if (Provider.of<AuthController>(context, listen: false).succuss ==
+                true) {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const BoardingViewScreen(),
+                  ),
+                  (route) => false);
+              Provider.of<AuthController>(context, listen: false)
+                  .clearTheControllerValue();
+            } else {
+              Navigator.pop(context);
+            }
           },
           child: const Icon(Icons.arrow_back),
         ),

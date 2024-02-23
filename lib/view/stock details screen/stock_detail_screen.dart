@@ -1,8 +1,10 @@
 import 'dart:developer';
 
+import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
 import 'package:finfresh_mobile/controller/scheme%20details%20controller/scheme_details_controller.dart';
 import 'package:finfresh_mobile/services/transaction%20service/transaction_service.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
+import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
 import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
 import 'package:finfresh_mobile/view/payment%20Screen/payment_screen.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/widgets/overview_in_tabbar.dart';
@@ -354,18 +356,30 @@ class _StockDetailsScreenState extends State<StockDetailsScreen>
                                     VerticalSpacer(2.h),
                                     InkWell(
                                       onTap: () {
-                                        // bool result =
-                                        //     schemeController.validator(context);
                                         if (schemeController
                                             .formKeyForbtmSheet.currentState!
                                             .validate()) {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const ScreenPayment(),
-                                            ),
-                                          );
+                                          if (Provider.of<DashBoardController>(
+                                                      context,
+                                                      listen: false)
+                                                  .dashBoardModel
+                                                  ?.result
+                                                  ?.data
+                                                  ?.activationStatus
+                                                  ?.statusCode ==
+                                              'S07') {
+                                            Navigator.pop(context);
+                                            showFlushbar(context,
+                                                'Our customer care will contact you shortly');
+                                          } else {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const ScreenPayment(),
+                                              ),
+                                            );
+                                          }
                                         } else {}
                                       },
                                       child: Container(

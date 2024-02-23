@@ -7,6 +7,7 @@ import 'package:finfresh_mobile/model/account%20type%20model/account_type_model.
 import 'package:finfresh_mobile/model/bank%20details%20model/bank_details_model.dart';
 import 'package:finfresh_mobile/model/holding%20nature%20model/holding_nature_model.dart';
 import 'package:finfresh_mobile/model/investors%20details/investors_details_model.dart';
+import 'package:finfresh_mobile/model/occupation%20model/occupation.dart';
 import 'package:finfresh_mobile/model/tax%20status%20model/tax_status_model.dart';
 import 'package:finfresh_mobile/services/get%20bank%20details/get_bank_details.dart';
 import 'package:finfresh_mobile/services/kyc/create_customer.dart';
@@ -653,6 +654,7 @@ class KycController extends ChangeNotifier {
 
   void updateSelectedValue(String? value) {
     selectedValue = value ?? '';
+    log('selected value $selectedValue');
     notifyListeners();
   }
 
@@ -721,6 +723,7 @@ class KycController extends ChangeNotifier {
   void addOcupation() async {
     final investorDb = await Hive.openBox<InvestorModel>('investor_db');
     final retrievedValue = investorDb.get('email');
+    log(selectedValue.toString());
     InvestorModel investorModel = InvestorModel(
       email: retrievedValue?.email,
       mobileNo: retrievedValue?.mobileNo,
@@ -1701,6 +1704,24 @@ class KycController extends ChangeNotifier {
     } else {
       logger.d('account type fetched failed');
       accounttypeLoading = false;
+    }
+  }
+
+  bool occupationLoading = false;
+  OccupationModel? occupationModel;
+  Future<void> getOccupation() async {
+    occupationLoading = true;
+    occupationModel = await masterService.fetchOccupation();
+    notifyListeners();
+    // logger.d('holding nature response == $holdingResponse');
+    if (accountTypeModel != null) {
+      // Map<String, dynamic> jsonResponse = json.decode(holdingResponse);
+
+      occupationLoading = false;
+      notifyListeners();
+    } else {
+      logger.d('occupation fetched failed');
+      occupationLoading = false;
     }
   }
 }

@@ -52,15 +52,29 @@ class ChartWidget extends StatelessWidget {
                     tooltipBehavior: TooltipBehavior(enable: true),
                     series: <CartesianSeries>[
                       FastLineSeries<NavDetails, dynamic>(
-                        color: Colors.red,
-                        dataSource:
-                            schemeController.historicalNavModel?.navList,
-                        xValueMapper: (NavDetails nav, _) => nav.navDateString,
-                        yValueMapper: (NavDetails nav, _) => nav.netAssetValue,
-                        legendIconType: LegendIconType.horizontalLine,
+                          dataSource:
+                              schemeController.historicalNavModel?.navList,
+                          xValueMapper: (NavDetails nav, _) =>
+                              nav.navDateString,
+                          yValueMapper: (NavDetails nav, _) =>
+                              nav.netAssetValue,
+                          legendIconType: LegendIconType.horizontalLine,
+                          color: schemeController.historicalNavModel!
+                                          .navList![0].netAssetValue! -
+                                      schemeController
+                                          .historicalNavModel!
+                                          .navList![schemeController
+                                                  .historicalNavModel!
+                                                  .navList!
+                                                  .length -
+                                              1]
+                                          .netAssetValue! >=
+                                  0
+                              ? Colors.red
+                              : Colors.green
 
-                        // name: 'Sales',
-                      ),
+                          // name: 'Sales',
+                          ),
                     ],
                   ),
           ),
@@ -111,4 +125,17 @@ class ChartWidget extends StatelessWidget {
       );
     });
   }
+  //  List<Color> getColorList(List<NavDetails> data) {
+  //   List<Color> colors = [];
+  //   for (int i = 0; i < data.length - 1; i++) {
+  //     if (data[i] < data[i + 1]) {
+  //       colors.add(Colors.green);
+  //     } else {
+  //       colors.add(Colors.red);
+  //     }
+  //   }
+  //   // The last color can be any color you want
+  //   colors.add(Colors.green);
+  //   return colors;
+  // }
 }
