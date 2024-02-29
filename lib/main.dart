@@ -1,3 +1,4 @@
+import 'package:finfresh_mobile/controller/achController/ach_controller.dart';
 import 'package:finfresh_mobile/controller/auth/auth_controller.dart';
 import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
 import 'package:finfresh_mobile/controller/fatcha%20registration/fatcha_registration.dart';
@@ -96,6 +97,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => FatchaRegistrationController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AchController(),
         ),
       ],
       child: ResponsiveSizer(builder: (context, orientation, screenType) {

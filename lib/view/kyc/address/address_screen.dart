@@ -210,6 +210,11 @@ class _ScreenAddressState extends State<ScreenAddress> {
                           controller: kycController.pinCodeController,
                           style: Theme.of(context).textTheme.labelLarge!,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
+                          onChanged: (value) {
+                            if (value.isNotEmpty) {
+                              kycController.getStateAndDistrict(value, context);
+                            }
+                          },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Enter the pincode';

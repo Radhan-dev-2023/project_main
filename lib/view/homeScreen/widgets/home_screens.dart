@@ -1,3 +1,4 @@
+import 'package:finfresh_mobile/controller/achController/ach_controller.dart';
 import 'package:finfresh_mobile/controller/auth/auth_controller.dart';
 import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
 import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_controller.dart';
@@ -14,6 +15,7 @@ import 'package:finfresh_mobile/view/onboarding%20screen/on_boarding_view_screen
 import 'package:finfresh_mobile/view/top%20funds/top_funds.dart';
 import 'package:finfresh_mobile/view/top%20mfs/screen_top_mfs.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
+import 'package:finfresh_mobile/view/widgets/custom_loading_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -215,6 +217,51 @@ class ScreenHome extends StatelessWidget {
                         ),
                       )
                     : const SizedBox(),
+                SizedBox(
+                  // height: 28.h,
+                  width: double.infinity,
+                  child: Consumer<AchController>(
+                      builder: (context, achController, _) {
+                    return Visibility(
+                      visible: achController.visibilty,
+                      child: Card(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            VerticalSpacer(1.h),
+                            Icon(
+                              Icons.warning_outlined,
+                              color: Colors.red,
+                              size: 5.h,
+                            ),
+                            Text(
+                              'Attention required!',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(
+                                    fontSize: 17.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                              // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
+                            ),
+                            VerticalSpacer(1.h),
+                            const Text('Register ACH Mandate'),
+                            VerticalSpacer(2.h),
+                            achController.loadingAch == true
+                                ? const LoadingButton()
+                                : ButtonWidget(
+                                    btName: 'Register',
+                                    onTap: () {
+                                      achController.registerAch(context, false);
+                                    },
+                                  )
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+                ),
                 VerticalSpacer(2.h),
                 Text(
                   'Collections',

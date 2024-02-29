@@ -8,6 +8,7 @@ import 'package:finfresh_mobile/model/bank%20details%20model/bank_details_model.
 import 'package:finfresh_mobile/model/holding%20nature%20model/holding_nature_model.dart';
 import 'package:finfresh_mobile/model/investors%20details/investors_details_model.dart';
 import 'package:finfresh_mobile/model/occupation%20model/occupation.dart';
+import 'package:finfresh_mobile/model/pincode%20model/pincode_model.dart';
 import 'package:finfresh_mobile/model/tax%20status%20model/tax_status_model.dart';
 import 'package:finfresh_mobile/services/get%20bank%20details/get_bank_details.dart';
 import 'package:finfresh_mobile/services/kyc/create_customer.dart';
@@ -19,7 +20,6 @@ import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:path/path.dart';
 
 class KycController extends ChangeNotifier {
   GetInnService getInnService = GetInnService();
@@ -1714,7 +1714,7 @@ class KycController extends ChangeNotifier {
     occupationModel = await masterService.fetchOccupation();
     notifyListeners();
     // logger.d('holding nature response == $holdingResponse');
-    if (accountTypeModel != null) {
+    if (occupationModel != null) {
       // Map<String, dynamic> jsonResponse = json.decode(holdingResponse);
 
       occupationLoading = false;
@@ -1722,6 +1722,23 @@ class KycController extends ChangeNotifier {
     } else {
       logger.d('occupation fetched failed');
       occupationLoading = false;
+    }
+  }
+
+  PincodeModel? pincodeModel;
+  Future<void> getStateAndDistrict(String pincode, context) async {
+    pincodeModel = await masterService.fetchStateAndDistrict(pincode, context);
+    notifyListeners();
+    // logger.d('holding nature response == $holdingResponse');
+    if (pincodeModel != null) {
+      // Map<String, dynamic> jsonResponse = json.decode(holdingResponse);
+      countryController.text = pincodeModel!.masterDetails!.country ?? '';
+      stateValue = pincodeModel!.masterDetails!.state ?? 'State';
+      cityController.text = pincodeModel!.masterDetails!.district ?? '';
+
+      notifyListeners();
+    } else {
+      logger.d('pincode fetched failed');
     }
   }
 }
