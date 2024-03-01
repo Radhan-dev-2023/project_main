@@ -658,6 +658,7 @@ class KycController extends ChangeNotifier {
     notifyListeners();
   }
 
+  String bankCodeForCustomer = '';
   BankDeatilsModel? bankDeatilsModel;
   bool ifscLoading = false;
   GetBankDetailsService getBankDetailsService = GetBankDetailsService();
@@ -667,6 +668,8 @@ class KycController extends ChangeNotifier {
     try {
       bankDeatilsModel =
           await getBankDetailsService.getBankDetails(context, ifscCode);
+      bankCodeForCustomer =
+          bankDeatilsModel?.bankDetails?.bank?[0].bankcode ?? '';
       log('bank detailsinkyc == ${bankDeatilsModel?.bankDetails!.toJson()}');
       ifscLoading = false;
       notifyListeners();
@@ -678,7 +681,10 @@ class KycController extends ChangeNotifier {
   }
 
   void addingbankname() {
-    banknameController.text = bankDeatilsModel?.bankDetails?.bank?[0] ?? '';
+    banknameController.text =
+        bankDeatilsModel?.bankDetails?.bank?[0].bankname ?? '';
+    // bankCodeForCustomer =
+    //     bankDeatilsModel?.bankDetails?.bank?[0].bankcode ?? '';
     SecureStorage.addToken('bankName', banknameController.text);
     notifyListeners();
   }
@@ -923,7 +929,7 @@ class KycController extends ChangeNotifier {
       fatherName: retrievedValue?.fatherName,
       motherName: retrievedValue?.motherName,
       ifscCode: retrievedValue?.ifscCode,
-      bankName: banknameController.text,
+      bankName: bankCodeForCustomer,
       branchName: bankDeatilsModel?.bankDetails?.branch,
     );
     dbFunctions.addTodb(investorModel);
@@ -1390,9 +1396,9 @@ class KycController extends ChangeNotifier {
       nriCountry: nriCountryController.text.isEmpty
           ? retrievedValue?.nriCountry
           : nriCountryController.text,
-      bankName: banknameController.text.isEmpty
+      bankName: bankCodeForCustomer.isEmpty
           ? retrievedValue?.bankName
-          : banknameController.text,
+          : bankCodeForCustomer,
       accNo: accountnumberCotroller.text.isEmpty
           ? retrievedValue?.accNo
           : accountnumberCotroller.text,

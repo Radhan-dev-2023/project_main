@@ -1,4 +1,5 @@
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
+import 'package:finfresh_mobile/model/bank%20details%20model/bank_details_model.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/kyc/bank%20account%20number/screen_bank_accont_number.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
@@ -61,11 +62,15 @@ class _ScreenAddingBankState extends State<ScreenAddingBank> {
                     kycController.banknameController.text = newValue!;
                   },
                   items: kycController.bankDeatilsModel?.bankDetails?.bank
-                      ?.map((String value) {
+                      ?.map((Bank value) {
                     return DropdownMenuItem<String>(
-                      value: value,
+                      onTap: () {
+                        kycController.bankCodeForCustomer =
+                            value.bankcode ?? '';
+                      },
+                      value: value.bankname,
                       child: Text(
-                        value,
+                        value.bankname!,
                       ),
                     );
                   }).toList(),

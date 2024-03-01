@@ -4,113 +4,126 @@
 
 import 'dart:convert';
 
-BankDeatilsModel bankDeatilsModelFromJson(String str) =>
-    BankDeatilsModel.fromJson(json.decode(str));
+BankDeatilsModel bankDeatilsModelFromJson(String str) => BankDeatilsModel.fromJson(json.decode(str));
 
-String bankDeatilsModelToJson(BankDeatilsModel data) =>
-    json.encode(data.toJson());
+String bankDeatilsModelToJson(BankDeatilsModel data) => json.encode(data.toJson());
 
 class BankDeatilsModel {
-  int? status;
-  String? message;
-  BankDetails? bankDetails;
+    int? status;
+    String? message;
+    BankDetails? bankDetails;
 
-  BankDeatilsModel({
-    this.status,
-    this.message,
-    this.bankDetails,
-  });
+    BankDeatilsModel({
+         this.status,
+         this.message,
+         this.bankDetails,
+    });
 
-  factory BankDeatilsModel.fromJson(Map<String, dynamic> json) =>
-      BankDeatilsModel(
+    factory BankDeatilsModel.fromJson(Map<String, dynamic> json) => BankDeatilsModel(
         status: json["status"],
         message: json["message"],
         bankDetails: BankDetails.fromJson(json["bankDetails"]),
-      );
+    );
 
-  Map<String, dynamic> toJson() => {
+    Map<String, dynamic> toJson() => {
         "status": status,
         "message": message,
         "bankDetails": bankDetails!.toJson(),
-      };
+    };
 }
 
 class BankDetails {
-  String? district;
-  String? city;
-  bool? rtgs;
-  dynamic swift;
-  String? branch;
-  bool? imps;
-  bool? neft;
-  String? state;
-  String? contact;
-  String? iso3166;
-  String? address;
-  String? centre;
-  bool? upi;
-  String? micr;
-  List<String>? bank;
-  String? bankcode;
-  String? ifsc;
+    String? micr;
+    String? branch;
+    String? address;
+    String? state;
+    String? contact;
+    bool? upi;
+    bool? rtgs;
+    String? city;
+    String? centre;
+    String? district;
+    bool? neft;
+    bool? imps;
+    dynamic swift;
+    String? iso3166;
+    List<Bank>? bank;
+    String? ifsc;
 
-  BankDetails({
-    this.district,
-    this.city,
-    this.rtgs,
-    this.swift,
-    this.branch,
-    this.imps,
-    this.neft,
-    this.state,
-    this.contact,
-    this.iso3166,
-    this.address,
-    this.centre,
-    this.upi,
-    this.micr,
-    this.bank,
-    this.bankcode,
-    this.ifsc,
-  });
+    BankDetails({
+     this.micr,
+     this.branch,
+     this.address,
+     this.state,
+     this.contact,
+     this.upi,
+     this.rtgs,
+     this.city,
+     this.centre,
+     this.district,
+     this.neft,
+     this.imps,
+     this.swift,
+     this.iso3166,
+     this.bank,
+     this.ifsc,
+    });
 
-  factory BankDetails.fromJson(Map<String, dynamic> json) => BankDetails(
-        district: json["DISTRICT"],
-        city: json["CITY"],
-        rtgs: json["RTGS"],
-        swift: json["SWIFT"],
+    factory BankDetails.fromJson(Map<String, dynamic> json) => BankDetails(
+        micr: json["MICR"],
         branch: json["BRANCH"],
-        imps: json["IMPS"],
-        neft: json["NEFT"],
+        address: json["ADDRESS"],
         state: json["STATE"],
         contact: json["CONTACT"],
-        iso3166: json["ISO3166"],
-        address: json["ADDRESS"],
-        centre: json["CENTRE"],
         upi: json["UPI"],
-        micr: json["MICR"],
-        bank: List<String>.from(json["BANK"].map((x) => x)),
-        bankcode: json["BANKCODE"],
+        rtgs: json["RTGS"],
+        city: json["CITY"],
+        centre: json["CENTRE"],
+        district: json["DISTRICT"],
+        neft: json["NEFT"],
+        imps: json["IMPS"],
+        swift: json["SWIFT"],
+        iso3166: json["ISO3166"],
+        bank: List<Bank>.from(json["BANK"].map((x) => Bank.fromJson(x))),
         ifsc: json["IFSC"],
-      );
+    );
 
-  Map<String, dynamic> toJson() => {
-        "DISTRICT": district,
-        "CITY": city,
-        "RTGS": rtgs,
-        "SWIFT": swift,
+    Map<String, dynamic> toJson() => {
+        "MICR": micr,
         "BRANCH": branch,
-        "IMPS": imps,
-        "NEFT": neft,
+        "ADDRESS": address,
         "STATE": state,
         "CONTACT": contact,
-        "ISO3166": iso3166,
-        "ADDRESS": address,
-        "CENTRE": centre,
         "UPI": upi,
-        "MICR": micr,
-        "BANK": List<dynamic>.from(bank!.map((x) => x)),
-        "BANKCODE": bankcode,
+        "RTGS": rtgs,
+        "CITY": city,
+        "CENTRE": centre,
+        "DISTRICT": district,
+        "NEFT": neft,
+        "IMPS": imps,
+        "SWIFT": swift,
+        "ISO3166": iso3166,
+        "BANK": List<dynamic>.from(bank!.map((x) => x.toJson())),
         "IFSC": ifsc,
-      };
+    };
+}
+
+class Bank {
+    String? bankname;
+    String? bankcode;
+
+    Bank({
+        required this.bankname,
+        required this.bankcode,
+    });
+
+    factory Bank.fromJson(Map<String, dynamic> json) => Bank(
+        bankname: json["bankname"],
+        bankcode: json["bankcode"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "bankname": bankname,
+        "bankcode": bankcode,
+    };
 }
