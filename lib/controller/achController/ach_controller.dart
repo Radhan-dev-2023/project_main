@@ -1,3 +1,5 @@
+import 'package:finfresh_mobile/model/ach%20history%20model/ach_history_model.dart';
+import 'package:finfresh_mobile/services/ach%20history/getting_ach_history.dart';
 import 'package:finfresh_mobile/services/ach%20service/ach_service.dart';
 import 'package:finfresh_mobile/services/refersh%20token/refersh_token.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
@@ -8,6 +10,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 
 class AchController extends ChangeNotifier {
   RefershTokenService refershTokenService = RefershTokenService();
+  AchHistoryService achHistoryService = AchHistoryService();
   AchService achService = AchService();
   final GlobalKey<FormState> formkeyForAch = GlobalKey<FormState>();
   TextEditingController microController = TextEditingController();
@@ -60,6 +63,7 @@ class AchController extends ChangeNotifier {
 
   bool visibilty = true;
   bool loadingAch = false;
+  String result = '';
   Future<bool> registerAch(context, bool dash) async {
     DateTime currentDate = DateTime.now();
     String selectdate = DateFormat('dd-MMM-yyyy').format(currentDate);
@@ -70,7 +74,7 @@ class AchController extends ChangeNotifier {
     try {
       if (isTokenExpired) {
         await refershTokenService.postRefershTocken(context);
-        bool result = await achService.achMadateRegister(
+        result = await achService.achMadateRegister(
           microController.text,
           cancelvaluuetobakend,
           dash == false ? selectdate : fromdateController.text,
@@ -81,7 +85,7 @@ class AchController extends ChangeNotifier {
           context,
           dash,
         );
-        if (result == true) {
+        if (result.isNotEmpty) {
           loadingAch = false;
           visibilty = false;
           notifyListeners();
@@ -93,7 +97,7 @@ class AchController extends ChangeNotifier {
           return false;
         }
       } else {
-        bool result = await achService.achMadateRegister(
+        result = await achService.achMadateRegister(
           microController.text,
           cancelvaluuetobakend,
           dash == false ? selectdate : fromdateController.text,
@@ -104,7 +108,7 @@ class AchController extends ChangeNotifier {
           context,
           dash,
         );
-        if (result == true) {
+        if (result.isNotEmpty) {
           loadingAch = false;
           visibilty = false;
           notifyListeners();
@@ -131,5 +135,41 @@ class AchController extends ChangeNotifier {
     processmodevalue = null;
     fromdateController.clear();
     todateController.clear();
+  }
+
+  AchHistoryModel? achHistoryModel;
+  bool historyLoading = false;
+  Future<void> getAchHistoy(context) async {
+    String token = await SecureStorage.readToken('token');
+    bool isTokenExpired = JwtDecoder.isExpired(token);
+    historyLoading = true;
+    notifyListeners();
+
+    try {
+      if (isTokenExpired) {
+        await refershTokenService.postRefershTocken(context);
+        achHistoryModel = await achHistoryService.getAchHistory(context);
+        if (achHistoryModel != null) {
+          historyLoading = false;
+          notifyListeners();
+        } else {
+          historyLoading = false;
+          notifyListeners();
+        }
+      } else {
+        achHistoryModel = await achHistoryService.getAchHistory(context);
+        if (achHistoryModel != null) {
+          historyLoading = false;
+          notifyListeners();
+        } else {
+          historyLoading = false;
+          notifyListeners();
+        }
+      }
+    } catch (e) {
+      logger.d('Ach history failed with an exception$e');
+      historyLoading = false;
+      notifyListeners();
+    }
   }
 }

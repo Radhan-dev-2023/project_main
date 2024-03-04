@@ -2,8 +2,6 @@ import 'package:finfresh_mobile/controller/achController/ach_controller.dart';
 import 'package:finfresh_mobile/controller/auth/auth_controller.dart';
 import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
 import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_controller.dart';
-import 'package:finfresh_mobile/controller/top%20MFs%20controller/top_mfs_controller.dart';
-import 'package:finfresh_mobile/services/scheme%20services/scheme_services.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:finfresh_mobile/view/homeScreen/widgets/attension_widget.dart';
@@ -12,8 +10,8 @@ import 'package:finfresh_mobile/view/homeScreen/widgets/drawer_widget.dart';
 import 'package:finfresh_mobile/view/kyc/uploading%20proofs/screen_upload_proof.dart';
 import 'package:finfresh_mobile/view/kyc/uploading%20proofs/upload%20bank%20proof/upload_bank_proof.dart';
 import 'package:finfresh_mobile/view/onboarding%20screen/on_boarding_view_screen.dart';
-import 'package:finfresh_mobile/view/top%20funds/top_funds.dart';
 import 'package:finfresh_mobile/view/top%20mfs/screen_top_mfs.dart';
+import 'package:finfresh_mobile/view/webview/screen_webview.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
@@ -252,8 +250,19 @@ class ScreenHome extends StatelessWidget {
                                 ? const LoadingButton()
                                 : ButtonWidget(
                                     btName: 'Register',
-                                    onTap: () {
-                                      achController.registerAch(context, false);
+                                    onTap: () async {
+                                      bool result = await achController
+                                          .registerAch(context, false);
+                                      if (result == true) {
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => ScreenWebview(
+                                                url: achController.result),
+                                          ),
+                                        );
+                                      }
                                     },
                                   )
                           ],

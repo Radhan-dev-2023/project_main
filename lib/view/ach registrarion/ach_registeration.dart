@@ -1,6 +1,7 @@
 import 'package:finfresh_mobile/controller/achController/ach_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
+import 'package:finfresh_mobile/view/webview/screen_webview.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_button_widget.dart';
 import 'package:flutter/material.dart';
@@ -167,18 +168,20 @@ class ScreenAchRegistration extends StatelessWidget {
                             if (achController.formkeyForAch.currentState!
                                 .validate()) {
                               bool result = await achController.registerAch(
-                                  context, true,
-                                  );
+                                context,
+                                true,
+                              );
                               if (result == true) {
                                 // ignore: use_build_context_synchronously
-                                Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ScreenHomeView(),
-                                    ),
-                                    (route) => false);
-                                achController.clearValue();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ScreenWebview(
+                                        url: achController.result),
+                                  ),
+                                );
+
+                                // achController.clearValue();
                               }
                             }
                           },

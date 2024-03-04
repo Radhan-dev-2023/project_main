@@ -1,10 +1,7 @@
 import 'dart:developer';
-
 import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
-import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
 import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:webview_flutter/webview_flutter.dart';
