@@ -23,6 +23,7 @@ class TransactionService {
     required String amc,
     required String productCode,
     required BuildContext context,
+    required String investorname,
   }) async {
     String token = await SecureStorage.readToken('token');
     String userId = await SecureStorage.readToken('userId');
@@ -180,7 +181,7 @@ class TransactionService {
         "until_cancelled": "",
         "Return_paymnt_flag": "Y",
         "Client_callback_url": "https://finfresh-api.in.techath.com/finfresh",
-        "Bank_holder_name": "Krishna",
+        "Bank_holder_name": investorname,
         "Bank_holder_name1": "",
         "Bank_holder_name2": "",
         "trxn_initiator": "I / O",
@@ -247,6 +248,4 @@ class TransactionService {
     }
     return false;
   }
-
-  
 }

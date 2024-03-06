@@ -27,7 +27,7 @@ class _ScreenWebviewState extends State<ScreenWebview> {
       ..setNavigationDelegate(
         NavigationDelegate(
           onUrlChange: (change) {
-            log('onchangeurl:$change');
+            log('onchangeurl:${change.url}');
             if (change.url!.contains('SUCCESS')) {
               showFlushbar(context, 'Paymet success');
               Navigator.pushAndRemoveUntil(

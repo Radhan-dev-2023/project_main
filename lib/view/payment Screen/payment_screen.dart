@@ -8,7 +8,6 @@ import 'package:finfresh_mobile/view/widgets/custom_loading_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ScreenPayment extends StatefulWidget {
   const ScreenPayment({super.key});
@@ -136,8 +135,17 @@ class _ScreenPaymentState extends State<ScreenPayment> {
                                   showSnackBar(
                                       context, 'Account number cannot be null');
                                 } else {
-                                  bool result = await schemeController
-                                      .transction(context);
+                                  bool result =
+                                      await schemeController.transction(
+                                          context,
+                                          Provider.of<DashBoardController>(
+                                                      context,
+                                                      listen: false)
+                                                  .dashBoardModel
+                                                  ?.result
+                                                  ?.data
+                                                  ?.name ??
+                                              '');
                                   if (result == true) {
                                     // ignore: use_build_context_synchronously
                                     showAlertDialog(context);

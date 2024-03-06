@@ -208,7 +208,7 @@ class SchemeDetailsController extends ChangeNotifier {
 
   RefershTokenService refershTokenService = RefershTokenService();
   bool loadingTransButton = false;
-  Future<bool> transction(context) async {
+  Future<bool> transction(context, String investorName) async {
     loadingTransButton = true;
     notifyListeners();
     String purchasedate = dateController.text;
@@ -234,6 +234,7 @@ class SchemeDetailsController extends ChangeNotifier {
         amc: productCodeModel?.product?.amcCode ?? '',
         productCode: productCodeModel?.product?.productCode ?? '',
         context: context,
+        investorname: investorName,
       );
       if (result == true) {
         loadingTransButton = false;
@@ -246,17 +247,18 @@ class SchemeDetailsController extends ChangeNotifier {
       }
     } else {
       bool result = await transactionService.transcationService(
-        paymenMode: paymentvalueTobackent ?? '',
-        accountNumber: accountnumberController.text,
-        ifscCode: ifscCodde,
-        instalmentAmount: installmentController.text,
-        fromdate: dateController.text,
-        duedate: duedate,
-        date: dateController.text,
-        amc: productCodeModel?.product?.amcCode ?? '',
-        productCode: productCodeModel?.product?.productCode ?? '',
-        context: context,
-      );
+          paymenMode: paymentvalueTobackent ?? '',
+          accountNumber: accountnumberController.text,
+          ifscCode: ifscCodde,
+          instalmentAmount: installmentController.text,
+          fromdate: dateController.text,
+          duedate: duedate,
+          date: dateController.text,
+          amc: productCodeModel?.product?.amcCode ?? '',
+          productCode: productCodeModel?.product?.productCode ?? '',
+          context: context,
+          investorname: investorName,
+          );
       if (result == true) {
         loadingTransButton = false;
         notifyListeners();

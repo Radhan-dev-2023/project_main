@@ -1,8 +1,6 @@
 import 'dart:io';
 
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
-import 'package:finfresh_mobile/view/kyc/Nominee%20adding/nominee%20type/screen_nominee_count.dart';
-import 'package:finfresh_mobile/view/kyc/Nominee%20adding/screen_nominee.dart';
 import 'package:finfresh_mobile/view/kyc/adding%20nominee%20and%20guardian/adding_nominee_guardian.dart';
 import 'package:finfresh_mobile/view/kyc/joint%20holders/join_holders_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';

@@ -130,7 +130,7 @@ class SchemeServices {
         log('completed in top p');
         topPerformingMutualFundModel =
             TopPerformingMutualFundModel.fromJson(jsonResponse);
-        // log(topPerformingMutualFundModel.toString());
+        log('hi${topPerformingMutualFundModel}');
         return topPerformingMutualFundModel;
       } else if (jsonResponse['status'] == 500) {
         // showSnackBar(context, jsonResponse['result']['message']);

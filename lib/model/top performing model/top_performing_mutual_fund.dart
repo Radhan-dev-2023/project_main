@@ -319,11 +319,11 @@ class CategoryReturns {
 class ListElement {
   int? id;
   String? inceptionDate;
-  PriceDate? priceDate;
+  String? priceDate;
   String? schemeAmfi;
   String? schemeAmfiCode;
   String? schemeCategory;
-  OpenOrClosed? openOrClosed;
+  String? openOrClosed;
   double? returnsAbs7Days;
   double? returnsAbs1Month;
   double? returnsAbs3Month;
@@ -347,12 +347,12 @@ class ListElement {
   double? returnsAbs2015;
   double? returnsAbs2016;
   double? ter;
-  TerDate? terDate;
+  String? terDate;
   double? price;
   double? priceChangeOnday;
   double? priceChangePercentOnday;
   String? schemeCompany;
-  DateTime? schemeAssetDate;
+  String? schemeAssetDate;
   double? schemeAssets;
   String? navTable;
   int? etfScheme;
@@ -480,15 +480,11 @@ class ListElement {
   factory ListElement.fromJson(Map<String, dynamic> json) => ListElement(
         id: json["id"],
         inceptionDate: json["inception_date"],
-        priceDate: json["price_date"] == null
-            ? null
-            : priceDateValues.map[json["price_date"]],
+        priceDate: json["price_date"].toString(),
         schemeAmfi: json["scheme_amfi"],
         schemeAmfiCode: json["scheme_amfi_code"],
         schemeCategory: json["scheme_category"],
-        openOrClosed: json["open_or_closed"] == null
-            ? null
-            : openOrClosedValues.map[json["open_or_closed"]],
+        openOrClosed: json["open_or_closed"],
         returnsAbs7Days: json["returns_abs_7days"]?.toDouble(),
         returnsAbs1Month: json["returns_abs_1month"]?.toDouble(),
         returnsAbs3Month: json["returns_abs_3month"]?.toDouble(),
@@ -512,16 +508,12 @@ class ListElement {
         returnsAbs2015: json["returns_abs_2015"]?.toDouble(),
         returnsAbs2016: json["returns_abs_2016"]?.toDouble(),
         ter: json["ter"]?.toDouble(),
-        terDate: json["ter_date"] == null
-            ? null
-            : terDateValues.map[json["ter_date"]],
+        terDate: json["ter_date"].toString(),
         price: json["price"]?.toDouble(),
         priceChangeOnday: json["price_change_onday"]?.toDouble(),
         priceChangePercentOnday: json["price_change_percent_onday"]?.toDouble(),
         schemeCompany: json["scheme_company"],
-        schemeAssetDate: json["scheme_asset_date"] == null
-            ? null
-            : DateTime.parse(json["scheme_asset_date"]),
+        schemeAssetDate: json["scheme_asset_date"],
         schemeAssets: json["scheme_assets"]?.toDouble(),
         navTable: json["nav_table"],
         etfScheme: json["etf_scheme"],
@@ -576,7 +568,7 @@ class ListElement {
   Map<String, dynamic> toJson() => {
         "id": id,
         "inception_date": inceptionDate,
-        "price_date": priceDateValues.reverse[priceDate],
+        "price_date": priceDate.toString(),
         "scheme_amfi": schemeAmfi,
         "scheme_amfi_code": schemeAmfiCode,
         "scheme_category": schemeCategory,
@@ -604,13 +596,13 @@ class ListElement {
         "returns_abs_2015": returnsAbs2015,
         "returns_abs_2016": returnsAbs2016,
         "ter": ter,
-        "ter_date": terDateValues.reverse[terDate],
+        "ter_date": terDate,
         "price": price,
         "price_change_onday": priceChangeOnday,
         "price_change_percent_onday": priceChangePercentOnday,
         "scheme_company": schemeCompany,
-        "scheme_asset_date":
-            "${schemeAssetDate?.year.toString().padLeft(4, '0')}-${schemeAssetDate?.month.toString().padLeft(2, '0')}-${schemeAssetDate?.day.toString().padLeft(2, '0')}",
+        "scheme_asset_date": schemeAssetDate,
+        // "${schemeAssetDate?.year.toString().padLeft(4, '0')}-${schemeAssetDate?.month.toString().padLeft(2, '0')}-${schemeAssetDate?.day.toString().padLeft(2, '0')}",
         "scheme_assets": schemeAssets,
         "nav_table": navTable,
         "etf_scheme": etfScheme,
@@ -674,13 +666,6 @@ final openOrClosedValues = EnumValues({
       OpenOrClosed.OPEN_ENDED_SCHEMES_SOLUTION_ORIENTED_SCHEME_CHILDREN_S_FUND
 });
 
-enum PriceDate { JAN_252024120000_AM, JAN_292024120000_AM }
-
-final priceDateValues = EnumValues({
-  "Jan 25, 2024 12:00:00 AM": PriceDate.JAN_252024120000_AM,
-  "Jan 29, 2024 12:00:00 AM": PriceDate.JAN_292024120000_AM
-});
-
 enum Riskometer { HIGH, VERY_HIGH }
 
 final riskometerValues =
@@ -694,11 +679,6 @@ final schemeCategoryClassValues = EnumValues(
 enum SchemePlanType { REGULAR }
 
 final schemePlanTypeValues = EnumValues({"Regular": SchemePlanType.REGULAR});
-
-enum TerDate { DEC_312023120000_AM }
-
-final terDateValues =
-    EnumValues({"Dec 31, 2023 12:00:00 AM": TerDate.DEC_312023120000_AM});
 
 class EnumValues<T> {
   Map<String, T> map;
