@@ -68,9 +68,9 @@ class SchemeDetailsController extends ChangeNotifier {
   String paymentMode = 'Select a payment mode';
   List<String> paymentList = [
     'Select a payment mode',
-    'Debit Mandate',
+    // 'Debit Mandate',
     'Online',
-    'RTGS/NEFT',
+    // 'RTGS/NEFT',
     'UPI',
   ];
   void updatePaymentMode(String? value) {
@@ -208,34 +208,48 @@ class SchemeDetailsController extends ChangeNotifier {
 
   RefershTokenService refershTokenService = RefershTokenService();
   bool loadingTransButton = false;
-  Future<bool> transction(context, String investorName) async {
+  Future<bool> transction(
+    context,
+    String investorName,
+    String isinNumber,
+    String category,
+    String navProdName,
+  ) async {
     loadingTransButton = true;
     notifyListeners();
-    String purchasedate = dateController.text;
-    String year = durationValue.trim().split(' ')[0];
-    log(year);
-    int yearConvetToint = int.parse(year);
-    DateTime selcetdate = DateFormat('dd-MMM-yyyy').parse(purchasedate);
-    DateTime date = selcetdate.add(Duration(days: yearConvetToint * 365));
-    String duedate = DateFormat('dd-MMM-yyyy').format(date);
-    log('duedate ===$duedate');
+    String duedate = '';
+    if (dateController.text.isNotEmpty) {
+      String purchasedate = dateController.text;
+      String year = durationValue.trim().split(' ')[0];
+      log(year);
+      int yearConvetToint = int.parse(year);
+      DateTime selcetdate = DateFormat('dd-MMM-yyyy').parse(purchasedate);
+      DateTime date = selcetdate.add(Duration(days: yearConvetToint * 365));
+      duedate = DateFormat('dd-MMM-yyyy').format(date);
+      log('duedate ===$duedate');
+    }
     String token = await SecureStorage.readToken('token');
     bool isTokenExpired = JwtDecoder.isExpired(token);
     if (isTokenExpired) {
       await refershTokenService.postRefershTocken(context);
       bool result = await transactionService.transcationService(
-        paymenMode: paymentvalueTobackent ?? '',
-        accountNumber: accountnumberController.text,
-        ifscCode: ifscCodde,
-        instalmentAmount: installmentController.text,
-        fromdate: dateController.text,
-        duedate: duedate,
-        date: dateController.text,
-        amc: productCodeModel?.product?.amcCode ?? '',
-        productCode: productCodeModel?.product?.productCode ?? '',
-        context: context,
-        investorname: investorName,
-      );
+          paymenMode: paymentvalueTobackent ?? '',
+          accountNumber: accountnumberController.text,
+          ifscCode: ifscCodde,
+          instalmentAmount: installmentController.text,
+          fromdate: dateController.text,
+          duedate: duedate,
+          date: dateController.text,
+          amc: productCodeModel?.product?.amcCode ?? '',
+          productCode: productCodeModel?.product?.productCode ?? '',
+          context: context,
+          investorname: investorName,
+          isinnumber: isinNumber,
+          category: category,
+          navpodname: navProdName,
+          productName: productCodeModel?.product?.productLongName ?? '',
+          transType: selectedValue,
+          );
       if (result == true) {
         loadingTransButton = false;
         notifyListeners();
@@ -258,7 +272,11 @@ class SchemeDetailsController extends ChangeNotifier {
           productCode: productCodeModel?.product?.productCode ?? '',
           context: context,
           investorname: investorName,
-          );
+          isinnumber: isinNumber,
+          category: category,
+          navpodname: navProdName,
+          productName: productCodeModel?.product?.productLongName ?? '',
+          transType: selectedValue);
       if (result == true) {
         loadingTransButton = false;
         notifyListeners();

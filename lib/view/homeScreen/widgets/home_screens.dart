@@ -4,6 +4,7 @@ import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_
 import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
+import 'package:finfresh_mobile/view/holding%20screen/screen_holdings.dart';
 import 'package:finfresh_mobile/view/homeScreen/widgets/attension_widget.dart';
 import 'package:finfresh_mobile/view/homeScreen/widgets/collection_widget.dart';
 import 'package:finfresh_mobile/view/homeScreen/widgets/drawer_widget.dart';
@@ -31,7 +32,7 @@ class ScreenHome extends StatelessWidget {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<DashBoardController>(context, listen: false).getusername();
       Provider.of<DashBoardController>(context, listen: false)
-          .getDashBoardDetails(context);
+          .callBothFunction(context);
     });
 
     return Scaffold(
@@ -53,15 +54,15 @@ class ScreenHome extends StatelessWidget {
           );
         }),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.search,
-              color: platformBrightness == Brightness.light
-                  ? Colors.black
-                  : Colors.white,
-            ),
-          ),
+          // IconButton(
+          //   onPressed: () {},
+          //   icon: Icon(
+          //     Icons.search,
+          //     color: platformBrightness == Brightness.light
+          //         ? Colors.black
+          //         : Colors.white,
+          //   ),
+          // ),
           IconButton(
             onPressed: () {
               showLogoutAlertDialog(context);
@@ -447,269 +448,347 @@ class ScreenHome extends StatelessWidget {
                 ),
 
                 VerticalSpacer(3.h),
-                Row(
-                  children: [
-                    Text(
-                      'Most bought on Finfresh',
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            fontSize: 17.sp,
-                            fontWeight: FontWeight.w400,
-                          ),
-                      // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   children: [
+                //     Text(
+                //       'Most bought on Finfresh',
+                //       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                //             fontSize: 17.sp,
+                //             fontWeight: FontWeight.w400,
+                //           ),
+                //       // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                //     ),
+                //   ],
+                // ),
                 SizedBox(
                   height: 2.h,
                 ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const StockDetailsScreen(),
-                          //   ),
-                          // );
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 18.sp, vertical: 10.sp),
-                          height: 18.h,
-                          width: 72.w,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20.sp),
-                              border: Border.all(color: Colors.grey)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: 6.h,
-                                width: 8.w,
-                                child: const FlutterLogo(),
-                              ),
-                              VerticalSpacer(1.h),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SizedBox(
-                                    child: Text(
-                                      'Quat Small Cap fund\nDirect plan growth',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .copyWith(
-                                            fontSize: 16.sp,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                    ),
-                                  ),
-                                  const Text(
-                                    '45.03%',
-                                    style: TextStyle(color: Colors.red),
-                                  )
-                                ],
-                              ),
-                              VerticalSpacer(1.h),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text('Equity Small cap',
-                                      style:
-                                          Theme.of(context).textTheme.bodySmall
-                                      // .copyWith(
-                                      //   fontSize: 17.sp,
-                                      //   fontWeight: FontWeight.w400,
-                                      // ),
-                                      ),
-                                  Text(
-                                    '3 y return',
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall,
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
+                // SingleChildScrollView(
+                //   scrollDirection: Axis.horizontal,
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       InkWell(
+                //         onTap: () {
+                //           // Navigator.push(
+                //           //   context,
+                //           //   MaterialPageRoute(
+                //           //     builder: (context) => const StockDetailsScreen(),
+                //           //   ),
+                //           // );
+                //         },
+                //         child: Container(
+                //           padding: EdgeInsets.symmetric(
+                //               horizontal: 18.sp, vertical: 10.sp),
+                //           height: 18.h,
+                //           width: 72.w,
+                //           decoration: BoxDecoration(
+                //               borderRadius: BorderRadius.circular(20.sp),
+                //               border: Border.all(color: Colors.grey)),
+                //           child: Column(
+                //             crossAxisAlignment: CrossAxisAlignment.start,
+                //             children: [
+                //               SizedBox(
+                //                 height: 6.h,
+                //                 width: 8.w,
+                //                 child: const FlutterLogo(),
+                //               ),
+                //               VerticalSpacer(1.h),
+                //               Row(
+                //                 mainAxisAlignment:
+                //                     MainAxisAlignment.spaceBetween,
+                //                 children: [
+                //                   SizedBox(
+                //                     child: Text(
+                //                       'Quat Small Cap fund\nDirect plan growth',
+                //                       style: Theme.of(context)
+                //                           .textTheme
+                //                           .bodyMedium!
+                //                           .copyWith(
+                //                             fontSize: 16.sp,
+                //                             fontWeight: FontWeight.w400,
+                //                           ),
+                //                     ),
+                //                   ),
+                //                   const Text(
+                //                     '45.03%',
+                //                     style: TextStyle(color: Colors.red),
+                //                   )
+                //                 ],
+                //               ),
+                //               VerticalSpacer(1.h),
+                //               Row(
+                //                 mainAxisAlignment:
+                //                     MainAxisAlignment.spaceBetween,
+                //                 children: [
+                //                   Text('Equity Small cap',
+                //                       style:
+                //                           Theme.of(context).textTheme.bodySmall
+                //                       // .copyWith(
+                //                       //   fontSize: 17.sp,
+                //                       //   fontWeight: FontWeight.w400,
+                //                       // ),
+                //                       ),
+                //                   Text(
+                //                     '3 y return',
+                //                     style:
+                //                         Theme.of(context).textTheme.bodySmall,
+                //                   )
+                //                 ],
+                //               ),
+                //             ],
+                //           ),
+                //         ),
+                //       ),
+                //       HorizontalSpacer(3.w),
+                //       Container(
+                //         padding: EdgeInsets.symmetric(
+                //             horizontal: 18.sp, vertical: 10.sp),
+                //         height: 18.h,
+                //         width: 72.w,
+                //         decoration: BoxDecoration(
+                //             borderRadius: BorderRadius.circular(20.sp),
+                //             border: Border.all(color: Colors.grey)),
+                //         child: Column(
+                //           crossAxisAlignment: CrossAxisAlignment.start,
+                //           children: [
+                //             SizedBox(
+                //               height: 6.h,
+                //               width: 8.w,
+                //               child: const FlutterLogo(),
+                //             ),
+                //             VerticalSpacer(1.h),
+                //             Row(
+                //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //               children: [
+                //                 SizedBox(
+                //                   child: Text(
+                //                     'Quat Small Cap fund\nDirect plan growth',
+                //                     style: Theme.of(context)
+                //                         .textTheme
+                //                         .bodyMedium!
+                //                         .copyWith(
+                //                           fontSize: 16.sp,
+                //                           fontWeight: FontWeight.w400,
+                //                         ),
+                //                   ),
+                //                 ),
+                //                 const Text(
+                //                   '45.03%',
+                //                   style: TextStyle(color: Colors.red),
+                //                 )
+                //               ],
+                //             ),
+                //             VerticalSpacer(1.h),
+                //             Row(
+                //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //               children: [
+                //                 Text('Equity Small cap',
+                //                     style: Theme.of(context).textTheme.bodySmall
+                //                     // .copyWith(
+                //                     //   fontSize: 17.sp,
+                //                     //   fontWeight: FontWeight.w400,
+                //                     // ),
+                //                     ),
+                //                 Text(
+                //                   '3 y return',
+                //                   style: Theme.of(context).textTheme.bodySmall,
+                //                 )
+                //               ],
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // VerticalSpacer(3.h),
+                // Row(
+                //   children: [
+                //     Text(
+                //       'Most bought on Finfresh',
+                //       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                //             fontSize: 17.sp,
+                //             fontWeight: FontWeight.w400,
+                //           ),
+                //       // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                //     ),
+                //   ],
+                // ),
+                // VerticalSpacer(2.h),
+                // SingleChildScrollView(
+                //   scrollDirection: Axis.horizontal,
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       InkWell(
+                //         onTap: () {
+                //           // Navigator.push(context, MaterialPageRoute(builder: (context) =>const ScreenProductDetails(),));
+                //         },
+                //         child: Container(
+                //           padding: EdgeInsets.symmetric(
+                //               horizontal: 18.sp, vertical: 10.sp),
+                //           height: 15.h,
+                //           width: 72.w,
+                //           decoration: BoxDecoration(
+                //               borderRadius: BorderRadius.circular(20.sp),
+                //               border: Border.all(color: Colors.grey)),
+                //           child: Column(
+                //             crossAxisAlignment: CrossAxisAlignment.start,
+                //             children: [
+                //               SizedBox(
+                //                 height: 6.h,
+                //                 width: 8.w,
+                //                 child: const FlutterLogo(),
+                //               ),
+                //               VerticalSpacer(1.h),
+                //               Row(
+                //                 mainAxisAlignment:
+                //                     MainAxisAlignment.spaceBetween,
+                //                 children: [
+                //                   SizedBox(
+                //                     child: Text(
+                //                       'Quat Small Cap fund\nDirect plan growth',
+                //                       style: Theme.of(context)
+                //                           .textTheme
+                //                           .bodyMedium!
+                //                           .copyWith(
+                //                             fontSize: 16.sp,
+                //                             fontWeight: FontWeight.w400,
+                //                           ),
+                //                     ),
+                //                   ),
+                //                   const Text(
+                //                     '45.03%',
+                //                     style: TextStyle(color: Colors.red),
+                //                   )
+                //                 ],
+                //               ),
+                //             ],
+                //           ),
+                //         ),
+                //       ),
+                //       HorizontalSpacer(3.w),
+                //       Container(
+                //         padding: EdgeInsets.symmetric(
+                //             horizontal: 18.sp, vertical: 10.sp),
+                //         height: 15.h,
+                //         width: 72.w,
+                //         decoration: BoxDecoration(
+                //             borderRadius: BorderRadius.circular(20.sp),
+                //             border: Border.all(color: Colors.grey)),
+                //         child: Column(
+                //           crossAxisAlignment: CrossAxisAlignment.start,
+                //           children: [
+                //             SizedBox(
+                //               height: 6.h,
+                //               width: 8.w,
+                //               child: const FlutterLogo(),
+                //             ),
+                //             VerticalSpacer(1.h),
+                //             Row(
+                //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //               children: [
+                //                 SizedBox(
+                //                   child: Text(
+                //                     'Quat Small Cap fund\nDirect plan growth',
+                //                     style: Theme.of(context)
+                //                         .textTheme
+                //                         .bodyMedium!
+                //                         .copyWith(
+                //                           fontSize: 16.sp,
+                //                           fontWeight: FontWeight.w400,
+                //                         ),
+                //                   ),
+                //                 ),
+                //                 const Text(
+                //                   '45.03%',
+                //                   style: TextStyle(color: Colors.red),
+                //                 )
+                //               ],
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ScreenHoldings(),
                       ),
-                      HorizontalSpacer(3.w),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 18.sp, vertical: 10.sp),
-                        height: 18.h,
-                        width: 72.w,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.sp),
-                            border: Border.all(color: Colors.grey)),
+                    );
+                  },
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: Card(
+                      surfaceTintColor: Colors.transparent,
+                      child: Padding(
+                        padding: EdgeInsets.all(15.sp),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(
-                              height: 6.h,
-                              width: 8.w,
-                              child: const FlutterLogo(),
-                            ),
-                            VerticalSpacer(1.h),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(
-                                  child: Text(
-                                    'Quat Small Cap fund\nDirect plan growth',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .copyWith(
-                                          fontSize: 16.sp,
-                                          fontWeight: FontWeight.w400,
-                                        ),
+                            Text(
+                              'Mutual Funds Portfolio',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(
+                                    fontSize: 17.sp,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                ),
-                                const Text(
-                                  '45.03%',
-                                  style: TextStyle(color: Colors.red),
-                                )
-                              ],
                             ),
-                            VerticalSpacer(1.h),
+                            VerticalSpacer(2.h),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text('Equity Small cap',
-                                    style: Theme.of(context).textTheme.bodySmall
-                                    // .copyWith(
-                                    //   fontSize: 17.sp,
-                                    //   fontWeight: FontWeight.w400,
-                                    // ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text('Net Investment'),
+                                    VerticalSpacer(1.h),
+                                    const Text('Net Debt Gain'),
+                                    VerticalSpacer(1.h),
+                                    const Text('Net Equity Gain'),
+                                    VerticalSpacer(1.h),
+                                    const Text('Total'),
+                                    VerticalSpacer(1.h),
+                                    const Text('Growth'),
+                                    VerticalSpacer(1.h),
+                                  ],
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                        '₹ ${dashBoardController.summaryModel?.result?.netInvestment ?? ''}'),
+                                    VerticalSpacer(1.h),
+                                    Text(
+                                        '₹ ${dashBoardController.summaryModel?.result?.netDebtGains ?? ''}'),
+                                    VerticalSpacer(1.h),
+                                    Text(
+                                        '₹ ${dashBoardController.summaryModel?.result?.netEquityGains ?? ''}'),
+                                    VerticalSpacer(1.h),
+                                    Text(
+                                        '₹ ${dashBoardController.summaryModel?.result?.totalAmount ?? ''}'),
+                                    VerticalSpacer(1.h),
+                                    Text(
+                                      dashBoardController
+                                              .summaryModel?.result?.growth ??
+                                          '',
                                     ),
-                                Text(
-                                  '3 y return',
-                                  style: Theme.of(context).textTheme.bodySmall,
+                                    VerticalSpacer(1.h),
+                                  ],
                                 )
                               ],
-                            ),
+                            )
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                VerticalSpacer(3.h),
-                Row(
-                  children: [
-                    Text(
-                      'Most bought on Finfresh',
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            fontSize: 17.sp,
-                            fontWeight: FontWeight.w400,
-                          ),
-                      // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
                     ),
-                  ],
-                ),
-                VerticalSpacer(2.h),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          // Navigator.push(context, MaterialPageRoute(builder: (context) =>const ScreenProductDetails(),));
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 18.sp, vertical: 10.sp),
-                          height: 15.h,
-                          width: 72.w,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20.sp),
-                              border: Border.all(color: Colors.grey)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: 6.h,
-                                width: 8.w,
-                                child: const FlutterLogo(),
-                              ),
-                              VerticalSpacer(1.h),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SizedBox(
-                                    child: Text(
-                                      'Quat Small Cap fund\nDirect plan growth',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .copyWith(
-                                            fontSize: 16.sp,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                    ),
-                                  ),
-                                  const Text(
-                                    '45.03%',
-                                    style: TextStyle(color: Colors.red),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      HorizontalSpacer(3.w),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 18.sp, vertical: 10.sp),
-                        height: 15.h,
-                        width: 72.w,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.sp),
-                            border: Border.all(color: Colors.grey)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: 6.h,
-                              width: 8.w,
-                              child: const FlutterLogo(),
-                            ),
-                            VerticalSpacer(1.h),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(
-                                  child: Text(
-                                    'Quat Small Cap fund\nDirect plan growth',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .copyWith(
-                                          fontSize: 16.sp,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                  ),
-                                ),
-                                const Text(
-                                  '45.03%',
-                                  style: TextStyle(color: Colors.red),
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
                   ),
                 ),
                 VerticalSpacer(10.h),

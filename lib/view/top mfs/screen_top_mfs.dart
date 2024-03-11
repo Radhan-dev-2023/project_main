@@ -36,144 +36,144 @@ class TopMfsScreen extends StatelessWidget {
                       ),
                 ),
                 VerticalSpacer(2.h),
-                if (category == 'Hybrid: Aggressive')
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const StockDetailsScreen(
-                              scheme:
-                                  'Quant Absolute Fund - Growth Option - Regular Plan',
-                              isinNumber: 'INF966L01267'),
-                        ),
-                      );
-                    },
-                    child: const DummyWidget(
-                      productname:
-                          "Quant Absolute Fund - Growth Option - Regular Plan",
-                      fundname: 'Hybrid: Aggressive',
-                      riskometer: 'Very High',
-                      percentage: '25.4%',
-                    ),
-                  )
-                else
-                  const SizedBox(),
-                category == 'Equity: Flexi Cap'
-                    ? InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const StockDetailsScreen(
-                                scheme:
-                                    'JM Flexicap Fund (Regular) - Growth option',
-                                isinNumber: 'INF192K01635',
-                              ),
-                            ),
-                          );
-                        },
-                        child: const DummyWidget(
-                          productname:
-                              'JM Flexicap Fund (Regular) - Growth option',
-                          fundname: "Equity: Flexi Cap",
-                          riskometer: 'Very High',
-                          percentage: '25.03%',
-                        ),
-                      )
-                    : const SizedBox(),
-                category == 'Equity: Large Cap'
-                    ? InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const StockDetailsScreen(
-                                scheme:
-                                    'Taurus Large Cap Fund - Regular Plan - Growth',
-                                isinNumber: 'INF044D01773',
-                              ),
-                            ),
-                          );
-                        },
-                        child: const DummyWidget(
-                          productname:
-                              'Taurus Large Cap Fund - Regular Plan - Growth',
-                          fundname: "Equity: Large Cap",
-                          riskometer: 'Very High',
-                          percentage: '15.28%',
-                        ),
-                      )
-                    : const SizedBox(),
-                category == 'Equity: Mid Cap'
-                    ? InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const StockDetailsScreen(
-                                scheme:
-                                    'ITI Mid Cap Fund - Regular Plan - Growth Option',
-                                isinNumber: 'INF00XX01895',
-                              ),
-                            ),
-                          );
-                        },
-                        child: const DummyWidget(
-                          productname:
-                              'ITI Mid Cap Fund - Regular Plan - Growth Option',
-                          fundname: "Equity: Mid Cap",
-                          riskometer: 'Very High',
-                          percentage: '0.0%',
-                        ),
-                      )
-                    : const SizedBox(),
-                category == 'Equity: Multi Cap'
-                    ? InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const StockDetailsScreen(
-                                scheme:
-                                    'Kotak Multicap Fund-Regular Plan-Growth',
-                                isinNumber: 'INF174KA1HS9',
-                              ),
-                            ),
-                          );
-                        },
-                        child: const DummyWidget(
-                          productname:
-                              'Kotak Multicap Fund-Regular Plan-Growth',
-                          fundname: "Equity: Multi Cap",
-                          riskometer: 'Very High',
-                          percentage: '0.0%',
-                        ),
-                      )
-                    : const SizedBox(),
-                category == 'Equity: Small Cap'
-                    ? InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const StockDetailsScreen(
-                                scheme:
-                                    'Quant Small Cap Fund - Growth - Regular Plan',
-                                isinNumber: 'INF966L01AA0',
-                              ),
-                            ),
-                          );
-                        },
-                        child: const DummyWidget(
-                          productname:
-                              'Quant Small Cap Fund - Growth - Regular Plan',
-                          fundname: "Equity: Small Cap",
-                          riskometer: 'Very High',
-                          percentage: '44.55%',
-                        ),
-                      )
-                    : const SizedBox(),
+                // if (category == 'Hybrid: Aggressive')
+                //   InkWell(
+                //     onTap: () {
+                //       Navigator.push(
+                //         context,
+                //         MaterialPageRoute(
+                //           builder: (context) => const StockDetailsScreen(
+                //               scheme:
+                //                   'Quant Absolute Fund - Growth Option - Regular Plan',
+                //               isinNumber: 'INF966L01267'),
+                //         ),
+                //       );
+                //     },
+                //     child: const DummyWidget(
+                //       productname:
+                //           "Quant Absolute Fund - Growth Option - Regular Plan",
+                //       fundname: 'Hybrid: Aggressive',
+                //       riskometer: 'Very High',
+                //       percentage: '25.4%',
+                //     ),
+                //   )
+                // else
+                //   const SizedBox(),
+                // category == 'Equity: Flexi Cap'
+                //     ? InkWell(
+                //         onTap: () {
+                //           Navigator.push(
+                //             context,
+                //             MaterialPageRoute(
+                //               builder: (context) => const StockDetailsScreen(
+                //                 scheme:
+                //                     'JM Flexicap Fund (Regular) - Growth option',
+                //                 isinNumber: 'INF192K01635',
+                //               ),
+                //             ),
+                //           );
+                //         },
+                //         child: const DummyWidget(
+                //           productname:
+                //               'JM Flexicap Fund (Regular) - Growth option',
+                //           fundname: "Equity: Flexi Cap",
+                //           riskometer: 'Very High',
+                //           percentage: '25.03%',
+                //         ),
+                //       )
+                //     : const SizedBox(),
+                // category == 'Equity: Large Cap'
+                //     ? InkWell(
+                //         onTap: () {
+                //           Navigator.push(
+                //             context,
+                //             MaterialPageRoute(
+                //               builder: (context) => const StockDetailsScreen(
+                //                 scheme:
+                //                     'Taurus Large Cap Fund - Regular Plan - Growth',
+                //                 isinNumber: 'INF044D01773',
+                //               ),
+                //             ),
+                //           );
+                //         },
+                //         child: const DummyWidget(
+                //           productname:
+                //               'Taurus Large Cap Fund - Regular Plan - Growth',
+                //           fundname: "Equity: Large Cap",
+                //           riskometer: 'Very High',
+                //           percentage: '15.28%',
+                //         ),
+                //       )
+                // : const SizedBox(),
+                // category == 'Equity: Mid Cap'
+                //     ? InkWell(
+                //         onTap: () {
+                //           Navigator.push(
+                //             context,
+                //             MaterialPageRoute(
+                //               builder: (context) => const StockDetailsScreen(
+                //                 scheme:
+                //                     'ITI Mid Cap Fund - Regular Plan - Growth Option',
+                //                 isinNumber: 'INF00XX01895',
+                //               ),
+                //             ),
+                //           );
+                //         },
+                //         child: const DummyWidget(
+                //           productname:
+                //               'ITI Mid Cap Fund - Regular Plan - Growth Option',
+                //           fundname: "Equity: Mid Cap",
+                //           riskometer: 'Very High',
+                //           percentage: '0.0%',
+                //         ),
+                //       )
+                //     : const SizedBox(),
+                // category == 'Equity: Multi Cap'
+                //     ? InkWell(
+                //         onTap: () {
+                //           Navigator.push(
+                //             context,
+                //             MaterialPageRoute(
+                //               builder: (context) => const StockDetailsScreen(
+                //                 scheme:
+                //                     'Kotak Multicap Fund-Regular Plan-Growth',
+                //                 isinNumber: 'INF174KA1HS9',
+                //               ),
+                //             ),
+                //           );
+                //         },
+                //         child: const DummyWidget(
+                //           productname:
+                //               'Kotak Multicap Fund-Regular Plan-Growth',
+                //           fundname: "Equity: Multi Cap",
+                //           riskometer: 'Very High',
+                //           percentage: '0.0%',
+                //         ),
+                //       )
+                //     : const SizedBox(),
+                // category == 'Equity: Small Cap'
+                //     ? InkWell(
+                //         onTap: () {
+                //           Navigator.push(
+                //             context,
+                //             MaterialPageRoute(
+                //               builder: (context) => const StockDetailsScreen(
+                //                 scheme:
+                //                     'Quant Small Cap Fund - Growth - Regular Plan',
+                //                 isinNumber: 'INF966L01AA0',
+                //               ),
+                //             ),
+                //           );
+                //         },
+                //         child: const DummyWidget(
+                //           productname:
+                //               'Quant Small Cap Fund - Growth - Regular Plan',
+                //           fundname: "Equity: Small Cap",
+                //           riskometer: 'Very High',
+                //           percentage: '44.55%',
+                //         ),
+                //       )
+                //     : const SizedBox(),
                 VerticalSpacer(2.h),
                 Expanded(
                   child: ListView.separated(
@@ -191,6 +191,11 @@ class TopMfsScreen extends StatelessWidget {
                                         ?.list?[index]
                                         .isinNo ??
                                     '',
+                                category: topMfsController
+                                        .topPerformingMutualFundModel
+                                        ?.list?[index]
+                                        .schemeCategory ??
+                                    "",
                               ),
                             ),
                           );

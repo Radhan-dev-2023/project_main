@@ -19,7 +19,7 @@ class OverViewInTabbar extends StatelessWidget {
           margin: EdgeInsets.all(15.sp),
           child: Column(
             children: [
-              VerticalSpacer(2.h),
+              // VerticalSpacer(2.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

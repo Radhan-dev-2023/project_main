@@ -17,10 +17,14 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 class StockDetailsScreen extends StatefulWidget {
   const StockDetailsScreen(
-      {Key? key, required this.scheme, required this.isinNumber})
+      {Key? key,
+      required this.scheme,
+      required this.isinNumber,
+      required this.category})
       : super(key: key);
   final String scheme;
   final String isinNumber;
+  final String category;
 
   @override
   State<StockDetailsScreen> createState() => _StockDetailsScreenState();
@@ -58,7 +62,8 @@ class _StockDetailsScreenState extends State<StockDetailsScreen>
           ButtonWidget(
             btName: 'INVEST',
             onTap: () {
-              modalBottomSheetMenu(context);
+              modalBottomSheetMenu(
+                  context, widget.isinNumber, widget.scheme, widget.category);
             },
           )
         ],
@@ -73,16 +78,19 @@ class _StockDetailsScreenState extends State<StockDetailsScreen>
     );
   }
 
-  void modalBottomSheetMenu(BuildContext context) {
+  void modalBottomSheetMenu(BuildContext context, String isinNumber,
+      String schemename, String category) {
     Brightness brightness = Theme.of(context).brightness;
 
     showModalBottomSheet(
+      // showDragHandle: true,
       context: context,
       builder: (builder) {
         return Consumer<SchemeDetailsController>(
           builder: (context, schemeController, child) {
             return SingleChildScrollView(
               child: Container(
+                height: 600,
                 margin: EdgeInsets.all(15.sp),
                 color: Colors.transparent,
                 child: Container(
@@ -376,7 +384,11 @@ class _StockDetailsScreenState extends State<StockDetailsScreen>
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const ScreenPayment(),
+                                                    ScreenPayment(
+                                                  isinNumber: isinNumber,
+                                                  navProdName: schemename,
+                                                  category: category,
+                                                ),
                                               ),
                                             );
                                           }

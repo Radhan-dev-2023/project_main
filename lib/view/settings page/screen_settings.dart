@@ -29,7 +29,7 @@ class ScreenSettings extends StatelessWidget {
           },
           child: Icon(Icons.arrow_back),
         ),
-        title: Text('Setings'),
+        title: Text('Settings'),
       ),
       body: Container(
         margin: EdgeInsets.all(15.sp),

@@ -10,7 +10,14 @@ import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class ScreenPayment extends StatefulWidget {
-  const ScreenPayment({super.key});
+  final String isinNumber;
+  final String navProdName;
+  final String category;
+  const ScreenPayment(
+      {super.key,
+      required this.isinNumber,
+      required this.navProdName,
+      required this.category});
 
   @override
   State<ScreenPayment> createState() => _ScreenPaymentState();
@@ -137,15 +144,18 @@ class _ScreenPaymentState extends State<ScreenPayment> {
                                 } else {
                                   bool result =
                                       await schemeController.transction(
-                                          context,
-                                          Provider.of<DashBoardController>(
-                                                      context,
-                                                      listen: false)
-                                                  .dashBoardModel
-                                                  ?.result
-                                                  ?.data
-                                                  ?.name ??
-                                              '');
+                                    context,
+                                    Provider.of<DashBoardController>(context,
+                                                listen: false)
+                                            .dashBoardModel
+                                            ?.result
+                                            ?.data
+                                            ?.name ??
+                                        '',
+                                    widget.isinNumber,
+                                    widget.category,
+                                    widget.navProdName,
+                                  );
                                   if (result == true) {
                                     // ignore: use_build_context_synchronously
                                     showAlertDialog(context);
@@ -166,8 +176,8 @@ class _ScreenPaymentState extends State<ScreenPayment> {
     String url = Provider.of<SchemeDetailsController>(context, listen: false)
         .transactionService
         .paymentResponseModel
-        .result!
-        .paymentlink!;
+        .result![0]
+        .link!;
 
     // String encodedUrl = Uri.encodeFull(url);
     // String url =

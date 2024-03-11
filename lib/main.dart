@@ -3,6 +3,7 @@ import 'package:finfresh_mobile/controller/auth/auth_controller.dart';
 import 'package:finfresh_mobile/controller/bank%20controller/bank_controller.dart';
 import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
 import 'package:finfresh_mobile/controller/fatcha%20registration/fatcha_registration.dart';
+import 'package:finfresh_mobile/controller/holdingns%20controller/holdings_controller.dart';
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_controller.dart';
 import 'package:finfresh_mobile/controller/pin%20controller/pin_controller.dart';
@@ -104,6 +105,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => BankController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => HoldingsController(),
         ),
       ],
       child: ResponsiveSizer(builder: (context, orientation, screenType) {

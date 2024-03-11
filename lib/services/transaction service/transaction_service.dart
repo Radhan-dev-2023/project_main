@@ -24,6 +24,11 @@ class TransactionService {
     required String productCode,
     required BuildContext context,
     required String investorname,
+    required String isinnumber,
+    required String category,
+    required String navpodname,
+    required String productName,
+    required String transType,
   }) async {
     String token = await SecureStorage.readToken('token');
     String userId = await SecureStorage.readToken('userId');
@@ -31,7 +36,8 @@ class TransactionService {
     String bankCode = await SecureStorage.readToken('bankcode');
     String iin = await SecureStorage.readToken('customerId');
     String url = '${ApiEndpoint.baseUrl}/api/v1/purchasetransaction';
-
+    log(token);
+    log(userId);
     log(phoneNumber);
     log(paymenMode);
     log(ifscCode);
@@ -129,6 +135,7 @@ class TransactionService {
       // }
 
       "transaction": "purchasetransaction",
+
       "phonenumber": phoneNumber,
       "service_request": {
         // "iin": "5014047687",
@@ -193,30 +200,39 @@ class TransactionService {
         "process_mode": "E",
         "channel_type": "NET"
       },
-      "childtrans": {
-        "amc": amc,
-        "folio": "",
-        "product_code": productCode,
-        "ft_acc_no": "",
-        "reinvest": "Z",
-        "amount": instalmentAmount,
-        "sip_from_date": date,
-        "sip_end_date": duedate,
-        "sip_freq": "",
-        "sip_amount": "",
-        "sip_period_day": "",
-        "input_ref_no": "52521",
-        "perpetual_flag": "",
-        "insurance_enabled": "",
-        "GOAL_BASED_SIP": "",
-        "GOAL_TYPE": "",
-        "GOAL_AMOUNT": "",
-        "FREEDOM_SIP": "Y",
-        "FREEDOM_TARGET_SCHEME": "RG2GR",
-        "FREEDOM_TENURE": "12",
-        "FREEDOM_SWP_AMOUNT": "100",
-        "FREEDOM_SCHEME_OPTION": "A"
-      }
+      "child": [
+        {
+          "childtrans": {
+            "isin": isinnumber,
+            "schemecategory": category,
+            "navschemename": navpodname,
+            "transaction_type": transType,
+            "product_name": productName,
+            "amc": amc,
+            "folio": "",
+            "product_code": productCode,
+            "ft_acc_no": "",
+            "reinvest": "Z",
+            "amount": instalmentAmount,
+            "sip_from_date": date,
+            "sip_end_date": duedate,
+            "sip_freq": "",
+            "sip_amount": "",
+            "sip_period_day": "",
+            "input_ref_no": "52521",
+            "perpetual_flag": "",
+            "insurance_enabled": "",
+            "GOAL_BASED_SIP": "",
+            "GOAL_TYPE": "",
+            "GOAL_AMOUNT": "",
+            "FREEDOM_SIP": "",
+            "FREEDOM_TARGET_SCHEME": "",
+            "FREEDOM_TENURE": "12",
+            "FREEDOM_SWP_AMOUNT": "",
+            "FREEDOM_SCHEME_OPTION": "A"
+          }
+        }
+      ],
     };
     log('payload === ${jsonEncode(payload)}');
     try {

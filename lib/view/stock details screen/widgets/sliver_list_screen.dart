@@ -89,20 +89,20 @@ class _SliverlistWidgetState extends State<SliverlistWidget> {
 
                       // ),
                       actions: [
-                        Icon(
-                          Icons.message,
-                          color: brightness == Brightness.dark
-                              ? Colors.white
-                              : Colors.black,
-                        ),
-                        HorizontalSpacer(5.w),
-                        Icon(
-                          Icons.shopping_cart,
-                          color: brightness == Brightness.dark
-                              ? Colors.white
-                              : Colors.black,
-                        ),
-                        HorizontalSpacer(2.w),
+                        // Icon(
+                        //   Icons.message,
+                        //   color: brightness == Brightness.dark
+                        //       ? Colors.white
+                        //       : Colors.black,
+                        // ),
+                        // HorizontalSpacer(5.w),
+                        // Icon(
+                        //   Icons.shopping_cart,
+                        //   color: brightness == Brightness.dark
+                        //       ? Colors.white
+                        //       : Colors.black,
+                        // ),
+                        // HorizontalSpacer(2.w),
                       ],
                     ),
                     SliverToBoxAdapter(
@@ -147,43 +147,63 @@ class _SliverlistWidgetState extends State<SliverlistWidget> {
                         height: 15,
                       ),
                     ),
-                    SliverPersistentHeader(
-                      delegate: _SliverAppBarDelegate(
-                        TabBar(
-                          padding: const EdgeInsets.all(7),
-                          indicatorSize: TabBarIndicatorSize.tab,
-                          controller: widget._tabController,
-                          tabs: const [
-                            Tab(text: 'Overview'),
-                            Tab(text: 'Events'),
-                            Tab(text: 'News'),
-                            Tab(text: 'F&Q'),
-                          ],
-                          labelPadding:
-                              const EdgeInsets.symmetric(horizontal: 5),
-                          labelStyle: const TextStyle(fontSize: 14),
-                          labelColor: Colors.white,
-                          unselectedLabelColor: Colors.white,
-                          indicator: BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                            color: Colors.grey.withOpacity(0.5),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          dividerColor: const Color(0xFF0E1330),
-                        ),
-                      ),
-                      pinned: true,
-                    ),
+                    // SliverPersistentHeader(
+                    //   delegate: _SliverAppBarDelegate(
+                    //     TabBar(
+                    //       padding: const EdgeInsets.all(7),
+                    //       indicatorSize: TabBarIndicatorSize.tab,
+                    //       controller: widget._tabController,
+                    //       tabs: const [
+                    //         Tab(text: 'Overview'),
+                    //         Tab(text: 'Events'),
+                    //         Tab(text: 'News'),
+                    //         Tab(text: 'F&Q'),
+                    //       ],
+                    //       labelPadding:
+                    //           const EdgeInsets.symmetric(horizontal: 5),
+                    //       labelStyle: const TextStyle(fontSize: 14),
+                    //       labelColor: Colors.white,
+                    //       unselectedLabelColor: Colors.white,
+                    //       indicator: BoxDecoration(
+                    //         border: Border.all(color: Colors.black),
+                    //         color: Colors.grey.withOpacity(0.5),
+                    //         borderRadius: BorderRadius.circular(20),
+                    //       ),
+                    //       dividerColor: const Color(0xFF0E1330),
+                    //     ),
+                    //   ),
+                    //   pinned: true,
+                    // ),
                   ];
                 },
-                body: TabBarView(
-                  controller: widget._tabController,
-                  children: const [
-                    OverViewInTabbar(),
-                    ScreenEventinTabBar(),
-                    NewsinTabBar(),
-                    Center(child: Text('F&Q')),
-                  ],
+                // body: TabBarView(
+                //   controller: widget._tabController,
+                //   children: const [
+                //     OverViewInTabbar(),
+                //     ScreenEventinTabBar(),
+                //     NewsinTabBar(),
+                //     Center(child: Text('F&Q')),
+                //   ],
+                // ),
+                body: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      VerticalSpacer(1.h),
+                      Padding(
+                        padding: EdgeInsets.all(15.sp),
+                        child: Text(
+                          'Overview',
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    fontSize: 18.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                      ),
+                      const OverViewInTabbar(),
+                    ],
+                  ),
                 ),
               ),
       );

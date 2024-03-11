@@ -12,7 +12,7 @@ String paymentResponseModelToJson(PaymentResponseModel data) =>
 
 class PaymentResponseModel {
   int? status;
-  Result? result;
+  List<Result>? result;
 
   PaymentResponseModel({
     this.status,
@@ -22,12 +22,13 @@ class PaymentResponseModel {
   factory PaymentResponseModel.fromJson(Map<String, dynamic> json) =>
       PaymentResponseModel(
         status: json["status"],
-        result: Result.fromJson(json["result"]),
+        result:
+            List<Result>.from(json["result"].map((x) => Result.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "status": status,
-        "result": result!.toJson(),
+        "result": List<dynamic>.from(result!.map((x) => x.toJson())),
       };
 }
 
@@ -36,18 +37,24 @@ class Result {
   String? trxnNo;
   String? fund;
   dynamic folio;
+  String? scheme;
   String? schemeName;
-  String? paymentstaus;
-  String? paymentlink;
+  String? amt;
+  String? inputRefNo;
+  dynamic paymentstaus;
+  String? link;
 
   Result({
     this.uniqueNo,
     this.trxnNo,
     this.fund,
     this.folio,
+    this.scheme,
     this.schemeName,
+    this.amt,
+    this.inputRefNo,
     this.paymentstaus,
-    this.paymentlink,
+    this.link,
   });
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
@@ -55,9 +62,12 @@ class Result {
         trxnNo: json["Trxn_No"],
         fund: json["Fund"],
         folio: json["Folio"],
+        scheme: json["Scheme"],
         schemeName: json["Scheme_Name"],
+        amt: json["Amt"],
+        inputRefNo: json["Input_ref_no"],
         paymentstaus: json["paymentstaus"],
-        paymentlink: json["paymentlink"],
+        link: json["link"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -65,8 +75,11 @@ class Result {
         "Trxn_No": trxnNo,
         "Fund": fund,
         "Folio": folio,
+        "Scheme": scheme,
         "Scheme_Name": schemeName,
+        "Amt": amt,
+        "Input_ref_no": inputRefNo,
         "paymentstaus": paymentstaus,
-        "paymentlink": paymentlink,
+        "link": link,
       };
 }

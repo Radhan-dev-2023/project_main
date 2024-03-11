@@ -1,4 +1,5 @@
 import 'package:finfresh_mobile/model/dash%20Board%20Model/dash_board_model.dart';
+import 'package:finfresh_mobile/model/summary%20model/summary_model.dart';
 import 'package:finfresh_mobile/services/dash%20board%20Services/dash_board_services.dart';
 import 'package:finfresh_mobile/services/refersh%20token/refersh_token.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
@@ -59,5 +60,35 @@ class DashBoardController extends ChangeNotifier {
     String name = await SecureStorage.readToken('username');
     username = name;
     notifyListeners();
+  }
+
+  SummaryModel? summaryModel;
+  Future<void> getSummary(context) async {
+    String token = await SecureStorage.readToken('token');
+    bool isTokenExpired = JwtDecoder.isExpired(token);
+    loadingDashboard = true;
+
+    notifyListeners();
+    try {
+      if (isTokenExpired) {
+        await refershTokenService.postRefershTocken(context);
+        summaryModel = await dashBoardService.fetchSummary(context);
+        loadingDashboard = false;
+        notifyListeners();
+      } else {
+        summaryModel = await dashBoardService.fetchSummary(context);
+        loadingDashboard = false;
+        notifyListeners();
+      }
+    } catch (e) {
+      logger.d('summary failed with an exception$e');
+      loadingDashboard = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> callBothFunction(context) async {
+    await getDashBoardDetails(context);
+    await getSummary(context);
   }
 }
