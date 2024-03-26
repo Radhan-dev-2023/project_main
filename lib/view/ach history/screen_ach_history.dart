@@ -17,7 +17,10 @@ class _ScreenAchHistoryState extends State<ScreenAchHistory> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Provider.of<AchController>(context, listen: false).getAchHistoy(context);
+    Provider.of<AchController>(context, listen: false).getAchHistoy(
+      context,
+      true,
+    );
   }
 
   @override

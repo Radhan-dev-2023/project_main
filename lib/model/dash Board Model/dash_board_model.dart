@@ -54,6 +54,7 @@ class Data {
   Transaction? transaction;
   Bank? bank;
   ActivationStatus? activationStatus;
+  Achmandate? achmandate;
   String? id;
   String? phoneNumber;
   String? email;
@@ -150,6 +151,34 @@ class Data {
         "topFunds": List<dynamic>.from(topFunds!.map((x) => x)),
         "frequentFunds": frequentFunds,
         "__v": v,
+      };
+}
+
+class Achmandate {
+  bool? allowAch;
+  bool? allowEmandateDebitcard;
+  bool? allowEmandateNetbanking;
+  String? achCompleted;
+
+  Achmandate({
+     this.allowAch,
+     this.allowEmandateDebitcard,
+     this.allowEmandateNetbanking,
+     this.achCompleted,
+  });
+
+  factory Achmandate.fromJson(Map<String, dynamic> json) => Achmandate(
+        allowAch: json["allow_ach"],
+        allowEmandateDebitcard: json["allow_emandate_debitcard"],
+        allowEmandateNetbanking: json["allow_emandate_netbanking"],
+        achCompleted: json["ach_completed"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "allow_ach": allowAch,
+        "allow_emandate_debitcard": allowEmandateDebitcard,
+        "allow_emandate_netbanking": allowEmandateNetbanking,
+        "ach_completed": achCompleted,
       };
 }
 

@@ -88,7 +88,7 @@ class _SliverlistWidgetState extends State<SliverlistWidget> {
                       // flexibleSpace: FlexibleSpaceBar(
 
                       // ),
-                      actions: [
+                      actions: const [
                         // Icon(
                         //   Icons.message,
                         //   color: brightness == Brightness.dark

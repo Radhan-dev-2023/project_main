@@ -43,6 +43,7 @@ class Result {
   String? achMandateStatus;
   String? expiredDateTime;
   String? processMode;
+  String? umrnNumber;
 
   Result({
     this.customerId,
@@ -55,6 +56,7 @@ class Result {
     this.achMandateStatus,
     this.expiredDateTime,
     this.processMode,
+    this.umrnNumber,
   });
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
@@ -68,6 +70,7 @@ class Result {
         achMandateStatus: json["ACH_MANDATE_STATUS"],
         expiredDateTime: json["EXPIRED_DATE_TIME"],
         processMode: json["PROCESS_MODE"],
+        umrnNumber: json["UMRN_NO"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -78,9 +81,10 @@ class Result {
         "FROM_DATE": fromDate,
         "TO_DATE": toDate,
         "AMOUNT": amount,
-        "ACH_MANDATE_STATUS": achMandateStatusValues.reverse[achMandateStatus],
+        "ACH_MANDATE_STATUS": achMandateStatus,
         "EXPIRED_DATE_TIME": expiredDateTime,
-        "PROCESS_MODE": processModeValues.reverse[processMode],
+        "PROCESS_MODE": processMode,
+        "UMRN_NO": umrnNumber
       };
 }
 

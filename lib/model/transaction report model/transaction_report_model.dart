@@ -36,7 +36,7 @@ class ResultReport {
   String? productName;
   String? investmentAmount;
   String? gains;
-  String? growth;
+  dynamic growth;
   String? totalAmount;
   String? isin;
   String? userTrxnno;

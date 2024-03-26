@@ -1,8 +1,9 @@
-// To parse this JSON data, do
+// // To parse this JSON data, do
 //
 //     final reportDetailsModel = reportDetailsModelFromJson(jsonString);
 
 import 'dart:convert';
+import 'dart:ffi';
 
 ReportDetailsModel reportDetailsModelFromJson(String str) =>
     ReportDetailsModel.fromJson(json.decode(str));
@@ -12,88 +13,82 @@ String reportDetailsModelToJson(ReportDetailsModel data) =>
 
 class ReportDetailsModel {
   int? status;
-  ReportDetailsModelTransaction? transaction;
+  Result? result;
 
   ReportDetailsModel({
     this.status,
-    this.transaction,
+    this.result,
   });
 
   factory ReportDetailsModel.fromJson(Map<String, dynamic> json) =>
       ReportDetailsModel(
         status: json["status"],
-        transaction:
-            ReportDetailsModelTransaction.fromJson(json["transaction"]),
+        result: Result.fromJson(json["result"]),
       );
 
   Map<String, dynamic> toJson() => {
         "status": status,
-        "transaction": transaction!.toJson(),
+        "result": result!.toJson(),
       };
 }
 
-class ReportDetailsModelTransaction {
-  String? transactionType;
-  double? totalAmount;
-  String? purchasedate;
-  double? investmentAmount;
-  double? gains;
+class Result {
+  String? schemeName;
+  dynamic totalUnits;
+  String? investmentAmount;
+  String? totalAmount;
+  dynamic gains;
+  dynamic purchaseDate;
   String? growthAbsolute;
-  double? totalUnits;
   double? averageNav;
   double? currentNav;
-  String? schemeName;
   List<PurchaseDetail>? purchaseDetails;
 
-  ReportDetailsModelTransaction({
-    this.transactionType,
-    this.totalAmount,
-    this.purchasedate,
-    this.investmentAmount,
-    this.gains,
-    this.growthAbsolute,
+  Result({
+    this.schemeName,
     this.totalUnits,
+    this.investmentAmount,
+    this.totalAmount,
+    this.gains,
+    this.purchaseDate,
+    this.growthAbsolute,
     this.averageNav,
     this.currentNav,
-    this.schemeName,
     this.purchaseDetails,
   });
 
-  factory ReportDetailsModelTransaction.fromJson(Map<String, dynamic> json) =>
-      ReportDetailsModelTransaction(
-        transactionType: json["transaction_type"],
-        totalAmount: json["total_amount"]?.toDouble(),
-        purchasedate: json["purchasedate"],
-        investmentAmount: json["investment_amount"]?.toDouble(),
-        gains: json["gains"]?.toDouble(),
+  factory Result.fromJson(Map<String, dynamic> json) => Result(
+        schemeName: json["scheme_name"],
+        totalUnits: json["total_units"],
+        investmentAmount: json["investment_amount"],
+        totalAmount: json["Total_amount"],
+        gains: json["gains"],
+        purchaseDate: json["purchaseDate"],
         growthAbsolute: json["growth_absolute"],
-        totalUnits: json["total_units"]?.toDouble(),
         averageNav: json["average_nav"]?.toDouble(),
         currentNav: json["current_nav"]?.toDouble(),
-        schemeName: json["scheme_name"],
         purchaseDetails: List<PurchaseDetail>.from(
             json["purchaseDetails"].map((x) => PurchaseDetail.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "transaction_type": transactionType,
-        "total_amount": totalAmount,
-        "purchasedate": purchasedate,
-        "investment_amount": investmentAmount,
-        "gains": gains,
-        "growth_absolute": growthAbsolute,
+        "scheme_name": schemeName,
         "total_units": totalUnits,
+        "investment_amount": investmentAmount,
+        "Total_amount": totalAmount,
+        "gains": gains,
+        "purchaseDate": purchaseDate,
+        "growth_absolute": growthAbsolute,
         "average_nav": averageNav,
         "current_nav": currentNav,
-        "scheme_name": schemeName,
         "purchaseDetails":
             List<dynamic>.from(purchaseDetails!.map((x) => x.toJson())),
       };
 }
 
 class PurchaseDetail {
-  String? folio;
-  List<TransactionElement>? transactions;
+  dynamic folio;
+  List<Transaction>? transactions;
 
   PurchaseDetail({
     this.folio,
@@ -102,8 +97,8 @@ class PurchaseDetail {
 
   factory PurchaseDetail.fromJson(Map<String, dynamic> json) => PurchaseDetail(
         folio: json["folio"],
-        transactions: List<TransactionElement>.from(
-            json["transactions"].map((x) => TransactionElement.fromJson(x))),
+        transactions: List<Transaction>.from(
+            json["transactions"].map((x) => Transaction.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -113,27 +108,26 @@ class PurchaseDetail {
       };
 }
 
-class TransactionElement {
+class Transaction {
   String? transactionType;
-  String? nav;
-  String? units;
-  double? purchasesmount;
-  String? transactionDate;
+  dynamic nav;
+  dynamic units;
+  dynamic purchaseAmount;
+  dynamic transactionDate;
 
-  TransactionElement({
+  Transaction({
     this.transactionType,
     this.nav,
     this.units,
-    this.purchasesmount,
+    this.purchaseAmount,
     this.transactionDate,
   });
 
-  factory TransactionElement.fromJson(Map<String, dynamic> json) =>
-      TransactionElement(
+  factory Transaction.fromJson(Map<String, dynamic> json) => Transaction(
         transactionType: json["transaction_type"],
         nav: json["nav"],
         units: json["units"],
-        purchasesmount: json["purchasesmount"]?.toDouble(),
+        purchaseAmount: json["purchase_amount"],
         transactionDate: json["transaction_date"],
       );
 
@@ -141,7 +135,7 @@ class TransactionElement {
         "transaction_type": transactionType,
         "nav": nav,
         "units": units,
-        "purchasesmount": purchasesmount,
+        "purchase_amount": purchaseAmount,
         "transaction_date": transactionDate,
       };
 }

@@ -7,6 +7,7 @@ import 'package:finfresh_mobile/model/holding%20nature%20model/holding_nature_mo
 import 'package:finfresh_mobile/model/occupation%20model/occupation.dart';
 import 'package:finfresh_mobile/model/pincode%20model/pincode_model.dart';
 import 'package:finfresh_mobile/model/product%20code%20model/product_code_model.dart';
+import 'package:finfresh_mobile/model/sip%20date%20model/sip_date_model.dart';
 import 'package:finfresh_mobile/model/source%20wealth%20model/source_wealth_model.dart';
 import 'package:finfresh_mobile/model/state%20model/state_model.dart';
 import 'package:finfresh_mobile/model/ubo%20income%20model/ubo_income_model.dart';
@@ -316,6 +317,34 @@ class MasterService {
       showSnackBar(context, 'No Internet Connection');
     } catch (e) {
       logger.d('exception in fetchDatain pincode $e');
+      return null;
+    }
+    return null;
+  }
+
+  SipdateModel sipdateModel = SipdateModel();
+  Future<SipdateModel?> fetchsipDate(String isinNumber, context) async {
+    final url = Uri.parse('${ApiEndpoint.baseUrl}/v1/sipdates/$isinNumber');
+    try {
+      http.Response response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+      logger.d('sip date response == ${response.statusCode}');
+      logger.d('sip date response body == ${response.body}');
+      Map<String, dynamic> jsonResponse = json.decode(response.body);
+      logger.d('jsonResponse == ${jsonResponse['status']}');
+      if (jsonResponse['status'] == 200) {
+        sipdateModel = SipdateModel.fromJson(jsonResponse);
+        return sipdateModel;
+      }
+    } on SocketException {
+      // ignore: use_build_context_synchronously
+      showSnackBar(context, 'No Internet Connection');
+    } catch (e) {
+      logger.d('exception in fetch sip dates $e');
       return null;
     }
     return null;

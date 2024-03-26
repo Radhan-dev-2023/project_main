@@ -82,7 +82,7 @@ class _ScreenHoldingsState extends State<ScreenHoldings> {
                                           ),
                                           VerticalSpacer(1.h),
                                           Text(
-                                            '₹ ${holdingController.transactionReport?.result?[index].totalAmount ?? ''}',
+                                            ' ${holdingController.transactionReport?.result?[index].totalAmount ?? ''}',
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium!
@@ -128,14 +128,14 @@ class _ScreenHoldingsState extends State<ScreenHoldings> {
                                                     CrossAxisAlignment.end,
                                                 children: [
                                                   Text(
-                                                    '₹ ${holdingController.transactionReport?.result?[index].investmentAmount ?? ''}',
+                                                    ' ${holdingController.transactionReport?.result?[index].investmentAmount ?? ''}',
                                                     style: const TextStyle(
                                                       color: Colors.green,
                                                     ),
                                                   ),
                                                   VerticalSpacer(1.h),
                                                   Text(
-                                                    '₹ ${holdingController.transactionReport?.result?[index].gains ?? ''}',
+                                                    ' ${holdingController.transactionReport?.result?[index].gains ?? ''}',
                                                     style: const TextStyle(
                                                       color: Colors.green,
                                                     ),
@@ -145,7 +145,8 @@ class _ScreenHoldingsState extends State<ScreenHoldings> {
                                                     holdingController
                                                             .transactionReport
                                                             ?.result?[index]
-                                                            .growth ??
+                                                            .growth
+                                                            .toString() ??
                                                         '',
                                                     style: const TextStyle(
                                                       color: Colors.green,

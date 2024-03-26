@@ -11,6 +11,7 @@ import 'package:finfresh_mobile/model/scheme%20model/scehem_information_model.da
 import 'package:finfresh_mobile/model/top%20performing%20lambsum%20fund%20model/lumsum_model.dart';
 import 'package:finfresh_mobile/model/top%20performing%20model/top_performing_mutual_fund.dart';
 import 'package:finfresh_mobile/model/top%20performing%20sib%20model/top_performing_sip_on_category.dart';
+import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
 import 'package:http/http.dart' as http;
@@ -100,6 +101,8 @@ class SchemeServices {
       if (jsonResponse['status'] == 200) {
         allCategoryModel = SchemeAllCategoryModel.fromJson(jsonResponse);
         return allCategoryModel;
+      } else if (jsonResponse['status'] == 400) {
+        showFlushbar(context, jsonResponse['msg']);
       } else if (jsonResponse['status'] == 500) {
         // showSnackBar(context, jsonResponse['result']['message']);
       }

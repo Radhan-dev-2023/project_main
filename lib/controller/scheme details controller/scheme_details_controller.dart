@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:finfresh_mobile/model/historical%20nav%20model/historical_nav_model.dart';
 import 'package:finfresh_mobile/model/product%20code%20model/product_code_model.dart';
 import 'package:finfresh_mobile/model/scheme%20model/scehem_information_model.dart';
+import 'package:finfresh_mobile/model/sip%20date%20model/sip_date_model.dart';
 import 'package:finfresh_mobile/services/kyc/master_services.dart';
 import 'package:finfresh_mobile/services/refersh%20token/refersh_token.dart';
 import 'package:finfresh_mobile/services/scheme%20services/scheme_services.dart';
@@ -24,7 +25,7 @@ class SchemeDetailsController extends ChangeNotifier {
   ProductCodeModel? productCodeModel;
   SchemeInfoModel? schemeInfoModel;
   HistoricalNavModel? historicalNavModel;
-  String? paymentvalueTobackent;
+  String paymentvalueTobackent = '';
   bool detailScreenLoading = false;
   List<dynamic> holding = [];
   List<dynamic> value = [];
@@ -32,7 +33,10 @@ class SchemeDetailsController extends ChangeNotifier {
   String selectValueForChart = 'ALL';
   List<String> monthvalue = ['3M', '6M', '1Y', '2Y', '5Y', '10Y', 'ALL'];
   String durationValue = '25 Year';
+  String achMandateLAstdate = '';
+
   List<String> duration = [
+    'Until Cancelled',
     '1 Year',
     '2 Year',
     '3 Year',
@@ -66,6 +70,58 @@ class SchemeDetailsController extends ChangeNotifier {
   }
 
   String paymentMode = 'Select a payment mode';
+
+  String selectedDay = '';
+  String currentMonth = '';
+  String currentYear = '';
+  String? datevalue;
+  void updateDatevalue(String newValue) {
+    datevalue = newValue;
+    selectedDay = datevalue!;
+    DateTime now = DateTime.now();
+    currentMonth = DateFormat.MMM().format(now);
+    currentYear = DateFormat.y().format(now);
+    String selecteddatefromdropdown = '$selectedDay-$currentMonth-$currentYear';
+    // dateController.text = '$selectedDay-$currentMonth-$currentYear';
+    DateFormat outputFormat = DateFormat('dd-MMM-yyyy');
+
+    DateTime date = outputFormat.parse(selecteddatefromdropdown);
+    log('date====$date');
+    int difference = date.difference(now).inDays;
+    log('difference$difference');
+    if (difference >= 7) {
+      dateController.text = '$selectedDay-$currentMonth-$currentYear';
+    } else {
+      DateTime selectedDate;
+      if (date.month == DateTime.december) {
+        selectedDate = DateTime(date.year + 1, date.month + 1, date.day);
+      } else {
+        selectedDate = DateTime(date.year, date.month + 1, date.day);
+      }
+      // DateTime selectedDate = DateTime(date.year, date.month + 1, date.day);
+      log('selected date =============$selectedDate');
+      // dateController.text = '$selectedDay-${currentMonth}-$currentYear';
+      // log('selctedtime$selectedDate');
+      dateController.text = DateFormat('dd-MMM-yyyy').format(selectedDate);
+      notifyListeners();
+    }
+
+    notifyListeners();
+  }
+
+  String umrnNumber = '';
+  String? mandatevalue;
+  void cahngeMandate(String newValue) {
+    mandatevalue = newValue;
+    notifyListeners();
+  }
+
+  bool ischecked = false;
+  void changeChecked(bool value) {
+    ischecked = value;
+    notifyListeners();
+  }
+
   List<String> paymentList = [
     'Select a payment mode',
     // 'Debit Mandate',
@@ -178,7 +234,7 @@ class SchemeDetailsController extends ChangeNotifier {
       startdate = DateFormat('dd-MM-yyyy').format(today);
     }
     log('last date ==$lastdate');
-    log('inception date =${schemeInfoModel!.schemeInceptionDate!}');
+    log('inception date =${schemeInfoModel?.schemeInceptionDate ?? ''}');
     // notifyListeners();
     try {
       historicalNavModel = await schemeService.historicalNav(
@@ -204,6 +260,7 @@ class SchemeDetailsController extends ChangeNotifier {
   Future<void> callingFunctionDetailScreen(context, String scheme) async {
     await getSchemeInfo(context, scheme);
     await getChartValue(context, scheme);
+    // await getSipDate(isinNumber, context);
   }
 
   RefershTokenService refershTokenService = RefershTokenService();
@@ -220,12 +277,18 @@ class SchemeDetailsController extends ChangeNotifier {
     String duedate = '';
     if (dateController.text.isNotEmpty) {
       String purchasedate = dateController.text;
-      String year = durationValue.trim().split(' ')[0];
-      log(year);
-      int yearConvetToint = int.parse(year);
-      DateTime selcetdate = DateFormat('dd-MMM-yyyy').parse(purchasedate);
-      DateTime date = selcetdate.add(Duration(days: yearConvetToint * 365));
-      duedate = DateFormat('dd-MMM-yyyy').format(date);
+      if (durationValue == 'Until Cancelled') {
+        duedate = achMandateLAstdate;
+      } else {
+        String year = durationValue.trim().split(' ')[0];
+        log(year);
+        int yearConvetToint = int.parse(year);
+        DateTime selcetdate = DateFormat('dd-MMM-yyyy').parse(purchasedate);
+        DateTime date = selcetdate.add(Duration(days: yearConvetToint * 365));
+        duedate = DateFormat('dd-MMM-yyyy').format(date);
+      }
+      // DateTime selcetdate = DateFormat('dd-MMM-yyyy').parse(purchasedate);
+
       log('duedate ===$duedate');
     }
     String token = await SecureStorage.readToken('token');
@@ -233,23 +296,25 @@ class SchemeDetailsController extends ChangeNotifier {
     if (isTokenExpired) {
       await refershTokenService.postRefershTocken(context);
       bool result = await transactionService.transcationService(
-          paymenMode: paymentvalueTobackent ?? '',
-          accountNumber: accountnumberController.text,
-          ifscCode: ifscCodde,
-          instalmentAmount: installmentController.text,
-          fromdate: dateController.text,
-          duedate: duedate,
-          date: dateController.text,
-          amc: productCodeModel?.product?.amcCode ?? '',
-          productCode: productCodeModel?.product?.productCode ?? '',
-          context: context,
-          investorname: investorName,
-          isinnumber: isinNumber,
-          category: category,
-          navpodname: navProdName,
-          productName: productCodeModel?.product?.productLongName ?? '',
-          transType: selectedValue,
-          );
+        paymenMode: paymentvalueTobackent.isEmpty ? 'M' : paymentvalueTobackent,
+        accountNumber: accountnumberController.text,
+        ifscCode: ifscCodde,
+        instalmentAmount: installmentController.text,
+        fromdate: dateController.text,
+        duedate: duedate,
+        date: dateController.text,
+        amc: productCodeModel?.product?.amcCode ?? '',
+        productCode: productCodeModel?.product?.productCode ?? '',
+        context: context,
+        investorname: investorName,
+        isinnumber: isinNumber,
+        category: category,
+        navpodname: navProdName,
+        productName: productCodeModel?.product?.productLongName ?? '',
+        transType: selectedValue,
+        umrn: umrnNumber,
+        systamatic: selectedValue == 'SIP' ? 'S' : "N",
+      );
       if (result == true) {
         loadingTransButton = false;
         notifyListeners();
@@ -261,22 +326,25 @@ class SchemeDetailsController extends ChangeNotifier {
       }
     } else {
       bool result = await transactionService.transcationService(
-          paymenMode: paymentvalueTobackent ?? '',
-          accountNumber: accountnumberController.text,
-          ifscCode: ifscCodde,
-          instalmentAmount: installmentController.text,
-          fromdate: dateController.text,
-          duedate: duedate,
-          date: dateController.text,
-          amc: productCodeModel?.product?.amcCode ?? '',
-          productCode: productCodeModel?.product?.productCode ?? '',
-          context: context,
-          investorname: investorName,
-          isinnumber: isinNumber,
-          category: category,
-          navpodname: navProdName,
-          productName: productCodeModel?.product?.productLongName ?? '',
-          transType: selectedValue);
+        paymenMode: paymentvalueTobackent.isEmpty ? 'M' : paymentvalueTobackent,
+        accountNumber: accountnumberController.text,
+        ifscCode: ifscCodde,
+        instalmentAmount: installmentController.text,
+        fromdate: dateController.text,
+        duedate: duedate,
+        date: dateController.text,
+        amc: productCodeModel?.product?.amcCode ?? '',
+        productCode: productCodeModel?.product?.productCode ?? '',
+        context: context,
+        investorname: investorName,
+        isinnumber: isinNumber,
+        category: category,
+        navpodname: navProdName,
+        productName: productCodeModel?.product?.productLongName ?? '',
+        transType: selectedValue,
+        umrn: umrnNumber,
+        systamatic: selectedValue == 'SIP' ? 'S' : "N",
+      );
       if (result == true) {
         loadingTransButton = false;
         notifyListeners();
@@ -286,6 +354,16 @@ class SchemeDetailsController extends ChangeNotifier {
         notifyListeners();
         return false;
       }
+    }
+  }
+
+  SipdateModel? sipdateModel;
+  Future<void> getSipDate(String isinNumber, context) async {
+    log('sip date calling');
+    try {
+      sipdateModel = await masterService.fetchsipDate(isinNumber, context);
+    } catch (e) {
+      logger.d('failed with an exception in sipdate$e');
     }
   }
 }

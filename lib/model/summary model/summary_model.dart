@@ -34,7 +34,7 @@ class Result {
   String? netDebtGains;
   String? netEquityGains;
   String? totalAmount;
-  String? growth;
+  dynamic growth;
   String? pendingAmount;
 
   Result({

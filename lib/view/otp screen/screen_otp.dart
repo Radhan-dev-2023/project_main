@@ -150,17 +150,26 @@ class ScreenOtp extends StatelessWidget {
                           : await authController.otpVerifyForLogin(context);
                       logger.d('resultotp===$result');
                       if (result == true) {
-                        // ignore: use_build_context_synchronously
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => title == 'signup' ||
-                                    biometricLoginController.buttonEnabled ==
-                                        true
-                                ? const ScreenSetPinNumber()
-                                : const ScreenHomeView(),
-                          ),
-                        );
+                        if (title == 'signup' ||
+                            biometricLoginController.buttonEnabled == true) {
+                          // ignore: use_build_context_synchronously
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ScreenSetPinNumber(),
+                            ),
+                          );
+                        } else {
+                          // ignore: use_build_context_synchronously
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ScreenHomeView(),
+                            ),
+                            (route) => false,
+                          );
+                        }
+
                         authController.otpController.clear();
                       } else {
                         // ignore: use_build_context_synchronously

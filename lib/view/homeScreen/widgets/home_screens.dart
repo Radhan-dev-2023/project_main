@@ -222,7 +222,11 @@ class ScreenHome extends StatelessWidget {
                   child: Consumer<AchController>(
                       builder: (context, achController, _) {
                     return Visibility(
-                      visible: achController.visibilty,
+                      visible: dashBoardController.dashBoardModel?.result?.data
+                                  ?.achmandate?.achCompleted ==
+                              "Not completed"
+                          ? true
+                          : false,
                       child: Card(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -713,84 +717,142 @@ class ScreenHome extends StatelessWidget {
                 //     ],
                 //   ),
                 // ),
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ScreenHoldings(),
-                      ),
-                    );
-                  },
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: Card(
-                      surfaceTintColor: Colors.transparent,
-                      child: Padding(
-                        padding: EdgeInsets.all(15.sp),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Mutual Funds Portfolio',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
-                                    fontSize: 17.sp,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                            VerticalSpacer(2.h),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                dashBoardController.summaryModel?.result == null
+                    ? SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Card(
+                          surfaceTintColor:
+                              const Color.fromARGB(255, 236, 230, 230),
+                          child: Padding(
+                            padding: EdgeInsets.all(13.sp),
+                            child: Column(
                               children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text('Net Investment'),
-                                    VerticalSpacer(1.h),
-                                    const Text('Net Debt Gain'),
-                                    VerticalSpacer(1.h),
-                                    const Text('Net Equity Gain'),
-                                    VerticalSpacer(1.h),
-                                    const Text('Total'),
-                                    VerticalSpacer(1.h),
-                                    const Text('Growth'),
-                                    VerticalSpacer(1.h),
-                                  ],
+                                VerticalSpacer(1.h),
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    'Mutual Funds Portfolio',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                          fontSize: 17.sp,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                  ),
                                 ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                        '₹ ${dashBoardController.summaryModel?.result?.netInvestment ?? ''}'),
-                                    VerticalSpacer(1.h),
-                                    Text(
-                                        '₹ ${dashBoardController.summaryModel?.result?.netDebtGains ?? ''}'),
-                                    VerticalSpacer(1.h),
-                                    Text(
-                                        '₹ ${dashBoardController.summaryModel?.result?.netEquityGains ?? ''}'),
-                                    VerticalSpacer(1.h),
-                                    Text(
-                                        '₹ ${dashBoardController.summaryModel?.result?.totalAmount ?? ''}'),
-                                    VerticalSpacer(1.h),
-                                    Text(
-                                      dashBoardController
-                                              .summaryModel?.result?.growth ??
-                                          '',
-                                    ),
-                                    VerticalSpacer(1.h),
-                                  ],
-                                )
+                                VerticalSpacer(3.h),
+                                Text(
+                                  'Your portfolio is currently empty!',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                ),
+                                VerticalSpacer(1.h),
+                                const Text(
+                                  'After you start investing,your mutual funds/n portfolio will appear here.',
+                                  textAlign: TextAlign.center,
+                                  // style: Theme.of(context)
+                                  //     .textTheme
+                                  //     .bodyMedium!
+                                  //     .copyWith(
+                                  //       fontSize: 16.sp,
+                                  //       fontWeight: FontWeight.bold,
+                                  //     ),
+                                ),
+                                VerticalSpacer(2.h),
                               ],
-                            )
-                          ],
+                            ),
+                          ),
+                        ),
+                      )
+                    : InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ScreenHoldings(),
+                            ),
+                          );
+                        },
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: Card(
+                            surfaceTintColor: Colors.transparent,
+                            child: Padding(
+                              padding: EdgeInsets.all(15.sp),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Mutual Funds Portfolio',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                          fontSize: 17.sp,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                  ),
+                                  VerticalSpacer(2.h),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Text('Net Investment'),
+                                          VerticalSpacer(1.h),
+                                          // const Text('Net Debt Gain'),
+                                          // VerticalSpacer(1.h),
+                                          const Text('Net Equity Gain'),
+                                          VerticalSpacer(1.h),
+                                          const Text('Total'),
+                                          // VerticalSpacer(1.h),
+                                          // const Text('Growth'),
+                                          VerticalSpacer(1.h),
+                                        ],
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                              ' ${dashBoardController.summaryModel?.result?.netInvestment ?? ''}'),
+                                          VerticalSpacer(1.h),
+                                          // Text(
+                                          //     '₹ ${dashBoardController.summaryModel?.result?.netDebtGains ?? ''}'),
+                                          // VerticalSpacer(1.h),
+                                          Text(
+                                              ' ${dashBoardController.summaryModel?.result?.netEquityGains ?? ''}'),
+                                          VerticalSpacer(1.h),
+                                          Text(dashBoardController.summaryModel
+                                                  ?.result?.totalAmount ??
+                                              ''),
+                                          // VerticalSpacer(1.h),
+                                          // Text(
+                                          //   dashBoardController.summaryModel
+                                          //           ?.result?.growth
+                                          //           .toString() ??
+                                          //       '',
+                                          // ),
+                                          VerticalSpacer(1.h),
+                                        ],
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                ),
                 VerticalSpacer(10.h),
               ],
             ),

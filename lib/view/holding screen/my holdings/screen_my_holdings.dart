@@ -21,6 +21,7 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
     super.initState();
     Provider.of<HoldingsController>(context, listen: false)
         .fetchReportDetails(context, widget.isinNumber, widget.trxnumber);
+    Provider.of<HoldingsController>(context, listen: false).currentindex = 0;
   }
 
   @override
@@ -48,8 +49,8 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                             children: [
                               VerticalSpacer(1.h),
                               Text(
-                                holdingController.reportDetailsModel
-                                        ?.transaction?.schemeName ??
+                                holdingController.reportDetailsModel?.result
+                                        ?.schemeName ??
                                     '',
                                 style: Theme.of(context)
                                     .textTheme
@@ -61,7 +62,7 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                               ),
                               VerticalSpacer(1.h),
                               Text(
-                                '₹ ${holdingController.reportDetailsModel?.transaction?.totalAmount ?? ''}',
+                                ' ${holdingController.reportDetailsModel?.result?.totalAmount ?? ''}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!
@@ -99,30 +100,30 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                                     children: [
                                       VerticalSpacer(2.h),
                                       Text(
-                                          '₹ ${holdingController.reportDetailsModel?.transaction?.investmentAmount ?? ''}'),
+                                          ' ${holdingController.reportDetailsModel?.result?.investmentAmount ?? ''}'),
                                       VerticalSpacer(1.h),
                                       Text(
-                                        '₹ ${holdingController.reportDetailsModel?.transaction?.gains ?? ''}',
+                                        ' ${holdingController.reportDetailsModel?.result?.gains.toString() ?? ''}',
                                         style: const TextStyle(
                                             color: Colors.green),
                                       ),
                                       VerticalSpacer(1.h),
                                       Text(
                                         holdingController.reportDetailsModel
-                                                ?.transaction?.growthAbsolute ??
+                                                ?.result?.growthAbsolute ??
                                             '',
                                         style: const TextStyle(
                                             color: Colors.green),
                                       ),
                                       VerticalSpacer(1.h),
                                       Text(
-                                          '${holdingController.reportDetailsModel?.transaction?.totalUnits ?? ''}'),
+                                          '${holdingController.reportDetailsModel?.result?.totalUnits.toString() ?? ''}'),
                                       VerticalSpacer(1.h),
                                       Text(
-                                          '${holdingController.reportDetailsModel?.transaction?.averageNav ?? ''}'),
+                                          '${holdingController.reportDetailsModel?.result?.averageNav ?? ''}'),
                                       VerticalSpacer(1.h),
                                       Text(
-                                          '${holdingController.reportDetailsModel?.transaction?.currentNav ?? ''}'),
+                                          '${holdingController.reportDetailsModel?.result?.currentNav ?? ''}'),
                                       VerticalSpacer(1.h),
                                     ],
                                   ),
@@ -172,7 +173,7 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                                                 child: Center(
                                                   child: Text(holdingController
                                                           .reportDetailsModel
-                                                          ?.transaction
+                                                          ?.result
                                                           ?.purchaseDetails?[
                                                               index]
                                                           .folio ??
@@ -188,11 +189,8 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                                 },
                                 separatorBuilder: (context, index) =>
                                     HorizontalSpacer(3.w),
-                                itemCount: holdingController
-                                        .reportDetailsModel
-                                        ?.transaction
-                                        ?.purchaseDetails
-                                        ?.length ??
+                                itemCount: holdingController.reportDetailsModel
+                                        ?.result?.purchaseDetails?.length ??
                                     0),
                           ),
                         ],
@@ -203,9 +201,9 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                       color: Color.fromARGB(255, 224, 219, 219),
                     ),
                     // VerticalSpacer(1.h),
-                    Text('Transaction'),
-                    Divider(
-                      color: const Color.fromARGB(255, 224, 219, 219),
+                    const Text('Transaction'),
+                    const Divider(
+                      color: Color.fromARGB(255, 224, 219, 219),
                     ),
                     Expanded(
                       child: ListView.separated(
@@ -218,14 +216,14 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                                   children: [
                                     Text(holdingController
                                             .reportDetailsModel
-                                            ?.transaction
+                                            ?.result
                                             ?.purchaseDetails?[
                                                 holdingController.currentindex]
                                             .transactions?[index]
                                             .transactionType ??
                                         ''),
                                     Text(
-                                      '₹ ${holdingController.reportDetailsModel?.transaction?.purchaseDetails?[holdingController.currentindex].transactions?[index].purchasesmount}',
+                                      ' ${holdingController.reportDetailsModel?.result?.purchaseDetails?[holdingController.currentindex].transactions?[index].purchaseAmount}',
                                       style:
                                           const TextStyle(color: Colors.green),
                                     )
@@ -237,7 +235,7 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                                     Text(
                                       holdingController
                                               .reportDetailsModel
-                                              ?.transaction
+                                              ?.result
                                               ?.purchaseDetails?[
                                                   holdingController
                                                       .currentindex]
@@ -247,10 +245,14 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                                     ),
                                     HorizontalSpacer(19.5.w),
                                     Text(
-                                        'NAV: ${holdingController.reportDetailsModel?.transaction?.purchaseDetails?[holdingController.currentindex].transactions?[index].nav}'),
+                                        'NAV: ${holdingController.reportDetailsModel?.result?.purchaseDetails?[holdingController.currentindex].transactions?[index].nav}'),
                                     HorizontalSpacer(2.w),
-                                    Text(
-                                        'Units: ${holdingController.reportDetailsModel?.transaction?.purchaseDetails?[holdingController.currentindex].transactions?[index].units}')
+                                    Expanded(
+                                      child: Text(
+                                        'Units: ${holdingController.reportDetailsModel?.result?.purchaseDetails?[holdingController.currentindex].transactions?[index].units}',
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    )
                                   ],
                                 )
                               ],
@@ -261,7 +263,7 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                               ),
                           itemCount: holdingController
                                   .reportDetailsModel
-                                  ?.transaction
+                                  ?.result
                                   ?.purchaseDetails?[
                                       holdingController.currentindex]
                                   .transactions

@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:finfresh_mobile/controller/scheme%20details%20controller/scheme_details_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';

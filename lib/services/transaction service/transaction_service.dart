@@ -3,9 +3,9 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:finfresh_mobile/model/payment%20response%20model/payment_response_model.dart';
+import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
-import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
 import 'package:finfresh_mobile/utilities/urls/url.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -29,6 +29,8 @@ class TransactionService {
     required String navpodname,
     required String productName,
     required String transType,
+    required String umrn,
+    required String systamatic,
   }) async {
     String token = await SecureStorage.readToken('token');
     String userId = await SecureStorage.readToken('userId');
@@ -140,7 +142,7 @@ class TransactionService {
       "service_request": {
         // "iin": "5014047687",
         "iin": iin,
-        "sub_trxn_type": "N",
+        "sub_trxn_type": systamatic,
         "poa": "N",
         "poa_bank_trxn_type": "NDCPMS",
         "trxn_acceptance": paymenMode,
@@ -179,9 +181,9 @@ class TransactionService {
         "sip_branch": "",
         "sip_acc_no": "",
         "sip_ac_type": "",
-        "sip_ifsc_code": "KKBK0008667",
+        "sip_ifsc_code": "",
         "sip_paymech": "",
-        "umrn": "",
+        "umrn": umrn,
         "ach_amt": "",
         "ach_fromdate": date,
         "ach_enddate": duedate,
@@ -217,7 +219,7 @@ class TransactionService {
             "sip_from_date": date,
             "sip_end_date": duedate,
             "sip_freq": "",
-            "sip_amount": "",
+            "sip_amount": instalmentAmount,
             "sip_period_day": "",
             "input_ref_no": "52521",
             "perpetual_flag": "",
@@ -227,9 +229,9 @@ class TransactionService {
             "GOAL_AMOUNT": "",
             "FREEDOM_SIP": "",
             "FREEDOM_TARGET_SCHEME": "",
-            "FREEDOM_TENURE": "12",
+            "FREEDOM_TENURE": "",
             "FREEDOM_SWP_AMOUNT": "",
-            "FREEDOM_SCHEME_OPTION": "A"
+            "FREEDOM_SCHEME_OPTION": ""
           }
         }
       ],
@@ -253,11 +255,11 @@ class TransactionService {
         return true;
       } else if (jsonResponse["code"] == 500) {
         // ignore: use_build_context_synchronously
-        showSnackBar(context, jsonResponse["message"]);
+        showFlushbar(context, jsonResponse["message"]);
       }
     } on SocketException {
       // ignore: use_build_context_synchronously
-      showSnackBar(context, 'No Internet Connection');
+      showFlushbar(context, 'No Internet Connection');
     } catch (e) {
       logger.d('Exception in purchase $e');
       return false;

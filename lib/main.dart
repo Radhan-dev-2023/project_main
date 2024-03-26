@@ -44,14 +44,17 @@ import 'package:finfresh_mobile/view/splash%20Screen/splash_screen.dart';
 import 'package:finfresh_mobile/view/kyc/user%20personal%20details/screen_personal_details.dart';
 import 'package:finfresh_mobile/view/webview/screen_webview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:image/image.dart';
-
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp, 
+    DeviceOrientation.portraitDown,
+  ]);
   await Hive.initFlutter();
   if (!Hive.isAdapterRegistered(InvestorModelAdapter().typeId)) {
     Hive.registerAdapter(InvestorModelAdapter());
