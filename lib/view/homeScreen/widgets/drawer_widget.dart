@@ -1,9 +1,9 @@
 import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
-import 'package:finfresh_mobile/view/ach%20registrarion/ach_registeration.dart';
 import 'package:finfresh_mobile/view/fatcha%20registration/fatcha_registeration.dart';
 import 'package:finfresh_mobile/view/settings%20page/screen_settings.dart';
 import 'package:finfresh_mobile/view/top%20funds/top_funds.dart';
+import 'package:finfresh_mobile/view/transaction%20screen/screen_transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -76,21 +76,19 @@ class DrawerWidget extends StatelessWidget {
                   ));
             },
           ),
-
-          // Add more ListTile widgets for additional items
-          // ListTile(
-          //   title: Text(
-          //     'ACH Mandate Registration',
-          //     style: Theme.of(context).textTheme.labelLarge,
-          //   ),
-          //   onTap: () {
-          //     Navigator.push(
-          //         context,
-          //         MaterialPageRoute(
-          //           builder: (context) => const ScreenAchRegistration(),
-          //         ));
-          //   },
-          // ),
+          ListTile(
+            title: Text(
+              'Transcations',
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ScreeenTranscations(),
+                  ));
+            },
+          ),
           ListTile(
             title: Text(
               'Settings',

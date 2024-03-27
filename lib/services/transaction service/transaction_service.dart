@@ -148,7 +148,7 @@ class TransactionService {
         "trxn_acceptance": paymenMode,
         "demat_user": "N",
         "dp_id": "",
-        "bank": bankCode,
+         "bank": bankCode,
         // "bank": 'YBK',
         // "ac_no": "069251100006838",
         // "ifsc_code": "YESB0000692",

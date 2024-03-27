@@ -315,7 +315,7 @@ void modalBottomSheetMenu(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             SizedBox(
-                                              height: Adaptive.h(10.5),
+                                              // height: Adaptive.h(10.5),
                                               width: 45.w,
                                               child: TextFormField(
                                                 onTap: () {
@@ -419,6 +419,7 @@ void modalBottomSheetMenu(
                                                   return null;
                                                 },
                                                 decoration: InputDecoration(
+                                                  helperText: '',
                                                   border: OutlineInputBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
@@ -429,7 +430,7 @@ void modalBottomSheetMenu(
                                             ),
                                             HorizontalSpacer(2.w),
                                             SizedBox(
-                                              height: Adaptive.h(10.5),
+                                              // height: Adaptive.h(10.5),
                                               width: 45.w,
                                               child: DropdownButtonFormField<
                                                   String>(

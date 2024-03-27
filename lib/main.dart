@@ -3,6 +3,7 @@ import 'package:finfresh_mobile/controller/auth/auth_controller.dart';
 import 'package:finfresh_mobile/controller/bank%20controller/bank_controller.dart';
 import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
 import 'package:finfresh_mobile/controller/fatcha%20registration/fatcha_registration.dart';
+import 'package:finfresh_mobile/controller/filter%20controller/filter_controller.dart';
 import 'package:finfresh_mobile/controller/holdingns%20controller/holdings_controller.dart';
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_controller.dart';
@@ -52,7 +53,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp, 
+    DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
   await Hive.initFlutter();
@@ -111,6 +112,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => HoldingsController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => FilterController(),
         ),
       ],
       child: ResponsiveSizer(builder: (context, orientation, screenType) {
