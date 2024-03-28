@@ -86,7 +86,7 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                                       VerticalSpacer(1.h),
                                       const Text('Growth(Absolute)'),
                                       VerticalSpacer(1.h),
-                                      const Text('Totel Units'),
+                                      const Text('Total Units'),
                                       VerticalSpacer(1.h),
                                       const Text('Average NAV'),
                                       VerticalSpacer(1.h),
@@ -100,10 +100,10 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                                     children: [
                                       VerticalSpacer(2.h),
                                       Text(
-                                          ' ${holdingController.reportDetailsModel?.result?.investmentAmount ?? ''}'),
+                                          ' ${holdingController.reportDetailsModel?.result?.investmentAmount ?? '-'}'),
                                       VerticalSpacer(1.h),
                                       Text(
-                                        ' ${holdingController.reportDetailsModel?.result?.gains.toString() ?? ''}',
+                                        ' ${holdingController.reportDetailsModel?.result?.gains.toString() ?? '-'}',
                                         style: const TextStyle(
                                             color: Colors.green),
                                       ),
@@ -116,14 +116,16 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                                             color: Colors.green),
                                       ),
                                       VerticalSpacer(1.h),
-                                      Text(
-                                          '${holdingController.reportDetailsModel?.result?.totalUnits.toString() ?? ''}'),
+                                      Text(holdingController.reportDetailsModel
+                                              ?.result?.totalUnits
+                                              .toString() ??
+                                          '-'),
                                       VerticalSpacer(1.h),
                                       Text(
-                                          '${holdingController.reportDetailsModel?.result?.averageNav ?? ''}'),
+                                          '${holdingController.reportDetailsModel?.result?.averageNav ?? '-'}'),
                                       VerticalSpacer(1.h),
                                       Text(
-                                          '${holdingController.reportDetailsModel?.result?.currentNav ?? ''}'),
+                                          '${holdingController.reportDetailsModel?.result?.currentNav ?? '-'}'),
                                       VerticalSpacer(1.h),
                                     ],
                                   ),
@@ -171,13 +173,24 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                                                           255, 224, 219, 219),
                                                 ),
                                                 child: Center(
-                                                  child: Text(holdingController
-                                                          .reportDetailsModel
-                                                          ?.result
-                                                          ?.purchaseDetails?[
-                                                              index]
-                                                          .folio ??
-                                                      ''),
+                                                  child: Text(
+                                                    holdingController
+                                                            .reportDetailsModel
+                                                            ?.result
+                                                            ?.purchaseDetails?[
+                                                                index]
+                                                            .folio ??
+                                                        '',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: holdingController
+                                                                  .currentindex ==
+                                                              index
+                                                          ? Colors.white
+                                                          : Colors.black,
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
                                             ),

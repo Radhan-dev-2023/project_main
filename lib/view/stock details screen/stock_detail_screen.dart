@@ -31,10 +31,13 @@ class StockDetailsScreen extends StatefulWidget {
   State<StockDetailsScreen> createState() => _StockDetailsScreenState();
 }
 
+final GlobalKey<ScaffoldState> scaffoldState = GlobalKey<ScaffoldState>();
+
 class _StockDetailsScreenState extends State<StockDetailsScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final int _currentIndex = 0;
+
   @override
   void initState() {
     log('isinnumber++${widget.isinNumber}');
@@ -82,6 +85,7 @@ class _StockDetailsScreenState extends State<StockDetailsScreen>
           scheme: widget.scheme),
     ];
     return Scaffold(
+      key: scaffoldState,
       body: Column(
         children: [
           Expanded(child: widgetList[_currentIndex]),
@@ -109,28 +113,34 @@ class _StockDetailsScreenState extends State<StockDetailsScreen>
 }
 
 void modalBottomSheetMenu(
-  context,
+  BuildContext context,
   String isinNumber,
   String schemename,
   String category,
 ) {
   Brightness brightness = Theme.of(context).brightness;
 
-  showModalBottomSheet(
-    isDismissible: false,
+  scaffoldState.currentState?.showBottomSheet(
+    // enableDrag: true,
+    // isDismissible: false,
     // useSafeArea: true,
-    isScrollControlled: true,
-    context: context,
-    builder: (builder) {
+    // isScrollControlled: true,
+    // context: context,
+    (builder) {
       return Consumer<SchemeDetailsController>(
         builder: (context, schemeController, child) {
+          log('schemeController.ischecked ${schemeController.ischecked}');
           return Container(
-            height: schemeController.selectedValue == 'Lumpsum' ||
-                    schemeController.selectedValue == 'Investment type'
-                ? 500
-                : 580,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15.sp),
+              // color: Colors.transparent,
+            ),
+            // height: schemeController.selectedValue == 'Lumpsum' ||
+            //         schemeController.selectedValue == 'Investment type'
+            //     ? 500
+            //     : 580,
             margin: EdgeInsets.all(15.sp),
-            color: Colors.transparent,
+
             child: SingleChildScrollView(
               child: Container(
                 decoration: const BoxDecoration(
@@ -167,7 +177,6 @@ void modalBottomSheetMenu(
                               schemeController.installmentController.clear();
                               schemeController.datevalue = null;
                               schemeController.mandatevalue = null;
-                              schemeController.ischecked = false;
                             },
                             child: const Icon(Icons.close),
                           ),
@@ -488,7 +497,7 @@ void modalBottomSheetMenu(
                                               },
                                             ),
                                             const Text(
-                                                'Pay First Instalment Today')
+                                                'Pay first installment today')
                                           ],
                                         )
                                       : const SizedBox(),
@@ -566,8 +575,7 @@ void modalBottomSheetMenu(
                                                       null;
                                                   schemeController
                                                       .mandatevalue = null;
-                                                  schemeController.ischecked =
-                                                      false;
+
                                                   // ignore: use_build_context_synchronously
                                                   Navigator.pop(context);
                                                 }

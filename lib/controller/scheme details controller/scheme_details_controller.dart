@@ -116,7 +116,7 @@ class SchemeDetailsController extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool ischecked = false;
+  bool ischecked = true;
   void changeChecked(bool value) {
     ischecked = value;
     notifyListeners();

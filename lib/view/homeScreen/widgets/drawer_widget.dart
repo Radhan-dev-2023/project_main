@@ -28,7 +28,7 @@ class DrawerWidget extends StatelessWidget {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  VerticalSpacer(7.h),
+                  VerticalSpacer(3.h),
                   Text(
                     '${dashBoardController.dashBoardModel?.result?.data?.name ?? ''}',
                     style: const TextStyle(
@@ -40,6 +40,13 @@ class DrawerWidget extends StatelessWidget {
                     dashBoardController
                             .dashBoardModel?.result?.data?.phoneNumber ??
                         '',
+                    style: const TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  VerticalSpacer(1.h),
+                  Text(
+                    'IIN : ${dashBoardController.dashBoardModel?.result?.data?.iin ?? ''}',
                     style: const TextStyle(
                       color: Colors.white,
                     ),
@@ -78,7 +85,7 @@ class DrawerWidget extends StatelessWidget {
           ),
           ListTile(
             title: Text(
-              'Transcations',
+              'Transactions',
               style: Theme.of(context).textTheme.labelLarge,
             ),
             onTap: () {

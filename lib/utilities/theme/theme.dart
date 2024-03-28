@@ -63,6 +63,7 @@ class AppTheme {
 // *****************
 
   static final ThemeData lightTheme = ThemeData(
+   
     iconTheme: const IconThemeData(color: Colors.black),
     inputDecorationTheme: InputDecorationTheme(
       focusedErrorBorder: OutlineInputBorder(
@@ -116,6 +117,7 @@ class AppTheme {
     //     ), // Set your desired icon color
     //   ),
     // ),
+   
     cardTheme: const CardTheme(
       color: Color(0xFF0E1330), // Set the background color for cards
     ),

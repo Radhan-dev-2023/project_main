@@ -302,7 +302,9 @@ class TopMfsScreen extends StatelessWidget {
                       );
                     },
                     separatorBuilder: (context, index) => VerticalSpacer(1.h),
-                    itemCount: 5,
+                    itemCount: topMfsController
+                            .topPerformingMutualFundModel?.list?.length ??
+                        0,
                   ),
                 ),
               ],

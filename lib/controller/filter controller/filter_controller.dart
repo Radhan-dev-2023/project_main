@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:finfresh_mobile/model/filter%20model/filter_model.dart';
 import 'package:finfresh_mobile/services/filter%20services/fliter_services.dart';
 import 'package:finfresh_mobile/services/refersh%20token/refersh_token.dart';
+import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -75,10 +76,13 @@ class FilterController extends ChangeNotifier {
 
   List<String> typeList = [];
   List<String> statusList = [];
+  List<Result> filteredList = [];
+  TextEditingController searchController = TextEditingController();
 
   RefershTokenService refershTokenService = RefershTokenService();
   bool filterPageLoading = false;
   Future<void> getfilter(context) async {
+    filteredList.clear();
     filterPageLoading = true;
     notifyListeners();
     String token = await SecureStorage.readToken('token');
@@ -87,14 +91,31 @@ class FilterController extends ChangeNotifier {
       await refershTokenService.postRefershTocken(context);
       fliterModel =
           await filterService.fetchFilterdata(typeList, statusList, context);
+      filteredList = fliterModel?.result ?? [];
+      log('filtere list =$filteredList');
       filterPageLoading = false;
       notifyListeners();
     } else {
       fliterModel =
           await filterService.fetchFilterdata(typeList, statusList, context);
+      filteredList = fliterModel?.result ?? [];
+      log('filtere list =${filteredList.toList()}');
       filterPageLoading = false;
       notifyListeners();
     }
+  }
+
+  void searchItems() {
+    // searchResults.addAll(vendourList.vendourModel.result!.company!)
+    logger.d('search function called ');
+
+    filteredList = fliterModel!.result!
+        .where((item) => item.schemeName!
+            .toLowerCase()
+            .contains(searchController.text.toLowerCase()))
+        .toList();
+    logger.d('search result list == $filteredList');
+    notifyListeners();
   }
 
   void resetFilter() {
@@ -105,5 +126,6 @@ class FilterController extends ChangeNotifier {
     compltedvalue = false;
     pendingvalue = false;
     failedvalue = false;
+    searchController.clear();
   }
 }

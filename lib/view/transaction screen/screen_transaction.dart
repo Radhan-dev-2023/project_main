@@ -21,8 +21,7 @@ class _ScreeenTranscationsState extends State<ScreeenTranscations> {
     super.initState();
     final filterController =
         Provider.of<FilterController>(context, listen: false);
-    filterController.typeList.clear();
-    filterController.statusList.clear();
+    filterController.resetFilter();
     filterController.getfilter(context);
   }
 
@@ -41,33 +40,50 @@ class _ScreeenTranscationsState extends State<ScreeenTranscations> {
               : Column(
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        // SizedBox(
-                        //   height: Adaptive.h(6),
-                        //   width: Adaptive.w(62),
-                        //   child: TextFormField(
-                        //     style: Theme.of(context)
-                        //         .textTheme
-                        //         .labelLarge!
-                        //         .copyWith(fontSize: 16.sp),
-                        //     autovalidateMode:
-                        //         AutovalidateMode.onUserInteraction,
-                        //     decoration: InputDecoration(
-                        //       // helperText: '',
-                        //       prefixIcon: Icon(
-                        //         Icons.search,
-                        //         size: Adaptive.h(2.3),
-                        //       ),
-                        //       border: OutlineInputBorder(
-                        //         borderRadius: BorderRadius.circular(10),
-                        //       ),
-                        //       contentPadding:
-                        //           EdgeInsets.symmetric(horizontal: 12.0.sp),
-                        //       hintText: 'Search',
-                        //     ),
-                        //   ),
-                        // ),
+                        SizedBox(
+                          height: Adaptive.h(6),
+                          width: Adaptive.w(62),
+                          child: TextFormField(
+                            controller: filterController.searchController,
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(fontSize: 16.sp),
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            decoration: InputDecoration(
+                              // helperText: '',
+                              prefixIcon: Icon(
+                                Icons.search,
+                                size: Adaptive.h(2.3),
+                              ),
+                              suffixIcon: filterController
+                                      .searchController.text.isNotEmpty
+                                  ? InkWell(
+                                      onTap: () {
+                                        filterController.searchController
+                                            .clear();
+                                        filterController.getfilter(context);
+                                      },
+                                      child: Icon(
+                                        Icons.clear,
+                                        size: Adaptive.h(2.3),
+                                      ))
+                                  : const SizedBox(),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 12.0.sp),
+                              hintText: 'Search',
+                            ),
+                            onChanged: (value) {
+                              filterController.searchItems();
+                            },
+                          ),
+                        ),
                         InkWell(
                           onTap: () {
                             Provider.of<FilterController>(context,
@@ -122,132 +138,158 @@ class _ScreeenTranscationsState extends State<ScreeenTranscations> {
                       ],
                     ),
                     VerticalSpacer(3.h),
-                    filterController.fliterModel != null &&
-                            filterController.fliterModel!.result != null &&
-                            filterController.fliterModel!.result!.isNotEmpty
+                    // filterController.fliterModel != null &&
+                    //         filterController.fliterModel!.result != null &&
+                    //         filterController.fliterModel!.result!.isNotEmpty
+                    filterController.filteredList.isNotEmpty
                         ? Expanded(
                             child: ListView.separated(
-                                itemBuilder: (context, index) {
-                                  return Card(
-                                    surfaceTintColor: Colors.transparent,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(13.sp),
-                                      child: Column(
-                                        children: [
-                                          VerticalSpacer(2.h),
-                                          Row(
-                                            children: [
-                                              HorizontalSpacer(1.w),
-                                              Expanded(
-                                                child: Text(
-                                                  '${filterController.fliterModel?.result?[index].schemeName}',
-                                                  overflow:
-                                                      TextOverflow.visible,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyMedium!
-                                                      .copyWith(
-                                                        fontSize: 17.sp,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          VerticalSpacer(1.h),
-                                          const Divider(
-                                            thickness: 0.5,
-                                            height: 1,
-                                            color: Colors.grey,
-                                          ),
-                                          VerticalSpacer(2.h),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(filterController
-                                                          .fliterModel
-                                                          ?.result?[index]
-                                                          .entryDate ??
-                                                      ''),
-                                                  VerticalSpacer(1.h),
-                                                  Text(
-                                                      'ID  ${filterController.fliterModel?.result?[index].trxnNo ?? ''}')
-                                                ],
-                                              ),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
-                                                children: [
-                                                  Text(filterController
-                                                          .fliterModel
-                                                          ?.result?[index]
-                                                          .transactionType ??
-                                                      ''),
-                                                  VerticalSpacer(1.h),
-                                                  Text(
-                                                      '₹${filterController.fliterModel?.result?[index].amount}')
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          VerticalSpacer(2.h),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  const Text('Folio'),
-                                                  VerticalSpacer(1.h),
-                                                  const Text('Status')
-                                                ],
-                                              ),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
-                                                children: [
-                                                  Text(filterController
-                                                          .fliterModel
-                                                          ?.result?[index]
-                                                          .folioNo ??
-                                                      '-'),
-                                                  VerticalSpacer(1.h),
-                                                  Text(
-                                                    filterController
-                                                            .fliterModel
-                                                            ?.result?[index]
-                                                            .trxnStatus ??
-                                                        '-',
-                                                    style: TextStyle(
-                                                      color: getColorForStatus(
-                                                        filterController
-                                                            .fliterModel
-                                                            ?.result?[index]
-                                                            .trxnStatus,
-                                                      ),
+                              itemBuilder: (context, index) {
+                                return Card(
+                                  surfaceTintColor: Colors.transparent,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(13.sp),
+                                    child: Column(
+                                      children: [
+                                        VerticalSpacer(2.h),
+                                        Row(
+                                          children: [
+                                            HorizontalSpacer(1.w),
+                                            Expanded(
+                                              child: Text(
+                                                // '${filterController.fliterModel?.result?[index].schemeName}',
+                                                ' ${filterController.filteredList[index].schemeName}',
+                                                overflow: TextOverflow.visible,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .copyWith(
+                                                      fontSize: 17.sp,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                     ),
-                                                  )
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                          VerticalSpacer(2.h),
-                                        ],
-                                      ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        VerticalSpacer(1.h),
+                                        const Divider(
+                                          thickness: 0.5,
+                                          height: 1,
+                                          color: Colors.grey,
+                                        ),
+                                        VerticalSpacer(2.h),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                // Text(filterController
+                                                //         .fliterModel
+                                                //         ?.result?[index]
+                                                //         .entryDate ??
+                                                //     ''),
+                                                Text(filterController
+                                                        .filteredList[index]
+                                                        .entryDate ??
+                                                    ''),
+                                                VerticalSpacer(1.h),
+                                                // Text(
+                                                //     'ID  ${filterController.fliterModel?.result?[index].trxnNo ?? ''}')
+                                                Text(
+                                                    'ID ${filterController.filteredList[index].trxnNo ?? ''}')
+                                              ],
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                // Text(filterController
+                                                //         .fliterModel
+                                                //         ?.result?[index]
+                                                //         .transactionType ??
+                                                //     ''),
+                                                Text(filterController
+                                                        .filteredList[index]
+                                                        .transactionType ??
+                                                    '-'),
+
+                                                VerticalSpacer(1.h),
+                                                // Text(
+                                                //     '₹${filterController.fliterModel?.result?[index].amount}')
+                                                Text(
+                                                    '₹${filterController.filteredList[index].amount}')
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        VerticalSpacer(2.h),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const Text('Folio'),
+                                                VerticalSpacer(1.h),
+                                                const Text('Status')
+                                              ],
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                // Text(filterController
+                                                //         .fliterModel
+                                                //         ?.result?[index]
+                                                //         .folioNo ??
+                                                //     '-'),
+                                                Text(filterController
+                                                        .filteredList[index]
+                                                        .folioNo ??
+                                                    '-'),
+                                                VerticalSpacer(1.h),
+                                                Text(
+                                                  // filterController
+                                                  //         .fliterModel
+                                                  //         ?.result?[index]
+                                                  //         .trxnStatus ??
+                                                  //     '-',
+                                                  filterController
+                                                          .filteredList[index]
+                                                          .trxnStatus ??
+                                                      '',
+                                                  style: TextStyle(
+                                                    color: getColorForStatus(
+                                                      filterController
+                                                          .fliterModel
+                                                          ?.result?[index]
+                                                          .trxnStatus,
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                        VerticalSpacer(2.h),
+                                      ],
                                     ),
-                                  );
-                                },
-                                separatorBuilder: (context, index) =>
-                                    VerticalSpacer(2.h),
-                                itemCount: 5),
+                                  ),
+                                );
+                              },
+                              separatorBuilder: (context, index) =>
+                                  VerticalSpacer(2.h),
+                              // itemCount: filterController
+                              //         .fliterModel?.result?.length ??
+                              //     0,
+                              itemCount: filterController.filteredList.length,
+                            ),
                           )
                         : SizedBox(
                             child: Column(
@@ -294,6 +336,7 @@ class _ScreeenTranscationsState extends State<ScreeenTranscations> {
   }
 
   void showmodalBottomSheet(BuildContext context) {
+    Brightness brightness = MediaQuery.of(context).platformBrightness;
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -333,6 +376,7 @@ class _ScreeenTranscationsState extends State<ScreeenTranscations> {
                 ),
                 VerticalSpacer(2.h),
                 Row(
+                  // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     HorizontalSpacer(4.w),
                     SizedBox(
@@ -359,12 +403,22 @@ class _ScreeenTranscationsState extends State<ScreeenTranscations> {
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
+                                  // crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
                                       'Type',
                                       style: Theme.of(context)
                                           .textTheme
-                                          .labelLarge,
+                                          .labelLarge!
+                                          .copyWith(
+                                            color: filterController
+                                                        .currentIndex ==
+                                                    0
+                                                ? Colors.black
+                                                : brightness == Brightness.dark
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                          ),
                                     ),
                                     Visibility(
                                       visible:
@@ -407,7 +461,16 @@ class _ScreeenTranscationsState extends State<ScreeenTranscations> {
                                       'Status',
                                       style: Theme.of(context)
                                           .textTheme
-                                          .labelLarge,
+                                          .labelLarge!
+                                          .copyWith(
+                                            color: filterController
+                                                        .currentIndex ==
+                                                    1
+                                                ? Colors.black
+                                                : brightness == Brightness.dark
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                          ),
                                     ),
                                     Visibility(
                                       visible:
