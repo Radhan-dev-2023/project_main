@@ -3,35 +3,17 @@ import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/stock_detail_screen.dart';
 import 'package:finfresh_mobile/view/top%20mfs/widget/duration_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class TopMfsScreen extends StatefulWidget {
-  final String category;
-  final String? appbarname;
-  const TopMfsScreen({super.key, required this.category, this.appbarname});
-
-  @override
-  State<TopMfsScreen> createState() => _TopMfsScreenState();
-}
-
-class _TopMfsScreenState extends State<TopMfsScreen> {
-  @override
-  void initState() {
-    super.initState();
-    Provider.of<TopMFsController>(context, listen: false)
-        .getTopMfs(context, widget.category);
-    Provider.of<TopMFsController>(context, listen: false).returns = '1 month';
-  }
+class ScreenAllMutualFund extends StatelessWidget {
+  const ScreenAllMutualFund({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Text(
-              widget.appbarname == null ? 'Top MFs' : '${widget.appbarname}')),
+      appBar: AppBar(title: const Text('Mutual Funds')),
       body: Container(
         margin: EdgeInsets.all(15.sp),
         child: Consumer<TopMFsController>(
@@ -46,14 +28,13 @@ class _TopMfsScreenState extends State<TopMfsScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Top Funds',
+                      '${topMfsController.topPerformingMutualFundModel?.list?.length ?? 0} SCHEMES',
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            fontSize: 17.sp,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 16.sp,
                           ),
                     ),
-                    DurationButton(
-                      category: widget.category,
+                    const DurationButton(
+                      category: 'All',
                     )
                   ],
                 ),
@@ -196,102 +177,6 @@ class _TopMfsScreenState extends State<TopMfsScreen> {
             );
           }
         }),
-      ),
-    );
-  }
-}
-
-class DummyWidget extends StatelessWidget {
-  final String productname;
-  final String fundname;
-  final String riskometer;
-  final String percentage;
-
-  const DummyWidget({
-    super.key,
-    required this.productname,
-    required this.fundname,
-    required this.riskometer,
-    required this.percentage,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: EdgeInsets.all(10.sp),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                // SizedBox(
-                //   height: 5.h,
-                //   width: 15.w,
-                //   child: Image.network(
-                //     topMfsController
-                //             .topPerformingMutualFundModel
-                //             ?.list?[index]
-                //             .logo ??
-                //         '',
-                //     errorBuilder: (context, error, stackTrace) {
-                //       return const SizedBox();
-                //     },
-                //   ),
-                // ),
-                HorizontalSpacer(5.w),
-                Expanded(
-                  child: Text(
-                    productname,
-                    overflow: TextOverflow.visible,
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          fontSize: 17.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                ),
-              ],
-            ),
-            VerticalSpacer(2.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Text(
-                    fundname,
-                    overflow: TextOverflow.visible,
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(
-                      10.sp,
-                    ),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(8.sp),
-                    child: Text(
-                      riskometer,
-                      style: TextStyle(color: Colors.red),
-                    ),
-                  ),
-                )
-              ],
-            ),
-            VerticalSpacer(2.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Column(
-                  children: [
-                    const Text('3 year Return'),
-                    Text(percentage),
-                  ],
-                )
-              ],
-            )
-          ],
-        ),
       ),
     );
   }

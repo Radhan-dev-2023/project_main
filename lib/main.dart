@@ -9,6 +9,7 @@ import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart'
 import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_controller.dart';
 import 'package:finfresh_mobile/controller/pin%20controller/pin_controller.dart';
 import 'package:finfresh_mobile/controller/scheme%20details%20controller/scheme_details_controller.dart';
+import 'package:finfresh_mobile/controller/search%20controller/search_controller.dart';
 import 'package:finfresh_mobile/controller/top%20MFs%20controller/top_mfs_controller.dart';
 import 'package:finfresh_mobile/controller/top%20fund%20controller/top_fund_controller.dart';
 import 'package:finfresh_mobile/controller/uploading%20proofs/uploading_proof_controller.dart';
@@ -115,6 +116,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => FilterController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SearchFundsController(),
         ),
       ],
       child: ResponsiveSizer(builder: (context, orientation, screenType) {

@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final mutualFundModel = mutualFundModelFromJson(jsonString);
-
 import 'dart:convert';
 
 MutualFundModel mutualFundModelFromJson(String str) =>

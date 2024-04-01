@@ -139,8 +139,11 @@ class _SliverlistWidgetState extends State<SliverlistWidget> {
                         ),
                       ),
                     ),
+
                     SliverToBoxAdapter(
-                      child: ChartWidget(scheme: widget.scheme),
+                      child: schemeDetailsController.historicalNavModel != null
+                          ? ChartWidget(scheme: widget.scheme)
+                          : const SizedBox(),
                     ),
                     const SliverToBoxAdapter(
                       child: SizedBox(
@@ -186,24 +189,32 @@ class _SliverlistWidgetState extends State<SliverlistWidget> {
                 //   ],
                 // ),
                 body: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      VerticalSpacer(1.h),
-                      Padding(
-                        padding: EdgeInsets.all(15.sp),
-                        child: Text(
-                          'Overview',
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                  child: schemeDetailsController.historicalNavModel != null
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            VerticalSpacer(1.h),
+                            Padding(
+                              padding: EdgeInsets.all(15.sp),
+                              child: Text(
+                                'Overview',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      fontSize: 18.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
+                            ),
+                            const OverViewInTabbar(),
+                          ],
+                        )
+                      : SizedBox(
+                          height: Adaptive.h(50),
+                          // width: MediaQuery.of(context).size.width,
+                          child: const Center(child: Text('No data found')),
                         ),
-                      ),
-                      const OverViewInTabbar(),
-                    ],
-                  ),
                 ),
               ),
       );

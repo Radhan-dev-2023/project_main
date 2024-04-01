@@ -132,7 +132,7 @@ class SchemeDetailsController extends ChangeNotifier {
   void updatePaymentMode(String? value) {
     paymentMode = value ?? '';
     notifyListeners();
-    if (paymentMode == 'Debit Mandate') {
+    if (paymentMode == 'Select a payment mode') {
       paymentvalueTobackent = 'M';
     } else if (paymentMode == 'Online') {
       paymentvalueTobackent = 'OL';
@@ -314,6 +314,7 @@ class SchemeDetailsController extends ChangeNotifier {
         transType: selectedValue,
         umrn: umrnNumber,
         systamatic: selectedValue == 'SIP' ? 'S' : "N",
+        sipPeriod: selectedValue == 'SIP' ? datevalue ?? '' : '',
       );
       if (result == true) {
         loadingTransButton = false;
@@ -344,6 +345,7 @@ class SchemeDetailsController extends ChangeNotifier {
         transType: selectedValue,
         umrn: umrnNumber,
         systamatic: selectedValue == 'SIP' ? 'S' : "N",
+        sipPeriod: selectedValue == 'SIP' ? datevalue ?? '' : '',
       );
       if (result == true) {
         loadingTransButton = false;

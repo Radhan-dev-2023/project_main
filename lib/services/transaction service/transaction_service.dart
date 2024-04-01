@@ -31,6 +31,7 @@ class TransactionService {
     required String transType,
     required String umrn,
     required String systamatic,
+    required String sipPeriod,
   }) async {
     String token = await SecureStorage.readToken('token');
     String userId = await SecureStorage.readToken('userId');
@@ -41,7 +42,7 @@ class TransactionService {
     log(token);
     log(userId);
     log(phoneNumber);
-    log(paymenMode);
+    log("paymenMode$paymenMode");
     log(ifscCode);
     log(instalmentAmount);
     log(fromdate);
@@ -148,7 +149,7 @@ class TransactionService {
         "trxn_acceptance": paymenMode,
         "demat_user": "N",
         "dp_id": "",
-         "bank": bankCode,
+        "bank": bankCode,
         // "bank": 'YBK',
         // "ac_no": "069251100006838",
         // "ifsc_code": "YESB0000692",
@@ -182,7 +183,7 @@ class TransactionService {
         "sip_acc_no": "",
         "sip_ac_type": "",
         "sip_ifsc_code": "",
-        "sip_paymech": "",
+        "sip_paymech": transType == 'SIP' ? "M" : '',
         "umrn": umrn,
         "ach_amt": "",
         "ach_fromdate": date,
@@ -218,16 +219,16 @@ class TransactionService {
             "amount": instalmentAmount,
             "sip_from_date": date,
             "sip_end_date": duedate,
-            "sip_freq": "",
+            "sip_freq": "OM",
             "sip_amount": instalmentAmount,
-            "sip_period_day": "",
+            "sip_period_day": sipPeriod,
             "input_ref_no": "52521",
-            "perpetual_flag": "",
-            "insurance_enabled": "",
-            "GOAL_BASED_SIP": "",
+            "perpetual_flag": transType == 'SIP' ? "N" : '',
+            "insurance_enabled": transType == 'SIP' ? "N" : "",
+            "GOAL_BASED_SIP": transType == 'SIP' ? "N" : '',
             "GOAL_TYPE": "",
             "GOAL_AMOUNT": "",
-            "FREEDOM_SIP": "",
+            "FREEDOM_SIP": transType == 'SIP' ? "N" : '',
             "FREEDOM_TARGET_SCHEME": "",
             "FREEDOM_TENURE": "",
             "FREEDOM_SWP_AMOUNT": "",

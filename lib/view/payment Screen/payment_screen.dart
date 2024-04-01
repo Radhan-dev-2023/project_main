@@ -52,7 +52,18 @@ class _ScreenPaymentState extends State<ScreenPayment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            Provider.of<SchemeDetailsController>(context, listen: false)
+                .paymentvalueTobackent = '';
+            Navigator.pop(context);
+          },
+          child: const Icon(
+            Icons.arrow_back,
+          ),
+        ),
+      ),
       body: Consumer<SchemeDetailsController>(
           builder: (context, schemeController, child) {
         return Container(

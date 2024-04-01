@@ -35,6 +35,7 @@ class SchemeServices {
     //HDFC Top 100 Fund - Growth Option - Regular Plan
     String url =
         'http://mfapi.advisorkhoj.com/getSchemeInfoFinfreshWealth?key=44aaa594-8ebd-4b0f-b3e2-80bc279d0163&scheme=$scheme';
+    log('url$url');
     try {
       log('try');
       http.Response response = await http.get(
@@ -117,10 +118,10 @@ class SchemeServices {
   }
 
   Future<TopPerformingMutualFundModel?> topPerformingMutualFund(
-      context, String category) async {
+      context, String category, String period) async {
     log('calling');
     String url =
-        'https://mfapi.advisorkhoj.com/getSchemePerformanceReturnsNew?key=44aaa594-8ebd-4b0f-b3e2-80bc279d0163&category=$category&period=1m';
+        'https://mfapi.advisorkhoj.com/getSchemePerformanceReturnsNew?key=44aaa594-8ebd-4b0f-b3e2-80bc279d0163&category=$category&period=$period';
     try {
       log('try');
       http.Response response = await http.get(
@@ -256,10 +257,13 @@ class SchemeServices {
     }
   }
 
-  Future<void> mutualFundBasedonCategoryAndQuery() async {
+  Future<MutualFundModel?> mutualFundBasedonCategoryAndQuery(
+    String query,
+    context,
+  ) async {
     log('calling');
     String url =
-        'https://mfapi.advisorkhoj.com/autoSuggestAllMfSchemes?key=44aaa594-8ebd-4b0f-b3e2-80bc279d0163&category=Debt: Liquid&query=hdfc';
+        'https://mfapi.advisorkhoj.com/autoSuggestAllMfSchemes?key=44aaa594-8ebd-4b0f-b3e2-80bc279d0163&category=All&query=$query';
     try {
       log('try');
       http.Response response = await http.get(
@@ -270,13 +274,18 @@ class SchemeServices {
       Map<String, dynamic> jsonResponse = json.decode(response.body);
       if (jsonResponse['status'] == 200) {
         mutualFundModel = MutualFundModel.fromJson(jsonResponse);
+        return mutualFundModel;
       } else if (jsonResponse['status'] == 500) {
-        // showSnackBar(context, jsonResponse['result']['message']);
+        showSnackBar(context, jsonResponse['status_msg']);
+        return null;
       }
     } on SocketException {
-      // showSnackBar(context, 'No Internet Connection');
+      showSnackBar(context, 'No Internet Connection');
+      return null;
     } catch (e) {
       logger.d('exception in scheme info $e');
+      return null;
     }
+    return null;
   }
 }

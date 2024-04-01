@@ -1,5 +1,7 @@
 import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
+import 'package:finfresh_mobile/controller/top%20MFs%20controller/top_mfs_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
+import 'package:finfresh_mobile/view/all%20mutual%20fund/screen_all_mutual_fund.dart';
 import 'package:finfresh_mobile/view/fatcha%20registration/fatcha_registeration.dart';
 import 'package:finfresh_mobile/view/settings%20page/screen_settings.dart';
 import 'package:finfresh_mobile/view/top%20funds/top_funds.dart';
@@ -68,6 +70,27 @@ class DrawerWidget extends StatelessWidget {
                   builder: (context) => const ScreenTopFunds(),
                 ),
               );
+            },
+          ),
+          ListTile(
+            title: Text(
+              'All Mutual Funds',
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ScreenAllMutualFund(),
+                ),
+              );
+              Provider.of<TopMFsController>(context, listen: false).returns =
+                  '1 month';
+              Provider.of<TopMFsController>(context, listen: false)
+                  .returntoBackend = '1m';
+              Provider.of<TopMFsController>(context, listen: false)
+                  .getTopMfs(context, 'All');
             },
           ),
           ListTile(

@@ -27,56 +27,58 @@ class ChartWidget extends StatelessWidget {
             height: 35.h,
             child: schemeController.detailScreenLoading == true
                 ? const LoadingWidget()
-                : SfCartesianChart(
-                    // zoomPanBehavior: ZoomPanBehavior(
-                    //   enablePanning: true,
-                    // ),
-                    margin: const EdgeInsets.all(0),
-                    enableAxisAnimation: true,
-                    plotAreaBorderWidth: 0,
-                    primaryYAxis: const NumericAxis(
+                : schemeController.historicalNavModel != null
+                    ? SfCartesianChart(
+                        // zoomPanBehavior: ZoomPanBehavior(
+                        //   enablePanning: true,
+                        // ),
+                        margin: const EdgeInsets.all(0),
+                        enableAxisAnimation: true,
+                        plotAreaBorderWidth: 0,
+                        primaryYAxis: const NumericAxis(
 
-                        // isVisible: false,
+                            // isVisible: false,
+                            ),
+                        primaryXAxis: const CategoryAxis(
+                          majorGridLines: MajorGridLines(width: 0),
+
+                          // isVisible: false,
                         ),
-                    primaryXAxis: const CategoryAxis(
-                      majorGridLines: MajorGridLines(width: 0),
 
-                      // isVisible: false,
-                    ),
+                        // Chart title
 
-                    // Chart title
+                        // Enable legend
+                        // legend: Legend(isVisible: true),
+                        // Enable tooltip
+                        tooltipBehavior: TooltipBehavior(enable: true),
+                        series: <CartesianSeries>[
+                          FastLineSeries<NavDetails, dynamic>(
+                              dataSource:
+                                  schemeController.historicalNavModel?.navList,
+                              xValueMapper: (NavDetails nav, _) =>
+                                  nav.navDateString,
+                              yValueMapper: (NavDetails nav, _) =>
+                                  nav.netAssetValue,
+                              legendIconType: LegendIconType.horizontalLine,
+                              color: schemeController.historicalNavModel!
+                                              .navList![0].netAssetValue! -
+                                          schemeController
+                                              .historicalNavModel!
+                                              .navList![schemeController
+                                                      .historicalNavModel!
+                                                      .navList!
+                                                      .length -
+                                                  1]
+                                              .netAssetValue! >=
+                                      0
+                                  ? Colors.red
+                                  : Colors.green
 
-                    // Enable legend
-                    // legend: Legend(isVisible: true),
-                    // Enable tooltip
-                    tooltipBehavior: TooltipBehavior(enable: true),
-                    series: <CartesianSeries>[
-                      FastLineSeries<NavDetails, dynamic>(
-                          dataSource:
-                              schemeController.historicalNavModel?.navList,
-                          xValueMapper: (NavDetails nav, _) =>
-                              nav.navDateString,
-                          yValueMapper: (NavDetails nav, _) =>
-                              nav.netAssetValue,
-                          legendIconType: LegendIconType.horizontalLine,
-                          color: schemeController.historicalNavModel!
-                                          .navList![0].netAssetValue! -
-                                      schemeController
-                                          .historicalNavModel!
-                                          .navList![schemeController
-                                                  .historicalNavModel!
-                                                  .navList!
-                                                  .length -
-                                              1]
-                                          .netAssetValue! >=
-                                  0
-                              ? Colors.red
-                              : Colors.green
-
-                          // name: 'Sales',
-                          ),
-                    ],
-                  ),
+                              // name: 'Sales',
+                              ),
+                        ],
+                      )
+                    : const SizedBox(),
           ),
           Positioned(
             right: 10.sp,

@@ -2,6 +2,7 @@ import 'package:finfresh_mobile/controller/achController/ach_controller.dart';
 import 'package:finfresh_mobile/controller/auth/auth_controller.dart';
 import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
 import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_controller.dart';
+import 'package:finfresh_mobile/controller/search%20controller/search_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:finfresh_mobile/view/holding%20screen/screen_holdings.dart';
@@ -11,6 +12,7 @@ import 'package:finfresh_mobile/view/homeScreen/widgets/drawer_widget.dart';
 import 'package:finfresh_mobile/view/kyc/uploading%20proofs/screen_upload_proof.dart';
 import 'package:finfresh_mobile/view/kyc/uploading%20proofs/upload%20bank%20proof/upload_bank_proof.dart';
 import 'package:finfresh_mobile/view/onboarding%20screen/on_boarding_view_screen.dart';
+import 'package:finfresh_mobile/view/search%20screen/search_screen.dart';
 import 'package:finfresh_mobile/view/top%20mfs/screen_top_mfs.dart';
 import 'package:finfresh_mobile/view/webview/screen_webview.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
@@ -55,7 +57,16 @@ class ScreenHome extends StatelessWidget {
         }),
         actions: [
           // IconButton(
-          //   onPressed: () {},
+          //   onPressed: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) => const ScreenSearch(),
+          //       ),
+          //     );
+          //     Provider.of<SearchFundsController>(context, listen: false)
+          //         .mutualFundsBasedonQuery('', context);
+          //   },
           //   icon: Icon(
           //     Icons.search,
           //     color: platformBrightness == Brightness.light
@@ -507,7 +518,6 @@ class ScreenHome extends StatelessWidget {
                                 const Text(
                                   'After you start investing,your mutual funds/n portfolio will appear here.',
                                   textAlign: TextAlign.center,
-                                
                                 ),
                                 VerticalSpacer(2.h),
                               ],
