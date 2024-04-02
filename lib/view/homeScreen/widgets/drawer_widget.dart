@@ -86,11 +86,11 @@ class DrawerWidget extends StatelessWidget {
                 ),
               );
               Provider.of<TopMFsController>(context, listen: false).returns =
-                  '1 month';
+                  '3 year';
               Provider.of<TopMFsController>(context, listen: false)
-                  .returntoBackend = '1m';
+                  .returntoBackend = '3y';
               Provider.of<TopMFsController>(context, listen: false)
-                  .getTopMfs(context, 'All');
+                  .getTopMfsFRomPeriod(context, 'All');
             },
           ),
           ListTile(

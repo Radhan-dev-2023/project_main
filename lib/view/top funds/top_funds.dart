@@ -1,5 +1,7 @@
+import 'package:finfresh_mobile/controller/top%20MFs%20controller/top_mfs_controller.dart';
 import 'package:finfresh_mobile/controller/top%20fund%20controller/top_fund_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
+import 'package:finfresh_mobile/view/all%20mutual%20fund/screen_all_mutual_fund.dart';
 import 'package:finfresh_mobile/view/top%20mfs/screen_top_mfs.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +15,34 @@ class ScreenTopFunds extends StatelessWidget {
   Widget build(BuildContext context) {
     Provider.of<TopFundController>(context, listen: false)
         .getSchemeAllCategory(context);
+    Brightness platformBrightness = MediaQuery.of(context).platformBrightness;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Top Funds'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ScreenAllMutualFund(),
+                ),
+              );
+              Provider.of<TopMFsController>(context, listen: false).returns =
+                  '3 year';
+              Provider.of<TopMFsController>(context, listen: false)
+                  .returntoBackend = '3y';
+              Provider.of<TopMFsController>(context, listen: false)
+                  .getTopMfsFRomPeriod(context, 'All');
+            },
+            icon: Icon(
+              Icons.search,
+              color: platformBrightness == Brightness.light
+                  ? Colors.black
+                  : Colors.white,
+            ),
+          ),
+        ],
       ),
       body: Container(
         margin: EdgeInsets.all(15.sp),

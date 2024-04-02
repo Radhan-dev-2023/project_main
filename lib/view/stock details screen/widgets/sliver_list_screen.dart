@@ -1,9 +1,6 @@
 import 'package:finfresh_mobile/controller/scheme%20details%20controller/scheme_details_controller.dart';
-import 'package:finfresh_mobile/model/latest%20nav%20model/latest_nav_model.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
-import 'package:finfresh_mobile/view/stock%20details%20screen/widgets/event_screen.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/widgets/chart_widget.dart';
-import 'package:finfresh_mobile/view/stock%20details%20screen/widgets/news_screen.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/widgets/overview_in_tabbar.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
 import 'package:flutter/material.dart';

@@ -120,8 +120,10 @@ class SchemeServices {
   Future<TopPerformingMutualFundModel?> topPerformingMutualFund(
       context, String category, String period) async {
     log('calling');
+    log('caaterrororo$category');
     String url =
         'https://mfapi.advisorkhoj.com/getSchemePerformanceReturnsNew?key=44aaa594-8ebd-4b0f-b3e2-80bc279d0163&category=$category&period=$period';
+    log('url$url');
     try {
       log('try');
       http.Response response = await http.get(

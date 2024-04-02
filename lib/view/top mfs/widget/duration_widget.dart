@@ -22,6 +22,7 @@ class DurationButton extends StatelessWidget {
                   topMfsController.pageController.previousPage(
                       duration: const Duration(milliseconds: 300),
                       curve: Curves.ease);
+                  // topMfsController.getTopMfsFRomPeriod(context, category);
                 }
               },
               child: const Icon(

@@ -21,9 +21,12 @@ class _TopMfsScreenState extends State<TopMfsScreen> {
   @override
   void initState() {
     super.initState();
+    Provider.of<TopMFsController>(context, listen: false).lodingList = false;
+    Provider.of<TopMFsController>(context, listen: false).returns = '3 year';
+    Provider.of<TopMFsController>(context, listen: false).returntoBackend =
+        '3y';
     Provider.of<TopMFsController>(context, listen: false)
         .getTopMfs(context, widget.category);
-    Provider.of<TopMFsController>(context, listen: false).returns = '1 month';
   }
 
   @override
@@ -59,138 +62,145 @@ class _TopMfsScreenState extends State<TopMfsScreen> {
                 ),
                 VerticalSpacer(2.h),
                 Expanded(
-                  child: ListView.separated(
-                    itemBuilder: (context, index) {
-                      topMfsController.returnValue(index);
-                      return InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => StockDetailsScreen(
-                                scheme:
-                                    '${topMfsController.topPerformingMutualFundModel?.list?[index].schemeAmfi}',
-                                isinNumber: topMfsController
-                                        .topPerformingMutualFundModel
-                                        ?.list?[index]
-                                        .isinNo ??
-                                    '',
-                                category: topMfsController
-                                        .topPerformingMutualFundModel
-                                        ?.list?[index]
-                                        .schemeCategory ??
-                                    "",
-                              ),
-                            ),
-                          );
-                        },
-                        child: Card(
-                          child: Padding(
-                            padding: EdgeInsets.all(10.sp),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    SizedBox(
-                                      height: 5.h,
-                                      width: 15.w,
-                                      child: Image.network(
-                                        topMfsController
-                                                .topPerformingMutualFundModel
-                                                ?.list?[index]
-                                                .logo ??
-                                            '',
-                                        errorBuilder:
-                                            (context, error, stackTrace) {
-                                          return const SizedBox();
-                                        },
-                                      ),
+                  child: topMfsController.lodingList == true
+                      ? const LoadingWidget()
+                      : ListView.separated(
+                          itemBuilder: (context, index) {
+                            topMfsController.returnValue(index);
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => StockDetailsScreen(
+                                      scheme:
+                                          '${topMfsController.topPerformingMutualFundModel?.list?[index].schemeAmfi}',
+                                      isinNumber: topMfsController
+                                              .topPerformingMutualFundModel
+                                              ?.list?[index]
+                                              .isinNo ??
+                                          '',
+                                      category: topMfsController
+                                              .topPerformingMutualFundModel
+                                              ?.list?[index]
+                                              .schemeCategory ??
+                                          "",
                                     ),
-                                    HorizontalSpacer(5.w),
-                                    Expanded(
-                                      child: Text(
-                                        '${topMfsController.topPerformingMutualFundModel?.list?[index].schemeAmfi}',
-                                        overflow: TextOverflow.visible,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .copyWith(
-                                              fontSize: 17.sp,
-                                              fontWeight: FontWeight.bold,
+                                  ),
+                                );
+                              },
+                              child: Card(
+                                child: Padding(
+                                  padding: EdgeInsets.all(10.sp),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          SizedBox(
+                                            height: 5.h,
+                                            width: 15.w,
+                                            child: Image.network(
+                                              topMfsController
+                                                      .topPerformingMutualFundModel
+                                                      ?.list?[index]
+                                                      .logo ??
+                                                  '',
+                                              errorBuilder:
+                                                  (context, error, stackTrace) {
+                                                return const SizedBox();
+                                              },
                                             ),
+                                          ),
+                                          HorizontalSpacer(5.w),
+                                          Expanded(
+                                            child: Text(
+                                              '${topMfsController.topPerformingMutualFundModel?.list?[index].schemeAmfi}',
+                                              overflow: TextOverflow.visible,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .copyWith(
+                                                    fontSize: 17.sp,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                  ],
+                                      VerticalSpacer(2.h),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              topMfsController
+                                                      .topPerformingMutualFundModel
+                                                      ?.list?[index]
+                                                      .schemeCategory ??
+                                                  "",
+                                              overflow: TextOverflow.visible,
+                                            ),
+                                          ),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              border: Border.all(),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                10.sp,
+                                              ),
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsets.all(8.sp),
+                                              child: Text(
+                                                '${topMfsController.topPerformingMutualFundModel?.list?[index].riskometer}',
+                                                style: TextStyle(
+                                                    color: topMfsController
+                                                                    .topPerformingMutualFundModel
+                                                                    ?.list?[
+                                                                        index]
+                                                                    .riskometer ==
+                                                                'Very High' ||
+                                                            topMfsController
+                                                                    .topPerformingMutualFundModel
+                                                                    ?.list?[
+                                                                        index]
+                                                                    .riskometer ==
+                                                                'High'
+                                                        ? Colors.red
+                                                        : Colors.amber),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      VerticalSpacer(2.h),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          Column(
+                                            children: [
+                                              Text(
+                                                  '${topMfsController.returns} return'),
+                                              Text(
+                                                  '${topMfsController.returnPercentage}%')
+                                            ],
+                                          )
+                                        ],
+                                      )
+                                    ],
+                                  ),
                                 ),
-                                VerticalSpacer(2.h),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        topMfsController
-                                                .topPerformingMutualFundModel
-                                                ?.list?[index]
-                                                .schemeCategory ??
-                                            "",
-                                        overflow: TextOverflow.visible,
-                                      ),
-                                    ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        border: Border.all(),
-                                        borderRadius: BorderRadius.circular(
-                                          10.sp,
-                                        ),
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsets.all(8.sp),
-                                        child: Text(
-                                          '${topMfsController.topPerformingMutualFundModel?.list?[index].riskometer}',
-                                          style: TextStyle(
-                                              color: topMfsController
-                                                              .topPerformingMutualFundModel
-                                                              ?.list?[index]
-                                                              .riskometer ==
-                                                          'Very High' ||
-                                                      topMfsController
-                                                              .topPerformingMutualFundModel
-                                                              ?.list?[index]
-                                                              .riskometer ==
-                                                          'High'
-                                                  ? Colors.red
-                                                  : Colors.amber),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                VerticalSpacer(2.h),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Column(
-                                      children: [
-                                        Text(
-                                            '${topMfsController.returns} return'),
-                                        Text(
-                                            '${topMfsController.returnPercentage}%')
-                                      ],
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
+                              ),
+                            );
+                          },
+                          separatorBuilder: (context, index) =>
+                              VerticalSpacer(1.h),
+                          itemCount: topMfsController
+                                  .topPerformingMutualFundModel?.list?.length ??
+                              0,
                         ),
-                      );
-                    },
-                    separatorBuilder: (context, index) => VerticalSpacer(1.h),
-                    itemCount: topMfsController
-                            .topPerformingMutualFundModel?.list?.length ??
-                        0,
-                  ),
                 ),
               ],
             );

@@ -626,6 +626,9 @@ void modalBottomSheetMenu(
 
                                                   // ignore: use_build_context_synchronously
                                                   Navigator.pop(context);
+                                                   // ignore: use_build_context_synchronously
+                                                  showFlushbar(context,
+                                                      ' Approve link sent through sms or email ');
                                                 }
                                               }
                                             } else {}
