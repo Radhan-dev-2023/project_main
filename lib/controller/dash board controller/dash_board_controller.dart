@@ -18,7 +18,7 @@ class DashBoardController extends ChangeNotifier {
 
     loadingDashboard = true;
 
-    notifyListeners();
+    // notifyListeners();
     String token = await SecureStorage.readToken('token');
     bool isTokenExpired = JwtDecoder.isExpired(token);
     try {
@@ -29,10 +29,12 @@ class DashBoardController extends ChangeNotifier {
         logger.d(
             'dassss=${dashBoardModel?.result?.data?.activationStatus!.statusCode}');
         SecureStorage.addToken(
-            'bankAccNumber', dashBoardModel?.result?.data?.bank?.accNo);
+            'bankAccNumber', dashBoardModel?.result?.data?.bank?.accNo ?? '');
         SecureStorage.addToken(
-            'bankcode', dashBoardModel?.result?.data?.bank?.bankName);
-        SecureStorage.addToken('customerId', dashBoardModel?.result?.data?.iin);
+            'bankcode', dashBoardModel?.result?.data?.bank?.bankName ?? '');
+        SecureStorage.addToken(
+            'customerId', dashBoardModel?.result?.data?.iin ?? '');
+        await getSummary(context);
         loadingDashboard = false;
         notifyListeners();
       } else {
@@ -41,10 +43,14 @@ class DashBoardController extends ChangeNotifier {
         logger.d(
             'dassss=${dashBoardModel?.result?.data?.activationStatus!.statusCode}');
         SecureStorage.addToken(
-            'bankAccNumber', dashBoardModel?.result?.data?.bank?.accNo);
+            'bankAccNumber', dashBoardModel?.result?.data?.bank?.accNo ?? '');
         SecureStorage.addToken(
-            'bankcode', dashBoardModel?.result?.data?.bank?.bankName);
-        SecureStorage.addToken('customerId', dashBoardModel?.result?.data?.iin);
+            'bankcode', dashBoardModel?.result?.data?.bank?.bankName ?? '');
+        SecureStorage.addToken(
+          'customerId',
+          dashBoardModel?.result?.data?.iin ?? '',
+        );
+        await getSummary(context);
         loadingDashboard = false;
         notifyListeners();
       }
@@ -87,8 +93,8 @@ class DashBoardController extends ChangeNotifier {
     }
   }
 
-  Future<void> callBothFunction(context) async {
-    await getDashBoardDetails(context);
-    await getSummary(context);
-  }
+  // Future<void> callBothFunction(context) async {
+  //   await getDashBoardDetails(context);
+  //   await getSummary(context);
+  // }
 }

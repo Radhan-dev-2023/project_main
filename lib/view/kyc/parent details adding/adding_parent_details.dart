@@ -57,6 +57,7 @@ class _ScreenAddingParentDetailsState extends State<ScreenAddingParentDetails> {
                   controller: kycController.motherNameCotroller,
                   style: Theme.of(context).textTheme.labelLarge!,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
+                  keyboardType: TextInputType.text,
                   validator: (value) {
                     if (!RegExp(r'^[a-zA-Z ]+$').hasMatch(value!)) {
                       return 'Enter valid name';
@@ -72,6 +73,7 @@ class _ScreenAddingParentDetailsState extends State<ScreenAddingParentDetails> {
                 TextFormField(
                   controller: kycController.fatherNameController,
                   style: Theme.of(context).textTheme.labelLarge!,
+                  keyboardType: TextInputType.text,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (!RegExp(r'^[a-zA-Z ]+$').hasMatch(value!)) {

@@ -101,6 +101,7 @@ class _ScreenPersonalDetailsState extends State<ScreenPersonalDetails> {
                         initialDate: DateTime.now(),
                         firstDate: DateTime(1900),
                         lastDate: DateTime.now(),
+                        initialEntryMode: DatePickerEntryMode.calendarOnly,
                         builder: (context, child) {
                           return Theme(
                             data: Theme.of(context).copyWith(

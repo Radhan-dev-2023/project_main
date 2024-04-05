@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:finfresh_mobile/env/env.dart';
 import 'package:finfresh_mobile/model/historical%20nav%20model/historical_nav_model.dart';
 import 'package:finfresh_mobile/model/latest%20nav%20model/latest_nav_model.dart';
 import 'package:finfresh_mobile/model/mutual%20Fund%20Model/Mutual_fund_model.dart';
@@ -34,7 +35,7 @@ class SchemeServices {
     log('calling');
     //HDFC Top 100 Fund - Growth Option - Regular Plan
     String url =
-        'http://mfapi.advisorkhoj.com/getSchemeInfoFinfreshWealth?key=44aaa594-8ebd-4b0f-b3e2-80bc279d0163&scheme=$scheme';
+        'http://mfapi.advisorkhoj.com/getSchemeInfoFinfreshWealth?key=${Env.key}&scheme=$scheme';
     log('url$url');
     try {
       log('try');
@@ -66,7 +67,7 @@ class SchemeServices {
   Future<void> schemeCategory() async {
     log('calling');
     String url =
-        'https://mfapi.advisorkhoj.com/getAllSchemeBroadCategories?key=44aaa594-8ebd-4b0f-b3e2-80bc279d0163';
+        'https://mfapi.advisorkhoj.com/getAllSchemeBroadCategories?key=${Env.key}';
     try {
       log('try');
       http.Response response = await http.get(
@@ -90,7 +91,7 @@ class SchemeServices {
   Future<SchemeAllCategoryModel?> schemeAllCategory(context) async {
     log('calling');
     String url =
-        'https://mfapi.advisorkhoj.com/getAllSchemeCategories?key=44aaa594-8ebd-4b0f-b3e2-80bc279d0163';
+        'https://mfapi.advisorkhoj.com/getAllSchemeCategories?key=${Env.key}';
     try {
       log('try');
       http.Response response = await http.get(
@@ -122,7 +123,7 @@ class SchemeServices {
     log('calling');
     log('caaterrororo$category');
     String url =
-        'https://mfapi.advisorkhoj.com/getSchemePerformanceReturnsNew?key=44aaa594-8ebd-4b0f-b3e2-80bc279d0163&category=$category&period=$period';
+        'https://mfapi.advisorkhoj.com/getSchemePerformanceReturnsNew?key=${Env.key}&category=$category&period=$period';
     log('url$url');
     try {
       log('try');
@@ -154,7 +155,7 @@ class SchemeServices {
   Future<void> latestNav() async {
     log('calling');
     String url =
-        'https://mfapi.advisorkhoj.com/getLatestNav?key=44aaa594-8ebd-4b0f-b3e2-80bc279d0163&amc=HDFC Mutual Fund&category=Debt: Liquid';
+        'https://mfapi.advisorkhoj.com/getLatestNav?key=${Env.key}&amc=HDFC Mutual Fund&category=Debt: Liquid';
     try {
       log('try');
       http.Response response = await http.get(
@@ -181,7 +182,7 @@ class SchemeServices {
       String startDate, context, String scheme, String lastdate) async {
     log('calling');
     String url =
-        'https://mfapi.advisorkhoj.com/getHistoricalNav?key=44aaa594-8ebd-4b0f-b3e2-80bc279d0163&scheme=$scheme&startdate=$startDate&enddate=$lastdate';
+        'https://mfapi.advisorkhoj.com/getHistoricalNav?key=${Env.key}&scheme=$scheme&startdate=$startDate&enddate=$lastdate';
     try {
       log('try');
       http.Response response = await http.get(
@@ -213,7 +214,7 @@ class SchemeServices {
   Future<void> topSIPbasedonCategory() async {
     log('calling');
     String url =
-        'https://mfapi.advisorkhoj.com/getSIPReturnsForCategoryPeriodAmount?key=44aaa594-8ebd-4b0f-b3e2-80bc279d0163&category=Equity: Mid Cap&period=3&amount=3000&maxno=3';
+        'https://mfapi.advisorkhoj.com/getSIPReturnsForCategoryPeriodAmount?key=${Env.key}&category=Equity: Mid Cap&period=3&amount=3000&maxno=3';
     try {
       log('try');
       http.Response response = await http.get(
@@ -238,7 +239,7 @@ class SchemeServices {
   Future<void> topLumbSum() async {
     log('calling');
     String url =
-        'https://mfapi.advisorkhoj.com/getTopPerformingLumpsumFunds?key=44aaa594-8ebd-4b0f-b3e2-80bc279d0163&category=Debt: Short Duration&period=3&amount=10000';
+        'https://mfapi.advisorkhoj.com/getTopPerformingLumpsumFunds?key=${Env.key}&category=Debt: Short Duration&period=3&amount=10000';
     try {
       log('try');
       http.Response response = await http.get(
@@ -265,7 +266,7 @@ class SchemeServices {
   ) async {
     log('calling');
     String url =
-        'https://mfapi.advisorkhoj.com/autoSuggestAllMfSchemes?key=44aaa594-8ebd-4b0f-b3e2-80bc279d0163&category=All&query=$query';
+        'https://mfapi.advisorkhoj.com/autoSuggestAllMfSchemes?key=${Env.key}&category=All&query=$query';
     try {
       log('try');
       http.Response response = await http.get(

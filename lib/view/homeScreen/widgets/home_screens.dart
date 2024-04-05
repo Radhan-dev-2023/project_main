@@ -4,7 +4,9 @@ import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_
 import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_controller.dart';
 import 'package:finfresh_mobile/controller/search%20controller/search_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
+import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
+import 'package:finfresh_mobile/view/fatcha%20registration/fatcha_registeration.dart';
 import 'package:finfresh_mobile/view/holding%20screen/screen_holdings.dart';
 import 'package:finfresh_mobile/view/homeScreen/widgets/attension_widget.dart';
 import 'package:finfresh_mobile/view/homeScreen/widgets/collection_widget.dart';
@@ -24,18 +26,36 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 // import 'placeholders.dart';
 
-class ScreenHome extends StatelessWidget {
+class ScreenHome extends StatefulWidget {
   const ScreenHome({super.key});
+
+  @override
+  State<ScreenHome> createState() => _ScreenHomeState();
+}
+
+class _ScreenHomeState extends State<ScreenHome> {
+  Future<void> function() async {
+    await Provider.of<DashBoardController>(context, listen: false)
+        .getDashBoardDetails(context);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    Provider.of<DashBoardController>(context, listen: false).getusername();
+    function();
+  }
 
   @override
   Widget build(BuildContext context) {
     // GlobalKey<ScaffoldState> drawerkey = GlobalKey();
     Brightness platformBrightness = MediaQuery.of(context).platformBrightness;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<DashBoardController>(context, listen: false).getusername();
-      Provider.of<DashBoardController>(context, listen: false)
-          .callBothFunction(context);
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    // Provider.of<DashBoardController>(context, listen: false).getusername();
+    //  Provider.of<DashBoardController>(context, listen: false)
+    //     .callBothFunction(context);
+    // });
 
     return Scaffold(
       drawer: const DrawerWidget(),
@@ -99,6 +119,8 @@ class ScreenHome extends StatelessWidget {
           if (dashBoardController.loadingDashboard == true) {
             return const LoadingWidget();
           }
+          logger.d(
+              'achCompleted================${dashBoardController.dashBoardModel?.result?.data?.achmandate?.achCompleted}');
           return Container(
             margin: EdgeInsets.all(18.sp),
             child: Column(
@@ -203,6 +225,7 @@ class ScreenHome extends StatelessWidget {
                         ),
                       )
                     : const SizedBox(),
+
                 dashBoardController.dashBoardModel?.result?.data
                             ?.activationStatus?.statusCode ==
                         'S07'
@@ -221,6 +244,52 @@ class ScreenHome extends StatelessWidget {
                                   style: Theme.of(context).textTheme.bodyMedium,
                                   textAlign: TextAlign.center,
                                 ),
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    : const SizedBox(),
+                dashBoardController.dashBoardModel?.result?.data
+                            ?.activationStatus?.statusCode ==
+                        'S04'
+                    ? SizedBox(
+                        height: 28.h,
+                        width: double.infinity,
+                        child: Card(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              VerticalSpacer(1.h),
+                              Icon(
+                                Icons.warning_outlined,
+                                color: Colors.red,
+                                size: 5.h,
+                              ),
+                              Text(
+                                'Attention required!',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      fontSize: 17.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
+                              ),
+                              VerticalSpacer(1.h),
+                              const Text('Complete FATCA Registration'),
+                              VerticalSpacer(2.h),
+                              ButtonWidget(
+                                btName: 'FATCHA Register',
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ScreenFatchaRegistration(),
+                                      ));
+                                },
                               )
                             ],
                           ),
@@ -628,6 +697,8 @@ class ScreenHome extends StatelessWidget {
             TextButton(
               onPressed: () {
                 SecureStorage.clearSecureStoragevalue('token');
+                SecureStorage.clearSecureStoragevalue('username');
+                SecureStorage.clearSecureStoragevalue('iin');
                 Provider.of<BiometricLogin>(context, listen: false)
                     .changeButtonEnabled(false);
                 Navigator.pushAndRemoveUntil(

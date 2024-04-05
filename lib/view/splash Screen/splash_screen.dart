@@ -4,7 +4,6 @@ import 'package:finfresh_mobile/view/login%20with%20pin/screen_login_with_pin.da
 import 'package:finfresh_mobile/view/onboarding%20screen/on_boarding_view_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

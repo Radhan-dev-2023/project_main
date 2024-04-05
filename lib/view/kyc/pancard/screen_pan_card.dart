@@ -1,6 +1,5 @@
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
-import 'package:finfresh_mobile/view/kyc/tax%20status/screen_tax_status.dart';
 import 'package:finfresh_mobile/view/kyc/user%20personal%20details/screen_personal_details.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/log_widget.dart';
@@ -62,6 +61,7 @@ class _ScreenPanCardState extends State<ScreenPanCard> {
                     ),
                     VerticalSpacer(6.h),
                     TextFormField(
+                      textCapitalization: TextCapitalization.characters,
                       controller: kycController.panController,
                       style: Theme.of(context).textTheme.labelLarge!,
                       autovalidateMode: AutovalidateMode.onUserInteraction,

@@ -8,8 +8,27 @@ import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class PinEnterForLoginScreen extends StatelessWidget {
+class PinEnterForLoginScreen extends StatefulWidget {
   const PinEnterForLoginScreen({super.key});
+
+  @override
+  State<PinEnterForLoginScreen> createState() => _PinEnterForLoginScreenState();
+}
+
+class _PinEnterForLoginScreenState extends State<PinEnterForLoginScreen> {
+  Future<void> functionForFingerprin() async {
+    final biometricLoginController =
+        Provider.of<BiometricLogin>(context, listen: false);
+
+    await biometricLoginController.authenticate();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    functionForFingerprin();
+  }
 
   @override
   Widget build(BuildContext context) {

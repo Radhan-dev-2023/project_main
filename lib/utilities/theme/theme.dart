@@ -92,6 +92,7 @@ class AppTheme {
     appBarTheme: const AppBarTheme(
       color: _appbarColorLight,
       iconTheme: IconThemeData(color: Colors.black),
+      surfaceTintColor: _appbarColorLight
     ),
     colorScheme: ColorScheme.light(
       primary: _lightOnPrimaryColor,

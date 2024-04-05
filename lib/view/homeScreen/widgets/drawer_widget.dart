@@ -85,6 +85,9 @@ class DrawerWidget extends StatelessWidget {
                   builder: (context) => const ScreenAllMutualFund(),
                 ),
               );
+              Provider.of<TopMFsController>(context, listen: false)
+                  .queryController
+                  .clear();
               Provider.of<TopMFsController>(context, listen: false).returns =
                   '3 year';
               Provider.of<TopMFsController>(context, listen: false)

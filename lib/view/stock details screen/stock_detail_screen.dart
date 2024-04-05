@@ -199,44 +199,37 @@ void modalBottomSheetMenu(
                         ),
                       ),
                       VerticalSpacer(2.h),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: brightness == Brightness.dark
-                                ? Colors.white
-                                : Colors.black,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                          color: brightness == Brightness.light
-                              ? Colors.transparent
-                              : const Color(0xFF0E1330),
+                      DropdownButtonFormField<String>(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Please select debit mandate';
+                          }
+                          return null;
+                        },
+                        style: Theme.of(context).textTheme.labelLarge!,
+                        value: schemeController.selectedValue,
+                        decoration: InputDecoration(
+                          helperText: '',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          hintText: 'Select Debit Mandate',
                         ),
-                        height: 60,
-                        width: double.infinity,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: DropdownButton(
-                            value: schemeController.selectedValue,
-                            isExpanded: true,
-                            underline: Container(
-                              height: 0,
-                            ),
-                            items: schemeController.investmentType
-                                .map((String items) {
-                              return DropdownMenuItem(
-                                value: items,
-                                child: Text(items),
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              Provider.of<SchemeDetailsController>(context,
-                                      listen: false)
-                                  .updateSelectedValue(value);
-                            },
-                          ),
-                        ),
+                        onChanged: (String? newValue) {
+                          Provider.of<SchemeDetailsController>(context,
+                                  listen: false)
+                              .updateSelectedValue(newValue);
+                        },
+                        items:
+                            schemeController.investmentType.map((String items) {
+                          return DropdownMenuItem<String>(
+                            value: items,
+                            child: Text(items),
+                          );
+                        }).toList(),
                       ),
-                      VerticalSpacer(2.h),
+
+                      // VerticalSpacer(2.h),
                       schemeController.selectedValue != 'Investment type'
                           ? SizedBox(
                               child: Column(
@@ -626,7 +619,7 @@ void modalBottomSheetMenu(
 
                                                   // ignore: use_build_context_synchronously
                                                   Navigator.pop(context);
-                                                   // ignore: use_build_context_synchronously
+                                                  // ignore: use_build_context_synchronously
                                                   showFlushbar(context,
                                                       ' Approve link sent through sms or email ');
                                                 }
