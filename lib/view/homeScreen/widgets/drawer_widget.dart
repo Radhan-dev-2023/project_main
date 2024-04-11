@@ -58,9 +58,20 @@ class DrawerWidget extends StatelessWidget {
             }),
           ),
           ListTile(
+            leading: SizedBox(
+                height: Adaptive.h(6),
+                width: Adaptive.w(6),
+                child: Image.asset(
+                  'assets/images/topmutualfunds.png',
+                  color: const Color(0xFF4D84BD),
+                )),
             title: Text(
               'Top Mutual Funds',
-              style: Theme.of(context).textTheme.labelLarge,
+              style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 3.5.sp,
+                    fontSize: 16.sp,
+                  ),
             ),
             onTap: () {
               Navigator.pop(context);
@@ -73,9 +84,20 @@ class DrawerWidget extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: SizedBox(
+                height: Adaptive.h(6),
+                width: Adaptive.w(6),
+                child: Image.asset(
+                  'assets/images/allmutualfunds.png',
+                  color: const Color(0xFF4D84BD),
+                )),
             title: Text(
               'All Mutual Funds',
-              style: Theme.of(context).textTheme.labelLarge,
+              style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 3.5.sp,
+                    fontSize: 16.sp,
+                  ),
             ),
             onTap: () {
               Navigator.pop(context);
@@ -97,9 +119,20 @@ class DrawerWidget extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: SizedBox(
+                height: Adaptive.h(6),
+                width: Adaptive.w(6),
+                child: Image.asset(
+                  'assets/images/FATCARestisration.png',
+                  color: const Color(0xFF4D84BD),
+                )),
             title: Text(
               'FATCA Registration',
-              style: Theme.of(context).textTheme.labelLarge,
+              style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 3.5.sp,
+                    fontSize: 16.sp,
+                  ),
             ),
             onTap: () {
               Navigator.push(
@@ -110,9 +143,20 @@ class DrawerWidget extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: SizedBox(
+                height: Adaptive.h(6),
+                width: Adaptive.w(6),
+                child: Image.asset(
+                  'assets/images/transactions.png',
+                  color: const Color(0xFF4D84BD),
+                )),
             title: Text(
               'Transactions',
-              style: Theme.of(context).textTheme.labelLarge,
+              style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 3.5.sp,
+                    fontSize: 16.sp,
+                  ),
             ),
             onTap: () {
               Navigator.push(
@@ -123,9 +167,20 @@ class DrawerWidget extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: SizedBox(
+                height: Adaptive.h(6),
+                width: Adaptive.w(6),
+                child: Image.asset(
+                  'assets/images/Settings.png',
+                  color: const Color(0xFF4D84BD),
+                )),
             title: Text(
               'Settings',
-              style: Theme.of(context).textTheme.labelLarge,
+              style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 3.5.sp,
+                    fontSize: 16.sp,
+                  ),
             ),
             onTap: () {
               Navigator.push(

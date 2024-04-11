@@ -139,7 +139,7 @@ class AchController extends ChangeNotifier {
 
   AchHistoryModel? achHistoryModel;
   bool historyLoading = false;
-  Future<void> getAchHistoy(context, bool dropdown) async {
+  Future<void> getAchHistoy(context, String status) async {
     String token = await SecureStorage.readToken('token');
     bool isTokenExpired = JwtDecoder.isExpired(token);
     historyLoading = true;
@@ -149,7 +149,7 @@ class AchController extends ChangeNotifier {
       if (isTokenExpired) {
         await refershTokenService.postRefershTocken(context);
         achHistoryModel =
-            await achHistoryService.getAchHistory(context, dropdown);
+            await achHistoryService.getAchHistory(context, status);
         if (achHistoryModel != null) {
           historyLoading = false;
           notifyListeners();
@@ -159,7 +159,7 @@ class AchController extends ChangeNotifier {
         }
       } else {
         achHistoryModel =
-            await achHistoryService.getAchHistory(context, dropdown);
+            await achHistoryService.getAchHistory(context, status);
         if (achHistoryModel != null) {
           historyLoading = false;
           notifyListeners();

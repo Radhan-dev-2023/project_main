@@ -56,6 +56,7 @@ class ScreenTopFunds extends StatelessWidget {
                     : ListView.separated(
                         itemBuilder: (context, index) {
                           return Card(
+                            elevation: 5,
                             child: ListTile(
                               title: Text(
                                 '${topfundController.schemeAllCategoryModel?.list?[index]}',

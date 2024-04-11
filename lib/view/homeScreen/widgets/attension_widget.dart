@@ -19,6 +19,7 @@ class AttensionWidget extends StatelessWidget {
       height: 28.h,
       width: double.infinity,
       child: Card(
+        elevation: 5,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

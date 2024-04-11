@@ -69,6 +69,7 @@ class DashBoardController extends ChangeNotifier {
   }
 
   SummaryModel? summaryModel;
+  // List<dynamic> summaryResilt = [];
   Future<void> getSummary(context) async {
     String token = await SecureStorage.readToken('token');
     bool isTokenExpired = JwtDecoder.isExpired(token);
@@ -79,6 +80,7 @@ class DashBoardController extends ChangeNotifier {
       if (isTokenExpired) {
         await refershTokenService.postRefershTocken(context);
         summaryModel = await dashBoardService.fetchSummary(context);
+
         loadingDashboard = false;
         notifyListeners();
       } else {

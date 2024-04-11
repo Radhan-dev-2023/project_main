@@ -28,6 +28,10 @@ class _SliverlistWidgetState extends State<SliverlistWidget> {
   void initState() {
     super.initState();
     Provider.of<SchemeDetailsController>(context, listen: false)
+        .selectValueForChart = 'ALL';
+    Provider.of<SchemeDetailsController>(context, listen: false)
+        .updateCurrent(6);
+    Provider.of<SchemeDetailsController>(context, listen: false)
         .callingFunctionDetailScreen(context, widget.scheme);
   }
 
@@ -142,12 +146,12 @@ class _SliverlistWidgetState extends State<SliverlistWidget> {
                           ? ChartWidget(scheme: widget.scheme)
                           : const SizedBox(),
                     ),
-                    const SliverToBoxAdapter(
-                      child: SizedBox(
-                        height: 15,
-                      ),
-                    ),
-                    // SliverPersistentHeader(
+                    // const SliverToBoxAdapter(
+                    //   child: SizedBox(
+                    //     height: 15,
+                    //   ),
+                    // ),
+                    // // SliverPersistentHeader(
                     //   delegate: _SliverAppBarDelegate(
                     //     TabBar(
                     //       padding: const EdgeInsets.all(7),
@@ -190,7 +194,7 @@ class _SliverlistWidgetState extends State<SliverlistWidget> {
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            VerticalSpacer(1.h),
+                            VerticalSpacer(2.h),
                             Padding(
                               padding: EdgeInsets.all(15.sp),
                               child: Text(

@@ -50,7 +50,7 @@ class _StockDetailsScreenState extends State<StockDetailsScreen>
     debugPrint('infnumbrer=${widget.isinNumber}');
     Provider.of<AchController>(context, listen: false).getAchHistoy(
       context,
-      false,
+      'A',
     );
     Provider.of<SchemeDetailsController>(context, listen: false)
         .accountnumberController
@@ -103,12 +103,29 @@ class _StockDetailsScreenState extends State<StockDetailsScreen>
               : ButtonWidget(
                   btName: 'INVEST',
                   onTap: () {
-                    modalBottomSheetMenu(
-                      context,
-                      widget.isinNumber,
-                      widget.scheme,
-                      widget.category,
-                    );
+                    if (Provider.of<DashBoardController>(context, listen: false)
+                                .dashBoardModel
+                                ?.result
+                                ?.data
+                                ?.activationStatus
+                                ?.statusCode ==
+                            'S06' ||
+                        Provider.of<DashBoardController>(context, listen: false)
+                                .dashBoardModel
+                                ?.result
+                                ?.data
+                                ?.activationStatus
+                                ?.statusCode ==
+                            'S12') {
+                      modalBottomSheetMenu(
+                        context,
+                        widget.isinNumber,
+                        widget.scheme,
+                        widget.category,
+                      );
+                    } else {
+                      showFlushbar(context, 'Your Account Not Registered');
+                    }
                   },
                 )
         ],

@@ -16,6 +16,7 @@ class LoadingButton extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: const Color(0xFF4D84BD),
+          // color: Color(0xFFC5714E),
         ),
         child: const Center(
           child: CupertinoActivityIndicator(color: Colors.white),

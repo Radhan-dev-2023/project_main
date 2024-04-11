@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 
 class AchHistoryService {
   AchHistoryModel achHistoryModel = AchHistoryModel();
-  Future<AchHistoryModel?> getAchHistory(context, bool dropdown) async {
+  Future<AchHistoryModel?> getAchHistory(context, String status) async {
     String url = '${ApiEndpoint.baseUrl}/api/v1/achhistory';
     String iin = await SecureStorage.readToken('customerId');
     // String phoneNumber = await SecureStorage.readToken('phoneNumber');
@@ -19,10 +19,15 @@ class AchHistoryService {
 
     String userId = await SecureStorage.readToken('userId');
 
-    Map<String, dynamic> payload = dropdown == true
-        ? {"cust_id": iin, "ach_fromdate": "", "ach_todate": "", "status": ""}
-        : {"cust_id": iin, "ach_fromdate": "", "ach_todate": "", "status": "A"};
-
+    // Map<String, dynamic> payload = dropdown == true
+    //     ? {"cust_id": iin, "ach_fromdate": "", "ach_todate": "", "status": ""}
+    //     : {"cust_id": iin, "ach_fromdate": "", "ach_todate": "", "status": "A"};
+    Map<String, dynamic> payload = {
+      "cust_id": iin,
+      "ach_fromdate": "",
+      "ach_todate": "",
+      "status": status
+    };
     log('paylod$payload');
     try {
       http.Response response = await http.post(

@@ -4,10 +4,12 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 class ButtonWidget extends StatelessWidget {
   final String btName;
   final Function()? onTap;
+  final Color? color;
   const ButtonWidget({
     super.key,
     required this.btName,
     this.onTap,
+    this.color = const Color(0xFF4D84BD),
   });
 
   @override
@@ -19,7 +21,8 @@ class ButtonWidget extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF4D84BD),
+            backgroundColor: color,
+            // backgroundColor: Color(0xFFC5714E),
             // backgroundColor: Colors.red,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),

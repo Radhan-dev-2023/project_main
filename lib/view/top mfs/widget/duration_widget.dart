@@ -46,6 +46,10 @@ class DurationButton extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Text(
                     topMfsController.dataList[index],
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 3.5.sp,
+                        ),
                   );
                 },
               ),

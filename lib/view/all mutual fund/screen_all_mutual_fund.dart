@@ -7,8 +7,27 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class ScreenAllMutualFund extends StatelessWidget {
+class ScreenAllMutualFund extends StatefulWidget {
   const ScreenAllMutualFund({super.key});
+
+  @override
+  State<ScreenAllMutualFund> createState() => _ScreenAllMutualFundState();
+}
+
+class _ScreenAllMutualFundState extends State<ScreenAllMutualFund> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<TopMFsController>(context, listen: false)
+        .queryController
+        .clear();
+    Provider.of<TopMFsController>(context, listen: false).returns = '3 year';
+    Provider.of<TopMFsController>(context, listen: false).returntoBackend =
+        '3y';
+    Provider.of<TopMFsController>(context, listen: false)
+        .getTopMfsFRomPeriod(context, 'All');
+  }
 
   @override
   Widget build(BuildContext context) {

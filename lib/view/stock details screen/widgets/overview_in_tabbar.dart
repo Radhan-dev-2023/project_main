@@ -1,3 +1,4 @@
+import 'dart:ui';
 
 import 'package:finfresh_mobile/controller/scheme%20details%20controller/scheme_details_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
@@ -15,19 +16,21 @@ class OverViewInTabbar extends StatelessWidget {
       child: Consumer<SchemeDetailsController>(
           builder: (context, schemeController, child) {
         return Container(
-          margin: EdgeInsets.all(15.sp),
+          margin: EdgeInsets.only(left: 15.sp, right: 15.sp),
           child: Column(
             children: [
               // VerticalSpacer(2.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const CustomTextWidget(
+                  CustomTextWidget(
                     text: 'Min. Investment',
+                    fontSize: 16.sp,
                   ),
                   CustomTextWidget(
                     text:
                         '₹ ${schemeController.schemeInfoModel?.minimumInvestment ?? ''}',
+                    fontSize: 16.sp,
                   ),
                 ],
               ),
@@ -35,12 +38,14 @@ class OverViewInTabbar extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const CustomTextWidget(
+                  CustomTextWidget(
                     text: 'Min. Investment(SIP)',
+                    fontSize: 16.sp,
                   ),
                   CustomTextWidget(
                     text:
                         '₹ ${schemeController.schemeInfoModel?.sipMinimumAmount ?? ''}',
+                    fontSize: 16.sp,
                   ),
                 ],
               ),
@@ -48,24 +53,25 @@ class OverViewInTabbar extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const CustomTextWidget(
+                  CustomTextWidget(
                     text: 'Exit Load',
+                    fontSize: 16.sp,
                   ),
                   SizedBox(
                     width: 50.w,
                     child: Align(
                       alignment: Alignment.centerRight,
-                      child: Text(
-                        schemeController.schemeInfoModel?.exitLoad ?? '',
+                      child: CustomTextWidget(
+                        text: schemeController.schemeInfoModel?.exitLoad ?? '-',
                         overflow: TextOverflow.ellipsis,
+                        fontSize: 16.sp,
                       ),
                     ),
                   ),
                 ],
               ),
               VerticalSpacer(2.h),
-              // Icon(CupertinoIcons.chevron_up),
-              // Icon(CupertinoIcons.chevron_down),
+
               SizedBox(
                 width: double.infinity.sp,
                 child: Column(
@@ -77,6 +83,7 @@ class OverViewInTabbar extends StatelessWidget {
                         CustomTextWidget(
                           text: 'Holdings',
                           fontSize: 18.sp,
+                          fontWeight: FontWeight.bold,
                         ),
                         InkWell(
                           onTap: () {
@@ -146,11 +153,17 @@ class OverViewInTabbar extends StatelessWidget {
 class CustomTextWidget extends StatelessWidget {
   final String? text;
   final double? fontSize;
+  final FontWeight? fontWeight;
+  final TextOverflow? overflow;
+  final double? letterSpacing;
 
   const CustomTextWidget({
     super.key,
     this.text,
     this.fontSize,
+    this.fontWeight,
+    this.overflow,
+    this.letterSpacing,
   });
 
   @override
@@ -159,6 +172,9 @@ class CustomTextWidget extends StatelessWidget {
       text!,
       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             fontSize: fontSize,
+            fontWeight: fontWeight,
+            overflow: overflow,
+            letterSpacing: letterSpacing,
           ),
       // overflow: TextOverflow.ellipsis,
     );

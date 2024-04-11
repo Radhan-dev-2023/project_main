@@ -90,10 +90,12 @@ class _TopMfsScreenState extends State<TopMfsScreen> {
                                 );
                               },
                               child: Card(
+                                elevation: 5,
                                 child: Padding(
                                   padding: EdgeInsets.all(10.sp),
                                   child: Column(
                                     children: [
+                                      VerticalSpacer(1.h),
                                       Row(
                                         children: [
                                           SizedBox(
@@ -132,6 +134,7 @@ class _TopMfsScreenState extends State<TopMfsScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
+                                          HorizontalSpacer(2.w),
                                           Expanded(
                                             child: Text(
                                               topMfsController
@@ -140,6 +143,13 @@ class _TopMfsScreenState extends State<TopMfsScreen> {
                                                       .schemeCategory ??
                                                   "",
                                               overflow: TextOverflow.visible,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .copyWith(
+                                                    fontSize: 16.sp,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
                                             ),
                                           ),
                                           Container(
@@ -155,6 +165,7 @@ class _TopMfsScreenState extends State<TopMfsScreen> {
                                               child: Text(
                                                 '${topMfsController.topPerformingMutualFundModel?.list?[index].riskometer}',
                                                 style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
                                                     color: topMfsController
                                                                     .topPerformingMutualFundModel
                                                                     ?.list?[
@@ -171,7 +182,8 @@ class _TopMfsScreenState extends State<TopMfsScreen> {
                                                         : Colors.amber),
                                               ),
                                             ),
-                                          )
+                                          ),
+                                          HorizontalSpacer(2.w),
                                         ],
                                       ),
                                       VerticalSpacer(2.h),
@@ -182,11 +194,29 @@ class _TopMfsScreenState extends State<TopMfsScreen> {
                                           Column(
                                             children: [
                                               Text(
-                                                  '${topMfsController.returns} return'),
+                                                '${topMfsController.returns} return',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    ),
+                                              ),
                                               Text(
-                                                  '${topMfsController.returnPercentage}%')
+                                                '${topMfsController.returnPercentage}%',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    ),
+                                              ),
+                                              VerticalSpacer(1.h),
                                             ],
-                                          )
+                                          ),
+                                          HorizontalSpacer(2.w),
                                         ],
                                       )
                                     ],
@@ -202,6 +232,7 @@ class _TopMfsScreenState extends State<TopMfsScreen> {
                               0,
                         ),
                 ),
+                VerticalSpacer(1.h),
               ],
             );
           }

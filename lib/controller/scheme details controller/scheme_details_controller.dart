@@ -32,8 +32,13 @@ class SchemeDetailsController extends ChangeNotifier {
   bool changebutton = false;
   String selectValueForChart = 'ALL';
   List<String> monthvalue = ['3M', '6M', '1Y', '2Y', '5Y', '10Y', 'ALL'];
+  int curentIndexForChart = 0;
   String durationValue = '25 Year';
   String achMandateLAstdate = '';
+  void updateCurrent(int value) {
+    curentIndexForChart = value;
+    notifyListeners();
+  }
 
   List<String> duration = [
     'Until Cancelled',

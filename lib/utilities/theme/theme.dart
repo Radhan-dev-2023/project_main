@@ -5,11 +5,11 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 class AppTheme {
   AppTheme._();
 
-  static const Color _lightPrimaryColor = Colors.white;
+  static const Color _lightPrimaryColor = Color(0xFFFAFAFA);
   static final Color _lightPrimaryVariantColor = Colors.blueGrey.shade800;
   static final Color _lightOnPrimaryColor = Colors.blueGrey.shade200;
   static const Color _lightTextColorPrimary = Colors.black;
-  static const Color _appbarColorLight = Colors.white;
+  static const Color _appbarColorLight = Color(0xFFFAFAFA);
 // 0E1330
 // 4D84BD button color
   static const Color _darkPrimaryColor = Color(0xFF060B27);
@@ -26,13 +26,13 @@ class AppTheme {
   // *****************
   // Text Style - light
   // *****************
-  static final TextStyle _lightHeadingText = GoogleFonts.poppins(
+  static final TextStyle _lightHeadingText = GoogleFonts.lato(
     color: _lightTextColorPrimary,
     fontSize: 20,
     fontWeight: FontWeight.bold,
   );
 
-  static final TextStyle _lightBodyText = GoogleFonts.poppins(
+  static final TextStyle _lightBodyText = GoogleFonts.lato(
     color: _lightTextColorPrimary,
     // fontStyle: FontStyle.italic,
     fontWeight: FontWeight.bold,
@@ -63,7 +63,10 @@ class AppTheme {
 // *****************
 
   static final ThemeData lightTheme = ThemeData(
-   
+    cardTheme: const CardTheme(
+        elevation: 5, surfaceTintColor: Colors.white, color: Colors.white,
+        // color: Color(0xFFFAF9F6), // Set the background color for cards
+        ),
     iconTheme: const IconThemeData(color: Colors.black),
     inputDecorationTheme: InputDecorationTheme(
       focusedErrorBorder: OutlineInputBorder(
@@ -89,11 +92,11 @@ class AppTheme {
     ),
     useMaterial3: true,
     scaffoldBackgroundColor: _lightPrimaryColor,
-    appBarTheme: const AppBarTheme(
-      color: _appbarColorLight,
-      iconTheme: IconThemeData(color: Colors.black),
-      surfaceTintColor: _appbarColorLight
-    ),
+    appBarTheme: AppBarTheme(
+        color: _appbarColorLight,
+        iconTheme: const IconThemeData(color: Colors.black),
+        surfaceTintColor: _appbarColorLight,
+        titleTextStyle: _lightHeadingText),
     colorScheme: ColorScheme.light(
       primary: _lightOnPrimaryColor,
       onPrimary: _lightOnPrimaryColor,
@@ -118,8 +121,9 @@ class AppTheme {
     //     ), // Set your desired icon color
     //   ),
     // ),
-   
+
     cardTheme: const CardTheme(
+      elevation: 6,
       color: Color(0xFF0E1330), // Set the background color for cards
     ),
     bottomSheetTheme: const BottomSheetThemeData(
@@ -145,9 +149,10 @@ class AppTheme {
     ),
     useMaterial3: true,
     scaffoldBackgroundColor: _darkPrimaryColor,
-    appBarTheme: const AppBarTheme(
+    appBarTheme: AppBarTheme(
+      titleTextStyle: _darkThemeHeadingTextStyle,
       color: _appbarColorDark,
-      iconTheme: IconThemeData(color: _iconColor),
+      iconTheme: const IconThemeData(color: _iconColor),
     ),
     colorScheme: ColorScheme.dark(
       primary: _darkPrimaryColor,
