@@ -478,7 +478,9 @@ import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_co
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:finfresh_mobile/view/fatcha%20registration/fatcha_registeration.dart';
+import 'package:finfresh_mobile/view/holding%20screen/screen_holdings.dart';
 import 'package:finfresh_mobile/view/homeScreen/widgets/attension_widget.dart';
+import 'package:finfresh_mobile/view/homeScreen/widgets/collection_widget.dart';
 import 'package:finfresh_mobile/view/homeScreen/widgets/drawer_widget.dart';
 import 'package:finfresh_mobile/view/homeScreen/widgets/portfolio_mutual_fund.dart';
 import 'package:finfresh_mobile/view/homeScreen/widgets/roundChart.dart';
@@ -545,19 +547,6 @@ class _ScreenHomeState extends State<ScreenHome> {
                 );
               },
             ),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  showLogoutAlertDialog(context);
-                },
-                icon: Icon(
-                  Icons.logout,
-                  color: platformBrightness == Brightness.light
-                      ? Colors.black
-                      : Colors.white,
-                ),
-              ),
-            ],
           ),
           SliverList(
             delegate: SliverChildListDelegate([
@@ -583,7 +572,6 @@ class _ScreenHomeState extends State<ScreenHome> {
                                     ?.activationStatus?.statusCode ==
                                 'S02'
                             ? SizedBox(
-                                height: 28.h,
                                 width: double.infinity,
                                 child: Card(
                                   elevation: 5,
@@ -591,36 +579,65 @@ class _ScreenHomeState extends State<ScreenHome> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       VerticalSpacer(1.h),
-                                      Icon(
-                                        Icons.warning_outlined,
-                                        color: Colors.red,
-                                        size: 5.h,
-                                      ),
-                                      Text(
-                                        'Attention required!',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .copyWith(
-                                              fontSize: 17.sp,
-                                              fontWeight: FontWeight.bold,
+                                      ListTile(
+                                        contentPadding: EdgeInsets.only(
+                                          left: 9.sp,
+                                          right: 15.sp,
+                                        ),
+                                        leading: const SizedBox(),
+                                        title: Text(
+                                          'Attention required!',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                fontSize: 17.5.sp,
+                                                fontWeight: FontWeight.bold,
+                                                letterSpacing: 3.5.sp,
+                                                // color: Color(0xFFACB2BA),
+                                              ),
+                                        ),
+                                        subtitle: Text(
+                                          'Upload Your Proof',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                color: Colors.grey,
+                                              ),
+                                        ),
+                                        trailing: InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const ScreenUploadinProofs(),
+                                                ));
+                                          },
+                                          child: SizedBox(
+                                            width: Adaptive.w(23),
+                                            height: Adaptive.h(5),
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        10.sp),
+                                                color: const Color(0xFF6C8FF8),
+                                              ),
+                                              child: Center(
+                                                child: Text(
+                                                  'Upload',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 15.sp,
+                                                  ),
+                                                ),
+                                              ),
                                             ),
-                                        // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
+                                          ),
+                                        ),
                                       ),
-                                      VerticalSpacer(1.h),
-                                      const Text('Upload Your Proof'),
-                                      VerticalSpacer(2.h),
-                                      ButtonWidget(
-                                        btName: 'Upload Proof',
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const ScreenUploadinProofs(),
-                                              ));
-                                        },
-                                      )
                                     ],
                                   ),
                                 ),
@@ -630,7 +647,6 @@ class _ScreenHomeState extends State<ScreenHome> {
                                     ?.activationStatus?.statusCode ==
                                 'S03'
                             ? SizedBox(
-                                height: 28.h,
                                 width: double.infinity,
                                 child: Card(
                                   elevation: 5,
@@ -638,36 +654,66 @@ class _ScreenHomeState extends State<ScreenHome> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       VerticalSpacer(1.h),
-                                      Icon(
-                                        Icons.warning_outlined,
-                                        color: Colors.red,
-                                        size: 5.h,
-                                      ),
-                                      Text(
-                                        'Attention required!',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .copyWith(
-                                              fontSize: 17.sp,
-                                              fontWeight: FontWeight.bold,
+                                      ListTile(
+                                        contentPadding: EdgeInsets.only(
+                                          left: 9.sp,
+                                          right: 15.sp,
+                                        ),
+                                        leading: const SizedBox(),
+                                        title: Text(
+                                          'Attention required!',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                fontSize: 17.5.sp,
+                                                fontWeight: FontWeight.bold,
+                                                letterSpacing: 3.5.sp,
+                                                // color: Color(0xFFACB2BA),
+                                              ),
+                                        ),
+                                        subtitle: Text(
+                                          'Upload Your Bank Proof',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                color: Colors.grey,
+                                              ),
+                                        ),
+                                        trailing: InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const ScreenBankProofs(),
+                                                ));
+                                          },
+                                          child: SizedBox(
+                                            width: Adaptive.w(23),
+                                            height: Adaptive.h(5),
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        10.sp),
+                                                color: const Color(0xFF6C8FF8),
+                                              ),
+                                              child: Center(
+                                                child: Text(
+                                                  'Upload',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 15.sp,
+                                                  ),
+                                                ),
+                                              ),
                                             ),
-                                        // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
+                                          ),
+                                        ),
                                       ),
                                       VerticalSpacer(1.h),
-                                      const Text('Upload Your Bank Proof'),
-                                      VerticalSpacer(2.h),
-                                      ButtonWidget(
-                                        btName: 'Upload Bank Proof',
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const ScreenBankProofs(),
-                                              ));
-                                        },
-                                      )
                                     ],
                                   ),
                                 ),
@@ -678,24 +724,22 @@ class _ScreenHomeState extends State<ScreenHome> {
                                     ?.activationStatus?.statusCode ==
                                 'S07'
                             ? SizedBox(
-                                height: 20.h,
+                                height: Adaptive.h(10),
                                 width: double.infinity,
                                 child: Card(
                                   elevation: 5,
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      VerticalSpacer(1.h),
-                                      Padding(
-                                        padding: EdgeInsets.all(10.0.sp),
-                                        child: Text(
+                                      ListTile(
+                                        title: Text(
                                           '${dashBoardController.dashBoardModel?.result?.data?.activationStatus?.message}',
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyMedium,
                                           textAlign: TextAlign.center,
                                         ),
-                                      )
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -781,50 +825,6 @@ class _ScreenHomeState extends State<ScreenHome> {
                                       VerticalSpacer(1.h),
                                     ],
                                   ),
-                                  // child: Column(
-                                  //   mainAxisAlignment: MainAxisAlignment.center,
-                                  //   // crossAxisAlignment:
-                                  //   //     CrossAxisAlignment.start,
-                                  //   children: [
-                                  //     VerticalSpacer(1.h),
-                                  //     Icon(
-                                  //       Icons.warning_outlined,
-                                  //       color: Colors.red,
-                                  //       size: 5.h,
-                                  //     ),
-                                  //     Text(
-                                  //       'Attention required!',
-                                  //       style: Theme.of(context)
-                                  //           .textTheme
-                                  //           .bodyMedium!
-                                  //           .copyWith(
-                                  //             fontSize: 18.sp,
-                                  //             fontWeight: FontWeight.bold,
-                                  //             letterSpacing: 3.5.sp,
-                                  //           ),
-                                  //       // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
-                                  //     ),
-                                  //     VerticalSpacer(1.h),
-                                  //     const Text(
-                                  //       'Complete FATCA Registration',
-                                  //     ),
-                                  //     VerticalSpacer(1.h),
-                                  //     SizedBox(
-                                  //       width: Adaptive.w(50),
-                                  //       child: ButtonWidget(
-                                  //         btName: 'FATCHA Register',
-                                  //         onTap: () {
-                                  //           Navigator.push(
-                                  //               context,
-                                  //               MaterialPageRoute(
-                                  //                 builder: (context) =>
-                                  //                     const ScreenFatchaRegistration(),
-                                  //               ));
-                                  //         },
-                                  //       ),
-                                  //     )
-                                  //   ],
-                                  // ),
                                 ),
                               )
                             : const SizedBox(),
@@ -930,110 +930,179 @@ class _ScreenHomeState extends State<ScreenHome> {
                           }),
                         ),
                         VerticalSpacer(2.h),
-                        SizedBox(
-                          height: 40.h,
-                          width: double.infinity,
-                          child: Card(
-                            elevation: 5,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                VerticalSpacer(7.h),
-                                const RoundChartWidget(),
-                                VerticalSpacer(8.h),
-                                Text(
-                                  dashBoardController
-                                          .summaryModel?.result?.totalAmount ??
-                                      '',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .copyWith(
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                ),
-                                VerticalSpacer(1.h),
-                                Padding(
-                                  padding: EdgeInsets.all(12.sp),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        'Investment Amount',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .copyWith(),
-                                      ),
-                                      HorizontalSpacer(5.w),
-                                      Text(
-                                        'Total Gain',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .copyWith(),
-                                      ),
-                                      HorizontalSpacer(8.w),
-                                      Text(
-                                        'Total Amount',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .copyWith(),
-                                      ),
-                                    ],
+                        dashBoardController.summaryModel?.result == null
+                            ? SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                child: Card(
+                                  elevation: 5,
+                                  // surfaceTintColor:
+                                  //     const Color.fromARGB(255, 236, 230, 230),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(13.sp),
+                                    child: Column(
+                                      children: [
+                                        VerticalSpacer(1.h),
+                                        Align(
+                                          alignment: Alignment.topCenter,
+                                          child: Text(
+                                            'Mutual Funds Portfolio',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .copyWith(
+                                                  fontSize: 17.sp,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                          ),
+                                        ),
+                                        VerticalSpacer(2.h),
+                                        Text(
+                                          'Your portfolio is currently empty!',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                fontSize: 16.sp,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                        ),
+                                        VerticalSpacer(1.h),
+                                        const Text(
+                                          'After you start investing,your mutual funds/n portfolio will appear here.',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        VerticalSpacer(2.h),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(0),
-                                  child: Row(
-                                    children: [
-                                      HorizontalSpacer(3.w),
-                                      Text(
-                                        dashBoardController.summaryModel?.result
-                                                ?.netInvestment ??
-                                            '',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .copyWith(
-                                              fontWeight: FontWeight.bold,
-                                              color: const Color(0xFFFFC700),
-                                            ),
-                                      ),
-                                      HorizontalSpacer(20.w),
-                                      Text(
-                                        dashBoardController.summaryModel?.result
-                                                ?.netEquityGains ??
-                                            '',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .copyWith(
-                                              fontWeight: FontWeight.bold,
-                                              color: const Color(0xFF6C8FF8),
-                                            ),
-                                      ),
-                                      HorizontalSpacer(13.w),
-                                      Text(
-                                        dashBoardController.summaryModel?.result
-                                                ?.totalAmount ??
-                                            '',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .copyWith(
-                                              fontWeight: FontWeight.bold,
-                                              color: const Color(0xFF324053),
-                                            ),
-                                      ),
-                                    ],
+                              )
+                            : InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ScreenHoldings(),
+                                    ),
+                                  );
+                                },
+                                child: SizedBox(
+                                  height: 40.h,
+                                  width: double.infinity,
+                                  child: Card(
+                                    elevation: 5,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        VerticalSpacer(7.h),
+                                        const RoundChartWidget(),
+                                        VerticalSpacer(8.h),
+                                        Text(
+                                          dashBoardController.summaryModel
+                                                  ?.result?.totalAmount ??
+                                              '',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                fontSize: 16.sp,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                        ),
+                                        VerticalSpacer(1.h),
+                                        Padding(
+                                          padding: EdgeInsets.all(12.sp),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                'Investment Amount',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .copyWith(),
+                                              ),
+                                              HorizontalSpacer(5.w),
+                                              Text(
+                                                'Total Gain',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .copyWith(),
+                                              ),
+                                              HorizontalSpacer(7.5.w),
+                                              Text(
+                                                'Total Amount',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .copyWith(),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(0),
+                                          child: Row(
+                                            children: [
+                                              HorizontalSpacer(3.w),
+                                              Text(
+                                                dashBoardController
+                                                        .summaryModel
+                                                        ?.result
+                                                        ?.netInvestment ??
+                                                    '',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: const Color(
+                                                          0xFFFFC700),
+                                                    ),
+                                              ),
+                                              HorizontalSpacer(20.w),
+                                              Text(
+                                                dashBoardController
+                                                        .summaryModel
+                                                        ?.result
+                                                        ?.netEquityGains ??
+                                                    '',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: const Color(
+                                                          0xFF6C8FF8),
+                                                    ),
+                                              ),
+                                              HorizontalSpacer(11.5.w),
+                                              Text(
+                                                dashBoardController.summaryModel
+                                                        ?.result?.totalAmount ??
+                                                    '',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: const Color(
+                                                          0xFF324053),
+                                                    ),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
+                                ),
+                              ),
                         VerticalSpacer(2.h),
                         Text(
                           'Funds',
@@ -1096,7 +1165,398 @@ class _ScreenHomeState extends State<ScreenHome> {
                         //           ),
                         //         ),
                         //       )
-                        //     : const PortFolioMutualFund(),
+                        //: const PortFolioMutualFund(),
+                        // VerticalSpacer(2.h),
+                        // Text(
+                        //   'Invest In Gold',
+                        //   style:
+                        //       Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        //             fontSize: 18.sp,
+                        //             fontWeight: FontWeight.bold,
+                        //           ),
+                        // ),
+                        // VerticalSpacer(2.h),
+                        // SizedBox(
+                        //   height: Adaptive.h(26),
+                        //   width: MediaQuery.of(context).size.width,
+                        //   child: Card(
+                        //     elevation: 9,
+                        //     shape: RoundedRectangleBorder(
+                        //       borderRadius: BorderRadius.circular(20.sp),
+                        //     ),
+                        //     child: Container(
+                        //       decoration: BoxDecoration(
+                        //         borderRadius: BorderRadius.circular(20.sp),
+                        //         gradient: const LinearGradient(
+                        //           begin: Alignment.topLeft,
+                        //           end: Alignment.bottomRight,
+                        //           colors: [
+                        //             Color(0xFF6C8FF8),
+                        //             Color(0xFF6C8FF8)
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+
+                        // Align(
+                        //   alignment: Alignment.center,
+                        //   child: SizedBox(
+                        //     width: Adaptive.w(42),
+                        //     child: ButtonWidget(
+                        //       btName: 'Buy Now',
+                        //       onTap: () {},
+                        //     ),
+                        //   ),
+                        // ),
+                        // VerticalSpacer(1.h),
+                        // Text(
+                        //   'Create Your Investment Habit',
+                        //   style:
+                        //       Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        //             fontSize: 18.sp,
+                        //             fontWeight: FontWeight.bold,
+                        //           ),
+                        // ),
+                        // VerticalSpacer(2.h),
+                        // SizedBox(
+                        //   child: Column(
+                        //     children: [
+                        //       Row(
+                        //         mainAxisAlignment:
+                        //             MainAxisAlignment.spaceBetween,
+                        //         children: [
+                        //           SizedBox(
+                        //             height: Adaptive.h(12),
+                        //             width: Adaptive.w(20),
+                        //             child: Card(
+                        //               elevation: 6,
+                        //               color: const Color(0xFFE1F5EA),
+                        //               child: Column(
+                        //                 mainAxisAlignment:
+                        //                     MainAxisAlignment.center,
+                        //                 children: [
+                        //                   VerticalSpacer(1.h),
+                        //                   InkWell(
+                        //                     onTap: () {
+                        //                       // Navigator.push(
+                        //                       //   context,
+                        //                       //   MaterialPageRoute(
+                        //                       //     builder: (context) => const TopMfsScreen(
+                        //                       //       category: 'Hybrid: Aggressive',
+                        //                       //       appbarname: 'Aggressive',
+                        //                       //     ),
+                        //                       //   ),
+                        //                       // );
+                        //                     },
+                        //                     child: const Collectionwidget(
+                        //                       image:
+                        //                           'assets/images/graduation-hat_999735.png',
+                        //                       color: Color(0xFFA0CFA2),
+                        //                     ),
+                        //                   ),
+                        //                   VerticalSpacer(1.h),
+                        //                   // Text(
+                        //                   //   'Aggressive',
+                        //                   //   style: TextStyle(
+                        //                   //     fontSize: 15.5.sp,
+                        //                   //     fontWeight: FontWeight.bold,
+                        //                   //   ),
+                        //                   // ),
+                        //                   // VerticalSpacer(1.h),
+                        //                 ],
+                        //               ),
+                        //             ),
+                        //           ),
+                        //           SizedBox(
+                        //             height: Adaptive.h(12),
+                        //             width: Adaptive.w(20),
+                        //             child: Card(
+                        //               color: const Color(0xFFFDEAD3),
+                        //               elevation: 6,
+                        //               child: Column(
+                        //                 mainAxisAlignment:
+                        //                     MainAxisAlignment.center,
+                        //                 children: [
+                        //                   VerticalSpacer(1.h),
+                        //                   InkWell(
+                        //                     onTap: () {
+                        //                       // Navigator.push(
+                        //                       //   context,
+                        //                       //   MaterialPageRoute(
+                        //                       //     builder: (context) => const TopMfsScreen(
+                        //                       //       category: 'Equity: Flexi Cap',
+                        //                       //       appbarname: "Flexi Cap",
+                        //                       //     ),
+                        //                       //   ),
+                        //                       // );
+                        //                     },
+                        //                     child: const Collectionwidget(
+                        //                       image:
+                        //                           'assets/images/wedding-ring_6612299.png',
+                        //                       color: Color(0xFFF8B39B),
+                        //                     ),
+                        //                   ),
+                        //                   VerticalSpacer(1.h),
+                        //                   // VerticalSpacer(3.h),
+                        //                   // Text('Flexi Cap',
+                        //                   //     style: TextStyle(
+                        //                   //       fontSize: 15.5.sp,
+                        //                   //       fontWeight: FontWeight.bold,
+                        //                   //     )),
+                        //                   // VerticalSpacer(1.h),
+                        //                 ],
+                        //               ),
+                        //             ),
+                        //           ),
+                        //           SizedBox(
+                        //             height: Adaptive.h(12),
+                        //             width: Adaptive.w(20),
+                        //             child: Card(
+                        //               color: const Color(0xFFF9F5FF),
+                        //               elevation: 6,
+                        //               child: Column(
+                        //                 mainAxisAlignment:
+                        //                     MainAxisAlignment.center,
+                        //                 children: [
+                        //                   VerticalSpacer(1.h),
+                        //                   InkWell(
+                        //                     onTap: () {
+                        //                       // Navigator.push(
+                        //                       //   context,
+                        //                       //   MaterialPageRoute(
+                        //                       //     builder: (context) => const TopMfsScreen(
+                        //                       //       category: 'Equity: Multi Cap',
+                        //                       //       appbarname: 'Multi Cap',
+                        //                       //     ),
+                        //                       //   ),
+                        //                       // );
+                        //                     },
+                        //                     child: const Collectionwidget(
+                        //                       image:
+                        //                           'assets/images/saving_8244497.png',
+                        //                       color: Color(0xFF8380B3),
+                        //                     ),
+                        //                   ),
+                        //                   VerticalSpacer(1.h),
+                        //                   // Text('Multi Cap',
+                        //                   //     style: TextStyle(
+                        //                   //       fontSize: 15.5.sp,
+                        //                   //       fontWeight: FontWeight.bold,
+                        //                   //     )),
+                        //                   // VerticalSpacer(1.h),
+                        //                 ],
+                        //               ),
+                        //             ),
+                        //           ),
+                        //           SizedBox(
+                        //             height: Adaptive.h(12),
+                        //             width: Adaptive.w(20),
+                        //             child: Card(
+                        //               elevation: 6,
+                        //               color: const Color(0xFFE1F5EA),
+                        //               child: Column(
+                        //                 mainAxisAlignment:
+                        //                     MainAxisAlignment.center,
+                        //                 children: [
+                        //                   VerticalSpacer(1.h),
+                        //                   InkWell(
+                        //                     onTap: () {
+                        //                       // Navigator.push(
+                        //                       //   context,
+                        //                       //   MaterialPageRoute(
+                        //                       //     builder: (context) => const TopMfsScreen(
+                        //                       //       category: 'Equity: Large Cap',
+                        //                       //       appbarname: 'Large Cap',
+                        //                       //     ),
+                        //                       //   ),
+                        //                       // );
+                        //                     },
+                        //                     child: const Collectionwidget(
+                        //                       image:
+                        //                           'assets/images/pension_8381454.png',
+                        //                       // image: 'assets/images/bank_8690572.png',
+                        //                       color: Color(0xFF71BEE7),
+                        //                     ),
+                        //                   ),
+                        //                   VerticalSpacer(1.h),
+                        //                   // Text(
+                        //                   //   'Aggressive',
+                        //                   //   style: TextStyle(
+                        //                   //     fontSize: 15.5.sp,
+                        //                   //     fontWeight: FontWeight.bold,
+                        //                   //   ),
+                        //                   // ),
+                        //                   // VerticalSpacer(1.h),
+                        //                 ],
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //       VerticalSpacer(1.h),
+                        //       Row(
+                        //         mainAxisAlignment:
+                        //             MainAxisAlignment.spaceBetween,
+                        //         children: [
+                        //           Text(
+                        //             'Education',
+                        //             style: TextStyle(
+                        //               fontSize: 15.5.sp,
+                        //               fontWeight: FontWeight.bold,
+                        //             ),
+                        //           ),
+                        //           // HorizontalSpacer(16.w),
+                        //           Text('Marriage',
+                        //               style: TextStyle(
+                        //                 fontSize: 15.5.sp,
+                        //                 fontWeight: FontWeight.bold,
+                        //               )),
+                        //           // HorizontalSpacer(19.w),
+                        //           Text('Savings',
+                        //               style: TextStyle(
+                        //                 fontSize: 15.5.sp,
+                        //                 fontWeight: FontWeight.bold,
+                        //               )),
+                        //           Text('Retirement',
+                        //               style: TextStyle(
+                        //                   fontSize: 15.5.sp,
+                        //                   fontWeight: FontWeight.bold)),
+                        //         ],
+                        //       ),
+                        //       VerticalSpacer(1.5.h),
+                        //       Row(
+                        //         children: [
+                        //           SizedBox(
+                        //             height: Adaptive.h(12),
+                        //             width: Adaptive.w(20),
+                        //             child: Card(
+                        //               color: const Color(0xFFF9FFB5),
+                        //               elevation: 6,
+                        //               child: Column(
+                        //                 mainAxisAlignment:
+                        //                     MainAxisAlignment.center,
+                        //                 children: [
+                        //                   VerticalSpacer(1.h),
+                        //                   InkWell(
+                        //                     onTap: () {},
+                        //                     child: const Collectionwidget(
+                        //                       image:
+                        //                           'assets/images/car_7264084.png',
+                        //                       color: Color.fromARGB(
+                        //                           255, 219, 213, 88),
+                        //                       // color: Color(0xFFC5714E),
+                        //                     ),
+                        //                   ),
+                        //                   VerticalSpacer(1.h),
+                        //                   // Text('Mid Cap',
+                        //                   //     style: TextStyle(
+                        //                   //       fontSize: 15.5.sp,
+                        //                   //       fontWeight: FontWeight.bold,
+                        //                   //     )),
+                        //                   // VerticalSpacer(1.h),
+                        //                 ],
+                        //               ),
+                        //             ),
+                        //           ),
+                        //           HorizontalSpacer(4.5.w),
+                        //           SizedBox(
+                        //             height: Adaptive.h(12),
+                        //             width: Adaptive.w(20),
+                        //             child: Card(
+                        //               elevation: 6,
+                        //               color: const Color.fromARGB(
+                        //                   255, 252, 219, 216),
+                        //               child: Column(
+                        //                 mainAxisAlignment:
+                        //                     MainAxisAlignment.center,
+                        //                 children: [
+                        //                   VerticalSpacer(1.h),
+                        //                   InkWell(
+                        //                     onTap: () {},
+                        //                     child: const Collectionwidget(
+                        //                       image:
+                        //                           'assets/images/debt_8891723.png',
+                        //                       color: Color.fromARGB(
+                        //                           255, 238, 107, 95),
+                        //                     ),
+                        //                   ),
+                        //                   VerticalSpacer(1.h),
+                        //                 ],
+                        //               ),
+                        //             ),
+                        //           ),
+                        //           HorizontalSpacer(4.5.w),
+                        //           SizedBox(
+                        //             height: Adaptive.h(12),
+                        //             width: Adaptive.w(20),
+                        //             child: Card(
+                        //               elevation: 6,
+                        //               color: const Color.fromARGB(
+                        //                   255, 239, 223, 253),
+                        //               child: Column(
+                        //                 mainAxisAlignment:
+                        //                     MainAxisAlignment.center,
+                        //                 children: [
+                        //                   VerticalSpacer(1.h),
+                        //                   InkWell(
+                        //                     onTap: () {},
+                        //                     child: const Collectionwidget(
+                        //                       image:
+                        //                           'assets/images/mortgage_13384497.png',
+                        //                       color: Color(0xFF9D94FF),
+                        //                     ),
+                        //                   ),
+                        //                   VerticalSpacer(1.h),
+                        //                   // Text(
+                        //                   //   'Aggressive',
+                        //                   //   style: TextStyle(
+                        //                   //     fontSize: 15.5.sp,
+                        //                   //     fontWeight: FontWeight.bold,
+                        //                   //   ),
+                        //                   // ),
+                        //                   // VerticalSpacer(1.h),
+                        //                 ],
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //       VerticalSpacer(1.h),
+                        //       Row(
+                        //         children: [
+                        //           Text('New Vehicle',
+                        //               style: TextStyle(
+                        //                 fontSize: 15.5.sp,
+                        //                 fontWeight: FontWeight.bold,
+                        //               )),
+                        //           HorizontalSpacer(7.w),
+                        //           Text('Debt',
+                        //               style: TextStyle(
+                        //                 fontSize: 15.5.sp,
+                        //                 fontWeight: FontWeight.bold,
+                        //               )),
+                        //           HorizontalSpacer(16.w),
+                        //           Text('Home Loan',
+                        //               style: TextStyle(
+                        //                 fontSize: 15.5.sp,
+                        //                 fontWeight: FontWeight.bold,
+                        //               )),
+                        //         ],
+                        //       ),
+                        //       VerticalSpacer(1.h),
+                        //       SizedBox(
+                        //         width: Adaptive.w(50),
+                        //         child: ButtonWidget(
+                        //           btName: 'Schedule a call',
+                        //           onTap: () {},
+                        //         ),
+                        //       )
+                        //     ],
+                        //   ),
+                        // ),
+
                         VerticalSpacer(10.h),
                       ],
                     ),
@@ -1107,52 +1567,6 @@ class _ScreenHomeState extends State<ScreenHome> {
           ),
         ],
       ),
-    );
-  }
-
-  void showLogoutAlertDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Logout'),
-          content: const Text('Are you sure you want to logout?'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                SecureStorage.clearSecureStoragevalue('token');
-                SecureStorage.clearSecureStoragevalue('username');
-                SecureStorage.clearSecureStoragevalue('iin');
-                Provider.of<BiometricLogin>(context, listen: false)
-                    .changeButtonEnabled(false);
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const BoardingViewScreen(),
-                  ),
-                  (route) => false,
-                );
-                Provider.of<AuthController>(context, listen: false)
-                    .clearTheControllerValue();
-              },
-              child: Text(
-                'Yes',
-                style: Theme.of(context).textTheme.labelLarge,
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                // Dismiss the alert dialog when 'No' is pressed
-                Navigator.of(context).pop();
-              },
-              child: Text(
-                'No',
-                style: Theme.of(context).textTheme.labelLarge,
-              ),
-            ),
-          ],
-        );
-      },
     );
   }
 }

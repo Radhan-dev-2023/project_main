@@ -37,12 +37,50 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
 
   @override
   Widget build(BuildContext context) {
+    List<BottomNavigationBarItem> bottomList = [
+      BottomNavigationBarItem(
+        icon: Image.asset(
+          'assets/images/dashboard_11118018.png',
+          color: indexfor == 0 ? Color(0xFFA6BBFB) : Colors.black,
+          height: 25,
+          width: 23,
+        ),
+        label: 'Home',
+      ),
+      BottomNavigationBarItem(
+        icon: Image.asset(
+          'assets/images/money_13299664.png',
+          color: indexfor == 1 ? const Color(0xFFA6BBFB) : Colors.black,
+          height: 25,
+          width: 23,
+        ),
+        label: 'Favorites',
+      ),
+      BottomNavigationBarItem(
+        icon: Image.asset(
+          'assets/images/hand-holding-usd_9795530.png',
+          color: indexfor == 2 ? const Color(0xFFA6BBFB) : Colors.black,
+          height: 25,
+          width: 23,
+        ),
+        label: '',
+      ),
+      BottomNavigationBarItem(
+        icon: Image.asset(
+          'assets/images/gear_609492.png',
+          color: indexfor == 3 ? Color(0xFFA6BBFB) : Colors.black,
+          height: 25,
+          width: 23,
+        ),
+        label: '',
+      ),
+    ];
     return Scaffold(
       body: bottomBarPages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         unselectedItemColor: Colors.black,
-        selectedItemColor: Colors.amber,
+
         showSelectedLabels: false, // Hide labels for active items
         showUnselectedLabels: false,
         currentIndex: _currentIndex,
@@ -57,44 +95,4 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
       ),
     );
   }
-
-  List<BottomNavigationBarItem> bottomList = [
-    BottomNavigationBarItem(
-      icon: Image.asset(
-        'assets/images/dashboard_11118018.png',
-         color: indexfor == 0 ? Color(0xFFA6BBFB) : Colors.black,
-        height: 25,
-        width: 23,
-      ),
-      label: 'Home',
-    ),
-    BottomNavigationBarItem(
-      icon: Image.asset(
-        'assets/images/money_13299664.png',
-        color: indexfor == 1 ? const Color(0xFFA6BBFB) : Colors.black,
-        height: 25,
-        width: 23,
-      ),
-      label: 'Favorites',
-    ),
-    BottomNavigationBarItem(
-      icon: Image.asset(
-        'assets/images/hand-holding-usd_9795530.png',
-         color: indexfor == 2 ? const Color(0xFFA6BBFB) : Colors.black,
-        height: 25,
-        width: 23,
-      ),
-      label: '',
-    ),
-    BottomNavigationBarItem(
-      icon: Image.asset(
-        'assets/images/gear_609492.png',
-        color: indexfor == 3 ? Color(0xFFA6BBFB) : Colors.black,
-        // color: indexfor == 3 ? const Color(0xFFF06D1C) : Colors.black,
-        height: 25,
-        width: 23,
-      ),
-      label: 'Pro',
-    ),
-  ];
 }

@@ -128,4 +128,6 @@ class FilterController extends ChangeNotifier {
     failedvalue = false;
     searchController.clear();
   }
+
+  
 }

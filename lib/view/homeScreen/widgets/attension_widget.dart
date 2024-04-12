@@ -16,7 +16,6 @@ class AttensionWidget extends StatelessWidget {
     // InvestorModel investorModel = InvestorModel();
     final dashBoardController = Provider.of<DashBoardController>(context);
     return SizedBox(
-      height: 28.h,
       width: double.infinity,
       child: Card(
         elevation: 5,
@@ -24,29 +23,52 @@ class AttensionWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             VerticalSpacer(1.h),
-            Icon(
-              Icons.warning_outlined,
-              color: Colors.red,
-              size: 5.h,
-            ),
-            Text(
-              'Attention required!',
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    fontSize: 17.sp,
-                    fontWeight: FontWeight.bold,
+            ListTile(
+              contentPadding: EdgeInsets.only(
+                left: 9.sp,
+                right: 15.sp,
+              ),
+              leading: const SizedBox(),
+              title: Text(
+                'Attention required!',
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      fontSize: 17.5.sp,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 3.5.sp,
+                      // color: Color(0xFFACB2BA),
+                    ),
+              ),
+              subtitle: Text(
+                'Complete Your KYC  ',
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      color: Colors.grey,
+                    ),
+              ),
+              trailing: InkWell(
+                onTap: () {
+                  Routes.dashboardToKycPage(context);
+                },
+                child: SizedBox(
+                  width: Adaptive.w(23),
+                  height: Adaptive.h(5),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.sp),
+                      color: const Color(0xFF6C8FF8),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Activate',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15.sp,
+                        ),
+                      ),
+                    ),
                   ),
-              // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
+                ),
+              ),
             ),
-            VerticalSpacer(1.h),
-            Text(
-                'Your KYC details are  ${dashBoardController.dashBoardModel?.result?.data?.activationStatus?.message}'),
-            VerticalSpacer(2.h),
-            ButtonWidget(
-              btName: 'Complete KYC',
-              onTap: () {
-                Routes.dashboardToKycPage(context);
-              },
-            )
           ],
         ),
       ),

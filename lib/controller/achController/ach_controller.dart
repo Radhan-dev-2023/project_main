@@ -2,6 +2,7 @@ import 'package:finfresh_mobile/model/ach%20history%20model/ach_history_model.da
 import 'package:finfresh_mobile/services/ach%20history/getting_ach_history.dart';
 import 'package:finfresh_mobile/services/ach%20service/ach_service.dart';
 import 'package:finfresh_mobile/services/refersh%20token/refersh_token.dart';
+import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -173,5 +174,55 @@ class AchController extends ChangeNotifier {
       historyLoading = false;
       notifyListeners();
     }
+  }
+
+  bool allvalue = false;
+  bool pendinginhistory = false;
+  bool acceptesvalue = false;
+  bool rejected = false;
+  void changeAllvalue(bool newValue) {
+    allvalue = newValue;
+    rejected = false;
+    acceptesvalue = false;
+    notifyListeners();
+  }
+
+  void changependingvalue(bool newValue) {
+    pendinginhistory = newValue;
+
+    notifyListeners();
+  }
+
+  void changeacceptedvalue(bool newValue) {
+    acceptesvalue = newValue;
+    rejected = false;
+    allvalue = false;
+    notifyListeners();
+  }
+
+  void changeFailedvalue(bool newValue) {
+    rejected = newValue;
+    allvalue = false;
+    acceptesvalue = false;
+
+    notifyListeners();
+  }
+
+  void callAchHistory(context) {
+    if (acceptesvalue == true) {
+      getAchHistoy(context, 'A');
+    } else if (rejected == true) {
+      getAchHistoy(context, 'R');
+    } else if (allvalue == true) {
+      getAchHistoy(context, '');
+    } else {
+      showFlushbar(context, 'Please select one ');
+    }
+  }
+
+  void resetFilter() {
+    allvalue = false;
+    rejected = false;
+    acceptesvalue = false;
   }
 }

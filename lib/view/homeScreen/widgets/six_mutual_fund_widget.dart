@@ -1,11 +1,9 @@
-import 'package:finfresh_mobile/controller/top%20MFs%20controller/top_mfs_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/all%20mutual%20fund/screen_all_mutual_fund.dart';
 import 'package:finfresh_mobile/view/homeScreen/widgets/collection_widget.dart';
 import 'package:finfresh_mobile/view/top%20funds/top_funds.dart';
 import 'package:finfresh_mobile/view/top%20mfs/screen_top_mfs.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class SixMutualFundWidget extends StatelessWidget {
@@ -48,7 +46,7 @@ class SixMutualFundWidget extends StatelessWidget {
                               ),
                             );
                           },
-                          child: Collectionwidget(
+                          child: const Collectionwidget(
                             image: 'assets/images/coin_8181194.png',
                             color: Color(0xFFA0CFA2),
                           ),
@@ -70,7 +68,7 @@ class SixMutualFundWidget extends StatelessWidget {
                   height: Adaptive.h(12),
                   width: Adaptive.w(20),
                   child: Card(
-                    color: Color(0xFFFDEAD3),
+                    color: const Color(0xFFFDEAD3),
                     elevation: 6,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -109,7 +107,7 @@ class SixMutualFundWidget extends StatelessWidget {
                   height: Adaptive.h(12),
                   width: Adaptive.w(20),
                   child: Card(
-                    color: Color(0xFFF9F5FF),
+                    color: const Color(0xFFF9F5FF),
                     elevation: 6,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -165,7 +163,7 @@ class SixMutualFundWidget extends StatelessWidget {
                               ),
                             );
                           },
-                          child: Collectionwidget(
+                          child: const Collectionwidget(
                             image: 'assets/images/office_9155715.png',
                             // image: 'assets/images/bank_8690572.png',
                             color: Color(0xFF71BEE7),
@@ -256,7 +254,7 @@ class SixMutualFundWidget extends StatelessWidget {
                   height: Adaptive.h(12),
                   width: Adaptive.w(20),
                   child: Card(
-                    color: Color(0xFFF9FFB5),
+                    color: const Color(0xFFF9FFB5),
                     elevation: 6,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -295,7 +293,7 @@ class SixMutualFundWidget extends StatelessWidget {
                   height: Adaptive.h(12),
                   width: Adaptive.w(20),
                   child: Card(
-                    color: Color.fromARGB(255, 200, 250, 207),
+                    color: const Color.fromARGB(255, 200, 250, 207),
                     elevation: 6,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -334,7 +332,7 @@ class SixMutualFundWidget extends StatelessWidget {
                   width: Adaptive.w(20),
                   child: Card(
                     elevation: 6,
-                    color: Color.fromARGB(255, 252, 219, 216),
+                    color: const Color.fromARGB(255, 252, 219, 216),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -348,7 +346,7 @@ class SixMutualFundWidget extends StatelessWidget {
                               ),
                             );
                           },
-                          child: Collectionwidget(
+                          child: const Collectionwidget(
                             image: 'assets/images/profit_9720059.png',
                             color: Color.fromARGB(255, 238, 107, 95),
                           ),
@@ -371,7 +369,7 @@ class SixMutualFundWidget extends StatelessWidget {
                   width: Adaptive.w(20),
                   child: Card(
                     elevation: 6,
-                    color: Color.fromARGB(255, 239, 223, 253),
+                    color: const Color.fromARGB(255, 239, 223, 253),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -399,7 +397,7 @@ class SixMutualFundWidget extends StatelessWidget {
                             //         listen: false)
                             //     .getTopMfsFRomPeriod(context, 'All');
                           },
-                          child: Collectionwidget(
+                          child: const Collectionwidget(
                             image: 'assets/images/guarantee_1175296.png',
                             color: Color(0xFF9D94FF),
                           ),
