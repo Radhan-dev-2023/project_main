@@ -1,7 +1,6 @@
-import 'dart:math';
-
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
+import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
 import 'package:finfresh_mobile/view/kyc/Nominee%20adding/Nominee%202/screen_nominee_2.dart';
 import 'package:finfresh_mobile/view/kyc/adding%20nominee%20and%20guardian/adding_nominee_guardian.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
@@ -109,6 +108,17 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10)),
                       hintText: "Enter Name"),
+                ),
+                VerticalSpacer(3.h),
+                TextFormField(
+                  keyboardType: TextInputType.number,
+                  controller: kycController.nominee1Percentage,
+                  style: Theme.of(context).textTheme.labelLarge!,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    hintText: 'Enter Percentage',
+                  ),
                 ),
                 VerticalSpacer(3.h),
                 Container(
@@ -477,14 +487,19 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: ButtonWidget(
         onTap: () {
-          Provider.of<KycController>(context, listen: false).addNominee();
+          int sum = kycController.calculatePercentage();
+          if (sum > 100) {
+            showFlushbar(context, 'Percentage of holding is over 100%');
+          } else {
+            Provider.of<KycController>(context, listen: false).addNominee();
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const AddingNomineeAndGuadianScreen(),
+              ),
+            );
+          }
 
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const AddingNomineeAndGuadianScreen(),
-            ),
-          );
           // kycController.addingvaluetoModel();
           // bool result = await kycController.createCustomer(context);
           // log('result is $result');

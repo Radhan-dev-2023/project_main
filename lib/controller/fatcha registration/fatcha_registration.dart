@@ -8,13 +8,17 @@ import 'package:finfresh_mobile/model/ubo%20model/ubo_model.dart';
 import 'package:finfresh_mobile/services/fatcha%20services/fatcha_services.dart';
 import 'package:finfresh_mobile/services/kyc/master_services.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
+import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:image/image.dart';
 import 'dart:math' as Math;
 import 'package:image/src/image/image.dart' as img;
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:path_provider/path_provider.dart';
+
+import '../../services/refersh token/refersh_token.dart';
 
 class FatchaRegistrationController extends ChangeNotifier {
   TextEditingController countrybirthController = TextEditingController();
@@ -304,44 +308,83 @@ class FatchaRegistrationController extends ChangeNotifier {
     notifyListeners();
   }
 
+  RefershTokenService refershTokenService = RefershTokenService();
   bool loading = false;
 
   Future<bool> fatchRegistration(context) async {
+    String token = await SecureStorage.readToken('token');
+    bool isTokenExpired = JwtDecoder.isExpired(token);
     loading = true;
     notifyListeners();
     log('Pepvalue $pepValuetobackend');
     try {
-      bool result = await fatchaServices.fatchaRegister(
-        appincomeCode: incomeCode ?? '',
-        networthsign: networthsignController.text,
-        networth: netWorthController.text,
-        networthdate: networthdate.text,
-        sourcewealth: wealthCode ?? '',
-        countryofbirth: countryvalueTobackend ?? '',
-        placeofbirth: stateCode ?? '',
-        taxresidence: taxresidencyValuetobackend ?? '',
-        identitytype: identitytoBackend,
-        stockexchange: stockvalue ?? '',
-        sponseravailability: sponservaluetobackend ?? '',
-        ubomastercode: ubocode ?? '',
-        ubobirthCountry: ubocountrybirthController.text,
-        ubocountry: uboCountryController.text,
-        uboGender: gendervalue ?? ' ',
-        uboHoldingPercentage: holdingPercentageController.text,
-        uboidentitytype: uboidentytobakend,
-        uboTinNumber: ubotinnumberController.text,
-        addresvalue: addrevaluetobackend ?? '',
-        pepVlaue: pepValuetobackend ?? '',
-        context: context,
-      );
-      if (result == true) {
-        loading = false;
-        notifyListeners();
-        return true;
+      if (isTokenExpired) {
+        await refershTokenService.postRefershTocken(context);
+        bool result = await fatchaServices.fatchaRegister(
+          appincomeCode: incomeCode ?? '',
+          networthsign: networthsignController.text,
+          networth: netWorthController.text,
+          networthdate: networthdate.text,
+          sourcewealth: wealthCode ?? '',
+          countryofbirth: countryvalueTobackend ?? '',
+          placeofbirth: stateCode ?? '',
+          taxresidence: taxresidencyValuetobackend ?? '',
+          identitytype: identitytoBackend,
+          stockexchange: stockvalue ?? '',
+          sponseravailability: sponservaluetobackend ?? '',
+          ubomastercode: ubocode ?? '',
+          ubobirthCountry: ubocountrybirthController.text,
+          ubocountry: uboCountryController.text,
+          uboGender: gendervalue ?? ' ',
+          uboHoldingPercentage: holdingPercentageController.text,
+          uboidentitytype: uboidentytobakend,
+          uboTinNumber: ubotinnumberController.text,
+          addresvalue: addrevaluetobackend ?? '',
+          pepVlaue: pepValuetobackend ?? '',
+          context: context,
+        );
+        if (result == true) {
+          loading = false;
+          notifyListeners();
+          return true;
+        } else {
+          loading = false;
+          notifyListeners();
+          return false;
+        }
       } else {
-        loading = false;
-        notifyListeners();
-        return false;
+        bool result = await fatchaServices.fatchaRegister(
+          appincomeCode: incomeCode ?? '',
+          networthsign: networthsignController.text,
+          networth: netWorthController.text,
+          networthdate: networthdate.text,
+          sourcewealth: wealthCode ?? '',
+          countryofbirth: countryvalueTobackend ?? '',
+          placeofbirth: stateCode ?? '',
+          taxresidence: taxresidencyValuetobackend ?? '',
+          identitytype: identitytoBackend,
+          stockexchange: stockvalue ?? '',
+          sponseravailability: sponservaluetobackend ?? '',
+          ubomastercode: ubocode ?? '',
+          ubobirthCountry: ubocountrybirthController.text,
+          ubocountry: uboCountryController.text,
+          uboGender: gendervalue ?? ' ',
+          uboHoldingPercentage: holdingPercentageController.text,
+          uboidentitytype: uboidentytobakend,
+          uboTinNumber: ubotinnumberController.text,
+          addresvalue: addrevaluetobackend ?? '',
+          pepVlaue: pepValuetobackend ?? '',
+          context: context,
+        );
+        if (result == true) {
+          loading = false;
+          notifyListeners();
+          return true;
+        } else {
+          loading = false;
+          notifyListeners();
+          return false;
+        }
       }
     } catch (e) {
       logger.d('Failed with an exception');

@@ -34,14 +34,14 @@ class RoundChartWidget extends StatelessWidget {
           .summaryModel!.result!.netInvestment!
           .replaceAll('₹', '')
           .replaceAll(',', ''));
-      double total = double.parse(dashBoardController
-          .summaryModel!.result!.totalAmount!
-          .replaceAll('₹', '')
-          .replaceAll(',', ''));
+      // double total = double.parse(dashBoardController
+      //     .summaryModel!.result!.totalAmount!
+      //     .replaceAll('₹', '')
+      //     .replaceAll(',', ''));
       // dynamic percentage = (gain / invest) * 100;
       dynamic percetageforinvest = (invest / totalAmount) * 100;
       dynamic prectageForGain = (gain / totalAmount) * 100;
-      dynamic totelper = (total / totalAmount) * 100;
+      // dynamic totelper = (total / totalAmount) * 100;
       return Column(
         children: [
           Padding(

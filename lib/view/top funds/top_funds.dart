@@ -28,12 +28,6 @@ class ScreenTopFunds extends StatelessWidget {
                   builder: (context) => const ScreenAllMutualFund(),
                 ),
               );
-              Provider.of<TopMFsController>(context, listen: false).returns =
-                  '3 year';
-              Provider.of<TopMFsController>(context, listen: false)
-                  .returntoBackend = '3y';
-              Provider.of<TopMFsController>(context, listen: false)
-                  .getTopMfsFRomPeriod(context, 'All');
             },
             icon: Icon(
               Icons.search,

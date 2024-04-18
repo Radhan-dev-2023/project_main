@@ -352,14 +352,7 @@ class SixMutualFundWidget extends StatelessWidget {
                           ),
                         ),
                         VerticalSpacer(1.h),
-                        // Text(
-                        //   'Aggressive',
-                        //   style: TextStyle(
-                        //     fontSize: 15.5.sp,
-                        //     fontWeight: FontWeight.bold,
-                        //   ),
-                        // ),
-                        // VerticalSpacer(1.h),
+                        
                       ],
                     ),
                   ),
@@ -383,19 +376,7 @@ class SixMutualFundWidget extends StatelessWidget {
                                     const ScreenAllMutualFund(),
                               ),
                             );
-                            // Provider.of<TopMFsController>(context,
-                            //         listen: false)
-                            //     .queryController
-                            //     .clear();
-                            // Provider.of<TopMFsController>(context,
-                            //         listen: false)
-                            //     .returns = '3 year';
-                            // Provider.of<TopMFsController>(context,
-                            //         listen: false)
-                            //     .returntoBackend = '3y';
-                            // Provider.of<TopMFsController>(context,
-                            //         listen: false)
-                            //     .getTopMfsFRomPeriod(context, 'All');
+                            
                           },
                           child: const Collectionwidget(
                             image: 'assets/images/guarantee_1175296.png',
@@ -403,14 +384,7 @@ class SixMutualFundWidget extends StatelessWidget {
                           ),
                         ),
                         VerticalSpacer(1.h),
-                        // Text(
-                        //   'Aggressive',
-                        //   style: TextStyle(
-                        //     fontSize: 15.5.sp,
-                        //     fontWeight: FontWeight.bold,
-                        //   ),
-                        // ),
-                        // VerticalSpacer(1.h),
+                       
                       ],
                     ),
                   ),

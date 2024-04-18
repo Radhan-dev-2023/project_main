@@ -75,10 +75,39 @@ class _ScreenAddingBankState extends State<ScreenAddingBank> {
                     );
                   }).toList(),
                 ),
+                VerticalSpacer(3.h),
+                RichText(
+                  text: TextSpan(children: [
+                    TextSpan(
+                      text: 'Branch : ',
+                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                            fontSize: 17.sp,
+                            fontWeight: FontWeight.w700,
+                          ),
+                    ),
+                    TextSpan(text: kycController.branchNameController.text),
+                  ]),
+                ),
+                VerticalSpacer(2.h),
+                RichText(
+                  text: TextSpan(children: [
+                    TextSpan(
+                      text: 'Address : ',
+                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                            fontSize: 17.sp,
+                            fontWeight: FontWeight.w700,
+                          ),
+                    ),
+                    TextSpan(text: kycController.addressForBank.text),
+                  ]),
+                ),
+                VerticalSpacer(3.h),
+
                 // TextFormField(
-                //   // readOnly: true,
+                //   maxLines: 2,
+                //   readOnly: true,
                 //   autovalidateMode: AutovalidateMode.onUserInteraction,
-                //   controller: kycController.banknameController,
+                //   controller: kycController.addressForBank,
                 //   style: Theme.of(context).textTheme.labelLarge!,
                 //   validator: (value) {
                 //     if (value == null || value.isEmpty) {
@@ -92,7 +121,7 @@ class _ScreenAddingBankState extends State<ScreenAddingBank> {
                 //   decoration: InputDecoration(
                 //     border: OutlineInputBorder(
                 //         borderRadius: BorderRadius.circular(10)),
-                //     hintText: 'Enter bank name',
+                //     hintText: 'Bank address',
                 //   ),
                 // ),
               ],

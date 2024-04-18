@@ -6,6 +6,7 @@ import 'package:finfresh_mobile/model/ubo%20income%20model/ubo_income_model.dart
 import 'package:finfresh_mobile/model/ubo%20model/ubo_model.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/fatcha%20registration/upload%20fatcha%20proof/screen.upload_fatcha_proof.dart';
+import 'package:finfresh_mobile/view/fatcha%20registration/widget/congratulation_screen.dart';
 import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_button_widget.dart';
@@ -805,7 +806,7 @@ class _ScreenFatchaRegistrationState extends State<ScreenFatchaRegistration> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          const ScreenHomeView(),
+                                          const CongratualtionScreen(),
                                     ),
                                     (route) => false,
                                   );

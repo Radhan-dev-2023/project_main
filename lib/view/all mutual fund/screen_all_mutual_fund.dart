@@ -7,30 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class ScreenAllMutualFund extends StatefulWidget {
+class ScreenAllMutualFund extends StatelessWidget {
   const ScreenAllMutualFund({super.key});
 
   @override
-  State<ScreenAllMutualFund> createState() => _ScreenAllMutualFundState();
-}
-
-class _ScreenAllMutualFundState extends State<ScreenAllMutualFund> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    Provider.of<TopMFsController>(context, listen: false)
-        .queryController
-        .clear();
-    Provider.of<TopMFsController>(context, listen: false).returns = '3 year';
-    Provider.of<TopMFsController>(context, listen: false).returntoBackend =
-        '3y';
-    Provider.of<TopMFsController>(context, listen: false)
-        .getTopMfsFRomPeriod(context, 'All');
-  }
-
-  @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<TopMFsController>(context, listen: false)
+          .callinginInit(context);
+    });
     return Scaffold(
       appBar: AppBar(title: const Text('Mutual Funds')),
       body: Container(
@@ -56,18 +41,7 @@ class _ScreenAllMutualFundState extends State<ScreenAllMutualFund> {
                       Icons.search,
                       size: Adaptive.h(2.3),
                     ),
-                    // suffixIcon: topMfsController.queryController.text.isNotEmpty
-                    //     ? InkWell(
-                    //         onTap: () {
-                    //           // filterController.searchController
-                    //           //     .clear();
-                    //           // filterController.getfilter(context);
-                    //         },
-                    //         child: Icon(
-                    //           Icons.clear,
-                    //           size: Adaptive.h(2.3),
-                    //         ))
-                    //     : const SizedBox(),
+
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -86,6 +60,8 @@ class _ScreenAllMutualFundState extends State<ScreenAllMutualFund> {
                       '${topMfsController.filteredListForAllFunds.length ?? 0} SCHEMES',
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                             fontSize: 16.sp,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 3.sp,
                           ),
                     ),
                     const DurationButton(
@@ -142,9 +118,10 @@ class _ScreenAllMutualFundState extends State<ScreenAllMutualFund> {
                                         children: [
                                           Row(
                                             children: [
+                                              HorizontalSpacer(1.w),
                                               SizedBox(
                                                 height: 5.h,
-                                                width: 15.w,
+                                                width: 10.w,
                                                 child: Image.network(
                                                   topMfsController
                                                           .filteredListForAllFunds[
@@ -157,7 +134,7 @@ class _ScreenAllMutualFundState extends State<ScreenAllMutualFund> {
                                                   },
                                                 ),
                                               ),
-                                              HorizontalSpacer(5.w),
+                                              HorizontalSpacer(1.w),
                                               Expanded(
                                                 child: Text(
                                                   '${topMfsController.filteredListForAllFunds[index].schemeAmfi}',
@@ -180,6 +157,7 @@ class _ScreenAllMutualFundState extends State<ScreenAllMutualFund> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
+                                              HorizontalSpacer(2.w),
                                               Expanded(
                                                 child: Text(
                                                   topMfsController
@@ -187,6 +165,14 @@ class _ScreenAllMutualFundState extends State<ScreenAllMutualFund> {
                                                               index]
                                                           .schemeCategory ??
                                                       "",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .copyWith(
+                                                        fontSize: 16.sp,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
                                                   overflow:
                                                       TextOverflow.visible,
                                                 ),
@@ -200,7 +186,8 @@ class _ScreenAllMutualFundState extends State<ScreenAllMutualFund> {
                                                   ),
                                                 ),
                                                 child: Padding(
-                                                  padding: EdgeInsets.all(8.sp),
+                                                  padding:
+                                                      EdgeInsets.all(10.0.sp),
                                                   child: Text(
                                                     '${topMfsController.filteredListForAllFunds[index].riskometer}',
                                                     style: TextStyle(

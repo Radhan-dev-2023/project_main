@@ -6,27 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class ScreeenTranscations extends StatefulWidget {
+class ScreeenTranscations extends StatelessWidget {
   const ScreeenTranscations({super.key});
 
   @override
-  State<ScreeenTranscations> createState() => _ScreeenTranscationsState();
-}
-
-class _ScreeenTranscationsState extends State<ScreeenTranscations> {
-  @override
-  void initState() {
-    // TODO: implement initState
-
-    super.initState();
+  Widget build(BuildContext context) {
     final filterController =
         Provider.of<FilterController>(context, listen: false);
-    filterController.resetFilter();
-    filterController.getfilter(context);
-  }
 
-  @override
-  Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      filterController.resetFilter();
+      await filterController.getfilter(context);
+    });
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,

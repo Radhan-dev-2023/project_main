@@ -100,7 +100,7 @@ class _TopMfsScreenState extends State<TopMfsScreen> {
                                         children: [
                                           SizedBox(
                                             height: 5.h,
-                                            width: 15.w,
+                                            width: 13.w,
                                             child: Image.network(
                                               topMfsController
                                                       .topPerformingMutualFundModel
@@ -113,7 +113,7 @@ class _TopMfsScreenState extends State<TopMfsScreen> {
                                               },
                                             ),
                                           ),
-                                          HorizontalSpacer(5.w),
+                                          HorizontalSpacer(1.w),
                                           Expanded(
                                             child: Text(
                                               '${topMfsController.topPerformingMutualFundModel?.list?[index].schemeAmfi}',

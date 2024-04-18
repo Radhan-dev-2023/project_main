@@ -23,7 +23,7 @@ class ScreenSettings extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         // automaticallyImplyLeading: false,
-        title: Text('Settings'),
+        title: const Text('Settings'),
         actions: [
           IconButton(
             onPressed: () {
@@ -62,7 +62,7 @@ class ScreenSettings extends StatelessWidget {
                         ),
                       ),
                       ListTile(
-                        leading: Icon(Icons.person),
+                        leading: const Icon(Icons.person),
                         title: Text(
                           'Name',
                           style:
@@ -94,14 +94,14 @@ class ScreenSettings extends StatelessWidget {
                       // ),
                       Padding(
                         padding: EdgeInsets.only(left: 31.sp),
-                        child: Divider(
+                        child: const Divider(
                           height: 1,
-                          color: const Color.fromARGB(255, 219, 219, 219),
+                          color: Color.fromARGB(255, 219, 219, 219),
                           thickness: 1,
                         ),
                       ),
                       ListTile(
-                        leading: Icon(Icons.mobile_friendly),
+                        leading: const Icon(Icons.mobile_friendly),
                         title: Text(
                           'Phone',
                           style:
@@ -130,14 +130,14 @@ class ScreenSettings extends StatelessWidget {
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: 31.sp),
-                        child: Divider(
+                        child: const Divider(
                           height: 1,
-                          color: const Color.fromARGB(255, 219, 217, 217),
+                          color: Color.fromARGB(255, 219, 217, 217),
                           thickness: 1,
                         ),
                       ),
                       ListTile(
-                        leading: Icon(Icons.email),
+                        leading: const Icon(Icons.email),
                         title: Text(
                           'Email',
                           style:
@@ -166,14 +166,14 @@ class ScreenSettings extends StatelessWidget {
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: 31.sp),
-                        child: Divider(
+                        child: const Divider(
                           height: 1,
-                          color: const Color.fromARGB(255, 219, 217, 217),
+                          color: Color.fromARGB(255, 219, 217, 217),
                           thickness: 1,
                         ),
                       ),
                       ListTile(
-                        leading: Icon(Icons.edit_document),
+                        leading: const Icon(Icons.edit_document),
                         title: Text(
                           'IIN',
                           style:
@@ -210,6 +210,9 @@ class ScreenSettings extends StatelessWidget {
                     ListTile(
                       leading: Image.asset(
                         'assets/images/mandate.png',
+                        color: platformBrightness == Brightness.light
+                            ? Colors.black
+                            : Colors.white,
                         height: Adaptive.h(6),
                         width: Adaptive.w(6),
                       ),
@@ -252,6 +255,9 @@ class ScreenSettings extends StatelessWidget {
                     ListTile(
                       leading: Image.asset(
                         'assets/images/bankdetails.png',
+                        color: platformBrightness == Brightness.light
+                            ? Colors.black
+                            : Colors.white,
                         height: Adaptive.h(6),
                         width: Adaptive.w(6),
                       ),
@@ -285,15 +291,18 @@ class ScreenSettings extends StatelessWidget {
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 31.sp),
-                      child: Divider(
+                      child: const Divider(
                         height: 1,
-                        color: const Color.fromARGB(255, 219, 217, 217),
+                        color: Color.fromARGB(255, 219, 217, 217),
                         thickness: 1,
                       ),
                     ),
                     ListTile(
                       leading: Image.asset(
                         'assets/images/fatcharegistrario.png',
+                        color: platformBrightness == Brightness.light
+                            ? Colors.black
+                            : Colors.white,
                         height: Adaptive.h(6),
                         width: Adaptive.w(6),
                       ),
@@ -327,15 +336,18 @@ class ScreenSettings extends StatelessWidget {
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 31.sp),
-                      child: Divider(
+                      child: const Divider(
                         height: 1,
-                        color: const Color.fromARGB(255, 219, 217, 217),
+                        color: Color.fromARGB(255, 219, 217, 217),
                         thickness: 1,
                       ),
                     ),
                     ListTile(
                       leading: Image.asset(
                         'assets/images/achhistory.png',
+                        color: platformBrightness == Brightness.light
+                            ? Colors.black
+                            : Colors.white,
                         height: Adaptive.h(6),
                         width: Adaptive.w(6),
                       ),
@@ -369,7 +381,7 @@ class ScreenSettings extends StatelessWidget {
                   ],
                 ),
               ),
-              VerticalSpacer(2.h),
+              VerticalSpacer(5.h),
             ],
           ),
         ),

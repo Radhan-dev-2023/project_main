@@ -1,6 +1,4 @@
 import 'dart:developer';
-
-import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:finfresh_mobile/view/all%20mutual%20fund/screen_all_mutual_fund.dart';
 import 'package:finfresh_mobile/view/homeScreen/widgets/home_screens.dart';
 import 'package:finfresh_mobile/view/settings%20page/screen_settings.dart';
@@ -37,11 +35,16 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
 
   @override
   Widget build(BuildContext context) {
+    Brightness platformBrightness = MediaQuery.of(context).platformBrightness;
     List<BottomNavigationBarItem> bottomList = [
       BottomNavigationBarItem(
         icon: Image.asset(
           'assets/images/dashboard_11118018.png',
-          color: indexfor == 0 ? Color(0xFFA6BBFB) : Colors.black,
+          color: indexfor == 0
+              ? const Color(0xFFA6BBFB)
+              : platformBrightness == Brightness.light
+                  ? Colors.black
+                  : Colors.white,
           height: 25,
           width: 23,
         ),
@@ -50,7 +53,11 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
       BottomNavigationBarItem(
         icon: Image.asset(
           'assets/images/money_13299664.png',
-          color: indexfor == 1 ? const Color(0xFFA6BBFB) : Colors.black,
+          color: indexfor == 1
+              ? const Color(0xFFA6BBFB)
+              : platformBrightness == Brightness.light
+                  ? Colors.black
+                  : Colors.white,
           height: 25,
           width: 23,
         ),
@@ -59,7 +66,11 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
       BottomNavigationBarItem(
         icon: Image.asset(
           'assets/images/hand-holding-usd_9795530.png',
-          color: indexfor == 2 ? const Color(0xFFA6BBFB) : Colors.black,
+          color: indexfor == 2
+              ? const Color(0xFFA6BBFB)
+              : platformBrightness == Brightness.light
+                  ? Colors.black
+                  : Colors.white,
           height: 25,
           width: 23,
         ),
@@ -68,7 +79,11 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
       BottomNavigationBarItem(
         icon: Image.asset(
           'assets/images/gear_609492.png',
-          color: indexfor == 3 ? Color(0xFFA6BBFB) : Colors.black,
+          color: indexfor == 3
+              ? const Color(0xFFA6BBFB)
+              : platformBrightness == Brightness.light
+                  ? Colors.black
+                  : Colors.white,
           height: 25,
           width: 23,
         ),
@@ -79,7 +94,9 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
       body: bottomBarPages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        unselectedItemColor: Colors.black,
+        unselectedItemColor: platformBrightness == Brightness.light
+            ? Colors.black
+            : Colors.white,
 
         showSelectedLabels: false, // Hide labels for active items
         showUnselectedLabels: false,

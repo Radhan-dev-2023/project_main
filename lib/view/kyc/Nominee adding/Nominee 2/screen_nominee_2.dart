@@ -11,6 +11,8 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
+import '../../../../utilities/constant/flushbar.dart';
+
 class ScreenNominee2 extends StatefulWidget {
   const ScreenNominee2({super.key});
 
@@ -107,6 +109,18 @@ class _ScreenNominee2State extends State<ScreenNominee2> {
                       hintText: "Enter Name"),
                 ),
                 VerticalSpacer(3.h),
+                TextFormField(
+                  keyboardType: TextInputType.number,
+                  controller: kycController.nominee2Percentage,
+                  style: Theme.of(context).textTheme.labelLarge!,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    hintText: 'Enter Percentage',
+                  ),
+                ),
+                VerticalSpacer(3.h),
+
                 Container(
                   decoration: BoxDecoration(
                     border: Border.all(
@@ -311,14 +325,18 @@ class _ScreenNominee2State extends State<ScreenNominee2> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: ButtonWidget(
         onTap: () {
-          Provider.of<KycController>(context, listen: false).addNominee();
-
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const AddingNomineeAndGuadianScreen(),
-            ),
-          );
+          int sum = kycController.calculatePercentage();
+          if (sum > 100) {
+            showFlushbar(context, 'Percentage of holding is over 100%');
+          } else {
+            Provider.of<KycController>(context, listen: false).addNominee();
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const AddingNomineeAndGuadianScreen(),
+              ),
+            );
+          }
           // kycController.addingvaluetoModel();
           // bool result = await kycController.createCustomer(context);
           // if (result == true) {

@@ -113,6 +113,11 @@ class KycController extends ChangeNotifier {
   TextEditingController guardpanController = TextEditingController();
   TextEditingController guardnameCotroller = TextEditingController();
   TextEditingController guardDOBController = TextEditingController();
+  TextEditingController addressForBank = TextEditingController();
+  TextEditingController branchNameController = TextEditingController();
+  TextEditingController nominee1Percentage = TextEditingController();
+  TextEditingController nominee2Percentage = TextEditingController();
+  TextEditingController nominee3Percentage = TextEditingController();
   String phonenumber = '';
   bool isChecked = false;
   void updateChecked(bool value) {
@@ -476,7 +481,7 @@ class KycController extends ChangeNotifier {
   }
 
   void updateRelationNominee3(String? value) {
-    selectRelationValueNominne2 = value ?? '';
+    selectRelationValueNominne3 = value ?? '';
     notifyListeners();
   }
 
@@ -683,6 +688,8 @@ class KycController extends ChangeNotifier {
   void addingbankname() {
     banknameController.text =
         bankDeatilsModel?.bankDetails?.bank?[0].bankname ?? '';
+    addressForBank.text = bankDeatilsModel?.bankDetails?.address ?? '';
+    branchNameController.text = bankDeatilsModel?.bankDetails?.branch ?? '';
     // bankCodeForCustomer =
     //     bankDeatilsModel?.bankDetails?.bank?[0].bankcode ?? '';
     SecureStorage.addToken('bankName', banknameController.text);
@@ -1024,31 +1031,34 @@ class KycController extends ChangeNotifier {
       nominee1City: nominee1cityController.text,
       nominee1State: nominee1stateValue == 'State' ? '' : nominee1stateValue,
       nominee1Pincode: nominee1pincodeController.text,
-      nominee1Relation: '',
-      // selectRelationValue == 'Select relation' ? '' : selectRelationValue,
-      nominee1Percent: '',
+      // nominee1Relation: '',
+      nominee1Relation:
+          selectRelationValue == 'Select relation' ? '' : selectRelationValue,
+      nominee1Percent: nominee1Percentage.text,
       nominee1GuardName: nominee1gurdnameCotroller.text,
       nominee1GuardPan: nominee1guardpanController.text,
-      nominee2Type: '',
-      // typevalueNominee2 == 'select a type ' ? '' : typevalueNominee2,
+      // nominee2Type: '',
+      nominee2Type:
+          typevalueNominee2 == 'Select relation ' ? '' : typevalueNominee2,
       nominee2Name: nominee2nameController.text,
       nominee2Dob: nominee2DOBController.text,
-      nominee2Relation: '',
-      // nominee2Relation: selectRelationValueNominne2 == 'Select relation'
-      //     ? ''
-      //     : selectRelationValueNominne2,
-      nominee2Percent: '',
+      // nominee2Relation: '',
+      nominee2Relation: selectRelationValueNominne2 == 'Select relation'
+          ? ''
+          : selectRelationValueNominne2,
+      nominee2Percent: nominee2Percentage.text,
       nominee2GuardName: nominee2gurdnameCotroller.text,
       nominee2GuardPan: nominee2guardpanController.text,
-      nominee3Type: '',
-      // typevalueNominee3 == 'select a type ' ? '' : typevalueNominee3,
+      // nominee3Type: '',
+      nominee3Type:
+          typevalueNominee3 == 'select a type ' ? '' : typevalueNominee3,
       nominee3Name: nominee3nameController.text,
       nominee3Dob: nominee3DOBController.text,
-      nominee3Relation: '',
-      // nominee3Relation: selectRelationValueNominne3 == 'Select relation'
-      //     ? ''
-      //     : selectRelationValueNominne3,
-      nominee3Percent: '',
+      // nominee3Relation: '',
+      nominee3Relation: selectRelationValueNominne3 == 'Select relation'
+          ? ''
+          : selectRelationValueNominne3,
+      nominee3Percent: nominee3Percentage.text,
       nominee3GuardName: nominee3gurdnameCotroller.text,
       nominee3GuardPan: nominee3guardpanController.text,
       nom1Pan: nominee1panCotroller.text,
@@ -1136,31 +1146,31 @@ class KycController extends ChangeNotifier {
       nominee1City: retrievedValue?.nominee1City,
       nominee1State: retrievedValue?.nominee1State,
       nominee1Pincode: retrievedValue?.nominee1Pincode,
-      nominee1Relation: '',
+      nominee1Relation: retrievedValue?.nominee1Relation,
       // selectRelationValue == 'Select relation' ? '' : selectRelationValue,
-      nominee1Percent: '',
+      nominee1Percent: retrievedValue?.nominee1Percent,
       nominee1GuardName: retrievedValue?.nominee1GuardName,
       nominee1GuardPan: retrievedValue?.nominee1GuardPan,
-      nominee2Type: '',
+      nominee2Type: retrievedValue?.nominee2Type,
       // typevalueNominee2 == 'select a type ' ? '' : typevalueNominee2,
       nominee2Name: retrievedValue?.nominee2Name,
       nominee2Dob: retrievedValue?.nominee2Dob,
-      nominee2Relation: '',
+      nominee2Relation: retrievedValue?.nominee2Relation,
       // nominee2Relation: selectRelationValueNominne2 == 'Select relation'
       //     ? ''
       //     : selectRelationValueNominne2,
-      nominee2Percent: '',
+      nominee2Percent: retrievedValue?.nominee2Percent,
       nominee2GuardName: retrievedValue?.nominee2GuardName,
       nominee2GuardPan: retrievedValue?.nominee2GuardPan,
-      nominee3Type: '',
+      nominee3Type: retrievedValue?.nominee3Type,
       // typevalueNominee3 == 'select a type ' ? '' : typevalueNominee3,
       nominee3Name: retrievedValue?.nominee3Name,
       nominee3Dob: retrievedValue?.nominee3Dob,
-      nominee3Relation: '',
+      nominee3Relation: retrievedValue?.nominee3Relation,
       // nominee3Relation: selectRelationValueNominne3 == 'Select relation'
       //     ? ''
       //     : selectRelationValueNominne3,
-      nominee3Percent: '',
+      nominee3Percent: retrievedValue?.nominee3Percent,
       nominee3GuardName: retrievedValue?.nominee3GuardName,
       nominee3GuardPan: retrievedValue?.nominee3GuardPan,
       nom1Pan: retrievedValue?.nom1Pan,
@@ -1300,6 +1310,24 @@ class KycController extends ChangeNotifier {
     final investorDb = await Hive.openBox<InvestorModel>('investor_db');
     final retrievedValue = investorDb.get('bankName');
     banknameController.text = retrievedValue!.bankName ?? '';
+  }
+
+  // int sum = 0;
+  int calculatePercentage() {
+    String nominee1percantage =
+        nominee1Percentage.text.isEmpty ? '0' : nominee1Percentage.text;
+    String nominee2percantage =
+        nominee2Percentage.text.isEmpty ? '0' : nominee2Percentage.text;
+    String nominee3percantage =
+        nominee3Percentage.text.isEmpty ? '0' : nominee3Percentage.text;
+
+    int nominee1percantageint = int.parse(nominee1percantage);
+
+    int nominee2percantageint = int.parse(nominee2percantage);
+    int nominee3percantageint = int.parse(nominee3percantage);
+    int sum =
+        nominee1percantageint + nominee2percantageint + nominee3percantageint;
+    return sum;
   }
 
   bool loading = false;
@@ -1488,16 +1516,22 @@ class KycController extends ChangeNotifier {
       nominee1Pincode: nominee1pincodeController.text.isEmpty
           ? retrievedValue?.nominee1Pincode
           : nominee1pincodeController.text,
-      nominee1Relation: '',
+      nominee1Relation: selectRelationValue == 'Select relation'
+          ? retrievedValue?.nominee1Relation
+          : selectRelationValue,
       // selectRelationValue == 'Select relation' ? '' : selectRelationValue,
-      nominee1Percent: '',
+      nominee1Percent: nominee1Percentage.text.isEmpty
+          ? retrievedValue?.nominee1Percent
+          : nominee1Percentage.text,
       nominee1GuardName: nominee1gurdnameCotroller.text.isEmpty
           ? retrievedValue?.nominee1GuardName
           : nominee1gurdnameCotroller.text,
       nominee1GuardPan: nominee1guardpanController.text.isEmpty
           ? retrievedValue?.nominee1GuardPan
           : nominee1guardpanController.text,
-      nominee2Type: '',
+      nominee2Type: typevalueNominee2 == 'select a type '
+          ? retrievedValue?.nominee2Type
+          : typevalueNominee2,
       // typevalueNominee2 == 'select a type ' ? '' : typevalueNominee2,
       nominee2Name: nominee2nameController.text.isEmpty
           ? retrievedValue?.nominee2Name
@@ -1505,18 +1539,24 @@ class KycController extends ChangeNotifier {
       nominee2Dob: nominee2DOBController.text.isEmpty
           ? retrievedValue?.nominee2Dob
           : nominee2DOBController.text,
-      nominee2Relation: '',
+      nominee2Relation: selectRelationValueNominne2 == 'Select relation'
+          ? retrievedValue?.nominee2Relation
+          : selectRelationValueNominne2,
       // nominee2Relation: selectRelationValueNominne2 == 'Select relation'
       //     ? ''
       //     : selectRelationValueNominne2,
-      nominee2Percent: '',
+      nominee2Percent: nominee2Percentage.text.isEmpty
+          ? retrievedValue?.nominee2Percent
+          : nominee2Percentage.text,
       nominee2GuardName: nominee2gurdnameCotroller.text.isEmpty
           ? retrievedValue?.nominee2GuardName
           : nominee2gurdnameCotroller.text,
       nominee2GuardPan: nominee2guardpanController.text.isEmpty
           ? retrievedValue?.nominee2GuardPan
           : nominee2guardpanController.text,
-      nominee3Type: '',
+      nominee3Type: typevalueNominee3 == 'select a type '
+          ? retrievedValue?.nominee3Type
+          : typevalueNominee3,
       // typevalueNominee3 == 'select a type ' ? '' : typevalueNominee3,
       nominee3Name: nominee3nameController.text.isEmpty
           ? retrievedValue?.nominee3Name
@@ -1524,11 +1564,15 @@ class KycController extends ChangeNotifier {
       nominee3Dob: nominee3DOBController.text.isEmpty
           ? retrievedValue?.nominee3Dob
           : nominee3DOBController.text,
-      nominee3Relation: '',
+      nominee3Relation: selectRelationValueNominne3 == 'Select relation'
+          ? retrievedValue?.nominee3Relation
+          : selectRelationValueNominne3,
       // nominee3Relation: selectRelationValueNominne3 == 'Select relation'
       //     ? ''
       //     : selectRelationValueNominne3,
-      nominee3Percent: '',
+      nominee3Percent: nominee3Percentage.text.isEmpty
+          ? retrievedValue?.nominee3Percent
+          : nominee3Percentage.text,
       nominee3GuardName: nominee3gurdnameCotroller.text.isEmpty
           ? retrievedValue?.nominee3GuardName
           : nominee3gurdnameCotroller.text,

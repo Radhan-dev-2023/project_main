@@ -74,9 +74,10 @@ class SchemeServices {
         Uri.parse(url),
       );
 
-      logger.d('Scheme info service == ${response.body}');
+      logger.d('Scheme category == ${response.body}');
       Map<String, dynamic> jsonResponse = json.decode(response.body);
       if (jsonResponse['status'] == 200) {
+        log('hi,heloo');
         categoryModel = SchemeCategoryModel.fromJson(jsonResponse);
       } else if (jsonResponse['status'] == 500) {
         // showSnackBar(context, jsonResponse['result']['message']);

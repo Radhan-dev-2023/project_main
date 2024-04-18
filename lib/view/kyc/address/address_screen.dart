@@ -207,6 +207,7 @@ class _ScreenAddressState extends State<ScreenAddress> {
                         // height: 60,
                         width: 37.w,
                         child: TextFormField(
+                          keyboardType: TextInputType.number,
                           controller: kycController.pinCodeController,
                           style: Theme.of(context).textTheme.labelLarge!,
                           autovalidateMode: AutovalidateMode.onUserInteraction,

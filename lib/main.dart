@@ -17,6 +17,7 @@ import 'package:finfresh_mobile/db/model/investors_data_model.dart';
 import 'package:finfresh_mobile/utilities/theme/theme.dart';
 import 'package:finfresh_mobile/view/fatcha%20registration/fatcha_registeration.dart';
 import 'package:finfresh_mobile/view/fatcha%20registration/upload%20fatcha%20proof/screen.upload_fatcha_proof.dart';
+import 'package:finfresh_mobile/view/fatcha%20registration/widget/congratulation_screen.dart';
 import 'package:finfresh_mobile/view/kyc/Nominee%20adding/Nominee%202/screen_nominee_2.dart';
 import 'package:finfresh_mobile/view/kyc/Nominee%20adding/Nominee%203/screen_nominee_3.dart';
 import 'package:finfresh_mobile/view/kyc/Nominee%20adding/nominee%20type/screen_nominee_count.dart';
@@ -128,6 +129,7 @@ class MyApp extends StatelessWidget {
           theme: isDarkMode ? AppTheme.darkTheme : AppTheme.lightTheme,
           // darkTheme: AppTheme.darkTheme,
           home: const SplashScreen(),
+          // home: CongratualtionScreen(),
           // home: ScreenPayment(),
           // home: ScreenCompletedScreen(),
           // home: const ScreenFatchaProof(),
@@ -140,15 +142,15 @@ class MyApp extends StatelessWidget {
           // home: const AddingNomineeAndGuadianScreen(),
           // home: const ScreenUploadinProofs(),
           // home: ScreenBankAccountNumber(),
-          // home: const ScreenIfcAdding(),
-          //  home: ScreenBankAccountNumber(),
+          //  home: const ScreenIfcAdding(),
+          // home: ScreenBankAccountNumber(),
           // home: const ScreenUploadingBankProof(),
           // home: const ScreenAddress(),
           // home: const ScreenTaxStatus(),
           // home: const ScreenJointHolders(),
           // home: const ScreenAddingNominee(),
           // home: ScreenAddingNominee(),
-          // home: const ScreenNomineeCount(),
+          //  home: const ScreenNomineeCount(),
           // home: const ScreenPanCard(),
           // home: const ScreenPersonalDetails(),
           // home: const ScreenSetPinNumber(),

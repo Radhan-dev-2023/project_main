@@ -171,6 +171,12 @@ class TopMFsController extends ChangeNotifier {
     }
   }
 
+  void callinginInit(context) {
+    queryController.clear();
+    returns = '3 year';
+    returntoBackend = '3y';
+    getTopMfsFRomPeriod(context, 'All');
+  }
   // @override
   // void dispose() {
   //   // TODO: implement dispose

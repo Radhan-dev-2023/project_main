@@ -1,7 +1,7 @@
 import 'package:finfresh_mobile/controller/fatcha%20registration/fatcha_registration.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
-import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
+import 'package:finfresh_mobile/view/fatcha%20registration/widget/congratulation_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_button_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -134,7 +134,8 @@ class _ScreenFatchaProofState extends State<ScreenFatchaProof> {
                             Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const ScreenHomeView(),
+                                builder: (context) =>
+                                    const CongratualtionScreen(),
                               ),
                               (route) => false,
                             );
