@@ -37,6 +37,7 @@ import 'package:finfresh_mobile/view/kyc/uploading%20proofs/upload%20bank%20proo
 import 'package:finfresh_mobile/view/nominee%20id%20adding/screen_nominee_id_adding.dart';
 import 'package:finfresh_mobile/view/kyc/occupation%20Screen/occupation_screen.dart';
 import 'package:finfresh_mobile/view/kyc/pancard/screen_pan_card.dart';
+import 'package:finfresh_mobile/view/onboarding%20screen/on_boarding_view_screen.dart';
 import 'package:finfresh_mobile/view/otp%20screen/screen_otp.dart';
 import 'package:finfresh_mobile/view/payment%20Screen/payment_screen.dart';
 import 'package:finfresh_mobile/view/setting%20pin%20number/setting_pin.dart';
@@ -129,6 +130,7 @@ class MyApp extends StatelessWidget {
           theme: isDarkMode ? AppTheme.darkTheme : AppTheme.lightTheme,
           // darkTheme: AppTheme.darkTheme,
           home: const SplashScreen(),
+          // home: BoardingViewScreen(),
           // home: CongratualtionScreen(),
           // home: ScreenPayment(),
           // home: ScreenCompletedScreen(),

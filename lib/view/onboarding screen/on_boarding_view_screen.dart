@@ -47,22 +47,31 @@ class _BoardingViewScreenState extends State<BoardingViewScreen> {
   }
 
   List<String> headingsOfOnboarding = [
-    'Welcome to Finfresh',
-    'Get Better Returns',
-    'Start With one',
-    'Your Safety is first',
-    'No commission',
-    'No spreads',
-    'Backed By Real Shares'
+    'WELCOME TO FINFRESH',
+    'PERSONAL FINANCE A JOURNEY',
+    'INVESTMENT IS REWARD, REWARD IS INVESTMENT',
+    'PENNY SAVED IS A PENNY EARNED',
+    'JOIN THE TOP 1%',
+    'NAME IT ALL',
+    'SEAMLESS TRANSACTION'
   ];
   List<String> condentList = [
-    'The best app for invest international stocks \n with as little',
-    "Invest in the world's top leading brands & \n unlock amazing return of investment",
-    "You don't want to buy a whole share.\n You can buy a fraction",
-    "Your bockerage account is maintained by \n interactive Brockers LLC.",
-    'No commission ever,just invest free and  \n maximize your returns',
-    "No spreads, all trades execute of the\n international best bid &offer",
-    'All your trades fully backed by real shares \n all the times.',
+    'Integrate behavioral finance principles into your \nfinancial planning with FINFRESH.',
+    "Integrate behavioral finance principles into your \nfinancial planning with FINFRESH.",
+    "Earn rewards on investments with FINFRESH's \n exclusive digigold reward points.",
+    "Track expenses effortlessly and make informed\n decisions with FINFRESH's advanced \n expense tracking.",
+    "Tailored financial solutions for your unique\n needs – only with FINFRESH.",
+    "GOLD ,FD, MF, RD, Insurance, Cards,\n Loans - we have it all",
+    'Start as low as INR 100',
+  ];
+  List<String> imagelist = [
+    'assets/images/Welcometoff.png',
+    'assets/images/Personalfinancejourny.png',
+    'assets/images/invertsmentreward.png',
+    'assets/images/pennysaved.png',
+    'assets/images/jointop1.png',
+    'assets/images/ff.png',
+        'assets/images/semelasstransaction.png'
   ];
   // final List<Widget> pages = [
   //   const ScreenBoarding(),
@@ -86,6 +95,7 @@ class _BoardingViewScreenState extends State<BoardingViewScreen> {
                       headingsOfOnboarding: headingsOfOnboarding,
                       condent: condentList,
                       index: index,
+                      imagelist: imagelist,
                     ),
                   ],
                 );
