@@ -381,7 +381,7 @@ class ScreenSettings extends StatelessWidget {
                   ],
                 ),
               ),
-              VerticalSpacer(5.h),
+              VerticalSpacer(10.h),
             ],
           ),
         ),
@@ -404,6 +404,8 @@ class ScreenSettings extends StatelessWidget {
                 SecureStorage.clearSecureStoragevalue('iin');
                 Provider.of<BiometricLogin>(context, listen: false)
                     .changeButtonEnabled(false);
+                Provider.of<DashBoardController>(context, listen: false)
+                    .currentIndex = 2;
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(

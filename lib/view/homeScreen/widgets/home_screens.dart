@@ -49,7 +49,7 @@ class _ScreenHomeState extends State<ScreenHome> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            leading: const SizedBox(),
+            // leading: const SizedBox(),
             pinned: true,
             toolbarHeight: Adaptive.h(6),
             // backgroundColor: Colors.transparent,

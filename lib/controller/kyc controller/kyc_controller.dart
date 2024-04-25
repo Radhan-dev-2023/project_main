@@ -153,7 +153,7 @@ class KycController extends ChangeNotifier {
   String? email;
   bool taxpageloading = false;
   MasterDetail? taxStatusValue;
-  MasterHoldingDetail? holdingValue;
+  String? holdingValue;
   MasterAccountDetail? acountypeValue;
   String? taxcode;
   int? selectedIndex;
@@ -518,9 +518,24 @@ class KycController extends ChangeNotifier {
   }
 
   String? holdingValuetoBackend;
+  List<String> holdingList = [
+    "Single",
+    "Joint",
+    "Anyone/Survivor",
+    "Either/Surviver"
+  ];
   void updateHoldingValue(value) {
     holdingValue = value;
-    holdingValuetoBackend = holdingValue?.holdNatureCode;
+    if (value == 'Single') {
+      holdingValuetoBackend = 'SI';
+    } else if (value == 'Joint') {
+      holdingValuetoBackend = 'JO';
+    } else if (value == 'Anyone/Survivor') {
+      holdingValuetoBackend = 'AS';
+    } else if (value == 'Either/Surviver') {
+      holdingValuetoBackend = 'ES';
+    }
+    // holdingValuetoBackend = holdingValue?.holdNatureCode;
 
     // taxcode = taxStatusValue?.taxStatusCode;
     logger.d('holdingNatureCode == $holdingValuetoBackend');
@@ -629,7 +644,7 @@ class KycController extends ChangeNotifier {
 
   callHodingAndTax(context) async {
     await getTaxStatus(context);
-    await getHoldingNature();
+    // await getHoldingNature();
   }
 
   setselectedIndex(int index) {
@@ -690,6 +705,7 @@ class KycController extends ChangeNotifier {
         bankDeatilsModel?.bankDetails?.bank?[0].bankname ?? '';
     addressForBank.text = bankDeatilsModel?.bankDetails?.address ?? '';
     branchNameController.text = bankDeatilsModel?.bankDetails?.branch ?? '';
+    log('adreess${bankDeatilsModel?.bankDetails?.branch}');
     // bankCodeForCustomer =
     //     bankDeatilsModel?.bankDetails?.bank?[0].bankcode ?? '';
     SecureStorage.addToken('bankName', banknameController.text);

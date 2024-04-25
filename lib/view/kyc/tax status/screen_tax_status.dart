@@ -133,14 +133,11 @@ class _ScreenTaxStatusState extends State<ScreenTaxStatus> {
                             underline: Container(
                               height: 0,
                             ),
-                            items: kycController
-                                .holdingNatureModel?.masterDetails!
-                                .map((MasterHoldingDetail masterDetail) {
+                            items:
+                                kycController.holdingList.map((String value) {
                               return DropdownMenuItem(
-                                value: masterDetail,
-                                child: Text(
-                                  masterDetail.holdNatureDesc.toString(),
-                                ),
+                                value: value,
+                                child: Text(value),
                               );
                             }).toList(),
                             onChanged: (value) {
@@ -181,11 +178,12 @@ class _ScreenTaxStatusState extends State<ScreenTaxStatus> {
                       kycController.updatePagenumber('3');
                       kycController.addtaxstatus();
                       // ignore: use_build_context_synchronously
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const ScreenOccupation(),
-                        ),
-                      );
+                      showAlert();
+                      // Navigator.of(context).push(
+                      //   MaterialPageRoute(
+                      //     builder: (context) => const ScreenOccupation(),
+                      //   ),
+                      // );
                     }
                   } else {
                     bool result = await kycController.getInn();
@@ -200,11 +198,12 @@ class _ScreenTaxStatusState extends State<ScreenTaxStatus> {
                       kycController.updatePagenumber('3');
                       kycController.addtaxstatus();
                       // ignore: use_build_context_synchronously
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const ScreenOccupation(),
-                        ),
-                      );
+                      // Navigator.of(context).push(
+                      //   MaterialPageRoute(
+                      //     builder: (context) => const ScreenOccupation(),
+                      //   ),
+                      // );
+                      showAlert();
                     }
                   }
                 },
@@ -212,5 +211,87 @@ class _ScreenTaxStatusState extends State<ScreenTaxStatus> {
               ),
       );
     });
+  }
+
+  void showAlert() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          titleTextStyle: Theme.of(context).textTheme.bodyMedium,
+          title: const Text(
+            "Would you like to add KYC (Know Your Customer) information?",
+          ),
+          content: VerticalSpacer(2.h),
+
+          // content: Column(
+          //   mainAxisSize: MainAxisSize.min,
+          //   children: <Widget>[
+
+          //     VerticalSpacer(2.h),
+          //     // SizedBox(height: ),
+          //     Text(
+          //       'We are working on it',
+          //       style: TextStyle(
+          //         color: Colors.black,
+          //         fontSize: 18.sp,
+          //         fontWeight: FontWeight.w500,
+          //       ),
+          //     ),
+          //   ],
+          // ),
+          actions: [
+            InkWell(
+              onTap: () {
+                Navigator.pop(context);
+
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ScreenOccupation(),
+                  ),
+                );
+              },
+              child: Container(
+                height: 4.h,
+                width: 13.w,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.sp),
+                  color: const Color(0xFF4D84BD),
+                ),
+                child: const Center(
+                  child: Text(
+                    'YES',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+            InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => const ScreenHomeView(),
+                    ),
+                  );
+                },
+                child: Container(
+                  height: 4.h,
+                  width: 13.w,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.sp),
+                    color: const Color(0xFF4D84BD),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'NO',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ))
+          ],
+        );
+      },
+    );
   }
 }

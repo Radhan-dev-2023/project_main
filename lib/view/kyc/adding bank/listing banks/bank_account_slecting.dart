@@ -25,8 +25,8 @@ class _ScreenAddingBankState extends State<ScreenAddingBank> {
 
   @override
   Widget build(BuildContext context) {
-    final kycController = Provider.of<KycController>(context);
-    kycController.updatePagenumber('9');
+    // final kyController = Provider.of<KycController>(context);
+
     return Scaffold(
       appBar: AppBar(
         leading: InkWell(
@@ -37,104 +37,114 @@ class _ScreenAddingBankState extends State<ScreenAddingBank> {
         ),
       ),
       body: SafeArea(
-        child: Container(
-          margin: EdgeInsets.all(15.sp),
-          child: Form(
-            key: kycController.banknameFormkey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const LogoWidget(),
-                VerticalSpacer(5.h),
-                Text(
-                  'Choose your bank',
-                  style: Theme.of(context)
-                      .textTheme
-                      .labelLarge!
-                      .copyWith(fontSize: 19.sp, fontWeight: FontWeight.w700),
-                ),
-                VerticalSpacer(4.h),
-                DropdownButtonFormField<String>(
-                  style: Theme.of(context).textTheme.labelLarge!,
-                  value: kycController.banknameController.text,
-                  decoration: const InputDecoration(hintText: 'Bank name'),
-                  onChanged: (String? newValue) {
-                    kycController.banknameController.text = newValue!;
-                  },
-                  items: kycController.bankDeatilsModel?.bankDetails?.bank
-                      ?.map((Bank value) {
-                    return DropdownMenuItem<String>(
-                      onTap: () {
-                        kycController.bankCodeForCustomer =
-                            value.bankcode ?? '';
-                      },
-                      value: value.bankname,
-                      child: Text(
-                        value.bankname!,
+        child: Consumer<KycController>(builder: (context, kycController, _) {
+          return Container(
+            margin: EdgeInsets.all(15.sp),
+            child: Form(
+              key: kycController.banknameFormkey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const LogoWidget(),
+                  VerticalSpacer(5.h),
+                  Text(
+                    'Choose your bank',
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelLarge!
+                        .copyWith(fontSize: 19.sp, fontWeight: FontWeight.w700),
+                  ),
+                  VerticalSpacer(4.h),
+                  DropdownButtonFormField<String>(
+                    style: Theme.of(context).textTheme.labelLarge!,
+                    value: kycController.banknameController.text,
+                    decoration: const InputDecoration(hintText: 'Bank name'),
+                    onChanged: (String? newValue) {
+                      kycController.banknameController.text = newValue!;
+                    },
+                    items: kycController.bankDeatilsModel?.bankDetails?.bank
+                        ?.map((Bank value) {
+                      return DropdownMenuItem<String>(
+                        onTap: () {
+                          kycController.bankCodeForCustomer =
+                              value.bankcode ?? '';
+                        },
+                        value: value.bankname,
+                        child: Text(
+                          value.bankname!,
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                  VerticalSpacer(3.h),
+                  RichText(
+                    text: TextSpan(children: [
+                      TextSpan(
+                        text: 'Branch : ',
+                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                              fontSize: 17.sp,
+                              fontWeight: FontWeight.w700,
+                            ),
                       ),
-                    );
-                  }).toList(),
-                ),
-                VerticalSpacer(3.h),
-                RichText(
-                  text: TextSpan(children: [
-                    TextSpan(
-                      text: 'Branch : ',
-                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                            fontSize: 17.sp,
-                            fontWeight: FontWeight.w700,
-                          ),
-                    ),
-                    TextSpan(text: kycController.branchNameController.text),
-                  ]),
-                ),
-                VerticalSpacer(2.h),
-                RichText(
-                  text: TextSpan(children: [
-                    TextSpan(
-                      text: 'Address : ',
-                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                            fontSize: 17.sp,
-                            fontWeight: FontWeight.w700,
-                          ),
-                    ),
-                    TextSpan(text: kycController.addressForBank.text),
-                  ]),
-                ),
-                VerticalSpacer(3.h),
+                      TextSpan(
+                        text: kycController.branchNameController.text,
+                        style: Theme.of(context).textTheme.labelMedium,
+                      ),
+                    ]),
+                  ),
+                  VerticalSpacer(2.h),
+                  RichText(
+                    text: TextSpan(children: [
+                      TextSpan(
+                        text: 'Address : ',
+                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                              fontSize: 17.sp,
+                              fontWeight: FontWeight.w700,
+                            ),
+                      ),
+                      TextSpan(
+                        text: kycController.addressForBank.text,
+                        style: Theme.of(context).textTheme.labelMedium,
+                      ),
+                    ]),
+                  ),
 
-                // TextFormField(
-                //   maxLines: 2,
-                //   readOnly: true,
-                //   autovalidateMode: AutovalidateMode.onUserInteraction,
-                //   controller: kycController.addressForBank,
-                //   style: Theme.of(context).textTheme.labelLarge!,
-                //   validator: (value) {
-                //     if (value == null || value.isEmpty) {
-                //       return 'field is required';
-                //     }
-                //     if (!RegExp(r'^[a-zA-Z0-9\s\-&.,]+$').hasMatch(value)) {
-                //       return 'Enter valid bank name';
-                //     }
-                //     return null;
-                //   },
-                //   decoration: InputDecoration(
-                //     border: OutlineInputBorder(
-                //         borderRadius: BorderRadius.circular(10)),
-                //     hintText: 'Bank address',
-                //   ),
-                // ),
-              ],
+                  VerticalSpacer(3.h),
+
+                  // TextFormField(
+                  //   maxLines: 2,
+                  //   readOnly: true,
+                  //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                  //   controller: kycController.addressForBank,
+                  //   style: Theme.of(context).textTheme.labelLarge!,
+                  //   validator: (value) {
+                  //     if (value == null || value.isEmpty) {
+                  //       return 'field is required';
+                  //     }
+                  //     if (!RegExp(r'^[a-zA-Z0-9\s\-&.,]+$').hasMatch(value)) {
+                  //       return 'Enter valid bank name';
+                  //     }
+                  //     return null;
+                  //   },
+                  //   decoration: InputDecoration(
+                  //     border: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(10)),
+                  //     hintText: 'Bank address',
+                  //   ),
+                  // ),
+                ],
+              ),
             ),
-          ),
-        ),
+          );
+        }),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: ButtonWidget(
         onTap: () {
-          if (kycController.banknameFormkey.currentState!.validate()) {
-            kycController.addbankname();
-            kycController.updatePagenumber('10');
+          final kyccontroller = Provider.of<KycController>(context);
+          if (kyccontroller.banknameFormkey.currentState!.validate()) {
+            kyccontroller.addbankname();
+            kyccontroller.updatePagenumber('10');
             Navigator.push(
               context,
               MaterialPageRoute(
