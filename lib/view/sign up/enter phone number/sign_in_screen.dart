@@ -54,7 +54,7 @@ class ScreenEnterPhoneNumber extends StatelessWidget {
                     ),
                     VerticalSpacer(2.h),
                     Text(
-                      'A verifaction code will be sent to this  number',
+                      'A verification code will be sent to this  number',
                       style: Theme.of(context)
                           .textTheme
                           .labelMedium!

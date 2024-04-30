@@ -54,15 +54,27 @@ class ScreenBoarding extends StatelessWidget {
                     ),
                   ),
                   VerticalSpacer(.5.h),
-                  Center(
-                    child: Text(
-                      'BACKED BY NSEMF , HDFC ',
-                      style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                            fontSize: 14.sp,
-                          ),
-                      textAlign: TextAlign.center,
-                      // '''Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book''',
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'BACKED BY NSEMF ',
+                        style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                              fontSize: 14.sp,
+                            ),
+                        textAlign: TextAlign.center,
+                        // '''Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book''',
+                      ),
+                      HorizontalSpacer(2.w),
+                      SizedBox(
+                        height: 18,
+                        width: 18,
+                        child: Image.asset(
+                          'assets/images/nsemf_logo.png',
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ],
                   ),
                   VerticalSpacer(1.5.h),
                   Center(

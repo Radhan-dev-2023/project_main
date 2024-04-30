@@ -55,6 +55,11 @@ class _ScreenHoldingsState extends State<ScreenHoldings> {
                                           .transactionReport!
                                           .result![index]
                                           .userTrxnno!,
+                                      productname: holdingController
+                                              .transactionReport!
+                                              .result![index]
+                                              .productName ??
+                                          '',
                                     ),
                                   ),
                                 );

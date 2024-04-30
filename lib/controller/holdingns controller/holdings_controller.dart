@@ -39,6 +39,13 @@ class HoldingsController extends ChangeNotifier {
     }
   }
 
+  String? redeemValue = 'Redeem';
+  List<String> radeemList = ['Redeem', 'Switch', 'Stp', 'Swp'];
+  void updateRedeemValue(String value) {
+    redeemValue = value;
+    notifyListeners();
+  }
+
   bool loading = false;
   ReportDetailsModel? reportDetailsModel;
   Future<void> fetchReportDetails(

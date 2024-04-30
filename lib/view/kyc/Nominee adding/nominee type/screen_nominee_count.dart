@@ -29,6 +29,8 @@ class _ScreenNomineeCountState extends State<ScreenNomineeCount> {
       appBar: AppBar(
         leading: InkWell(
           onTap: () {
+            kycController.changeTypeValue();
+            kycController.guardianSelectedInguardianAdding = false;
             Navigator.pop(context);
           },
           child: Icon(

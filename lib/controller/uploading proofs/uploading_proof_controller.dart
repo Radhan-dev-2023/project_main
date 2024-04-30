@@ -180,8 +180,8 @@ class UploadingProof extends ChangeNotifier {
     try {
       bool result = await uploadProofservice.uploadBankProof(
         compressedImage!.path,
-        pOAValue,
-        pOABankTypeValue,
+        'N',
+        "N",
         bankCode.isEmpty ? bankcode : bankCode,
         context,
       );

@@ -21,7 +21,12 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
   @override
   void initState() {
     // TODO: implement initState
+    Provider.of<KycController>(context, listen: false).typevalue =
+        'Select a type';
+    Provider.of<KycController>(context, listen: false)
+        .nominee1guardRelationvalue = "Select Guardian Relationship";
     Provider.of<KycController>(context, listen: false).updatePagenumber('14');
+
     super.initState();
   }
 

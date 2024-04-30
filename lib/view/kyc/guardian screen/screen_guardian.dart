@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
+import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
 import 'package:finfresh_mobile/view/kyc/adding%20nominee%20and%20guardian/adding_nominee_guardian.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/log_widget.dart';
@@ -22,6 +23,8 @@ class _ScreenGuardianAddingState extends State<ScreenGuardianAdding> {
   void initState() {
     // TODO: implement initState
     Provider.of<KycController>(context, listen: false).updatePagenumber('17');
+    Provider.of<KycController>(context, listen: false).guardianrelationvalue =
+        'Select Guardian Relationship';
     super.initState();
   }
 
@@ -79,7 +82,31 @@ class _ScreenGuardianAddingState extends State<ScreenGuardianAdding> {
                       initialDate: DateTime.now(),
                       firstDate: DateTime(1900),
                       lastDate: DateTime.now(),
+                      initialEntryMode: DatePickerEntryMode.calendarOnly,
+                      builder: (context, child) {
+                        return Theme(
+                          data: Theme.of(context).copyWith(
+                            primaryTextTheme: TextTheme(
+                                bodyMedium: TextStyle(fontSize: 15.sp),
+                                bodyLarge: TextStyle(fontSize: 15.sp)),
+                            colorScheme: const ColorScheme.light(
+                              primary:
+                                  Color(0xFF4D84BD), // header background color
+                              onPrimary: Colors.white, // header text color
+                              onSurface: Colors.black, // body text color
+                            ),
+                            textButtonTheme: TextButtonThemeData(
+                              style: TextButton.styleFrom(
+                                foregroundColor: const Color(
+                                    0xFF4D84BD), // button text color
+                              ),
+                            ),
+                          ),
+                          child: child!,
+                        );
+                      },
                     );
+
                     if (picked != null) {
                       String selectdate =
                           DateFormat('dd-MMM-yyyy').format(picked);
@@ -128,43 +155,43 @@ class _ScreenGuardianAddingState extends State<ScreenGuardianAdding> {
                     return null;
                   },
                 ),
-                VerticalSpacer(3.h),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        color: brightness == Brightness.dark
-                            ? Colors.white
-                            : Colors.black),
-                    borderRadius: BorderRadius.circular(8),
-                    color: brightness == Brightness.light
-                        ? Colors.white
-                        : const Color(0xFF0E1330),
-                  ),
-                  height: 60,
-                  // width: 120,
-                  width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: DropdownButton(
-                      value: kycController.mobileRation,
-                      isExpanded: true,
-                      underline: Container(
-                        height: 0,
-                      ),
-                      items: kycController.mobileRelation.map((String items) {
-                        return DropdownMenuItem(
-                          value: items,
-                          child: Text(
-                            items,
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        kycController.updateMobileRelationValue(value);
-                      },
-                    ),
-                  ),
-                ),
+                // VerticalSpacer(3.h),
+                // Container(
+                //   decoration: BoxDecoration(
+                //     border: Border.all(
+                //         color: brightness == Brightness.dark
+                //             ? Colors.white
+                //             : Colors.black),
+                //     borderRadius: BorderRadius.circular(8),
+                //     color: brightness == Brightness.light
+                //         ? Colors.white
+                //         : const Color(0xFF0E1330),
+                //   ),
+                //   height: 60,
+                //   // width: 120,
+                //   width: double.infinity,
+                //   child: Padding(
+                //     padding: const EdgeInsets.all(8.0),
+                //     child: DropdownButton(
+                //       value: kycController.mobileRation,
+                //       isExpanded: true,
+                //       underline: Container(
+                //         height: 0,
+                //       ),
+                //       items: kycController.mobileRelation.map((String items) {
+                //         return DropdownMenuItem(
+                //           value: items,
+                //           child: Text(
+                //             items,
+                //           ),
+                //         );
+                //       }).toList(),
+                //       onChanged: (value) {
+                //         kycController.updateMobileRelationValue(value);
+                //       },
+                //     ),
+                //   ),
+                // ),
                 VerticalSpacer(3.h),
                 Container(
                   decoration: BoxDecoration(
@@ -197,48 +224,49 @@ class _ScreenGuardianAddingState extends State<ScreenGuardianAdding> {
                         );
                       }).toList(),
                       onChanged: (value) {
-                        kycController.updateguardRelationValue(value);
+                        kycController
+                            .updateguardRelationValueinGuradianAdding(value);
                       },
                     ),
                   ),
                 ),
-                VerticalSpacer(3.h),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        color: brightness == Brightness.dark
-                            ? Colors.white
-                            : Colors.black),
-                    borderRadius: BorderRadius.circular(8),
-                    color: brightness == Brightness.light
-                        ? Colors.white
-                        : const Color(0xFF0E1330),
-                  ),
-                  height: 60,
-                  // width: 120,
-                  width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: DropdownButton(
-                      value: kycController.emailRation,
-                      isExpanded: true,
-                      underline: Container(
-                        height: 0,
-                      ),
-                      items: kycController.emailRelation.map((String items) {
-                        return DropdownMenuItem(
-                          value: items,
-                          child: Text(
-                            items,
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        kycController.updateEmailRelationValue(value);
-                      },
-                    ),
-                  ),
-                ),
+                // VerticalSpacer(3.h),
+                // Container(
+                //   decoration: BoxDecoration(
+                //     border: Border.all(
+                //         color: brightness == Brightness.dark
+                //             ? Colors.white
+                //             : Colors.black),
+                //     borderRadius: BorderRadius.circular(8),
+                //     color: brightness == Brightness.light
+                //         ? Colors.white
+                //         : const Color(0xFF0E1330),
+                //   ),
+                //   height: 60,
+                //   // width: 120,
+                //   width: double.infinity,
+                //   child: Padding(
+                //     padding: const EdgeInsets.all(8.0),
+                //     child: DropdownButton(
+                //       value: kycController.emailRation,
+                //       isExpanded: true,
+                //       underline: Container(
+                //         height: 0,
+                //       ),
+                //       items: kycController.emailRelation.map((String items) {
+                //         return DropdownMenuItem(
+                //           value: items,
+                //           child: Text(
+                //             items,
+                //           ),
+                //         );
+                //       }).toList(),
+                //       onChanged: (value) {
+                //         kycController.updateEmailRelationValue(value);
+                //       },
+                //     ),
+                //   ),
+                // ),
                 VerticalSpacer(20.h),
               ],
             ),
@@ -248,13 +276,25 @@ class _ScreenGuardianAddingState extends State<ScreenGuardianAdding> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: ButtonWidget(
         onTap: () {
-          kycController.addGuardian();
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const AddingNomineeAndGuadianScreen(),
-            ),
-          );
+          bool result = kycController.validate(context);
+          if (result == true) {
+            kycController.guardianSelectedInguardianAdding = true;
+            // kycController.changeGuardian();
+            // Provider.of<KycController>(context, listen: false).changeGuardian();
+
+            kycController.addGuardian();
+
+            // Navigator.pushReplacement(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => const AddingNomineeAndGuadianScreen(),
+            //   ),
+            // );
+            Navigator.pop(context);
+
+            kycController.clearGuardianValue();
+            // kycController.changeGuardian();
+          }
         },
         btName: 'Confirm '.toUpperCase(),
       ),

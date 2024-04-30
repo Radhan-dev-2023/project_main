@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
+import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:finfresh_mobile/view/kyc/tax%20status/screen_tax_status.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
@@ -164,15 +165,31 @@ class _ScreenPersonalDetailsState extends State<ScreenPersonalDetails> {
         btName: 'Continue'.toUpperCase(),
         onTap: () {
           if (kycController.investornameFormkey.currentState!.validate()) {
-            SecureStorage.addToken(
-                'username', kycController.nameController.text);
-            kycController.addnameAndDOB();
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const ScreenTaxStatus(),
-              ),
-            );
+            bool ageResult =
+                kycController.calculateAge(kycController.dobController.text);
+            if (ageResult == true) {
+              SecureStorage.addToken(
+                  'username', kycController.nameController.text);
+              kycController.addnameAndDOB();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ScreenTaxStatus(),
+                ),
+              );
+            } else {
+              showFlushbar(
+                  context, "Your age is below 18.You can't create an account");
+            }
+            // SecureStorage.addToken(
+            //     'username', kycController.nameController.text);
+            // kycController.addnameAndDOB();
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => const ScreenTaxStatus(),
+            //   ),
+            // );
           }
         },
       ),

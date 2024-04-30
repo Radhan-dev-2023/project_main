@@ -29,7 +29,9 @@ import 'package:finfresh_mobile/view/kyc/adding%20bank/upload%20bank%20proof/upl
 import 'package:finfresh_mobile/view/kyc/adding%20nominee%20and%20guardian/adding_nominee_guardian.dart';
 import 'package:finfresh_mobile/view/kyc/address/address_screen.dart';
 import 'package:finfresh_mobile/view/kyc/bank%20account%20number/screen_bank_accont_number.dart';
+import 'package:finfresh_mobile/view/kyc/guardian%20screen/screen_guardian.dart';
 import 'package:finfresh_mobile/view/kyc/joint%20holders/join_holders_screen.dart';
+import 'package:finfresh_mobile/view/kyc/mobile%20relation%20screen/screen_mobile_relation.dart';
 import 'package:finfresh_mobile/view/kyc/nri%20address/nri_address_screen.dart';
 import 'package:finfresh_mobile/view/kyc/parent%20details%20adding/adding_parent_details.dart';
 import 'package:finfresh_mobile/view/kyc/tax%20status/screen_tax_status.dart';
@@ -43,6 +45,7 @@ import 'package:finfresh_mobile/view/onboarding%20screen/on_boarding_view_screen
 import 'package:finfresh_mobile/view/otp%20screen/screen_otp.dart';
 import 'package:finfresh_mobile/view/payment%20Screen/payment_screen.dart';
 import 'package:finfresh_mobile/view/setting%20pin%20number/setting_pin.dart';
+import 'package:finfresh_mobile/view/settings%20page/screen_settings.dart';
 import 'package:finfresh_mobile/view/showing%20animation%20screen/screen_showing_animation.dart';
 import 'package:finfresh_mobile/view/sign%20in/sign_in_screen.dart';
 import 'package:finfresh_mobile/view/sign%20up/enter%20phone%20number/sign_in_screen.dart';
@@ -132,6 +135,9 @@ class MyApp extends StatelessWidget {
           theme: isDarkMode ? AppTheme.darkTheme : AppTheme.lightTheme,
           // darkTheme: AppTheme.darkTheme,
           home: const SplashScreen(),
+          // home: ScreenGuardianAdding(),
+          // home: ScreenMobileRelation(),
+          // home: ScreenEnterPhoneNumber(),
           // home: ScreenIfcAdding(),
           // home: ScreenDigiGold(),
           // home: ScreenMutualFund(),
@@ -142,6 +148,7 @@ class MyApp extends StatelessWidget {
           // home: const ScreenFatchaProof(),
           // home: ScreenFatchaRegistration(),
           // home: ScreenNriAdress(),
+          // home: ScreenSettings(),
           // home: ScreenBankProofs(),
           // home: ScreenAddingParentDetails(),
           // home: ScreenJointHolders(),
@@ -157,7 +164,7 @@ class MyApp extends StatelessWidget {
           // home: const ScreenJointHolders(),
           // home: const ScreenAddingNominee(),
           // home: ScreenAddingNominee(),
-          //  home: const ScreenNomineeCount(),
+          // home: const ScreenNomineeCount(),
           // home: const ScreenPanCard(),
           // home: const ScreenPersonalDetails(),
           // home: const ScreenSetPinNumber(),

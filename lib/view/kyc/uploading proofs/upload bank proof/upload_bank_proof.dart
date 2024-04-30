@@ -50,13 +50,13 @@ class _ScreenBankProofsState extends State<ScreenBankProofs> {
                     ),
                     VerticalSpacer(2.h),
                     Text(
-                      'Upload your bank proof to complete your KYC',
+                      'Upload your bank passbook image,cancelled cheque leaf..',
                       style: Theme.of(context).textTheme.labelLarge!.copyWith(
                           fontSize: 15.sp, fontWeight: FontWeight.w400),
                     ),
                     VerticalSpacer(4.h),
-                    ForBankProof(brightness: brightness),
-                    VerticalSpacer(4.h),
+                    //  ForBankProof(brightness: brightness),
+                    VerticalSpacer(5.h),
                     InkWell(
                       onTap: () {
                         showOptions(context);

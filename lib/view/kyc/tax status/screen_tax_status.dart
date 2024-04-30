@@ -23,7 +23,7 @@ class ScreenTaxStatus extends StatefulWidget {
 class _ScreenTaxStatusState extends State<ScreenTaxStatus> {
   @override
   void initState() {
-    Provider.of<KycController>(context, listen: false).taxStatusValue = null;
+    // Provider.of<KycController>(context, listen: false).taxStatusValue =
     Provider.of<KycController>(context, listen: false).holdingValue = null;
     Provider.of<KycController>(context, listen: false)
         .callHodingAndTax(context);

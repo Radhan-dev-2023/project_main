@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:ffi';
 
 import 'package:finfresh_mobile/db/functions/db_functions.dart';
 import 'package:finfresh_mobile/db/model/investors_data_model.dart';
@@ -20,6 +21,9 @@ import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
+
+import '../../utilities/constant/flushbar.dart';
 
 class KycController extends ChangeNotifier {
   GetInnService getInnService = GetInnService();
@@ -125,6 +129,23 @@ class KycController extends ChangeNotifier {
     notifyListeners();
   }
 
+  void changeTypeValue() {
+    typevalue = 'Select a type';
+    notifyListeners();
+  }
+
+  bool validateNumber(context) {
+    if (mobileRation == 'Select Mobile Relation') {
+      showFlushbar(context, 'Please select mobile relation');
+      return false;
+    } else if (emailRation == 'Select Email Relation') {
+      showFlushbar(context, 'Please select email relation');
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   void addAress(bool value) async {
     isChecked = value;
     notifyListeners();
@@ -153,6 +174,7 @@ class KycController extends ChangeNotifier {
   String? email;
   bool taxpageloading = false;
   MasterDetail? taxStatusValue;
+
   String? holdingValue;
   MasterAccountDetail? acountypeValue;
   String? taxcode;
@@ -206,27 +228,75 @@ class KycController extends ChangeNotifier {
     "2",
     "3",
   ];
-  String guardianrelationvalue = 'Select Guardian relationship';
+  String guardianrelationvalue = 'Select Guardian Relationship';
   String gudianvalueToBackend = '';
-  String nominee1guardRelationvalue = "Select Guardian relationship";
-  String nominee2guardRelationvalue = "Select Guardian relationship";
-  String nominee3guardRelationvalue = "Select Guardian relationship";
+  String nominee1guardRelationvalue = "Select Guardian Relationship";
+  String nominee2guardRelationvalue = "Select Guardian Relationship";
+  String nominee3guardRelationvalue = "Select Guardian Relationship";
   String nom1guardrelationtobackend = '';
   String nom2guardrelationtobackend = '';
   String nom3guardrelationtobackend = '';
   List<String> guardianRelation = [
-    'Select Guardian relationship',
+    'Select Guardian Relationship',
     "Natural Guardian",
     "Legaly Appointed Guardian",
   ];
-  updateguardRelationValue(String? value) {
-    nominee1guardRelationvalue = value ?? '';
+  bool calculateAge(String birthDate) {
+    DateTime dateTime = DateFormat('dd-MMM-yyyy').parse(birthDate);
+    final now = DateTime.now();
+    log('now ===$now');
+    int age = now.year - dateTime.year;
+    if (age >= 18) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // updateguardRelationValue(String? value) {
+  //   nominee1guardRelationvalue = value ?? '';
+  //   notifyListeners();
+  //   if (nominee1guardRelationvalue == "Natural Guardian") {
+  //     gudianvalueToBackend = "NG";
+  //   } else if (guardianrelationvalue == "Legaly Appointed Guardian") {
+  //     gudianvalueToBackend = "LG";
+  //     log('guardianrelationvalue == $gudianvalueToBackend ');
+  //   }
+  // }
+
+  updateguardRelationValueinGuradianAdding(String? value) {
+    log('fifresh$value');
+    guardianrelationvalue = value ?? '';
     notifyListeners();
-    if (nominee1guardRelationvalue == "Natural Guardian") {
+    if (guardianrelationvalue == "Natural Guardian") {
       gudianvalueToBackend = "NG";
     } else if (guardianrelationvalue == "Legaly Appointed Guardian") {
       gudianvalueToBackend = "LG";
       log('guardianrelationvalue == $gudianvalueToBackend ');
+    }
+  }
+
+  bool validate(context) {
+    if (guardnameCotroller.text.isEmpty) {
+      showFlushbar(context, 'Please enter the guardian name');
+      return false;
+    } else if (guardDOBController.text.isEmpty) {
+      showFlushbar(context, 'Please select the date of birth');
+      return false;
+    } else if (guardpanController.text.isEmpty) {
+      showFlushbar(context, 'Please enter the pancard number');
+      return false;
+    } else if (mobileRation == 'Select Mobile Relation') {
+      showFlushbar(context, 'Please select mobile relation');
+      return false;
+    } else if (guardianrelationvalue == 'Select Guardian Relationship') {
+      showFlushbar(context, 'Please select the guardian relationship');
+      return false;
+    } else if (emailRation == 'Select Email Relation') {
+      showFlushbar(context, 'Please select the email relation');
+      return false;
+    } else {
+      return true;
     }
   }
 
@@ -263,12 +333,12 @@ class KycController extends ChangeNotifier {
     }
   }
 
-  String mobileRation = 'Select Mobile relation';
-  String jh1MobileRelation = 'Select Mobile relation';
-  String jh2MobileRelation = 'Select Mobile relation';
+  String mobileRation = 'Select Mobile Relation';
+  String jh1MobileRelation = 'Select Mobile Relation';
+  String jh2MobileRelation = 'Select Mobile Relation';
   String mobilerelationtobackend = '';
   List<String> mobileRelation = [
-    'Select Mobile relation',
+    'Select Mobile Relation',
     "Self",
     "Spouse",
     "Dependent Children",
@@ -356,11 +426,11 @@ class KycController extends ChangeNotifier {
   }
 
   String guardEmailrelationTobacked = '';
-  String emailRation = 'Select Email relation';
-  String jh1emailRation = 'Select Email relation';
-  String jh2emailRation = 'Select Email relation';
+  String emailRation = 'Select Email Relation';
+  String jh1emailRation = 'Select Email Relation';
+  String jh2emailRation = 'Select Email Relation';
   List<String> emailRelation = [
-    'Select Email relation',
+    'Select Email Relation',
     "Self",
     "Spouse",
     "Dependent Children",
@@ -452,9 +522,13 @@ class KycController extends ChangeNotifier {
     'Grand mother',
     'Other'
   ];
-  bool guardianSelected = false;
-  void changeGuardianSelected(bool value) {
-    guardianSelected = value;
+  bool guardianSelectedInguardianAdding = false;
+  // void changeGuardianSelected(bool value) {
+  //   guardianSelected = value;
+  //   notifyListeners();
+  // }
+  void changeGuardian() {
+    guardianSelectedInguardianAdding = true;
     notifyListeners();
   }
 
@@ -600,14 +674,14 @@ class KycController extends ChangeNotifier {
     nominee1panCotroller.clear();
     typevalue = "select a type";
     selectRelationValue = 'Select relation';
-    nominee1guardRelationvalue = "Select Guardian relationShip";
+    nominee1guardRelationvalue = "Select Guardian RelationShip";
     nominee1stateValue = 'State';
   }
 
   void clearnom2Value() {
     typevalueNominee2 = "select a type";
     selectRelationValueNominne2 = 'Select relation';
-    nominee2guardRelationvalue = "Select Guardian relationShip";
+    nominee2guardRelationvalue = "Select Guardian RelationShip";
     nominee2guardpanController.clear();
     nominee2gurdnameCotroller.clear();
     nominee2panCotroller.clear();
@@ -618,7 +692,7 @@ class KycController extends ChangeNotifier {
   void clearnom3Value() {
     typevalueNominee3 = "select a type";
     selectRelationValueNominne3 = 'Select relation';
-    nominee3guardRelationvalue = "Select Guardian relationShip";
+    nominee3guardRelationvalue = "Select Guardian RelationShip";
     nominee3guardpanController.clear();
     nominee3gurdnameCotroller.clear();
     nominee3panCotroller.clear();
@@ -630,9 +704,9 @@ class KycController extends ChangeNotifier {
     guardDOBController.clear();
     guardnameCotroller.clear();
     guardpanController.clear();
-    mobileRation = 'Select Mobile relation';
-    guardianrelationvalue = 'Select Guardian relationShip';
-    emailRation = 'Select Email relation';
+    mobileRation = 'Select Mobile Relation';
+    guardianrelationvalue = 'Select Guardian RelationShip';
+    emailRation = 'Select Email Relation';
   }
 
   String? accountypeToBackend;
@@ -644,6 +718,9 @@ class KycController extends ChangeNotifier {
 
   callHodingAndTax(context) async {
     await getTaxStatus(context);
+    taxStatusValue = taxStatusService.taxMaster.masterDetails![10];
+    taxcode = taxStatusValue!.taxStatusCode;
+
     // await getHoldingNature();
   }
 
@@ -1324,9 +1401,17 @@ class KycController extends ChangeNotifier {
 
   void addbanknameToController() async {
     final investorDb = await Hive.openBox<InvestorModel>('investor_db');
-    final retrievedValue = investorDb.get('bankName');
+    final retrievedValue = investorDb.get('email');
     banknameController.text = retrievedValue!.bankName ?? '';
   }
+
+  // String phoneNumberForRelation = '';
+  // String emailrelationship = '';
+  // void getPhoneAndMail() async {
+  //   final investorDb = await Hive.openBox<InvestorModel>('investor_db');
+  //   final retrievedValue = investorDb.get('email');
+  //   phoneNumberForRelation = retrievedValue!.mobileNo ??'';
+  // }
 
   // int sum = 0;
   int calculatePercentage() {

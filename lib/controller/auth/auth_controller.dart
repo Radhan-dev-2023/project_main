@@ -30,6 +30,7 @@ class AuthController extends ChangeNotifier {
   final GlobalKey<FormState> formKeyForPinput = GlobalKey<FormState>();
   Future<bool> userRegister(context) async {
     SecureStorage.addToken('phoneNumber', phonenumberController.text);
+    SecureStorage.addToken('email', emailController.text);
 
     iscliked = true;
     notifyListeners();

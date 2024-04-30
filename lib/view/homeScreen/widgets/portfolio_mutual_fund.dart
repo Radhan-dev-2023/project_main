@@ -13,6 +13,7 @@ class PortfolioWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Brightness platformBrightness = MediaQuery.of(context).platformBrightness;
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -45,19 +46,20 @@ class PortfolioWidget extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.all(12.sp),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         'Investment Amount',
                         style:
                             Theme.of(context).textTheme.bodyMedium!.copyWith(),
                       ),
-                      HorizontalSpacer(5.w),
+                      // HorizontalSpacer(5.w),
                       Text(
                         'Total Gain',
                         style:
                             Theme.of(context).textTheme.bodyMedium!.copyWith(),
                       ),
-                      HorizontalSpacer(7.5.w),
+                      // HorizontalSpacer(7.5.w),
                       Text(
                         'Total Amount',
                         style:
@@ -69,6 +71,7 @@ class PortfolioWidget extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(0),
                   child: Row(
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       HorizontalSpacer(3.w),
                       Text(
@@ -80,7 +83,7 @@ class PortfolioWidget extends StatelessWidget {
                               color: const Color(0xFFFFC700),
                             ),
                       ),
-                      HorizontalSpacer(20.w),
+                      HorizontalSpacer(21.5.w),
                       Text(
                         dashBoardController
                                 .summaryModel?.result?.netEquityGains ??
@@ -90,14 +93,16 @@ class PortfolioWidget extends StatelessWidget {
                               color: const Color(0xFF6C8FF8),
                             ),
                       ),
-                      HorizontalSpacer(11.5.w),
+                      HorizontalSpacer(13.w),
                       Text(
                         dashBoardController.summaryModel?.result?.totalAmount ??
                             '',
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: const Color(0xFF324053),
-                            ),
+                            fontWeight: FontWeight.bold,
+                            // color: const Color(0xFF324053),
+                            color: platformBrightness == Brightness.dark
+                                ? const Color.fromARGB(255, 211, 226, 248)
+                                : const Color(0xFF324053)),
                       ),
                     ],
                   ),

@@ -4,6 +4,7 @@ import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
 import 'package:finfresh_mobile/view/kyc/adding%20nominee%20and%20guardian/adding_nominee_guardian.dart';
 import 'package:finfresh_mobile/view/kyc/joint%20holders/join_holders_screen.dart';
+import 'package:finfresh_mobile/view/kyc/mobile%20relation%20screen/screen_mobile_relation.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
 import 'package:finfresh_mobile/view/widgets/log_widget.dart';
@@ -198,7 +199,7 @@ class _ScreenBankAccountNumberState extends State<ScreenBankAccountNumber> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const AddingNomineeAndGuadianScreen(),
+                  builder: (context) => const ScreenMobileRelation(),
                 ),
               );
             },
