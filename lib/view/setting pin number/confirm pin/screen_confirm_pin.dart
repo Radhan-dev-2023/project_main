@@ -17,9 +17,15 @@ class ScreenConfirmPinNumber extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String fringerAccepted = '';
     final pinController = Provider.of<PinController>(context);
     final biometricLoginController = Provider.of<BiometricLogin>(context);
     Brightness brightness = MediaQuery.of(context).platformBrightness;
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      // showFingerprintBottomSheet(context);
+      // await biometricLoginController.authenticate();
+      fringerAccepted = await pinController.getfringerAccept();
+    });
     final defaultPinTheme = PinTheme(
       width: 56,
       height: 56,
@@ -133,6 +139,104 @@ class ScreenConfirmPinNumber extends StatelessWidget {
               onTap: () {
                 if (pinController.formKeyForConfirmPin.currentState!
                     .validate()) {
+                  if (fringerAccepted == 'true') {
+                    Navigator.pop(context);
+                    Provider.of<KycController>(context, listen: false)
+                        .updatePagenumber('1');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            biometricLoginController.buttonEnabled == true
+                                ? const ScreenHomeView()
+                                : const ScreenPanCard(),
+                      ),
+                    );
+                  } else {
+                    alertForFringerAsking(
+                        context, pinController, biometricLoginController);
+                  }
+
+                  // Provider.of<KycController>(context, listen: false)
+                  //     .updatePagenumber('1');
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) =>
+                  //         biometricLoginController.buttonEnabled == true
+                  //             ? const ScreenHomeView()
+                  //             : const ScreenPanCard(),
+                  //   ),
+                  // );
+                }
+                // } else if (pinController.confirmPinController.text.length < 4) {
+                //   showSnackBar(context, 'Please enter the 4-digit PIN');
+                // }
+              },
+            ),
+    );
+  }
+
+  Future<dynamic> alertForFringerAsking(BuildContext context,
+      PinController pinController, BiometricLogin biometricLoginController) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Add Fingerprint'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              VerticalSpacer(1.h),
+              Icon(Icons.fingerprint, size: Adaptive.h(7)),
+              VerticalSpacer(2.h),
+              const Text('Do you want to add your fingerprint?'),
+            ],
+          ),
+          actions: [
+            Container(
+              height: 5.h,
+              width: 15.w,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.sp),
+                color: const Color(0xFF4D84BD),
+              ),
+              child: Center(
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    pinController.setFringer('true');
+                    pinController.setPin();
+                    Provider.of<KycController>(context, listen: false)
+                        .updatePagenumber('1');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            biometricLoginController.buttonEnabled == true
+                                ? const ScreenHomeView()
+                                : const ScreenPanCard(),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    'YES',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              height: 5.h,
+              width: 15.w,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.sp),
+                color: const Color(0xFF4D84BD),
+              ),
+              child: TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  pinController.setFringer('false');
                   pinController.setPin();
                   Provider.of<KycController>(context, listen: false)
                       .updatePagenumber('1');
@@ -145,12 +249,16 @@ class ScreenConfirmPinNumber extends StatelessWidget {
                               : const ScreenPanCard(),
                     ),
                   );
-                }
-                // } else if (pinController.confirmPinController.text.length < 4) {
-                //   showSnackBar(context, 'Please enter the 4-digit PIN');
-                // }
-              },
+                },
+                child: const Text(
+                  'NO',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
             ),
+          ],
+        );
+      },
     );
   }
 }

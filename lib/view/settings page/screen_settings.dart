@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:finfresh_mobile/controller/auth/auth_controller.dart';
 import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
 import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_controller.dart';
@@ -11,12 +13,27 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'widget/register_wiget.dart';
 
-class ScreenSettings extends StatelessWidget {
+class ScreenSettings extends StatefulWidget {
   const ScreenSettings({super.key});
+
+  @override
+  State<ScreenSettings> createState() => _ScreenSettingsState();
+}
+
+class _ScreenSettingsState extends State<ScreenSettings> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<DashBoardController>(context, listen: false)
+        .fringerprintCheck();
+    Provider.of<DashBoardController>(context, listen: false).getusername();
+  }
 
   @override
   Widget build(BuildContext context) {
     Brightness platformBrightness = MediaQuery.of(context).platformBrightness;
+
     return Scaffold(
       appBar: AppBar(
         // automaticallyImplyLeading: false,
@@ -42,6 +59,7 @@ class ScreenSettings extends StatelessWidget {
             children: [
               Consumer<DashBoardController>(
                   builder: (context, dashBoardController, _) {
+                log('namee${dashBoardController.dashBoardModel?.result?.data?.name}');
                 return Card(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,7 +89,7 @@ class ScreenSettings extends StatelessWidget {
                         subtitle: Text(
                           dashBoardController
                                   .dashBoardModel?.result?.data?.name ??
-                              '',
+                              dashBoardController.username,
                           style: Theme.of(context)
                               .textTheme
                               .labelLarge!
@@ -163,6 +181,43 @@ class ScreenSettings extends StatelessWidget {
                               .textTheme
                               .labelLarge!
                               .copyWith(color: Colors.grey),
+                        ),
+                        onTap: () {},
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 31.sp),
+                        child: const Divider(
+                          height: 1,
+                          color: Color.fromARGB(255, 219, 217, 217),
+                          thickness: 1,
+                        ),
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.fingerprint),
+                        title: Text(
+                          'Fingerprint',
+                          style:
+                              Theme.of(context).textTheme.labelLarge!.copyWith(
+                                    fontSize: 18.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                        subtitle: Text(
+                          'Enable Fringerprint',
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelLarge!
+                              .copyWith(color: Colors.grey),
+                        ),
+                        trailing: Transform.scale(
+                          scale: 0.8,
+                          child: Switch(
+                            activeColor: const Color(0xFF4D84BD),
+                            value: dashBoardController.isSwitched,
+                            onChanged: (value) {
+                              dashBoardController.changeToogle();
+                            },
+                          ),
                         ),
                         onTap: () {},
                       ),

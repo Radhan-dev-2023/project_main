@@ -1,4 +1,5 @@
 import 'package:finfresh_mobile/controller/top%20MFs%20controller/top_mfs_controller.dart';
+import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -31,6 +32,7 @@ class DurationButton extends StatelessWidget {
                 color: Color(0xFF4D84BD),
               ),
             ),
+            HorizontalSpacer(2.w),
             SizedBox(
               height: Adaptive.h(2.5),
               width: Adaptive.w(15),
@@ -54,6 +56,7 @@ class DurationButton extends StatelessWidget {
                 },
               ),
             ),
+            HorizontalSpacer(1.w),
             InkWell(
               onTap: () {
                 if (topMfsController.pageController.page! <

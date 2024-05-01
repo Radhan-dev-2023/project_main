@@ -66,7 +66,7 @@ class ScreenAllMutualFund extends StatelessWidget {
                     ),
                     const DurationButton(
                       category: 'All',
-                    )
+                    ),
                   ],
                 ),
                 VerticalSpacer(2.h),
@@ -111,86 +111,113 @@ class ScreenAllMutualFund extends StatelessWidget {
                                       ),
                                     );
                                   },
-                                  child: Card(
-                                    child: Padding(
-                                      padding: EdgeInsets.all(10.sp),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              HorizontalSpacer(1.w),
-                                              SizedBox(
-                                                height: 5.h,
-                                                width: 10.w,
-                                                child: Image.network(
-                                                  topMfsController
-                                                          .filteredListForAllFunds[
-                                                              index]
-                                                          .logo ??
-                                                      '',
-                                                  errorBuilder: (context, error,
-                                                      stackTrace) {
-                                                    return const SizedBox();
-                                                  },
-                                                ),
-                                              ),
-                                              HorizontalSpacer(1.w),
-                                              Expanded(
-                                                child: Text(
-                                                  '${topMfsController.filteredListForAllFunds[index].schemeAmfi}',
-                                                  overflow:
-                                                      TextOverflow.visible,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyMedium!
-                                                      .copyWith(
-                                                        fontSize: 17.sp,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          VerticalSpacer(2.h),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              HorizontalSpacer(2.w),
-                                              Expanded(
-                                                child: Text(
-                                                  topMfsController
-                                                          .filteredListForAllFunds[
-                                                              index]
-                                                          .schemeCategory ??
-                                                      "",
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyMedium!
-                                                      .copyWith(
-                                                        fontSize: 16.sp,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                  overflow:
-                                                      TextOverflow.visible,
-                                                ),
-                                              ),
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                    10.sp,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.circular(25.sp),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.01),
+                                          spreadRadius: 1.5,
+                                          blurRadius: 5,
+                                          offset: Offset(0, 2),
+                                        ),
+                                      ],
+                                    ),
+                                    child: Card(
+                                      child: Padding(
+                                        padding: EdgeInsets.all(10.sp),
+                                        child: Column(
+                                          children: [
+                                            VerticalSpacer(0.5.h),
+                                            Row(
+                                              children: [
+                                                HorizontalSpacer(1.w),
+                                                SizedBox(
+                                                  height: 5.h,
+                                                  width: 10.w,
+                                                  child: Image.network(
+                                                    topMfsController
+                                                            .filteredListForAllFunds[
+                                                                index]
+                                                            .logo ??
+                                                        '',
+                                                    fit: BoxFit.fill,
+                                                    errorBuilder: (context,
+                                                        error, stackTrace) {
+                                                      return const SizedBox();
+                                                    },
                                                   ),
                                                 ),
-                                                child: Padding(
-                                                  padding:
-                                                      EdgeInsets.all(10.0.sp),
+                                                HorizontalSpacer(1.w),
+                                                Expanded(
                                                   child: Text(
-                                                    '${topMfsController.filteredListForAllFunds[index].riskometer}',
-                                                    style: TextStyle(
+                                                    '${topMfsController.filteredListForAllFunds[index].schemeAmfi}',
+                                                    overflow:
+                                                        TextOverflow.visible,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .copyWith(
+                                                            fontSize: 17.sp,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            letterSpacing:
+                                                                3.sp),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            VerticalSpacer(2.h),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                HorizontalSpacer(2.w),
+                                                Expanded(
+                                                  child: Text(
+                                                    topMfsController
+                                                            .filteredListForAllFunds[
+                                                                index]
+                                                            .schemeCategory ??
+                                                        "",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .copyWith(
+                                                          fontSize: 16.sp,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                    overflow:
+                                                        TextOverflow.visible,
+                                                  ),
+                                                ),
+                                                Container(
+                                                  height: Adaptive.h(3),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                      12.sp,
+                                                    ),
+                                                    color: Color.fromARGB(
+                                                            255, 253, 217, 214)
+                                                        .withOpacity(0.5),
+                                                  ),
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(
+                                                      left: 12.sp,
+                                                      right: 12.sp,
+                                                      top: 6.sp,
+                                                      bottom: 8.sp,
+                                                    ),
+                                                    child: Text(
+                                                      '${topMfsController.filteredListForAllFunds[index].riskometer}',
+                                                      style: TextStyle(
+                                                        fontSize: 15.sp,
+                                                        fontWeight:
+                                                            FontWeight.w500,
                                                         color: topMfsController
                                                                         .filteredListForAllFunds[
                                                                             index]
@@ -202,28 +229,64 @@ class ScreenAllMutualFund extends StatelessWidget {
                                                                         .riskometer ==
                                                                     'High'
                                                             ? Colors.red
-                                                            : Colors.amber),
+                                                            : Colors.amber,
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
-                                              )
-                                            ],
-                                          ),
-                                          VerticalSpacer(2.h),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              Column(
+                                                HorizontalSpacer(2.5.w)
+                                              ],
+                                            ),
+                                            VerticalSpacer(1.h),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 8.0, right: 8.0),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
-                                                  Text(
-                                                      '${topMfsController.returns} return'),
-                                                  Text(
-                                                      '${topMfsController.returnPercentageinAllFunds}%')
+                                                  Column(
+                                                    children: [
+                                                      Text(
+                                                        'Scheme Asset',
+                                                        style: TextStyle(
+                                                          color: Colors.grey,
+                                                        ),
+                                                      ),
+                                                      VerticalSpacer(0.5.sp),
+                                                      Text(
+                                                          '₹ ${topMfsController.filteredListForAllFunds[index].schemeAssets}')
+                                                    ],
+                                                  ),
+
+                                                  Column(
+                                                    children: [
+                                                      Text(
+                                                        '${topMfsController.returns} return',
+                                                        style: TextStyle(
+                                                          color: Colors.grey,
+                                                        ),
+                                                      ),
+                                                      VerticalSpacer(0.5.sp),
+                                                      Text(
+                                                        '${topMfsController.returnPercentageinAllFunds}%',
+                                                        style: TextStyle(
+                                                          color: Colors.green,
+                                                          fontSize: 15.sp,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  // HorizontalSpacer(2.5.w)
                                                 ],
-                                              )
-                                            ],
-                                          )
-                                        ],
+                                              ),
+                                            ),
+                                            VerticalSpacer(0.5.h),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),

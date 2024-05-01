@@ -3,6 +3,7 @@ import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/stock_detail_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -138,116 +139,75 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                                   ),
                                 ],
                               ),
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    height: Adaptive.h(8),
-                                    width: Adaptive.w(30),
-                                    child: ButtonWidget(
-                                      btName: 'Add',
-                                      onTap: () {
-                                        // Navigator.push(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //       builder: (context) =>
-                                        //           StockDetailsScreen(
-                                        //         scheme: widget.productname,
-                                        //         isinNumber: widget.isinNumber,
-                                        //         category: '',
-                                        //       ),
-                                        //     ));
-                                      },
-                                    ),
-                                  ),
-                                  HorizontalSpacer(Adaptive.w(18)),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: brightness == Brightness.dark
-                                            ? Colors.white
-                                            : Colors.black,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                      // color: brightness == Brightness.light
-                                      //     ? Colors.white
-                                      //     : const Color(0xFF0E1330),
-                                    ),
-                                    height: Adaptive.h(4.5),
-                                    // width: 120,
-                                    width: 30.w,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: DropdownButton(
-                                        value: holdingController.redeemValue,
-                                        isExpanded: true,
-                                        underline: Container(
-                                          height: 0,
-                                        ),
-                                        items: holdingController.radeemList
-                                            .map((String items) {
-                                          return DropdownMenuItem(
-                                            value: items,
-                                            child: Text(
-                                              items,
-                                            ),
-                                          );
-                                        }).toList(),
-                                        onChanged: (value) {
-                                          holdingController
-                                              .updateRedeemValue(value ?? '');
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                  // SizedBox(
-                                  //   height: Adaptive.h(9),
-                                  //   width: 40.w,
-                                  //   child: DropdownButtonFormField<String>(
-                                  //     isExpanded: true,
-                                  //     padding: EdgeInsets.all(0),
-
-                                  //     // autovalidateMode:
-                                  //     //     AutovalidateMode
-                                  //     //         .onUserInteraction,
-                                  //     validator: (value) {
-                                  //       if (value == null) {
-                                  //         return 'Please select a duration';
-                                  //       }
-                                  //       return null;
-                                  //     },
-                                  //     style: Theme.of(context)
-                                  //         .textTheme
-                                  //         .labelLarge!,
-                                  //     value: holdingController.redeemValue,
-                                  //     decoration: InputDecoration(
-                                  //         helperText: '',
-                                  //         border: OutlineInputBorder(
-                                  //             borderRadius:
-                                  //                 BorderRadius.circular(10)),
-                                  //         hintText: 'Select Item'),
-                                  //     onChanged: (String? newValue) {
-                                  //       holdingController
-                                  //           .updateRedeemValue(newValue ?? '');
-                                  //     },
-                                  //     items: holdingController.radeemList
-                                  //         .map((String value) {
-                                  //       return DropdownMenuItem<String>(
-                                  //         value: value,
-                                  //         child: Text(
-                                  //           value,
-                                  //         ),
-                                  //       );
-                                  //     }).toList(),
-                                  //   ),
-                                  // ),
-                                ],
-                              )
                             ],
                           ),
                         ),
                       ),
                     ),
                     VerticalSpacer(2.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.sp),
+                            color: const Color(0xFF4D84BD),
+                          ),
+                          height: Adaptive.h(6),
+                          width: Adaptive.w(40),
+                          child: const Center(
+                            child: Text(
+                              'ADD',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        // HorizontalSpacer(Adaptive.w(18)),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: brightness == Brightness.dark
+                                  ? Colors.white
+                                  : Colors.black,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                            // color: brightness == Brightness.light
+                            //     ? Colors.white
+                            //     : const Color(0xFF0E1330),
+                          ),
+                          height: Adaptive.h(5.7),
+                          // width: 120,
+                          width: 40.w,
+                          child: Padding(
+                            padding: const EdgeInsets.all(9.0),
+                            child: DropdownButton(
+                              value: holdingController.redeemValue,
+                              isExpanded: true,
+                              underline: Container(
+                                height: 0,
+                              ),
+                              items: holdingController.radeemList
+                                  .map((String items) {
+                                return DropdownMenuItem(
+                                  value: items,
+                                  child: Text(
+                                    items,
+                                  ),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                holdingController
+                                    .updateRedeemValue(value ?? '');
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    VerticalSpacer(3.h),
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
                       height: 3.h,

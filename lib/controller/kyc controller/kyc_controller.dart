@@ -286,14 +286,8 @@ class KycController extends ChangeNotifier {
     } else if (guardpanController.text.isEmpty) {
       showFlushbar(context, 'Please enter the pancard number');
       return false;
-    } else if (mobileRation == 'Select Mobile Relation') {
-      showFlushbar(context, 'Please select mobile relation');
-      return false;
     } else if (guardianrelationvalue == 'Select Guardian Relationship') {
       showFlushbar(context, 'Please select the guardian relationship');
-      return false;
-    } else if (emailRation == 'Select Email Relation') {
-      showFlushbar(context, 'Please select the email relation');
       return false;
     } else {
       return true;

@@ -8,7 +8,7 @@ class AppTheme {
   static const Color _lightPrimaryColor = Color(0xFFFAFAFA);
   static final Color _lightPrimaryVariantColor = Colors.blueGrey.shade800;
   static final Color _lightOnPrimaryColor = Colors.blueGrey.shade200;
-  static const Color _lightTextColorPrimary = Colors.black;
+  static const Color _lightTextColorPrimary = Color(0xFF0d1321);
   static const Color _appbarColorLight = Color(0xFFFAFAFA);
 // 0E1330
 // 4D84BD button color
@@ -26,13 +26,13 @@ class AppTheme {
   // *****************
   // Text Style - light
   // *****************
-  static final TextStyle _lightHeadingText = GoogleFonts.lato(
+  static final TextStyle _lightHeadingText = GoogleFonts.roboto(
     color: _lightTextColorPrimary,
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: FontWeight.bold,
   );
 
-  static final TextStyle _lightBodyText = GoogleFonts.lato(
+  static final TextStyle _lightBodyText = GoogleFonts.roboto(
     color: _lightTextColorPrimary,
     // fontStyle: FontStyle.italic,
     fontWeight: FontWeight.bold,
@@ -64,9 +64,9 @@ class AppTheme {
 
   static final ThemeData lightTheme = ThemeData(
     cardTheme: const CardTheme(
-        elevation: 5, surfaceTintColor: Colors.white, color: Colors.white,
-        // color: Color(0xFFFAF9F6), // Set the background color for cards
-        ),
+      elevation: 5, surfaceTintColor: Colors.white, color: Colors.white,
+      // color: Color(0xFFFAF9F6), // Set the background color for cards
+    ),
     iconTheme: const IconThemeData(color: Colors.black),
     inputDecorationTheme: InputDecorationTheme(
       focusedErrorBorder: OutlineInputBorder(

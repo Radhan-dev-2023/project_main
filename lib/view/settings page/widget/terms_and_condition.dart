@@ -217,11 +217,11 @@ class TermsAndCondition extends StatelessWidget {
                   .copyWith(color: Colors.grey),
             ),
             onTap: () {},
-            trailing: Icon(
-              Icons.arrow_forward_ios,
-              size: 15.sp,
-              color: Colors.grey,
-            ),
+            // trailing: Icon(
+            //   Icons.arrow_forward_ios,
+            //   size: 15.sp,
+            //   color: Colors.grey,
+            // ),
           ),
         ],
       ),

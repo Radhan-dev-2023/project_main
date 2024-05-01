@@ -93,16 +93,17 @@ class PortfolioWidget extends StatelessWidget {
                               color: const Color(0xFF6C8FF8),
                             ),
                       ),
-                      HorizontalSpacer(13.w),
+                      HorizontalSpacer(10.w),
                       Text(
                         dashBoardController.summaryModel?.result?.totalAmount ??
                             '',
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            fontWeight: FontWeight.bold,
-                            // color: const Color(0xFF324053),
-                            color: platformBrightness == Brightness.dark
-                                ? const Color.fromARGB(255, 211, 226, 248)
-                                : const Color(0xFF324053)),
+                              fontWeight: FontWeight.bold,
+                              // color: const Color(0xFF324053),
+                              color: platformBrightness == Brightness.dark
+                                  ? const Color.fromARGB(255, 211, 226, 248)
+                                  : const Color(0xFF324053),
+                            ),
                       ),
                     ],
                   ),

@@ -12,4 +12,12 @@ class PinController extends ChangeNotifier {
   Future<void> setPin() async {
     await SecureStorage.addingvaluesToStorage('pin', confirmPinController.text);
   }
+
+  Future<void> setFringer(String value) async {
+    await SecureStorage.addingvaluesToStorage('fringer', value);
+  }
+  Future<String> getfringerAccept() async {
+    String pin = await SecureStorage.readToken('fringer');
+    return pin;
+  }
 }

@@ -28,6 +28,7 @@ class _ScreenHomeState extends State<ScreenHome> {
   Future<void> function() async {
     await Provider.of<DashBoardController>(context, listen: false)
         .getDashBoardDetails(context);
+        
   }
 
   @override

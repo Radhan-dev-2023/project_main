@@ -1,4 +1,8 @@
+import 'dart:developer';
+
+import 'package:finfresh_mobile/controller/auth/auth_controller.dart';
 import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_controller.dart';
+import 'package:finfresh_mobile/controller/pin%20controller/pin_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
@@ -16,6 +20,7 @@ class PinEnterForLoginScreen extends StatefulWidget {
 }
 
 class _PinEnterForLoginScreenState extends State<PinEnterForLoginScreen> {
+  String fingerAccepted = '';
   Future<void> functionForFingerprin() async {
     final biometricLoginController =
         Provider.of<BiometricLogin>(context, listen: false);
@@ -23,16 +28,36 @@ class _PinEnterForLoginScreenState extends State<PinEnterForLoginScreen> {
     await biometricLoginController.authenticate();
   }
 
+  Future<void> functionForcheckFinger() async {
+    log('calling');
+    fingerAccepted = await Provider.of<PinController>(context, listen: false)
+        .getfringerAccept();
+    log('message$fingerAccepted');
+    // setState(() {});
+  }
+
+  Future<void> functionCallingboth() async {
+    await functionForcheckFinger();
+    log('functionAfter ==$fingerAccepted');
+    if (fingerAccepted == 'true') {
+      log('calling in if');
+      functionForFingerprin();
+    } else {
+      log('calling in else');
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    functionForFingerprin();
+    functionCallingboth();
   }
 
   @override
   Widget build(BuildContext context) {
     String pin = '';
+
     Brightness brightness = MediaQuery.of(context).platformBrightness;
     final biometricLoginController = Provider.of<BiometricLogin>(context);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
@@ -163,16 +188,18 @@ class _PinEnterForLoginScreenState extends State<PinEnterForLoginScreen> {
                     )
                   : const SizedBox(),
               VerticalSpacer(10.h),
-              TextButton(
-                onPressed: () async {
-                  // showFingerprintBottomSheet(context);
-                  await biometricLoginController.authenticate();
-                },
-                child: Text(
-                  'Use fingerprint',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ),
+              fingerAccepted == 'true'
+                  ? TextButton(
+                      onPressed: () async {
+                        // showFingerprintBottomSheet(context);
+                        await biometricLoginController.authenticate();
+                      },
+                      child: Text(
+                        'Use fingerprint',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    )
+                  : const SizedBox(),
             ],
           ),
         ),

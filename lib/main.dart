@@ -135,6 +135,7 @@ class MyApp extends StatelessWidget {
           theme: isDarkMode ? AppTheme.darkTheme : AppTheme.lightTheme,
           // darkTheme: AppTheme.darkTheme,
           home: const SplashScreen(),
+          // home: ScreenSetPinNumber(),
           // home: ScreenGuardianAdding(),
           // home: ScreenMobileRelation(),
           // home: ScreenEnterPhoneNumber(),

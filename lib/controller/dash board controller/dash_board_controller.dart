@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:finfresh_mobile/model/dash%20Board%20Model/dash_board_model.dart';
 import 'package:finfresh_mobile/model/summary%20model/summary_model.dart';
 import 'package:finfresh_mobile/services/dash%20board%20Services/dash_board_services.dart';
@@ -13,12 +15,32 @@ class DashBoardController extends ChangeNotifier {
   bool loadingDashboard = false;
   RefershTokenService refershTokenService = RefershTokenService();
   int currentIndex = 2;
+  bool isSwitched = false;
+  void changeToogle() async {
+    isSwitched = !isSwitched;
+    notifyListeners();
+    if (isSwitched == false) {
+      log('changing');
+      await SecureStorage.addingvaluesToStorage('fringer', 'false');
+    } else {
+      log('fringer false');
+      await SecureStorage.addingvaluesToStorage('fringer', 'true');
+    }
+  }
+
+  Future<void> fringerprintCheck() async {
+    String pin = await SecureStorage.readToken('fringer');
+    if (pin == 'true') {
+      isSwitched = true;
+    } else {
+      isSwitched = false;
+    }
+  }
 
   Future<void> getDashBoardDetails(context) async {
     // refershTokenService.postRefershTocken(context);
 
     loadingDashboard = true;
-    
 
     // notifyListeners();
     String token = await SecureStorage.readToken('token');
