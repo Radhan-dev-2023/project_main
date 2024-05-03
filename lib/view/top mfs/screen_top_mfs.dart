@@ -3,7 +3,6 @@ import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/stock_detail_screen.dart';
 import 'package:finfresh_mobile/view/top%20mfs/widget/duration_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -90,7 +89,8 @@ class _TopMfsScreenState extends State<TopMfsScreen> {
                                 );
                               },
                               child: Card(
-                                elevation: 5,
+                                elevation: 7,
+                                shadowColor: Colors.black.withOpacity(0.02),
                                 child: Padding(
                                   padding: EdgeInsets.all(10.sp),
                                   child: Column(
@@ -123,7 +123,7 @@ class _TopMfsScreenState extends State<TopMfsScreen> {
                                                   .bodyMedium!
                                                   .copyWith(
                                                     fontSize: 17.sp,
-                                                    fontWeight: FontWeight.bold,
+                                                    fontWeight: FontWeight.w400,
                                                   ),
                                             ),
                                           ),
@@ -148,20 +148,28 @@ class _TopMfsScreenState extends State<TopMfsScreen> {
                                                   .bodyMedium!
                                                   .copyWith(
                                                     fontSize: 16.sp,
-                                                    fontWeight: FontWeight.w500,
+                                                    // fontWeight:
+                                                    //     FontWeight.w500,
                                                   ),
                                             ),
                                           ),
                                           Container(
                                             decoration: BoxDecoration(
-                                              border: Border.all(),
+                                              color: Color.fromARGB(
+                                                      255, 253, 217, 214)
+                                                  .withOpacity(0.5),
                                               borderRadius:
                                                   BorderRadius.circular(
                                                 10.sp,
                                               ),
                                             ),
                                             child: Padding(
-                                              padding: EdgeInsets.all(8.sp),
+                                              padding: EdgeInsets.only(
+                                                left: 12.sp,
+                                                right: 12.sp,
+                                                top: 6.sp,
+                                                bottom: 8.sp,
+                                              ),
                                               child: Text(
                                                 '${topMfsController.topPerformingMutualFundModel?.list?[index].riskometer}',
                                                 style: TextStyle(
@@ -187,37 +195,60 @@ class _TopMfsScreenState extends State<TopMfsScreen> {
                                         ],
                                       ),
                                       VerticalSpacer(2.h),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Column(
-                                            children: [
-                                              Text(
-                                                '${topMfsController.returns} return',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyMedium!
-                                                    .copyWith(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ),
-                                              ),
-                                              Text(
-                                                '${topMfsController.returnPercentage}%',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyMedium!
-                                                    .copyWith(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ),
-                                              ),
-                                              VerticalSpacer(1.h),
-                                            ],
-                                          ),
-                                          HorizontalSpacer(2.w),
-                                        ],
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 8.0, right: 8.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Scheme Asset',
+                                                  style: TextStyle(
+                                                    color: Colors.grey,
+                                                  ),
+                                                ),
+                                                VerticalSpacer(0.5.sp),
+                                                Text(
+                                                    '₹ ${topMfsController.filteredListForAllFunds[index].schemeAssets}')
+                                              ],
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  '${topMfsController.returns} return',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .copyWith(
+                                                        color: Colors.grey,
+                                                      ),
+                                                ),
+                                                VerticalSpacer(0.5.sp),
+                                                Text(
+                                                  '${topMfsController.returnPercentage}%',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .copyWith(
+                                                        color: Colors.green,
+                                                        fontSize: 15.sp,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                ),
+                                                VerticalSpacer(1.h),
+                                              ],
+                                            ),
+                                            // HorizontalSpacer(2.w),
+                                          ],
+                                        ),
                                       )
                                     ],
                                   ),

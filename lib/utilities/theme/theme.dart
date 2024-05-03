@@ -6,9 +6,10 @@ class AppTheme {
   AppTheme._();
 
   static const Color _lightPrimaryColor = Color(0xFFFAFAFA);
+
   static final Color _lightPrimaryVariantColor = Colors.blueGrey.shade800;
   static final Color _lightOnPrimaryColor = Colors.blueGrey.shade200;
-  static const Color _lightTextColorPrimary = Color(0xFF0d1321);
+  static const Color _lightTextColorPrimary = Color(0xFF232730);
   static const Color _appbarColorLight = Color(0xFFFAFAFA);
 // 0E1330
 // 4D84BD button color
@@ -29,13 +30,13 @@ class AppTheme {
   static final TextStyle _lightHeadingText = GoogleFonts.roboto(
     color: _lightTextColorPrimary,
     fontSize: 18,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.w500,
   );
 
   static final TextStyle _lightBodyText = GoogleFonts.roboto(
     color: _lightTextColorPrimary,
     // fontStyle: FontStyle.italic,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.w500,
     fontSize: 16,
   );
 

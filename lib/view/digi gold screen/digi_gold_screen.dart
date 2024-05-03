@@ -1,4 +1,5 @@
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
+import 'package:finfresh_mobile/view/digi%20gold%20screen/gold%20buying%20screen/screen_gold_buying_selling.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -16,7 +17,7 @@ class ScreenDigiGold extends StatelessWidget {
           children: [
             Center(
               child: SizedBox(
-                child: Image.asset('assets/images/goldimage.png'),
+                child: Image.asset('assets/images/goldwelcomimage.png'),
               ),
             ),
             VerticalSpacer(3.h),
@@ -91,11 +92,11 @@ class ScreenDigiGold extends StatelessWidget {
                 //   Navigator.of(context).pop();
                 // });
 
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => const ScreenGoldBuyingAndSelling(),
-                //     ));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ScreenGoldBuyingAndSelling(),
+                    ));
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -105,7 +106,7 @@ class ScreenDigiGold extends StatelessWidget {
                 width: Adaptive.w(50),
                 child: const Center(
                   child: Text(
-                    'Coming soon...',
+                    'Start',
                     style: TextStyle(
                         fontWeight: FontWeight.bold, color: Color(0xFF2D5D5F)),
                   ),

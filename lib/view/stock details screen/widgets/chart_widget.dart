@@ -41,6 +41,8 @@ class ChartWidget extends StatelessWidget {
                   ? const LoadingWidget()
                   : schemeController.historicalNavModel != null
                       ? SfCartesianChart(
+                          // trackballBehavior: TrackballBehavior(
+                          //     enable: true, shouldAlwaysShow: true),
                           zoomPanBehavior: ZoomPanBehavior(
                             enablePinching: true,
                             enableDoubleTapZooming: true,

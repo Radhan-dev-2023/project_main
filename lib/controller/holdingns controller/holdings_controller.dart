@@ -82,4 +82,38 @@ class HoldingsController extends ChangeNotifier {
     log('curent$currentindex');
     notifyListeners();
   }
+
+  bool loadingmail = false;
+  Future<void> sendMailToClinet(
+    String mobile,
+    String username,
+    String schemename,
+    String transactiontype,
+    context,
+  ) async {
+    String token = await SecureStorage.readToken('token');
+    bool isTokenExpired = JwtDecoder.isExpired(token);
+    loadingmail = true;
+    notifyListeners();
+    try {
+      if (isTokenExpired) {
+        await refershTokenService.postRefershTocken(context);
+        holdingServices.sendmailToClient(
+            mobile, username, schemename, transactiontype, context);
+        // notifyListeners();
+        loadingmail = false;
+        notifyListeners();
+      } else {
+        holdingServices.sendmailToClient(
+            mobile, username, schemename, transactiontype, context);
+        // notifyListeners();
+        loadingmail = false;
+        notifyListeners();
+      }
+    } catch (e) {
+      logger.d('report failed with an exception$e');
+      loadingmail = false;
+      notifyListeners();
+    }
+  }
 }

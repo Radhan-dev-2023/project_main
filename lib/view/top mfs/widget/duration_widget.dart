@@ -49,14 +49,14 @@ class DurationButton extends StatelessWidget {
                   return Text(
                     topMfsController.dataList[index],
                     style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: 3.5.sp,
+                          fontWeight: FontWeight.w400,
+                          // letterSpacing: 3.5.sp,
                         ),
                   );
                 },
               ),
             ),
-            HorizontalSpacer(1.w),
+            // HorizontalSpacer(1.w),
             InkWell(
               onTap: () {
                 if (topMfsController.pageController.page! <

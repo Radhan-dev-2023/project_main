@@ -77,26 +77,31 @@ class OverViewInTabbar extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CustomTextWidget(
-                          text: 'Holdings',
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            schemeController.changeButton();
-                          },
-                          child: Icon(
-                            schemeController.changebutton == false
-                                ? CupertinoIcons.chevron_down
-                                : CupertinoIcons.chevron_up,
-                            size: 18.sp,
+                    InkWell(
+                      onTap: () {
+                        schemeController.changeButton();
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomTextWidget(
+                            text: 'Holdings',
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.bold,
                           ),
-                        ),
-                      ],
+                          InkWell(
+                            onTap: () {
+                              schemeController.changeButton();
+                            },
+                            child: Icon(
+                              schemeController.changebutton == false
+                                  ? CupertinoIcons.chevron_down
+                                  : CupertinoIcons.chevron_up,
+                              size: 18.sp,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     VerticalSpacer(2.h),
                     schemeController.changebutton == true
@@ -156,26 +161,27 @@ class CustomTextWidget extends StatelessWidget {
   final FontWeight? fontWeight;
   final TextOverflow? overflow;
   final double? letterSpacing;
+  final Color? color;
 
-  const CustomTextWidget({
-    super.key,
-    this.text,
-    this.fontSize,
-    this.fontWeight,
-    this.overflow,
-    this.letterSpacing,
-  });
+  const CustomTextWidget(
+      {super.key,
+      this.text,
+      this.fontSize,
+      this.fontWeight,
+      this.overflow,
+      this.letterSpacing,
+      this.color});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text!,
       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            fontSize: fontSize,
-            fontWeight: fontWeight,
-            overflow: overflow,
-            letterSpacing: letterSpacing,
-          ),
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+          overflow: overflow,
+          letterSpacing: letterSpacing,
+          color: color),
       // overflow: TextOverflow.ellipsis,
     );
   }

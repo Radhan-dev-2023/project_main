@@ -9,6 +9,7 @@ import 'package:finfresh_mobile/view/settings%20page/screen_settings.dart';
 import 'package:finfresh_mobile/view/transaction%20screen/screen_transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 int? indexfor;
 
@@ -34,7 +35,8 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
   @override
   void initState() {
     super.initState();
-    _currentIndex = Provider.of<DashBoardController>(context,listen: false).currentIndex;
+    _currentIndex =
+        Provider.of<DashBoardController>(context, listen: false).currentIndex;
     _currentIndex = _currentIndex;
     indexfor = _currentIndex;
   }
@@ -47,7 +49,7 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
     List<BottomBarItem> bottomList = [
       BottomBarItem(
         inActiveItem: Image.asset(
-          'assets/images/data-network_12074139.png',
+          'assets/images/compensation.png',
           // 'assets/images/dashboard_11118018.png',
           color: Colors.black,
           // color: indexfor == 0
@@ -59,34 +61,21 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
           width: 23,
         ),
         activeItem: Image.asset(
-          'assets/images/data-network_12074139.png',
-          // 'assets/images/dashboard_11118018.png',
+          'assets/images/compensation.png',
           color: const Color(0xFFA6BBFB),
-          // color: indexfor == 0
-          //     ? const Color(0xFFA6BBFB)
-          //     : platformBrightness == Brightness.light
-          //         ? Colors.black
-          //         : Colors.white,
           height: 25,
           width: 23,
         ),
-        itemLabel: '',
       ),
       BottomBarItem(
         inActiveItem: Image.asset(
-          'assets/images/money_14298817.png',
-          // 'assets/images/money_13299664.png',
+          'assets/images/digicold.png',
           color: Colors.black,
-          // color: indexfor == 1
-          //     ? const Color(0xFFA6BBFB)
-          //     : platformBrightness == Brightness.light
-          //         ? Colors.black
-          //         : Colors.white,
           height: 25,
           width: 23,
         ),
         activeItem: Image.asset(
-          'assets/images/money_14298817.png',
+          'assets/images/digicold.png',
           // 'assets/images/money_13299664.png',
           color: const Color(0xFFA6BBFB),
           // color: indexfor == 1
@@ -97,7 +86,6 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
           height: 25,
           width: 23,
         ),
-        itemLabel: '',
       ),
       BottomBarItem(
         inActiveItem: Image.asset(
@@ -108,7 +96,7 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
           //     : platformBrightness == Brightness.light
           //         ? Colors.black
           //         : Colors.white,
-          height: 25,
+          height: 30,
           width: 23,
         ),
         activeItem: Image.asset(
@@ -119,14 +107,13 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
           //     : platformBrightness == Brightness.light
           //         ? Colors.black
           //         : Colors.white,
-          height: 25,
+          height: 30,
           width: 23,
         ),
-        itemLabel: '',
       ),
       BottomBarItem(
         inActiveItem: Image.asset(
-          'assets/images/transaction_2420245.png',
+          'assets/images/transaction.png',
           color: Colors.black,
           // color: indexfor == 2
           //     ? const Color(0xFFA6BBFB)
@@ -137,7 +124,7 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
           width: 23,
         ),
         activeItem: Image.asset(
-          'assets/images/transaction_2420245.png',
+          'assets/images/transaction.png',
           color: const Color(0xFFA6BBFB),
           // color: indexfor == 2
           //     ? const Color(0xFFA6BBFB)
@@ -147,11 +134,10 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
           height: 25,
           width: 23,
         ),
-        itemLabel: '',
       ),
       BottomBarItem(
         inActiveItem: Image.asset(
-          'assets/images/setting_12326803.png',
+          'assets/images/Setting.png',
           color: Colors.black,
           // color: indexfor == 3
           //     ? const Color(0xFFA6BBFB)
@@ -162,7 +148,7 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
           width: 23,
         ),
         activeItem: Image.asset(
-          'assets/images/setting_12326803.png',
+          'assets/images/Setting.png',
           color: const Color(0xFFA6BBFB),
           // color: indexfor == 3
           //     ? const Color(0xFFA6BBFB)
@@ -172,7 +158,6 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
           height: 25,
           width: 23,
         ),
-        itemLabel: '',
       ),
     ];
     return Scaffold(
@@ -186,8 +171,15 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
         extendBody: true,
         body: bottomBarPages[_currentIndex],
         bottomNavigationBar: AnimatedNotchBottomBar(
+          showShadow: false,
+          blurFilterX: 0,
+          blurFilterY: 0,
+
+          // showBlurBottomBar: true,
+          // blurOpacity: 0.1,
+          bottomBarWidth: 100,
           notchBottomBarController: _controller,
-          removeMargins: false,
+          removeMargins: true,
           onTap: (index) {
             setState(() {
               _currentIndex = index;
@@ -195,6 +187,7 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
               // indexfor = index;
             });
           },
+
           bottomBarItems: bottomList,
         )
         // bottomNavigationBar: BottomNavigationBar(

@@ -7,6 +7,7 @@ class TopFundController extends ChangeNotifier {
   SchemeServices schemeServices = SchemeServices();
   SchemeAllCategoryModel? schemeAllCategoryModel;
   bool loading = false;
+  
   Future<void> getSchemeAllCategory(context) async {
     loading = true;
 

@@ -1,11 +1,18 @@
 import 'dart:developer';
 
+import 'package:finfresh_mobile/model/schem%20allCategory/scheme_allcategory_model.dart';
 import 'package:finfresh_mobile/model/top%20performing%20model/top_performing_mutual_fund.dart';
 import 'package:finfresh_mobile/services/scheme%20services/scheme_services.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:flutter/material.dart';
 
 class TopMFsController extends ChangeNotifier {
+  int currentIndex = 0;
+  void changeCurrentIndex(int index) {
+    currentIndex = index;
+    notifyListeners();
+  }
+
   String returns = '3 year';
   SchemeServices schemeServices = SchemeServices();
   TextEditingController queryController = TextEditingController();
@@ -105,6 +112,32 @@ class TopMFsController extends ChangeNotifier {
     notifyListeners();
   }
 
+// SchemeServices schemeServices = SchemeServices();
+  SchemeAllCategoryModel? schemeAllCategoryModel;
+  // bool loading = false;
+  String valueforCategory = 'All';
+  List<String> categoryList = ['All'];
+  Future<void> getSchemeAllCategory(context) async {
+    loading = true;
+    categoryList.clear();
+    categoryList.add('All');
+    try {
+      schemeAllCategoryModel = await schemeServices.schemeAllCategory(context);
+      for (String category in schemeAllCategoryModel!.list!) {
+        categoryList.add(category);
+      }
+      log('category list $categoryList');
+      loading = false;
+      notifyListeners();
+    } catch (e) {
+      logger.d('Exxception $e');
+      loading = false;
+      notifyListeners();
+    }
+    loading = false;
+    notifyListeners();
+  }
+
   String returnPercentage = '';
   void returnValue(int index) {
     if (returns == '1 month') {
@@ -176,6 +209,14 @@ class TopMFsController extends ChangeNotifier {
     returns = '3 year';
     returntoBackend = '3y';
     getTopMfsFRomPeriod(context, 'All');
+    getSchemeAllCategory(context);
+  }
+
+  bool selectedRadio = false;
+  void updateRadioButton(bool value) {
+    log('called radiobutton');
+    selectedRadio = value;
+    notifyListeners();
   }
   // @override
   // void dispose() {

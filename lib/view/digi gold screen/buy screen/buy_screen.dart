@@ -1,9 +1,27 @@
+import 'dart:developer';
+
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
+import 'package:finfresh_mobile/view/payu%20payment/hashservice.dart';
 import 'package:flutter/material.dart';
+import 'package:payu_checkoutpro_flutter/PayUConstantKeys.dart';
+import 'package:payu_checkoutpro_flutter/payu_checkoutpro_flutter.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class ScreenBuy extends StatelessWidget {
+class ScreenBuy extends StatefulWidget {
   const ScreenBuy({super.key});
+
+  @override
+  State<ScreenBuy> createState() => _ScreenBuyState();
+}
+
+class _ScreenBuyState extends State<ScreenBuy>
+    implements PayUCheckoutProProtocol {
+  late PayUCheckoutProFlutter _checkoutPro;
+  @override
+  void initState() {
+    super.initState();
+    _checkoutPro = PayUCheckoutProFlutter(this);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +145,33 @@ class ScreenBuy extends StatelessWidget {
             ),
             VerticalSpacer(15.h),
             InkWell(
-              onTap: () {},
+              onTap: () async {
+                _checkoutPro.openCheckoutScreen(payUPaymentParams: {
+                  PayUPaymentParamKey.key: "TB7WBn",
+                  PayUPaymentParamKey.amount: "10",
+                  PayUPaymentParamKey.productInfo: "Payu",
+                  PayUPaymentParamKey.firstName: "Sidhu Patil",
+                  PayUPaymentParamKey.email: "abc@gmail.com",
+                  PayUPaymentParamKey.phone: "9876543210",
+                  PayUPaymentParamKey.environment: "1",
+                  // String - "0" for Production and "1" for Test
+                  PayUPaymentParamKey.transactionId: "abc1234567982",
+                  // transactionId Cannot be null or empty and should be unique for each transaction. Maximum allowed length is 25 characters. It cannot contain special characters like: -_/
+                  PayUPaymentParamKey.userCredential: ":1000",
+                  //  Format: <merchantKey>:<userId> ... UserId is any id/email/phone number to uniquely identify the user.
+                  PayUPaymentParamKey.android_surl:
+                      "https://cbjs.payu.in/sdk/success",
+                  PayUPaymentParamKey.android_furl:
+                      "https://cbjs.payu.in/sdk/failure",
+                  PayUPaymentParamKey.ios_surl:
+                      "https://cbjs.payu.in/sdk/success",
+                  PayUPaymentParamKey.ios_furl:
+                      "https://cbjs.payu.in/sdk/failure",
+                }, payUCheckoutProConfig: {
+                  PayUCheckoutProConfigKeys.merchantName: "PayU",
+                });
+                // PayUPayment();
+              },
               child: Container(
                 height: Adaptive.h(5),
                 width: Adaptive.w(25),
@@ -150,5 +194,32 @@ class ScreenBuy extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  generateHash(Map response) async {
+    // Handle Hash
+    Map hashResponse = HashService.generateHash(response);
+    _checkoutPro.hashGenerated(hash: hashResponse);
+  }
+
+  @override
+  onPaymentSuccess(dynamic response) {
+    log(response.toString());
+  }
+
+  @override
+  onPaymentFailure(dynamic response) {
+    log(response.toString());
+  }
+
+  @override
+  onPaymentCancel(dynamic response) {
+    log(response.toString());
+  }
+
+  @override
+  onError(dynamic response) {
+    log(response.toString());
   }
 }

@@ -3,7 +3,6 @@
 //     final reportDetailsModel = reportDetailsModelFromJson(jsonString);
 
 import 'dart:convert';
-import 'dart:ffi';
 
 ReportDetailsModel reportDetailsModelFromJson(String str) =>
     ReportDetailsModel.fromJson(json.decode(str));
@@ -65,7 +64,7 @@ class Result {
         gains: json["gains"],
         purchaseDate: json["purchaseDate"],
         growthAbsolute: json["growth_absolute"],
-        averageNav: json["average_nav"]?.toDouble(),
+        averageNav: json["avg_nav"]?.toDouble(),
         currentNav: json["current_nav"]?.toDouble(),
         purchaseDetails: List<PurchaseDetail>.from(
             json["purchaseDetails"].map((x) => PurchaseDetail.fromJson(x))),

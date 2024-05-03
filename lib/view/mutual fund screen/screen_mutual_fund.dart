@@ -575,7 +575,7 @@ class ScreenMutualFund extends StatelessWidget {
                                                 .bodyMedium!
                                                 .copyWith(
                                                   fontSize: 17.sp,
-                                                  fontWeight: FontWeight.bold,
+                                                  fontWeight: FontWeight.w500,
                                                 ),
                                           ),
                                           VerticalSpacer(1.h),
@@ -591,20 +591,25 @@ class ScreenMutualFund extends StatelessWidget {
                                             .bodyMedium!
                                             .copyWith(
                                                 fontSize: 16.sp,
-                                                color: Colors.grey
-                                                // fontWeight: FontWeight.w500,
-                                                ),
+                                                color: Colors.grey),
                                         overflow: TextOverflow.visible,
                                       ),
                                       trailing: Container(
                                         decoration: BoxDecoration(
-                                          border: Border.all(),
+                                          color:
+                                              Color.fromARGB(255, 253, 217, 214)
+                                                  .withOpacity(0.5),
                                           borderRadius: BorderRadius.circular(
                                             10.sp,
                                           ),
                                         ),
                                         child: Padding(
-                                          padding: EdgeInsets.all(10.0.sp),
+                                          padding: EdgeInsets.only(
+                                            left: 12.sp,
+                                            right: 12.sp,
+                                            top: 6.sp,
+                                            bottom: 8.sp,
+                                          ),
                                           child: Text(
                                             '${topMfsController.filteredListForAllFunds[index].riskometer}',
                                             style: TextStyle(

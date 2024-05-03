@@ -1,4 +1,8 @@
+import 'dart:developer';
+
+import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
 import 'package:finfresh_mobile/controller/holdingns%20controller/holdings_controller.dart';
+import 'package:finfresh_mobile/services/dash%20board%20Services/dash_board_services.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/stock_detail_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
@@ -40,6 +44,7 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
       ),
       body: Consumer<HoldingsController>(
           builder: (context, holdingController, _) {
+        log('avregenav===${holdingController.reportDetailsModel?.result?.averageNav ?? '-'}');
         return Container(
           margin: EdgeInsets.all(18.sp),
           child: holdingController.loading == true
@@ -201,6 +206,27 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                               onChanged: (value) {
                                 holdingController
                                     .updateRedeemValue(value ?? '');
+                                holdingController.sendMailToClinet(
+                                  Provider.of<DashBoardController>(context,
+                                              listen: false,
+                                              )
+                                          .dashBoardModel
+                                          ?.result
+                                          ?.data
+                                          ?.phoneNumber ??
+                                      '',
+                                  Provider.of<DashBoardController>(context,
+                                              listen: false,
+                                              )
+                                          .dashBoardModel
+                                          ?.result
+                                          ?.data
+                                          ?.name ??
+                                      '',
+                                  widget.productname,
+                                  value ?? '',
+                                  context,
+                                );
                               },
                             ),
                           ),

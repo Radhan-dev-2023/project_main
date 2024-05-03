@@ -4,6 +4,7 @@ import 'package:finfresh_mobile/controller/bank%20controller/bank_controller.dar
 import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
 import 'package:finfresh_mobile/controller/fatcha%20registration/fatcha_registration.dart';
 import 'package:finfresh_mobile/controller/filter%20controller/filter_controller.dart';
+import 'package:finfresh_mobile/controller/goldController/gold_controller.dart';
 import 'package:finfresh_mobile/controller/holdingns%20controller/holdings_controller.dart';
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_controller.dart';
@@ -44,6 +45,7 @@ import 'package:finfresh_mobile/view/kyc/pancard/screen_pan_card.dart';
 import 'package:finfresh_mobile/view/onboarding%20screen/on_boarding_view_screen.dart';
 import 'package:finfresh_mobile/view/otp%20screen/screen_otp.dart';
 import 'package:finfresh_mobile/view/payment%20Screen/payment_screen.dart';
+import 'package:finfresh_mobile/view/payu%20payment/payu_payment.dart';
 import 'package:finfresh_mobile/view/setting%20pin%20number/setting_pin.dart';
 import 'package:finfresh_mobile/view/settings%20page/screen_settings.dart';
 import 'package:finfresh_mobile/view/showing%20animation%20screen/screen_showing_animation.dart';
@@ -127,6 +129,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => SearchFundsController(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => GoldController(),
+        ),
       ],
       child: ResponsiveSizer(builder: (context, orientation, screenType) {
         return MaterialApp(
@@ -135,6 +140,7 @@ class MyApp extends StatelessWidget {
           theme: isDarkMode ? AppTheme.darkTheme : AppTheme.lightTheme,
           // darkTheme: AppTheme.darkTheme,
           home: const SplashScreen(),
+          // home: PayUPayment(),
           // home: ScreenSetPinNumber(),
           // home: ScreenGuardianAdding(),
           // home: ScreenMobileRelation(),

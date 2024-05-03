@@ -4,6 +4,7 @@ import 'package:finfresh_mobile/view/stock%20details%20screen/widgets/chart_widg
 import 'package:finfresh_mobile/view/stock%20details%20screen/widgets/overview_in_tabbar.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -72,6 +73,11 @@ class _SliverlistWidgetState extends State<SliverlistWidget> {
             : NestedScrollView(
                 headerSliverBuilder:
                     (BuildContext context, bool innerBoxIsScrolled) {
+                  DateTime date = DateFormat('MMM dd, yyyy hh:mm:ss a').parse(
+                      '${schemeDetailsController.historicalNavModel!.navList![schemeDetailsController.historicalNavModel!.navList!.length - 1].navDate}');
+
+                  // Format the date to display only month and day
+                  String formattedDate = DateFormat('MMM d, yyyy').format(date);
                   return [
                     SliverAppBar(
                       title: const Text('Scheme Info'),
@@ -133,7 +139,20 @@ class _SliverlistWidgetState extends State<SliverlistWidget> {
                                   text: schemeDetailsController
                                           .schemeInfoModel?.schemeCategory ??
                                       '',
-                                )
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                VerticalSpacer(1.h),
+                                CustomTextWidget(
+                                  text:
+                                      'Nav :${schemeDetailsController.historicalNavModel!.navList![schemeDetailsController.historicalNavModel!.navList!.length - 1].netAssetValue}',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.sp,
+                                ),
+                                VerticalSpacer(0.5.h),
+                                CustomTextWidget(
+                                  text: formattedDate,
+                                  color: Color(0xFF545454),
+                                ),
                               ],
                             ),
                           ),

@@ -13,15 +13,12 @@ class Collectionwidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 5.h,
-      width: 10.w,
+      height: 4.h,
+      width: 9.w,
       child: Image.asset(
         image,
         fit: BoxFit.fill,
         color: color,
-        // color: color,
-        // color: const Color(0xFF7214FF),
-        // color: Color(0xFFC5714E),
       ),
     );
   }
