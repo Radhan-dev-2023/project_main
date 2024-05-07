@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
 import 'package:finfresh_mobile/controller/goldController/gold_controller.dart';
 import 'package:finfresh_mobile/services/get%20gold%20rate/get_gold_rate.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
@@ -9,6 +10,7 @@ import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -33,6 +35,10 @@ class _ScreenGoldBuyingAndSellingState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xFF2D5D5F),
+        iconTheme: IconThemeData(color: Colors.white),
+      ),
       key: scaffoldState,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -50,7 +56,7 @@ class _ScreenGoldBuyingAndSellingState
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              '₹${goldController.goldvalue}/mg',
+                              '₹${goldController.goldvalue ?? ''}/mg',
                               style: TextStyle(
                                 fontSize: 23.sp,
                                 fontWeight: FontWeight.bold,
@@ -162,77 +168,88 @@ class _ScreenGoldBuyingAndSellingState
                           ),
                         ),
                       ),
-                      VerticalSpacer(10.h),
+                      VerticalSpacer(6.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          InkWell(
-                            onTap: () {
-                              scaffoldState.currentState!.showBottomSheet(
-                                (BuildContext context) {
-                                  return Consumer<GoldController>(
-                                      builder: (context, goldController, _) {
-                                    return Container(
-                                      margin: EdgeInsets.all(15.sp),
-                                      height: 300,
-                                      color: Colors.white,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          VerticalSpacer(1.h),
-                                          Text(
-                                            'Add Gold Rate',
-                                            style: TextStyle(fontSize: 20),
-                                          ),
-                                          VerticalSpacer(3.h),
-                                          TextFormField(
-                                            controller: goldController
-                                                .goldRateController,
-                                            keyboardType: TextInputType.number,
-                                            decoration: InputDecoration(
-                                              hintText: 'Enter the gold rate',
-                                              // border: OutlineInputBorder(),
+                          Visibility(
+                            visible: Provider.of<DashBoardController>(context)
+                                        .dashBoardModel
+                                        ?.result
+                                        ?.data
+                                        ?.name ==
+                                    'SHANMUGA BHUVANESWAR RAMALINGAM'
+                                ? true
+                                : false,
+                            child: InkWell(
+                              onTap: () {
+                                scaffoldState.currentState!.showBottomSheet(
+                                  (BuildContext context) {
+                                    return Consumer<GoldController>(
+                                        builder: (context, goldController, _) {
+                                      return Container(
+                                        margin: EdgeInsets.all(15.sp),
+                                        height: 300,
+                                        color: Colors.white,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            VerticalSpacer(1.h),
+                                            Text(
+                                              'Add Gold Rate',
+                                              style: TextStyle(fontSize: 20),
                                             ),
-                                          ),
-                                          VerticalSpacer(5.h),
-                                          goldController.loading == true
-                                              ? const LoadingButton()
-                                              : ButtonWidget(
-                                                  btName: 'Add',
-                                                  onTap: () async {
-                                                    bool result =
-                                                        await goldController
-                                                            .addGoldRate(
-                                                                context);
-                                                    if (result == true) {
-                                                      // ignore: use_build_context_synchronously
-                                                      Navigator.pop(context);
-                                                    } else {
-                                                      log('failed');
-                                                    }
-                                                  },
-                                                )
-                                        ],
-                                      ),
-                                    );
-                                  });
-                                },
-                              );
-                            },
-                            child: Container(
-                              height: Adaptive.h(5),
-                              width: Adaptive.w(30),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20.sp),
-                                color: const Color(0xFF2D5D5F),
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  'Add Gold Rate',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xFFF7BF05),
+                                            VerticalSpacer(3.h),
+                                            TextFormField(
+                                              controller: goldController
+                                                  .goldRateController,
+                                              keyboardType:
+                                                  TextInputType.number,
+                                              decoration: InputDecoration(
+                                                hintText: 'Enter the gold rate',
+                                                // border: OutlineInputBorder(),
+                                              ),
+                                            ),
+                                            VerticalSpacer(5.h),
+                                            goldController.loading == true
+                                                ? const LoadingButton()
+                                                : ButtonWidget(
+                                                    btName: 'Add',
+                                                    onTap: () async {
+                                                      bool result =
+                                                          await goldController
+                                                              .addGoldRate(
+                                                                  context);
+                                                      if (result == true) {
+                                                        // ignore: use_build_context_synchronously
+                                                        Navigator.pop(context);
+                                                      } else {
+                                                        log('failed');
+                                                      }
+                                                    },
+                                                  )
+                                          ],
+                                        ),
+                                      );
+                                    });
+                                  },
+                                );
+                              },
+                              child: Container(
+                                height: Adaptive.h(5),
+                                width: Adaptive.w(30),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20.sp),
+                                  color: const Color(0xFF2D5D5F),
+                                ),
+                                child: const Center(
+                                  child: Text(
+                                    'Add Gold Rate',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFFF7BF05),
+                                    ),
                                   ),
                                 ),
                               ),

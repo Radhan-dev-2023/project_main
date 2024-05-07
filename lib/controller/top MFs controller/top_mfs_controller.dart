@@ -218,10 +218,68 @@ class TopMFsController extends ChangeNotifier {
     selectedRadio = value;
     notifyListeners();
   }
+
   // @override
   // void dispose() {
   //   // TODO: implement dispose
   //   super.dispose();
   //   pageController.dispose();
   // }
+  List<String> sipUnder500list = [
+    "Nippon India Small Cap Fund - Growth Plan - Growth Option",
+    'UTI Nifty 50 Index Fund - Regular Plan - Growth Option',
+    'HDFC Infrastructure Fund - Growth Plan',
+    'Baroda BNP Paribas Business Cycle Fund - Regular Plan - Growth',
+    'Nippon India Power Infra Fund-Growth Plan -Growth Option',
+  ];
+  List<String> finfreshpickslist = [
+    'HDFC Defence Fund - Growth Option',
+    'Bajaj Finserv Flexi Cap Fund -Regular Plan-Growt',
+    'Quant Active Fund-GROWTH OPTION - Regular Plan',
+    'Quant Business Cycle Fund - Growth Option - Regular Plan',
+    'Union Innovation Opportunities Fund - Regular Plan - Growth Option ',
+  ];
+  List<String> taxsavinginToppicks = [
+    "Quant ELSS Tax Saver Fund - Growth Option - Regular Plan",
+    'HDFC ELSS Tax saver - Growth Plan',
+    'Tata ELSS Tax Saver Fund-Growth-Regular Plan',
+    'ITI ELSS Tax Saver Fund - Regular Plan - Growth Option',
+    'Taurus ELSS Tax Saver Fund - Regular Plan - Growth',
+  ];
+  List<String> sectorlFundlist = [
+    'quant PSU Fund - Growth Option - Regular Plan ',
+    'BANK OF INDIA Manufacturing \u0026 Infrastructure Fund-Growth',
+    'BANDHAN TRANSPORTATION AND LOGISTICS FUND - GROWTH - REGULAR PLAN',
+    'Tata Resources \u0026 Energy Fund-Regular Plan-Growth',
+    'WhiteOak Capital Banking \u0026 Financial Services Fund - Regular Growth',
+  ];
+
+  List<String> taxsavingInGoals = [
+    'WhiteOak Capital ELSS Tax Saver Fund Regular Plan Growth',
+    'HSBC Tax Saver Equity Fund - Growth',
+    'Kotak ELSS Tax Saver Fund Growth ',
+    'Navi ELSS Tax Saver Fund- Regular Plan- Growth Option',
+    'Quant ELSS Tax Saver Fund - Growth Option - Regular Plans',
+  ];
+  List<String> threeyearList = [
+    'Quant Liquid Fund - Growth Option - Regular Plan',
+    'Edelweiss Liquid Fund - Regular Plan - Growth Option',
+    'Baroda BNP Paribas Credit Risk Fund -Regular-Growth Option ',
+    'HDFC Dynamic Debt Fund - Growth Option ',
+    'ICICI Prudential All Seasons Bond Fund - Growth',
+  ];
+  List<String> threetofiveyears = [
+    "Quant PSU Fund - Growth Option - Regular Plan",
+    "Parag Parikh Flexi Cap Fund - Regular Plan - Growth",
+    "Mirae Asset Multi Asset Allocation Fund-Regular Plan-Growth",
+    "Bank of India Multi Asset Allocation Fund-Regular Plan-Growth",
+    'Quant Absolute Fund - Growth Option - Regular Plan',
+  ];
+  List<String> fivePlusYears = [
+    "Quant Active Fund-GROWTH OPTION - Regular Plan",
+    'Tata India Pharma Healthcare Fund-Regular Plan-Growth',
+    'HDFC housing oppurtunity',
+    'Tata Small Cap Fund-Regular Plan-Growth',
+    'SBI Consumption Opportunities Fund - Regular - Growth'
+  ];
 }

@@ -26,92 +26,148 @@ class PortfolioWidget extends StatelessWidget {
       child: SizedBox(
         height: 40.h,
         width: double.infinity,
-        child: Card(
-          child: Consumer<DashBoardController>(
-              builder: (context, dashBoardController, _) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                VerticalSpacer(7.h),
-                const RoundChartWidget(),
-                VerticalSpacer(8.h),
-                Text(
-                  dashBoardController.summaryModel?.result?.totalAmount ?? '',
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
+        child: Consumer<DashBoardController>(
+            builder: (context, dashBoardController, _) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              VerticalSpacer(7.h),
+              const RoundChartWidget(),
+              VerticalSpacer(9.h),
+              Text(
+                dashBoardController.summaryModel?.result?.totalAmount ?? '',
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              VerticalSpacer(2.h),
+              Padding(
+                padding: EdgeInsets.all(12.sp),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Investment Amount',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(),
+                        ),
+                        VerticalSpacer(1.h),
+                        Text(
+                          dashBoardController
+                                  .summaryModel?.result?.netInvestment ??
+                              '',
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: const Color(0xFFFFC700),
+                                  ),
+                        ),
+                      ],
+                    ),
+                    // HorizontalSpacer(5.w),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Total Gain',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(),
+                        ),
+                        VerticalSpacer(1.h),
+                        Text(
+                          dashBoardController
+                                  .summaryModel?.result?.netEquityGains ??
+                              '',
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: const Color(0xFF6C8FF8),
+                                  ),
+                        ),
+                      ],
+                    ),
+                    // HorizontalSpacer(7.5.w),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Total Amount',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(),
+                        ),
+                        VerticalSpacer(1.h),
+                        Text(
+                          dashBoardController
+                                  .summaryModel?.result?.totalAmount ??
+                              '',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                fontWeight: FontWeight.bold,
+                                // color: const Color(0xFF324053),
+                                color: platformBrightness == Brightness.dark
+                                    ? const Color.fromARGB(255, 211, 226, 248)
+                                    : const Color(0xFF324053),
+                              ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                VerticalSpacer(1.h),
-                Padding(
-                  padding: EdgeInsets.all(12.sp),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Investment Amount',
-                        style:
-                            Theme.of(context).textTheme.bodyMedium!.copyWith(),
-                      ),
-                      // HorizontalSpacer(5.w),
-                      Text(
-                        'Total Gain',
-                        style:
-                            Theme.of(context).textTheme.bodyMedium!.copyWith(),
-                      ),
-                      // HorizontalSpacer(7.5.w),
-                      Text(
-                        'Total Amount',
-                        style:
-                            Theme.of(context).textTheme.bodyMedium!.copyWith(),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(0),
-                  child: Row(
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      HorizontalSpacer(3.w),
-                      Text(
-                        dashBoardController
-                                .summaryModel?.result?.netInvestment ??
-                            '',
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: const Color(0xFFFFC700),
-                            ),
-                      ),
-                      HorizontalSpacer(21.5.w),
-                      Text(
-                        dashBoardController
-                                .summaryModel?.result?.netEquityGains ??
-                            '',
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: const Color(0xFF6C8FF8),
-                            ),
-                      ),
-                      HorizontalSpacer(10.w),
-                      Text(
-                        dashBoardController.summaryModel?.result?.totalAmount ??
-                            '',
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              fontWeight: FontWeight.bold,
-                              // color: const Color(0xFF324053),
-                              color: platformBrightness == Brightness.dark
-                                  ? const Color.fromARGB(255, 211, 226, 248)
-                                  : const Color(0xFF324053),
-                            ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            );
-          }),
-        ),
+              ),
+              // Padding(
+              //   padding: const EdgeInsets.all(0),
+              //   child: Row(
+              //     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       HorizontalSpacer(3.w),
+              //       Text(
+              //         dashBoardController.summaryModel?.result?.netInvestment ??
+              //             '',
+              //         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              //               fontWeight: FontWeight.bold,
+              //               color: const Color(0xFFFFC700),
+              //             ),
+              //       ),
+              //       HorizontalSpacer(21.5.w),
+              //       Text(
+              //         dashBoardController
+              //                 .summaryModel?.result?.netEquityGains ??
+              //             '',
+              //         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              //               fontWeight: FontWeight.bold,
+              //               color: const Color(0xFF6C8FF8),
+              //             ),
+              //       ),
+              //       HorizontalSpacer(10.w),
+              //       Text(
+              //         dashBoardController.summaryModel?.result?.totalAmount ??
+              //             '',
+              //         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              //               fontWeight: FontWeight.bold,
+              //               // color: const Color(0xFF324053),
+              //               color: platformBrightness == Brightness.dark
+              //                   ? const Color.fromARGB(255, 211, 226, 248)
+              //                   : const Color(0xFF324053),
+              //             ),
+              //       ),
+              //     ],
+              //   ),
+              // )
+            ],
+          );
+        }),
       ),
     );
   }

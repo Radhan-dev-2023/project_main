@@ -1,10 +1,13 @@
 import 'package:finfresh_mobile/controller/top%20MFs%20controller/top_mfs_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/all%20mutual%20fund/screen_all_mutual_fund.dart';
+import 'package:finfresh_mobile/view/mutual%20fund%20screen/widgets/widget_for_toppicks_goals.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/stock_detail_screen.dart';
+import 'package:finfresh_mobile/view/stock%20details%20screen/widgets/overview_in_tabbar.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -89,129 +92,164 @@ class ScreenMutualFund extends StatelessWidget {
                     //     )
                     //   ],
                     // ),
-                    SizedBox(
-                      height: Adaptive.h(15.5),
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 10.sp, right: 10.sp),
-                        child: Column(
-                          children: [
-                            VerticalSpacer(1.h),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Card(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(27.sp),
-                                  ),
-                                  child: CircleAvatar(
-                                    radius: 35,
-                                    backgroundColor: const Color(0xFFEFF0FC),
-                                    child: Image.asset(
-                                      'assets/images/anniversary_6520985.png',
-                                      height: Adaptive.h(5),
-                                      width: Adaptive.w(5),
-                                      color: const Color(0xFF71BEE7),
-                                    ),
-                                  ),
-                                ),
-                                Card(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(27.sp),
-                                  ),
-                                  child: CircleAvatar(
-                                    radius: 35,
-                                    backgroundColor: const Color(0xFFEFFBF8),
-                                    child: Image.asset(
-                                      'assets/images/top-games-star_40894.png',
-                                      height: Adaptive.h(5),
-                                      width: Adaptive.w(5),
-                                      color: const Color(0xFF42D6A4),
-                                    ),
-                                  ),
-                                ),
-                                Card(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(27.sp),
-                                  ),
-                                  child: CircleAvatar(
-                                    radius: 35,
-                                    backgroundColor: const Color(0xFFF6F7F8),
-                                    child: Image.asset(
-                                      'assets/images/up_5920480.png',
-                                      height: Adaptive.h(5),
-                                      width: Adaptive.w(5),
-                                      color: const Color(0xFF8380B3),
-                                    ),
-                                  ),
-                                ),
-                                Card(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(27.sp),
-                                  ),
-                                  child: CircleAvatar(
-                                    radius: 35,
-                                    backgroundColor: const Color(0xFFFFF4F3),
-                                    child: Image.asset(
-                                      'assets/images/user_1077114.png',
-                                      height: Adaptive.h(5),
-                                      width: Adaptive.w(5),
-                                      color: const Color.fromARGB(
-                                          255, 238, 107, 95),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            VerticalSpacer(1.h),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'SIP with 100',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall!
-                                      .copyWith(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                ),
-                                Text(
-                                  'Top Performing',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall!
-                                      .copyWith(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                ),
-                                Text(
-                                  'High Returns',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall!
-                                      .copyWith(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                ),
-                                Text(
-                                  'Only For You',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall!
-                                      .copyWith(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                    // SizedBox(
+                    //   height: Adaptive.h(15.5),
+                    //   child: Padding(
+                    //     padding: EdgeInsets.only(left: 10.sp, right: 10.sp),
+                    //     child: Column(
+                    //       children: [
+                    //         VerticalSpacer(1.h),
+                    //         Row(
+                    //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //           children: [
+                    //             Card(
+                    //               shape: RoundedRectangleBorder(
+                    //                 borderRadius: BorderRadius.circular(27.sp),
+                    //               ),
+                    //               child: CircleAvatar(
+                    //                 radius: 35,
+                    //                 backgroundColor: const Color(0xFFEFF0FC),
+                    //                 child: Image.asset(
+                    //                   'assets/images/anniversary_6520985.png',
+                    //                   height: Adaptive.h(5),
+                    //                   width: Adaptive.w(5),
+                    //                   color: const Color(0xFF71BEE7),
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //             Card(
+                    //               shape: RoundedRectangleBorder(
+                    //                 borderRadius: BorderRadius.circular(27.sp),
+                    //               ),
+                    //               child: CircleAvatar(
+                    //                 radius: 35,
+                    //                 backgroundColor: const Color(0xFFEFFBF8),
+                    //                 child: Image.asset(
+                    //                   'assets/images/top-games-star_40894.png',
+                    //                   height: Adaptive.h(5),
+                    //                   width: Adaptive.w(5),
+                    //                   color: const Color(0xFF42D6A4),
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //             Card(
+                    //               shape: RoundedRectangleBorder(
+                    //                 borderRadius: BorderRadius.circular(27.sp),
+                    //               ),
+                    //               child: CircleAvatar(
+                    //                 radius: 35,
+                    //                 backgroundColor: const Color(0xFFF6F7F8),
+                    //                 child: Image.asset(
+                    //                   'assets/images/up_5920480.png',
+                    //                   height: Adaptive.h(5),
+                    //                   width: Adaptive.w(5),
+                    //                   color: const Color(0xFF8380B3),
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //             Card(
+                    //               shape: RoundedRectangleBorder(
+                    //                 borderRadius: BorderRadius.circular(27.sp),
+                    //               ),
+                    //               child: CircleAvatar(
+                    //                 radius: 35,
+                    //                 backgroundColor: const Color(0xFFFFF4F3),
+                    //                 child: Image.asset(
+                    //                   'assets/images/user_1077114.png',
+                    //                   height: Adaptive.h(5),
+                    //                   width: Adaptive.w(5),
+                    //                   color: const Color.fromARGB(
+                    //                       255, 238, 107, 95),
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //           ],
+                    //         ),
+                    //         VerticalSpacer(1.h),
+                    //         Row(
+                    //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //           children: [
+                    //             Text(
+                    //               'SIP with 100',
+                    //               style: Theme.of(context)
+                    //                   .textTheme
+                    //                   .bodySmall!
+                    //                   .copyWith(
+                    //                     fontSize: 14.sp,
+                    //                     fontWeight: FontWeight.w500,
+                    //                   ),
+                    //             ),
+                    //             Text(
+                    //               'Top Performing',
+                    //               style: Theme.of(context)
+                    //                   .textTheme
+                    //                   .bodySmall!
+                    //                   .copyWith(
+                    //                     fontSize: 14.sp,
+                    //                     fontWeight: FontWeight.w500,
+                    //                   ),
+                    //             ),
+                    //             Text(
+                    //               'High Returns',
+                    //               style: Theme.of(context)
+                    //                   .textTheme
+                    //                   .bodySmall!
+                    //                   .copyWith(
+                    //                     fontSize: 14.sp,
+                    //                     fontWeight: FontWeight.w500,
+                    //                   ),
+                    //             ),
+                    //             Text(
+                    //               'Only For You',
+                    //               style: Theme.of(context)
+                    //                   .textTheme
+                    //                   .bodySmall!
+                    //                   .copyWith(
+                    //                     fontSize: 14.sp,
+                    //                     fontWeight: FontWeight.w500,
+                    //                   ),
+                    //             ),
+                    //           ],
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                    Text(
+                      'Top Picks',
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          WigetForTopPIcksAndGoals(
+                            title: 'Sip under 500',
+                            listname: topMfsController.sipUnder500list,
+                            wigetInTrailing: SizedBox(),
+                          ),
+                          WigetForTopPIcksAndGoals(
+                            title: 'Finfresh pick',
+                            listname: topMfsController.finfreshpickslist,
+                            wigetInTrailing: SizedBox(),
+                          ),
+                          WigetForTopPIcksAndGoals(
+                            title: 'Tax savings',
+                            listname: topMfsController.taxsavinginToppicks,
+                            wigetInTrailing: SizedBox(),
+                          ),
+                          WigetForTopPIcksAndGoals(
+                            title: 'Sectoral',
+                            listname: topMfsController.sectorlFundlist,
+                            wigetInTrailing: SizedBox(),
+                          ),
+                        ],
                       ),
                     ),
+
                     SizedBox(
                       width: double.infinity,
                       child: Card(
@@ -285,139 +323,171 @@ class ScreenMutualFund extends StatelessWidget {
                     ),
                     VerticalSpacer(2.h),
                     Text(
-                      'Lumpsum',
+                      'Goals',
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                             fontSize: 18.sp,
                             fontWeight: FontWeight.bold,
                           ),
                     ),
-                    // VerticalSpacer(2.h),
-                    SizedBox(
-                      height: Adaptive.h(15.5),
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 10.sp, right: 10.sp),
-                        child: Column(
-                          children: [
-                            VerticalSpacer(1.h),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Card(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(27.sp),
-                                  ),
-                                  child: CircleAvatar(
-                                    radius: 35,
-                                    backgroundColor: const Color(0xFFEFF0FC),
-                                    child: Image.asset(
-                                      'assets/images/check_1232237.png',
-                                      height: Adaptive.h(5),
-                                      width: Adaptive.w(5),
-                                      color: const Color(0xFF71BEE7),
-                                    ),
-                                  ),
-                                ),
-                                Card(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(27.sp),
-                                  ),
-                                  child: CircleAvatar(
-                                    radius: 35,
-                                    backgroundColor: const Color(0xFFEFFBF8),
-                                    child: Image.asset(
-                                      'assets/images/1-year_12068439.png',
-                                      height: Adaptive.h(5),
-                                      width: Adaptive.w(5),
-                                      color: const Color(0xFF42D6A4),
-                                    ),
-                                  ),
-                                ),
-                                Card(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(27.sp),
-                                  ),
-                                  child: CircleAvatar(
-                                    radius: 35,
-                                    backgroundColor: const Color(0xFFF6F7F8),
-                                    child: Image.asset(
-                                      'assets/images/5th-years_11945704.png',
-                                      height: Adaptive.h(5),
-                                      width: Adaptive.w(5),
-                                      color: const Color(0xFF8380B3),
-                                    ),
-                                  ),
-                                ),
-                                Card(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(27.sp),
-                                  ),
-                                  child: CircleAvatar(
-                                    radius: 35,
-                                    backgroundColor: const Color(0xFFFFF4F3),
-                                    child: Image.asset(
-                                      'assets/images/trophy_7018676.png',
-                                      height: Adaptive.h(6),
-                                      width: Adaptive.w(6),
-                                      color: const Color.fromARGB(
-                                          255, 238, 107, 95),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            VerticalSpacer(1.h),
-                            Row(
-                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Start from 10000',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall!
-                                      .copyWith(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                ),
-                                HorizontalSpacer(4.w),
-                                Text(
-                                  '1 year goal',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall!
-                                      .copyWith(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                ),
-                                HorizontalSpacer(10.w),
-                                Text(
-                                  '5 years',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall!
-                                      .copyWith(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                ),
-                                HorizontalSpacer(13.w),
-                                Text(
-                                  '7+ years',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall!
-                                      .copyWith(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          WigetForTopPIcksAndGoals(
+                              title: 'Tax savings',
+                              listname: topMfsController.taxsavingInGoals,
+                              wigetInTrailing: SizedBox()),
+                          WigetForTopPIcksAndGoals(
+                              title: '0-3 Years',
+                              listname: topMfsController.threeyearList,
+                              wigetInTrailing: SizedBox()),
+                          WigetForTopPIcksAndGoals(
+                              title: '3-5 Years',
+                              listname: topMfsController.threetofiveyears,
+                              wigetInTrailing: SizedBox()),
+                          WigetForTopPIcksAndGoals(
+                              title: '5+ Year',
+                              listname: topMfsController.fivePlusYears,
+                              wigetInTrailing: SizedBox()),
+                        ],
                       ),
                     ),
+                    // Text(
+                    //   'Lumpsum',
+                    //   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    //         fontSize: 18.sp,
+                    //         fontWeight: FontWeight.bold,
+                    //       ),
+                    // ),
+                    // VerticalSpacer(2.h),
+                    // SizedBox(
+                    //   height: Adaptive.h(15.5),
+                    //   child: Padding(
+                    //     padding: EdgeInsets.only(left: 10.sp, right: 10.sp),
+                    //     child: Column(
+                    //       children: [
+                    //         VerticalSpacer(1.h),
+                    //         Row(
+                    //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //           children: [
+                    //             Card(
+                    //               shape: RoundedRectangleBorder(
+                    //                 borderRadius: BorderRadius.circular(27.sp),
+                    //               ),
+                    //               child: CircleAvatar(
+                    //                 radius: 35,
+                    //                 backgroundColor: const Color(0xFFEFF0FC),
+                    //                 child: Image.asset(
+                    //                   'assets/images/check_1232237.png',
+                    //                   height: Adaptive.h(5),
+                    //                   width: Adaptive.w(5),
+                    //                   color: const Color(0xFF71BEE7),
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //             Card(
+                    //               shape: RoundedRectangleBorder(
+                    //                 borderRadius: BorderRadius.circular(27.sp),
+                    //               ),
+                    //               child: CircleAvatar(
+                    //                 radius: 35,
+                    //                 backgroundColor: const Color(0xFFEFFBF8),
+                    //                 child: Image.asset(
+                    //                   'assets/images/1-year_12068439.png',
+                    //                   height: Adaptive.h(5),
+                    //                   width: Adaptive.w(5),
+                    //                   color: const Color(0xFF42D6A4),
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //             Card(
+                    //               shape: RoundedRectangleBorder(
+                    //                 borderRadius: BorderRadius.circular(27.sp),
+                    //               ),
+                    //               child: CircleAvatar(
+                    //                 radius: 35,
+                    //                 backgroundColor: const Color(0xFFF6F7F8),
+                    //                 child: Image.asset(
+                    //                   'assets/images/5th-years_11945704.png',
+                    //                   height: Adaptive.h(5),
+                    //                   width: Adaptive.w(5),
+                    //                   color: const Color(0xFF8380B3),
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //             Card(
+                    //               shape: RoundedRectangleBorder(
+                    //                 borderRadius: BorderRadius.circular(27.sp),
+                    //               ),
+                    //               child: CircleAvatar(
+                    //                 radius: 35,
+                    //                 backgroundColor: const Color(0xFFFFF4F3),
+                    //                 child: Image.asset(
+                    //                   'assets/images/trophy_7018676.png',
+                    //                   height: Adaptive.h(6),
+                    //                   width: Adaptive.w(6),
+                    //                   color: const Color.fromARGB(
+                    //                       255, 238, 107, 95),
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //           ],
+                    //         ),
+                    //         VerticalSpacer(1.h),
+                    //         Row(
+                    //           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //           children: [
+                    //             Text(
+                    //               'Start from 10000',
+                    //               style: Theme.of(context)
+                    //                   .textTheme
+                    //                   .bodySmall!
+                    //                   .copyWith(
+                    //                     fontSize: 14.sp,
+                    //                     fontWeight: FontWeight.w500,
+                    //                   ),
+                    //             ),
+                    //             HorizontalSpacer(4.w),
+                    //             Text(
+                    //               '1 year goal',
+                    //               style: Theme.of(context)
+                    //                   .textTheme
+                    //                   .bodySmall!
+                    //                   .copyWith(
+                    //                     fontSize: 14.sp,
+                    //                     fontWeight: FontWeight.w500,
+                    //                   ),
+                    //             ),
+                    //             HorizontalSpacer(10.w),
+                    //             Text(
+                    //               '5 years',
+                    //               style: Theme.of(context)
+                    //                   .textTheme
+                    //                   .bodySmall!
+                    //                   .copyWith(
+                    //                     fontSize: 14.sp,
+                    //                     fontWeight: FontWeight.w500,
+                    //                   ),
+                    //             ),
+                    //             HorizontalSpacer(13.w),
+                    //             Text(
+                    //               '7+ years',
+                    //               style: Theme.of(context)
+                    //                   .textTheme
+                    //                   .bodySmall!
+                    //                   .copyWith(
+                    //                     fontSize: 14.sp,
+                    //                     fontWeight: FontWeight.w500,
+                    //                   ),
+                    //             ),
+                    //           ],
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+
                     SizedBox(
                       width: double.infinity,
                       child: Card(

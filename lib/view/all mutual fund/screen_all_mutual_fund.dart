@@ -290,7 +290,8 @@ class _ScreenAllMutualFundState extends State<ScreenAllMutualFund> {
                                                                   FontWeight
                                                                       .w400,
                                                               letterSpacing:
-                                                                  3.sp),
+                                                                  3.sp,
+                                                                  ),
                                                     ),
                                                   ),
                                                   HorizontalSpacer(1.w),

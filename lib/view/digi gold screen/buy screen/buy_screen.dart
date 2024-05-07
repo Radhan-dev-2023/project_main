@@ -26,6 +26,10 @@ class _ScreenBuyState extends State<ScreenBuy>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xFF2D5D5F),
+        iconTheme: IconThemeData(color: Colors.white),
+      ),
       backgroundColor: const Color(0xFF2D5D5F),
       body: SingleChildScrollView(
         child: Column(

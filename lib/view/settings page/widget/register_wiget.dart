@@ -16,22 +16,33 @@ class Registrationwidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 1,
       child: Column(
         children: [
           ListTile(
-            leading: Image.asset(
-              'assets/images/mandate.png',
-              color: platformBrightness == Brightness.light
-                  ? Colors.black
-                  : Colors.white,
-              height: Adaptive.h(6),
-              width: Adaptive.w(6),
+            leading: Container(
+              height: 5.h,
+              width: 10.w,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.sp),
+                color: Color(0xFF0E1330),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(6.5),
+                child: Image.asset(
+                  'assets/images/mandate.png',
+                  color: Colors.white,
+                  height: Adaptive.h(4),
+                  width: Adaptive.w(4),
+                ),
+              ),
             ),
             title: Text(
               'ACH Mandate',
               style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 17.sp,
+                    fontWeight: FontWeight.w400,
+                    letterSpacing: 3.sp,
                   ),
             ),
             trailing: Icon(
@@ -50,8 +61,7 @@ class Registrationwidget extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        const ScreenAchRegistration(),
+                    builder: (context) => const ScreenAchRegistration(),
                   ));
             },
           ),
@@ -64,19 +74,29 @@ class Registrationwidget extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Image.asset(
-              'assets/images/bankdetails.png',
-              color: platformBrightness == Brightness.light
-                  ? Colors.black
-                  : Colors.white,
-              height: Adaptive.h(6),
-              width: Adaptive.w(6),
+            leading: Container(
+              height: 5.h,
+              width: 10.w,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.sp),
+                color: Color(0xFF0E1330),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(6.5),
+                child: Image.asset(
+                  'assets/images/bankdetails.png',
+                  color: Colors.white,
+                  height: Adaptive.h(5),
+                  width: Adaptive.w(5),
+                ),
+              ),
             ),
             title: Text(
               'Bank Details',
               style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 17.sp,
+                    fontWeight: FontWeight.w400,
+                    letterSpacing: 3.sp,
                   ),
             ),
             subtitle: Text(
@@ -90,8 +110,7 @@ class Registrationwidget extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        const ScreenListingOfBanks(),
+                    builder: (context) => const ScreenListingOfBanks(),
                   ));
             },
             trailing: Icon(
@@ -109,19 +128,32 @@ class Registrationwidget extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Image.asset(
-              'assets/images/fatcharegistrario.png',
-              color: platformBrightness == Brightness.light
-                  ? Colors.black
-                  : Colors.white,
-              height: Adaptive.h(6),
-              width: Adaptive.w(6),
+            leading: Container(
+              height: 5.h,
+              width: 10.w,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.sp),
+                color: Color(0xFF0E1330),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(6.5),
+                child: Image.asset(
+                  'assets/images/fatcharegistrario.png',
+                  // color: platformBrightness == Brightness.light
+                  //     ? Colors.black
+                  //     : Colors.white,
+                  color: Colors.white,
+                  height: Adaptive.h(6),
+                  width: Adaptive.w(6),
+                ),
+              ),
             ),
             title: Text(
               'FATCA',
               style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 17.sp,
+                    fontWeight: FontWeight.w400,
+                    letterSpacing: 3.sp,
                   ),
             ),
             subtitle: Text(
@@ -135,8 +167,7 @@ class Registrationwidget extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        const ScreenFatchaRegistration(),
+                    builder: (context) => const ScreenFatchaRegistration(),
                   ));
             },
             trailing: Icon(
@@ -154,19 +185,35 @@ class Registrationwidget extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Image.asset(
-              'assets/images/achhistory.png',
-              color: platformBrightness == Brightness.light
-                  ? Colors.black
-                  : Colors.white,
-              height: Adaptive.h(6),
-              width: Adaptive.w(6),
+            leading: Padding(
+              padding: const EdgeInsets.all(6.5),
+              child: Container(
+                height: 5.h,
+                width: 10.w,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.sp),
+                  color: Color(0xFF0E1330),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(6.5),
+                  child: Image.asset(
+                    'assets/images/achhistory.png',
+                    // color: platformBrightness == Brightness.light
+                    //     ? Colors.black
+                    //     : Colors.white,
+                    color: Colors.white,
+                    height: Adaptive.h(6),
+                    width: Adaptive.w(6),
+                  ),
+                ),
+              ),
             ),
             title: Text(
               'ACH',
               style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 17.sp,
+                    fontWeight: FontWeight.w400,
+                    letterSpacing: 3.sp,
                   ),
             ),
             subtitle: Text(

@@ -61,6 +61,7 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                   builder: (context, dashBoardController, _) {
                 log('namee${dashBoardController.dashBoardModel?.result?.data?.name}');
                 return Card(
+                  elevation: 1,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -71,19 +72,31 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                           'Account',
                           style:
                               Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    fontSize: 21.sp,
+                                    fontSize: 18.sp,
                                     fontWeight: FontWeight.bold,
+                                    letterSpacing: 3.sp,
                                   ),
                         ),
                       ),
                       ListTile(
-                        leading: const Icon(Icons.person),
+                        leading: Container(
+                            height: 5.h,
+                            width: 10.w,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.sp),
+                              color: Color(0xFF0E1330),
+                            ),
+                            child: const Icon(
+                              Icons.person,
+                              color: Colors.white,
+                            )),
                         title: Text(
                           'Name',
                           style:
                               Theme.of(context).textTheme.labelLarge!.copyWith(
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17.sp,
+                                    fontWeight: FontWeight.w400,
+                                    letterSpacing: 3.sp,
                                   ),
                         ),
                         subtitle: Text(
@@ -98,7 +111,7 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                         onTap: () {},
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 31.sp),
+                        padding: EdgeInsets.only(left: 33.sp),
                         child: const Divider(
                           height: 1,
                           color: Color.fromARGB(255, 219, 219, 219),
@@ -106,13 +119,25 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                         ),
                       ),
                       ListTile(
-                        leading: const Icon(Icons.mobile_friendly),
+                        leading: Container(
+                          height: 5.h,
+                          width: 10.w,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.sp),
+                            color: Color(0xFF0E1330),
+                          ),
+                          child: const Icon(
+                            Icons.mobile_friendly,
+                            color: Colors.white,
+                          ),
+                        ),
                         title: Text(
                           'Phone',
                           style:
                               Theme.of(context).textTheme.labelLarge!.copyWith(
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17.sp,
+                                    fontWeight: FontWeight.w400,
+                                    letterSpacing: 3.sp,
                                   ),
                         ),
                         subtitle: Text(
@@ -127,7 +152,7 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                         onTap: () {},
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 31.sp),
+                        padding: EdgeInsets.only(left: 33.sp),
                         child: const Divider(
                           height: 1,
                           color: Color.fromARGB(255, 219, 217, 217),
@@ -135,13 +160,24 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                         ),
                       ),
                       ListTile(
-                        leading: const Icon(Icons.email),
+                        leading: Container(
+                            height: 5.h,
+                            width: 10.w,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.sp),
+                              color: Color(0xFF0E1330),
+                            ),
+                            child: const Icon(
+                              Icons.email,
+                              color: Colors.white,
+                            )),
                         title: Text(
                           'Email',
                           style:
                               Theme.of(context).textTheme.labelLarge!.copyWith(
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17.sp,
+                                    fontWeight: FontWeight.w400,
+                                    letterSpacing: 3.sp,
                                   ),
                         ),
                         subtitle: Text(
@@ -156,7 +192,7 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                         onTap: () {},
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 31.sp),
+                        padding: EdgeInsets.only(left: 33.sp),
                         child: const Divider(
                           height: 1,
                           color: Color.fromARGB(255, 219, 217, 217),
@@ -164,13 +200,24 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                         ),
                       ),
                       ListTile(
-                        leading: const Icon(Icons.edit_document),
+                        leading: Container(
+                            height: 5.h,
+                            width: 10.w,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.sp),
+                              color: Color(0xFF0E1330),
+                            ),
+                            child: const Icon(
+                              Icons.edit_document,
+                              color: Colors.white,
+                            )),
                         title: Text(
                           'IIN',
                           style:
                               Theme.of(context).textTheme.labelLarge!.copyWith(
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17.sp,
+                                    fontWeight: FontWeight.w400,
+                                    letterSpacing: 3.sp,
                                   ),
                         ),
                         subtitle: Text(
@@ -185,7 +232,7 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                         onTap: () {},
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 31.sp),
+                        padding: EdgeInsets.only(left: 33.sp),
                         child: const Divider(
                           height: 1,
                           color: Color.fromARGB(255, 219, 217, 217),
@@ -193,13 +240,24 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                         ),
                       ),
                       ListTile(
-                        leading: const Icon(Icons.fingerprint),
+                        leading: Container(
+                            height: 5.h,
+                            width: 10.w,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.sp),
+                              color: Color(0xFF0E1330),
+                            ),
+                            child: const Icon(
+                              Icons.fingerprint,
+                              color: Colors.white,
+                            )),
                         title: Text(
                           'Fingerprint',
                           style:
                               Theme.of(context).textTheme.labelLarge!.copyWith(
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17.sp,
+                                    fontWeight: FontWeight.w400,
+                                    letterSpacing: 3.sp,
                                   ),
                         ),
                         subtitle: Text(
