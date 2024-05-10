@@ -207,6 +207,8 @@ class _ScreenAllMutualFundState extends State<ScreenAllMutualFund> {
                                 topMfsController.returnValueallFunds(index);
                                 return InkWell(
                                   onTap: () {
+                                    log('logo  ${topMfsController.filteredListForAllFunds[index].logo}, ${topMfsController.filteredListForAllFunds[index].isinNo} ,,   ${topMfsController.filteredListForAllFunds[index].schemeCategory},,,${topMfsController.filteredListForAllFunds[index].schemeAmfi}');
+
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -285,13 +287,11 @@ class _ScreenAllMutualFundState extends State<ScreenAllMutualFund> {
                                                           .textTheme
                                                           .bodyMedium!
                                                           .copyWith(
-                                                              fontSize: 17.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              letterSpacing:
-                                                                  3.sp,
-                                                                  ),
+                                                            fontSize: 17.sp,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            letterSpacing: 3.sp,
+                                                          ),
                                                     ),
                                                   ),
                                                   HorizontalSpacer(1.w),

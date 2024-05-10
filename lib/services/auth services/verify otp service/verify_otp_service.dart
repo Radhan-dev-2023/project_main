@@ -8,10 +8,10 @@ import 'package:finfresh_mobile/utilities/urls/url.dart';
 import 'package:http/http.dart' as http;
 
 class VerifyOtp {
-  static String dummyOtp = "123456";
-  static bool dummyverifyOtp(String otp) {
-    return otp == dummyOtp ? true : false;
-  }
+  // static String dummyOtp = "123456";
+  // static bool dummyverifyOtp(String otp) {
+  //   return otp == dummyOtp ? true : false;
+  // }
 
   static Future<bool> verifyOtp(String phoneNumber, String otp, context) async {
     final url = Uri.parse('${ApiEndpoint.baseUrl}/v1/otp/verify');

@@ -70,36 +70,37 @@ class AuthController extends ChangeNotifier {
     logger.d('otpcontroller.text ===${otpController.text}');
     otploading = true;
     notifyListeners();
-    bool result = VerifyOtp.dummyverifyOtp(otpController.text);
-    if (result == true) {
-      bool isVerified = await VerifyOtp.verifyOtp(
-          phonenumberController.text, otpController.text, context);
-      succuss = true;
-      otploading = false;
-      notifyListeners();
-      return isVerified;
-    }
-    succuss = false;
+    // bool result = VerifyOtp.dummyverifyOtp(otpController.text);
+
+    bool isVerified = await VerifyOtp.verifyOtp(
+        phonenumberController.text, otpController.text, context);
+
+    succuss = true;
     otploading = false;
     notifyListeners();
-    return false;
+    return isVerified;
+
+    // succuss = false;
+    // otploading = false;
+    // notifyListeners();
+    // return false;
   }
 
   Future<bool> otpVerifyForLogin(context) async {
     logger.d('otpcontroller.text ===${otpController.text}');
     otploadingforlogin = true;
     notifyListeners();
-    bool result = VerifyOtp.dummyverifyOtp(otpController.text);
-    if (result == true) {
-      bool isVerified = await VerifyOtp.verifyOtp(
-          phonenumberControllerforlogin.text, otpController.text, context);
-      otploadingforlogin = false;
-      notifyListeners();
-      return isVerified;
-    }
+    // bool result = VerifyOtp.dummyverifyOtp(otpController.text);
+
+    bool isVerified = await VerifyOtp.verifyOtp(
+        phonenumberControllerforlogin.text, otpController.text, context);
     otploadingforlogin = false;
     notifyListeners();
-    return false;
+    return isVerified;
+
+    // otploadingforlogin = false;
+    // notifyListeners();
+    // return false;
   }
 
   void clearTheControllerValue() {

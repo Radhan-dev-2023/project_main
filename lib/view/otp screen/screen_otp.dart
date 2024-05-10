@@ -139,58 +139,62 @@ class ScreenOtp extends StatelessWidget {
           ? const LoadingButton()
           : authController.otpController.text.length < 6
               ? const ButtonWidget(btName: 'Verify OTP')
-              : ButtonWidget(
-                  onTap: () async {
-                    if (authController.formKeyForPinput.currentState!
-                        .validate()) {
-                      bool result = title == 'signup'
-                          // ignore: use_build_context_synchronously
-                          ? await authController.otpVerfy(context)
-                          // ignore: use_build_context_synchronously
-                          : await authController.otpVerifyForLogin(context);
-                      logger.d('resultotp===$result');
-                      if (result == true) {
-                        if (title == 'signup' ||
-                            biometricLoginController.buttonEnabled == true) {
-                          // ignore: use_build_context_synchronously
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ScreenSetPinNumber(),
-                            ),
-                          );
-                        } else {
-                          // ignore: use_build_context_synchronously
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ScreenHomeView(),
-                            ),
-                            (route) => false,
-                          );
+              : authController.otploading == true
+                  ? const LoadingButton()
+                  : ButtonWidget(
+                      onTap: () async {
+                        if (authController.formKeyForPinput.currentState!
+                            .validate()) {
+                          bool result = title == 'signup'
+                              // ignore: use_build_context_synchronously
+                              ? await authController.otpVerfy(context)
+                              // ignore: use_build_context_synchronously
+                              : await authController.otpVerifyForLogin(context);
+                          logger.d('resultotp===$result');
+                          if (result == true) {
+                            if (title == 'signup' ||
+                                biometricLoginController.buttonEnabled ==
+                                    true) {
+                              // ignore: use_build_context_synchronously
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ScreenSetPinNumber(),
+                                ),
+                              );
+                            } else {
+                              // ignore: use_build_context_synchronously
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const ScreenHomeView(),
+                                ),
+                                (route) => false,
+                              );
+                            }
+
+                            authController.otpController.clear();
+                          } else {
+                            // ignore: use_build_context_synchronously
+                            // showSnackBar(context, 'Incorrect OTP');
+                          }
+                          logger.d('result===$result');
+
+                          // Navigator.push
+                          // Replacement(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => const ScreenPassword(),
+                          //   ),
+                          // );
                         }
-
-                        authController.otpController.clear();
-                      } else {
-                        // ignore: use_build_context_synchronously
-                        showSnackBar(context, 'Incorrect OTP');
-                      }
-                      logger.d('result===$result');
-
-                      // Navigator.push
-                      // Replacement(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => const ScreenPassword(),
-                      //   ),
-                      // );
-                    }
-                    // } else if (authController.otpController.text.length < 4) {
-                    //   showSnackBar(context, 'Enter the OTP');
-                    // }
-                  },
-                  btName: 'Verify OTP'.toUpperCase(),
-                ),
+                        // } else if (authController.otpController.text.length < 4) {
+                        //   showSnackBar(context, 'Enter the OTP');
+                        // }
+                      },
+                      btName: 'Verify OTP'.toUpperCase(),
+                    ),
     );
   }
 }

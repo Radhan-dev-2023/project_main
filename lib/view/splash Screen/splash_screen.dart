@@ -1,9 +1,11 @@
+import 'package:finfresh_mobile/controller/goldController/gold_controller.dart';
 import 'package:finfresh_mobile/services/refersh%20token/refersh_token.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:finfresh_mobile/view/login%20with%20pin/screen_login_with_pin.dart';
 import 'package:finfresh_mobile/view/onboarding%20screen/on_boarding_view_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -36,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void navigateToOnboarding() async {
     RefershTokenService refershTokenService = RefershTokenService();
     String token = await SecureStorage.readToken('token');
-
+    Provider.of<GoldController>(context, listen: false).isCompleted();
     await Future.delayed(
       const Duration(seconds: 3),
     );

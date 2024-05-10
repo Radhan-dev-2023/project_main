@@ -1,4 +1,5 @@
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
+import 'package:finfresh_mobile/view/stock%20details%20screen/stock_detail_screen.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/widgets/overview_in_tabbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -8,17 +9,24 @@ class WigetForTopPIcksAndGoals extends StatelessWidget {
   final String title;
   final List<String> listname;
   final Widget wigetInTrailing;
+  final List<String> imageList;
+  final List<String>? isinList;
+  final List<String>? categoryList;
+
   const WigetForTopPIcksAndGoals({
     super.key,
     required this.title,
     required this.listname,
     required this.wigetInTrailing,
+    required this.imageList,
+    this.isinList,
+    this.categoryList,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: Adaptive.w(95),
+      width: Adaptive.w(89),
       // height: Adaptive.h(46),
       child: Card(
         elevation: 6,
@@ -36,8 +44,8 @@ class WigetForTopPIcksAndGoals extends StatelessWidget {
             ),
             ConstrainedBox(
               constraints: BoxConstraints(
-                maxHeight: Adaptive.h(41),
-                minHeight: Adaptive.h(35),
+                maxHeight: Adaptive.h(36),
+                minHeight: Adaptive.h(36),
               ),
               child: ListView.separated(
                 physics: NeverScrollableScrollPhysics(),
@@ -45,23 +53,17 @@ class WigetForTopPIcksAndGoals extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return ListTile(
                     contentPadding: EdgeInsets.only(left: 15.sp, right: 12.sp),
-                    leading: Container(
-                      height: 5.h,
-                      width: 10.w,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.sp),
-                        color: Color(0xFF0E1330),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(6.5),
-                        child: Image.asset(
-                          'assets/images/ffdash.png',
-                          color: Colors.white,
-                          height: Adaptive.h(4),
-                          width: Adaptive.w(4),
-                        ),
-                      ),
-                    ),
+                    leading: imageList[index].isEmpty
+                        ? CircleAvatar(
+                            radius: 29,
+                            backgroundColor: Colors.white,
+                            child: Image.asset(
+                              'assets/images/ffdash.png',
+                              height: Adaptive.h(6),
+                              width: Adaptive.w(6),
+                            ),
+                          )
+                        : Image.network(imageList[index]),
                     title: Text(
                       listname[index],
                       style: Theme.of(context).textTheme.labelLarge!.copyWith(
@@ -69,6 +71,7 @@ class WigetForTopPIcksAndGoals extends StatelessWidget {
                             fontWeight: FontWeight.w400,
                             letterSpacing: 3.sp,
                           ),
+                      maxLines: 2,
                     ),
                     trailing: Container(
                       height: Adaptive.h(3),
@@ -88,7 +91,17 @@ class WigetForTopPIcksAndGoals extends StatelessWidget {
                         ),
                       ),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => StockDetailsScreen(
+                              scheme: listname[index],
+                              isinNumber: isinList?[index] ?? '',
+                              category: categoryList?[index] ?? '',
+                            ),
+                          ));
+                    },
                   );
                 },
                 separatorBuilder: (context, index) => VerticalSpacer(0),

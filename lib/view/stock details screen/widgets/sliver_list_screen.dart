@@ -73,11 +73,26 @@ class _SliverlistWidgetState extends State<SliverlistWidget> {
             : NestedScrollView(
                 headerSliverBuilder:
                     (BuildContext context, bool innerBoxIsScrolled) {
-                  DateTime date = DateFormat('MMM dd, yyyy hh:mm:ss a').parse(
-                      '${schemeDetailsController.historicalNavModel!.navList![schemeDetailsController.historicalNavModel!.navList!.length - 1].navDate}');
+                  String formattedDate = '';
+                  // String? navDate = schemeDetailsController
+                  //             .historicalNavModel?.navList?.isNotEmpty ??
+                  //         false
+                  //     ? schemeDetailsController
+                  //         .historicalNavModel!.navList!.last.navDate
+                  //     : null;
+                  if (schemeDetailsController.historicalNavModel != null) {
+                    DateTime date = DateFormat('MMM dd, yyyy hh:mm:ss a').parse(
+                        schemeDetailsController
+                                .historicalNavModel
+                                ?.navList?[schemeDetailsController
+                                        .historicalNavModel!.navList!.length -
+                                    1]
+                                .navDate ??
+                            '');
 
-                  // Format the date to display only month and day
-                  String formattedDate = DateFormat('MMM d, yyyy').format(date);
+                    // Format the date to display only month and day
+                    formattedDate = DateFormat('MMM d, yyyy').format(date);
+                  }
                   return [
                     SliverAppBar(
                       title: const Text('Scheme Info'),
@@ -142,12 +157,15 @@ class _SliverlistWidgetState extends State<SliverlistWidget> {
                                   fontWeight: FontWeight.w400,
                                 ),
                                 VerticalSpacer(1.h),
-                                CustomTextWidget(
-                                  text:
-                                      'Nav :${schemeDetailsController.historicalNavModel!.navList![schemeDetailsController.historicalNavModel!.navList!.length - 1].netAssetValue}',
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16.sp,
-                                ),
+                                schemeDetailsController.historicalNavModel !=
+                                        null
+                                    ? CustomTextWidget(
+                                        text:
+                                            'Nav :${schemeDetailsController.historicalNavModel!.navList![schemeDetailsController.historicalNavModel!.navList!.length - 1].netAssetValue}',
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.sp,
+                                      )
+                                    : SizedBox(),
                                 VerticalSpacer(0.5.h),
                                 CustomTextWidget(
                                   text: formattedDate,

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:payu_checkoutpro_flutter/PayUConstantKeys.dart';
 //Remove this plugin when you implement the salt at your server..
 import 'package:crypto/crypto.dart';
@@ -6,14 +8,18 @@ import 'dart:convert';
 class HashService {
 //Find the test credentials from dev guide: https://devguide.payu.in/flutter-sdk-integration/getting-started-flutter-sdk/mobile-sdk-test-environment/
 //Keep the hash in backend for Security reasons.
-  static const merchantSalt =
-      "pBfJzti7i9Lgo5IYRb66d0faa00M46Zb"; // Add you Salt here.
+  static const merchantSalt = "pBfJzti7i9Lgo5IYRb66d0faa00M46Zb";
+  // "pBfJzti7i9Lgo5IYRb66d0faa00M46Zb";
+  //UlxBIVUX1cxVtYMIgJEkc1iJWnMbp1j1
+  // // Add you Salt here.
   static const merchantSecretKey = ""; // Add Merchant Secrete Key - Optional
 
   static Map generateHash(Map response) {
+    log('hashname${response[PayUHashConstantsKeys.hashName]} hashStringWithoutSalt ${response[PayUHashConstantsKeys.hashString]}hashType ${response[PayUHashConstantsKeys.hashType]}');
     var hashName = response[PayUHashConstantsKeys.hashName];
     var hashStringWithoutSalt = response[PayUHashConstantsKeys.hashString];
     var hashType = response[PayUHashConstantsKeys.hashType];
+
     var postSalt = response[PayUHashConstantsKeys.postSalt];
 
     var hash = "";

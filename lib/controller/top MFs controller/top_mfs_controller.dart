@@ -230,14 +230,57 @@ class TopMFsController extends ChangeNotifier {
     'UTI Nifty 50 Index Fund - Regular Plan - Growth Option',
     'HDFC Infrastructure Fund - Growth Plan',
     'Baroda BNP Paribas Business Cycle Fund - Regular Plan - Growth',
-    'Nippon India Power Infra Fund-Growth Plan -Growth Option',
+    'Nippon India Power & Infra Fund-Growth Plan -Growth Option',
   ];
+  List<String> isinForSip500 = [
+    'INF204K01HY3',
+    'INF789F01JN2',
+    'INF179K01GF8',
+    'INF955L01KH7',
+    'INF204K01AE0',
+  ];
+  List<String> categorySip500 = [
+    'Equity: Small Cap',
+    'Index Fund',
+    'Equity: Sectoral-Infrastructure',
+    'Debt: Credit Risk',
+    'Equity: Sectoral-Infrastructure'
+  ];
+  List<String> sipUnder500Logo = [
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/nippon.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/uti.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/hdfc.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/bnp.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/nippon.png',
+  ];
+
   List<String> finfreshpickslist = [
     'HDFC Defence Fund - Growth Option',
-    'Bajaj Finserv Flexi Cap Fund -Regular Plan-Growt',
+    'Bajaj Finserv Flexi Cap Fund -Regular Plan-Growth',
     'Quant Active Fund-GROWTH OPTION - Regular Plan',
     'Quant Business Cycle Fund - Growth Option - Regular Plan',
     'Union Innovation Opportunities Fund - Regular Plan - Growth Option ',
+  ];
+  List<String> finfreshtoppickCategory = [
+    'Equity: Thematic-Others',
+    'Equity: Flexi Cap',
+    'Equity: Multi Cap',
+    'Equity: Thematic-Others',
+    ''
+  ];
+  List<String> finffreshtoppicksisin = [
+    'INF179KC1GL9',
+    'INF0QA701383',
+    'INF966L01234',
+    'INF966L01BU6',
+    'INF582M01JA4'
+  ];
+  List<String> finfreshpickslistlogo = [
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/hdfc.png',
+    '',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/quant.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/quant.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/union.png',
   ];
   List<String> taxsavinginToppicks = [
     "Quant ELSS Tax Saver Fund - Growth Option - Regular Plan",
@@ -246,12 +289,54 @@ class TopMFsController extends ChangeNotifier {
     'ITI ELSS Tax Saver Fund - Regular Plan - Growth Option',
     'Taurus ELSS Tax Saver Fund - Regular Plan - Growth',
   ];
+  List<String> taxSavingintopPicksCategory = [
+    'Equity: ELSS',
+    'Equity: ELSS',
+    'Equity: ELSS',
+    'Equity: ELSS',
+    'Equity: ELSS',
+  ];
+  List<String> taxSavingIsin = [
+    'INF966L01135',
+    'INF179K01BB8',
+    'INF277K01I52',
+    'INF00XX01374',
+    ' INF044D01AC9',
+  ];
+  List<String> taxSavingIntopPicksLogo = [
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/quant.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/hdfc.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/tata.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/iti.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/taurus.png',
+  ];
   List<String> sectorlFundlist = [
     'quant PSU Fund - Growth Option - Regular Plan ',
-    'BANK OF INDIA Manufacturing \u0026 Infrastructure Fund-Growth',
+    'BANK OF INDIA Manufacturing & Infrastructure Fund-Growth',
     'BANDHAN TRANSPORTATION AND LOGISTICS FUND - GROWTH - REGULAR PLAN',
-    'Tata Resources \u0026 Energy Fund-Regular Plan-Growth',
+    'Tata Resources & Energy Fund-Regular Plan-Growth',
     'WhiteOak Capital Banking \u0026 Financial Services Fund - Regular Growth',
+  ];
+  List<String> sectorCategory = [
+    'Equity: Thematic-Psu',
+    'Equity: Sectoral-Infrastructure',
+    'Equity: Thematic-Transportation',
+    'Equity: Thematic-Energy',
+    '',
+  ];
+  List<String> sectoralIsin = [
+    'INF966L01DQ0',
+    'INF761K01199',
+    'INF194KB1EE1',
+    'INF277K012B6',
+    'INF03VN01852',
+  ];
+  List<String> sectoralLogoList = [
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/quant.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/boi.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/bandhan.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/tata.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/whiteoak.png',
   ];
 
   List<String> taxsavingInGoals = [
@@ -261,12 +346,40 @@ class TopMFsController extends ChangeNotifier {
     'Navi ELSS Tax Saver Fund- Regular Plan- Growth Option',
     'Quant ELSS Tax Saver Fund - Growth Option - Regular Plans',
   ];
+  List<String> taxsavingInGoalsIsin = [
+    'INF03VN01647',
+    'INF336L01BA4',
+    'INF174K01369',
+    'INF959L01CF0',
+    'INF966L01135',
+  ];
+  List<String> taxSavingingoalsLogo = [
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/whiteoak.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/hsbc.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/kotak.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/navi.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/quant.png',
+  ];
   List<String> threeyearList = [
     'Quant Liquid Fund - Growth Option - Regular Plan',
     'Edelweiss Liquid Fund - Regular Plan - Growth Option',
     'Baroda BNP Paribas Credit Risk Fund -Regular-Growth Option ',
     'HDFC Dynamic Debt Fund - Growth Option ',
     'ICICI Prudential All Seasons Bond Fund - Growth',
+  ];
+  List<String> threrYearIsin = [
+    'INF966L01317',
+    'INF754K01GZ6',
+    'INF955L01FP0',
+    'INF179K01848',
+    'INF109K01GN9',
+  ];
+  List<String> threeyearLogo = [
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/quant.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/edelweiss.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/bnp.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/hdfc.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/icici.png',
   ];
   List<String> threetofiveyears = [
     "Quant PSU Fund - Growth Option - Regular Plan",
@@ -275,11 +388,53 @@ class TopMFsController extends ChangeNotifier {
     "Bank of India Multi Asset Allocation Fund-Regular Plan-Growth",
     'Quant Absolute Fund - Growth Option - Regular Plan',
   ];
+  List<String> threeYeartoFinveisin = [
+    'INF966L01DQ0',
+    'INF879O01019',
+    'INF769K01KW3',
+    'INF761K01FW0',
+    'INF966L01267',
+  ];
+  List<String> threetoFiveyearsLogo = [
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/quant.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/ppfas.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/mirae.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/boi.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/quant.png',
+  ];
   List<String> fivePlusYears = [
     "Quant Active Fund-GROWTH OPTION - Regular Plan",
     'Tata India Pharma Healthcare Fund-Regular Plan-Growth',
-    'HDFC housing oppurtunity',
+    'HDFC Housing Opportunities Fund  - Growth Option',
     'Tata Small Cap Fund-Regular Plan-Growth',
     'SBI Consumption Opportunities Fund - Regular - Growth'
+  ];
+  //Equity: Thematic-Others
+  List<String> fivePlusIsin = [
+    'INF966L01234',
+    'INF277K016A9',
+    'INF179KC1AX7',
+    'INF277K015O2',
+    'INF200K01VR6'
+  ];
+  List<String> fiveYearLogo = [
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/quant.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/tata.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/hdfc.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/tata.png',
+    'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/sbi.png',
+  ];
+  List<String> item = ['Tax Savings', '0-3 Years', '3-5 Years', '5+ Years'];
+  List<String> imageList = [
+    'assets/images/taxsavings.png',
+    'assets/images/zerotofiveyears.png',
+    'assets/images/threetofiveyear.png',
+    'assets/images/fiveyesrs.png'
+  ];
+  List<Color> colorList = [
+    Color(0xFF5A765E),
+    Color(0xFF9688C1),
+    Color(0xFF1F8D92),
+    Color(0xFF006685)
   ];
 }

@@ -1,15 +1,16 @@
 import 'dart:developer';
 import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
+import 'package:finfresh_mobile/controller/goldController/gold_controller.dart';
 import 'package:finfresh_mobile/view/all%20mutual%20fund/screen_all_mutual_fund.dart';
 import 'package:finfresh_mobile/view/digi%20gold%20screen/digi_gold_screen.dart';
+import 'package:finfresh_mobile/view/digi%20gold%20screen/gold%20buying%20screen/screen_gold_buying_selling.dart';
 import 'package:finfresh_mobile/view/homeScreen/widgets/home_screens.dart';
 import 'package:finfresh_mobile/view/mutual%20fund%20screen/screen_mutual_fund.dart';
 import 'package:finfresh_mobile/view/settings%20page/screen_settings.dart';
 import 'package:finfresh_mobile/view/transaction%20screen/screen_transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
 int? indexfor;
 
@@ -25,16 +26,10 @@ class ScreenHomeView extends StatefulWidget {
 int _currentIndex = 0;
 
 class _ScreenHomeViewState extends State<ScreenHomeView> {
-  final List<Widget> bottomBarPages = [
-    const ScreenMutualFund(),
-    const ScreenDigiGold(),
-    const ScreenHome(),
-    const ScreeenTranscations(),
-    const ScreenSettings()
-  ];
   @override
   void initState() {
     super.initState();
+
     _currentIndex =
         Provider.of<DashBoardController>(context, listen: false).currentIndex;
     _currentIndex = _currentIndex;
@@ -45,7 +40,16 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
   // final _pageController = PageController(initialPage: 2);
   @override
   Widget build(BuildContext context) {
+    final goldProvider = Provider.of<GoldController>(context);
+
     Brightness platformBrightness = MediaQuery.of(context).platformBrightness;
+    final List<Widget> bottomBarPages = [
+      const ScreenMutualFund(),
+      const ScreenDigiGold(),
+      const ScreenHome(),
+      const ScreeenTranscations(),
+      const ScreenSettings()
+    ];
     List<BottomBarItem> bottomList = [
       BottomBarItem(
         inActiveItem: Image.asset(

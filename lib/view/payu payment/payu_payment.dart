@@ -154,7 +154,6 @@ class _PayUPaymentState extends State<PayUPayment>
     _checkoutPro = PayUCheckoutProFlutter(this);
   }
 
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -166,30 +165,33 @@ class _PayUPaymentState extends State<PayUPayment>
           child: ElevatedButton(
             child: const Text("Start Payment"),
             onPressed: () async {
-              _checkoutPro.openCheckoutScreen(payUPaymentParams: {
-                PayUPaymentParamKey.key: "TB7WBn",
-                PayUPaymentParamKey.amount: "10",
-                PayUPaymentParamKey.productInfo: "Payu",
-                PayUPaymentParamKey.firstName: "Sidhu Patil",
-                PayUPaymentParamKey.email: "abc@gmail.com",
-                PayUPaymentParamKey.phone: "9876543210",
-                PayUPaymentParamKey.environment: "1",
-                // String - "0" for Production and "1" for Test
-                PayUPaymentParamKey.transactionId: "abc1234567982",
-                // transactionId Cannot be null or empty and should be unique for each transaction. Maximum allowed length is 25 characters. It cannot contain special characters like: -_/
-                PayUPaymentParamKey.userCredential: ":1000",
-                //  Format: <merchantKey>:<userId> ... UserId is any id/email/phone number to uniquely identify the user.
-                PayUPaymentParamKey.android_surl:
-                    "https://cbjs.payu.in/sdk/success",
-                PayUPaymentParamKey.android_furl:
-                    "https://cbjs.payu.in/sdk/failure",
-                PayUPaymentParamKey.ios_surl:
-                    "https://cbjs.payu.in/sdk/success",
-                PayUPaymentParamKey.ios_furl:
-                    "https://cbjs.payu.in/sdk/failure",
-              }, payUCheckoutProConfig: {
-                PayUCheckoutProConfigKeys.merchantName: "PayU",
-              });
+              _checkoutPro.openCheckoutScreen(
+                payUPaymentParams: {
+                  PayUPaymentParamKey.key: "TB7WBn",
+                  PayUPaymentParamKey.amount: "10",
+                  PayUPaymentParamKey.productInfo: "Payu",
+                  PayUPaymentParamKey.firstName: "Sidhu Patil",
+                  PayUPaymentParamKey.email: "abc@gmail.com",
+                  PayUPaymentParamKey.phone: "9876543210",
+                  PayUPaymentParamKey.environment: "1",
+                  // String - "0" for Production and "1" for Test
+                  PayUPaymentParamKey.transactionId: "abc1234567982",
+                  // transactionId Cannot be null or empty and should be unique for each transaction. Maximum allowed length is 25 characters. It cannot contain special characters like: -_/
+                  PayUPaymentParamKey.userCredential: ":1000",
+                  //  Format: <merchantKey>:<userId> ... UserId is any id/email/phone number to uniquely identify the user.
+                  PayUPaymentParamKey.android_surl:
+                      "https://cbjs.payu.in/sdk/success",
+                  PayUPaymentParamKey.android_furl:
+                      "https://cbjs.payu.in/sdk/failure",
+                  PayUPaymentParamKey.ios_surl:
+                      "https://cbjs.payu.in/sdk/success",
+                  PayUPaymentParamKey.ios_furl:
+                      "https://cbjs.payu.in/sdk/failure",
+                },
+                payUCheckoutProConfig: {
+                  PayUCheckoutProConfigKeys.merchantName: "PayU",
+                },
+              );
             },
           ),
         ),
@@ -199,6 +201,7 @@ class _PayUPaymentState extends State<PayUPayment>
 
   @override
   generateHash(Map response) async {
+    log('response in generate hash $response');
     // Handle Hash
     Map hashResponse = HashService.generateHash(response);
     _checkoutPro.hashGenerated(hash: hashResponse);

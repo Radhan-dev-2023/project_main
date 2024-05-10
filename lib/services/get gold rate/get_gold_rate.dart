@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 import '../../utilities/constant/snackbar.dart';
 
 class DigiGoldService {
-  Future<double?> getDigiGoldRate(context) async {
+  Future<num?> getDigiGoldRate(context) async {
     String token = await SecureStorage.readToken('token');
     String userId = await SecureStorage.readToken('userId');
     log(userId);
@@ -30,7 +30,7 @@ class DigiGoldService {
       if (jsonResponse['status'] == 200) {
         log('manu');
         // dashBoardModel = DashBoardModel.fromJson(jsonResponse);
-        double rate = jsonResponse["rate"];
+        num rate = jsonResponse["rate"];
         // return dashBoajdModel;
         return rate;
       } else if (jsonResponse['result']['status'] == 500) {

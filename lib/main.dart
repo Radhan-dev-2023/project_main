@@ -70,6 +70,7 @@ Future<void> main() async {
   if (!Hive.isAdapterRegistered(InvestorModelAdapter().typeId)) {
     Hive.registerAdapter(InvestorModelAdapter());
   }
+  
   runApp(const MyApp());
 }
 

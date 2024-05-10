@@ -1,13 +1,12 @@
 import 'package:finfresh_mobile/controller/top%20MFs%20controller/top_mfs_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/all%20mutual%20fund/screen_all_mutual_fund.dart';
+import 'package:finfresh_mobile/view/mutual%20fund%20screen/widgets/goals_screen.dart';
 import 'package:finfresh_mobile/view/mutual%20fund%20screen/widgets/widget_for_toppicks_goals.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/stock_detail_screen.dart';
-import 'package:finfresh_mobile/view/stock%20details%20screen/widgets/overview_in_tabbar.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -229,98 +228,107 @@ class ScreenMutualFund extends StatelessWidget {
                           WigetForTopPIcksAndGoals(
                             title: 'Sip under 500',
                             listname: topMfsController.sipUnder500list,
-                            wigetInTrailing: SizedBox(),
+                            wigetInTrailing: const SizedBox(),
+                            imageList: topMfsController.sipUnder500Logo,
+                            isinList: topMfsController.isinForSip500,
+                            categoryList: topMfsController.categoryList,
                           ),
                           WigetForTopPIcksAndGoals(
                             title: 'Finfresh pick',
                             listname: topMfsController.finfreshpickslist,
-                            wigetInTrailing: SizedBox(),
+                            wigetInTrailing: const SizedBox(),
+                            imageList: topMfsController.finfreshpickslistlogo,
+                            isinList: topMfsController.finffreshtoppicksisin,
                           ),
                           WigetForTopPIcksAndGoals(
                             title: 'Tax savings',
                             listname: topMfsController.taxsavinginToppicks,
-                            wigetInTrailing: SizedBox(),
+                            wigetInTrailing: const SizedBox(),
+                            imageList: topMfsController.taxSavingIntopPicksLogo,
+                            isinList: topMfsController.taxSavingIsin,
                           ),
                           WigetForTopPIcksAndGoals(
                             title: 'Sectoral',
                             listname: topMfsController.sectorlFundlist,
-                            wigetInTrailing: SizedBox(),
+                            wigetInTrailing: const SizedBox(),
+                            imageList: topMfsController.sectoralLogoList,
+                            isinList: topMfsController.sectoralIsin,
                           ),
                         ],
                       ),
                     ),
 
-                    SizedBox(
-                      width: double.infinity,
-                      child: Card(
-                        elevation: 5,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            VerticalSpacer(1.h),
-                            ListTile(
-                              contentPadding: EdgeInsets.only(
-                                left: 9.sp,
-                                right: 15.sp,
-                              ),
-                              leading: const SizedBox(),
-                              title: Text(
-                                'Start a SIP',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .copyWith(
-                                      fontSize: 17.5.sp,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 3.5.sp,
-                                      // color: Color(0xFFACB2BA),
-                                    ),
-                              ),
-                              subtitle: Text(
-                                'For a longer term growth and goals.',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .copyWith(
-                                      color: Colors.grey,
-                                    ),
-                              ),
-                              trailing: InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ScreenAllMutualFund(),
-                                      ));
-                                },
-                                child: SizedBox(
-                                  width: Adaptive.w(20),
-                                  height: Adaptive.h(4.5),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.circular(10.sp),
-                                      color: const Color(0xFF6C8FF8),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        'Start',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 15.sp,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            VerticalSpacer(1.h),
-                          ],
-                        ),
-                      ),
-                    ),
+                    // SizedBox(
+                    //   width: double.infinity,
+                    //   child: Card(
+                    //     elevation: 5,
+                    //     child: Column(
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       children: [
+                    //         VerticalSpacer(1.h),
+                    //         ListTile(
+                    //           contentPadding: EdgeInsets.only(
+                    //             left: 9.sp,
+                    //             right: 15.sp,
+                    //           ),
+                    //           leading: const SizedBox(),
+                    //           title: Text(
+                    //             'Start a SIP',
+                    //             style: Theme.of(context)
+                    //                 .textTheme
+                    //                 .bodyMedium!
+                    //                 .copyWith(
+                    //                   fontSize: 17.5.sp,
+                    //                   fontWeight: FontWeight.bold,
+                    //                   letterSpacing: 3.5.sp,
+                    //                   // color: Color(0xFFACB2BA),
+                    //                 ),
+                    //           ),
+                    //           subtitle: Text(
+                    //             'For a longer term growth and goals.',
+                    //             style: Theme.of(context)
+                    //                 .textTheme
+                    //                 .bodyMedium!
+                    //                 .copyWith(
+                    //                   color: Colors.grey,
+                    //                 ),
+                    //           ),
+                    //           trailing: InkWell(
+                    //             onTap: () {
+                    //               Navigator.push(
+                    //                   context,
+                    //                   MaterialPageRoute(
+                    //                     builder: (context) =>
+                    //                         const ScreenAllMutualFund(),
+                    //                   ));
+                    //             },
+                    //             child: SizedBox(
+                    //               width: Adaptive.w(20),
+                    //               height: Adaptive.h(4.5),
+                    //               child: Container(
+                    //                 decoration: BoxDecoration(
+                    //                   borderRadius:
+                    //                       BorderRadius.circular(10.sp),
+                    //                   color: const Color(0xFF6C8FF8),
+                    //                 ),
+                    //                 child: Center(
+                    //                   child: Text(
+                    //                     'Start',
+                    //                     style: TextStyle(
+                    //                       color: Colors.white,
+                    //                       fontSize: 15.sp,
+                    //                     ),
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //           ),
+                    //         ),
+                    //         VerticalSpacer(1.h),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                     VerticalSpacer(2.h),
                     Text(
                       'Goals',
@@ -329,30 +337,109 @@ class ScreenMutualFund extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                     ),
-
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          WigetForTopPIcksAndGoals(
-                              title: 'Tax savings',
-                              listname: topMfsController.taxsavingInGoals,
-                              wigetInTrailing: SizedBox()),
-                          WigetForTopPIcksAndGoals(
-                              title: '0-3 Years',
-                              listname: topMfsController.threeyearList,
-                              wigetInTrailing: SizedBox()),
-                          WigetForTopPIcksAndGoals(
-                              title: '3-5 Years',
-                              listname: topMfsController.threetofiveyears,
-                              wigetInTrailing: SizedBox()),
-                          WigetForTopPIcksAndGoals(
-                              title: '5+ Year',
-                              listname: topMfsController.fivePlusYears,
-                              wigetInTrailing: SizedBox()),
-                        ],
+                    SizedBox(
+                      height: Adaptive.h(48),
+                      child: GridView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2, // Number of columns
+                          crossAxisSpacing: 10, // Spacing between columns
+                          mainAxisSpacing: 10, // Spacing between rows
+                        ),
+                        itemCount: topMfsController.item.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ScreenGolas(
+                                      heading: topMfsController.item[index],
+                                      image: topMfsController.imageList[index],
+                                    ),
+                                  ));
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20.sp),
+                              child: Card(
+                                child: Stack(
+                                  children: [
+                                    Image.asset(
+                                      topMfsController.imageList[
+                                          index], // Example image URL
+                                      fit: BoxFit.cover,
+                                      width: double.infinity,
+                                      height: Adaptive.h(16),
+                                    ),
+                                    Positioned(
+                                      bottom: 0,
+                                      child: Container(
+                                        width: 172,
+                                        height: 45.5,
+                                        decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                              stops: [0.3, 0.7],
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                              colors: [
+                                                topMfsController
+                                                    .colorList[index],
+                                                topMfsController
+                                                    .colorList[index]
+                                                    .withOpacity(0.5)
+                                              ], // Define your gradient colors
+                                            ),
+                                            borderRadius: BorderRadius.only(
+                                                bottomLeft:
+                                                    Radius.circular(15.sp),
+                                                bottomRight:
+                                                    Radius.circular(15.sp))),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      bottom: 12.sp,
+                                      left: 22.sp,
+                                      child: Text(
+                                        topMfsController.item[index],
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18.sp,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ),
+                    // SingleChildScrollView(
+                    //   scrollDirection: Axis.horizontal,
+                    //   child: Row(
+                    //     children: [
+                    //       WigetForTopPIcksAndGoals(
+                    //           title: 'Tax savings',
+                    //           listname: topMfsController.taxsavingInGoals,
+                    //           wigetInTrailing: SizedBox()),
+                    //       WigetForTopPIcksAndGoals(
+                    //           title: '0-3 Years',
+                    //           listname: topMfsController.threeyearList,
+                    //           wigetInTrailing: SizedBox()),
+                    //       WigetForTopPIcksAndGoals(
+                    //           title: '3-5 Years',
+                    //           listname: topMfsController.threetofiveyears,
+                    //           wigetInTrailing: SizedBox()),
+                    //       WigetForTopPIcksAndGoals(
+                    //           title: '5+ Year',
+                    //           listname: topMfsController.fivePlusYears,
+                    //           wigetInTrailing: SizedBox()),
+                    //     ],
+                    //   ),
+                    // ),
                     // Text(
                     //   'Lumpsum',
                     //   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
@@ -488,77 +575,77 @@ class ScreenMutualFund extends StatelessWidget {
                     //   ),
                     // ),
 
-                    SizedBox(
-                      width: double.infinity,
-                      child: Card(
-                        elevation: 5,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            VerticalSpacer(1.h),
-                            ListTile(
-                              contentPadding: EdgeInsets.only(
-                                left: 9.sp,
-                                right: 15.sp,
-                              ),
-                              leading: const SizedBox(),
-                              title: Text(
-                                'Start a Lumpsum',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .copyWith(
-                                      fontSize: 17.5.sp,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 3.5.sp,
-                                      // color: Color(0xFFACB2BA),
-                                    ),
-                              ),
-                              subtitle: Text(
-                                'For a longer term growth and goals.',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .copyWith(
-                                      color: Colors.grey,
-                                    ),
-                              ),
-                              trailing: InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ScreenAllMutualFund(),
-                                      ));
-                                },
-                                child: SizedBox(
-                                  width: Adaptive.w(20),
-                                  height: Adaptive.h(4.5),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.circular(10.sp),
-                                      color: const Color(0xFF6C8FF8),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        'Start',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 15.sp,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            VerticalSpacer(1.h),
-                          ],
-                        ),
-                      ),
-                    ),
+                    // SizedBox(
+                    //   width: double.infinity,
+                    //   child: Card(
+                    //     elevation: 5,
+                    //     child: Column(
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       children: [
+                    //         VerticalSpacer(1.h),
+                    //         ListTile(
+                    //           contentPadding: EdgeInsets.only(
+                    //             left: 9.sp,
+                    //             right: 15.sp,
+                    //           ),
+                    //           leading: const SizedBox(),
+                    //           title: Text(
+                    //             'Start a Lumpsum',
+                    //             style: Theme.of(context)
+                    //                 .textTheme
+                    //                 .bodyMedium!
+                    //                 .copyWith(
+                    //                   fontSize: 17.5.sp,
+                    //                   fontWeight: FontWeight.bold,
+                    //                   letterSpacing: 3.5.sp,
+                    //                   // color: Color(0xFFACB2BA),
+                    //                 ),
+                    //           ),
+                    //           subtitle: Text(
+                    //             'For a longer term growth and goals.',
+                    //             style: Theme.of(context)
+                    //                 .textTheme
+                    //                 .bodyMedium!
+                    //                 .copyWith(
+                    //                   color: Colors.grey,
+                    //                 ),
+                    //           ),
+                    //           trailing: InkWell(
+                    //             onTap: () {
+                    //               Navigator.push(
+                    //                   context,
+                    //                   MaterialPageRoute(
+                    //                     builder: (context) =>
+                    //                         const ScreenAllMutualFund(),
+                    //                   ));
+                    //             },
+                    //             child: SizedBox(
+                    //               width: Adaptive.w(20),
+                    //               height: Adaptive.h(4.5),
+                    //               child: Container(
+                    //                 decoration: BoxDecoration(
+                    //                   borderRadius:
+                    //                       BorderRadius.circular(10.sp),
+                    //                   color: const Color(0xFF6C8FF8),
+                    //                 ),
+                    //                 child: Center(
+                    //                   child: Text(
+                    //                     'Start',
+                    //                     style: TextStyle(
+                    //                       color: Colors.white,
+                    //                       fontSize: 15.sp,
+                    //                     ),
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //           ),
+                    //         ),
+                    //         VerticalSpacer(1.h),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
 
                     VerticalSpacer(2.h),
                     Text(
@@ -586,7 +673,7 @@ class ScreenMutualFund extends StatelessWidget {
                     //           )
                     // :
                     SizedBox(
-                      height: Adaptive.h(84),
+                      height: Adaptive.h(75),
                       child: ListView.separated(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
@@ -644,9 +731,10 @@ class ScreenMutualFund extends StatelessWidget {
                                                 .textTheme
                                                 .bodyMedium!
                                                 .copyWith(
-                                                  fontSize: 17.sp,
-                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 16.sp,
+                                                  fontWeight: FontWeight.w400,
                                                 ),
+                                            maxLines: 2,
                                           ),
                                           VerticalSpacer(1.h),
                                         ],
@@ -666,9 +754,9 @@ class ScreenMutualFund extends StatelessWidget {
                                       ),
                                       trailing: Container(
                                         decoration: BoxDecoration(
-                                          color:
-                                              Color.fromARGB(255, 253, 217, 214)
-                                                  .withOpacity(0.5),
+                                          color: const Color.fromARGB(
+                                                  255, 253, 217, 214)
+                                              .withOpacity(0.5),
                                           borderRadius: BorderRadius.circular(
                                             10.sp,
                                           ),

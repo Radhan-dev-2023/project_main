@@ -4,7 +4,9 @@ import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_
 import 'package:finfresh_mobile/controller/goldController/gold_controller.dart';
 import 'package:finfresh_mobile/services/get%20gold%20rate/get_gold_rate.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
+import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
 import 'package:finfresh_mobile/view/digi%20gold%20screen/buy%20screen/buy_screen.dart';
+import 'package:finfresh_mobile/view/digi%20gold%20screen/digi_gold_screen.dart';
 import 'package:finfresh_mobile/view/digi%20gold%20screen/sell%20screen/sell_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_button_widget.dart';
@@ -29,17 +31,24 @@ class _ScreenGoldBuyingAndSellingState
   @override
   void initState() {
     super.initState();
+    Provider.of<GoldController>(context, listen: false).isCompleted();
     Provider.of<GoldController>(context, listen: false).getGoldrate(context);
   }
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<GoldController>(context);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (provider.isCompletedGoldPurchase == 'true') {
+        provider.currentValue();
+      }
+    });
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF2D5D5F),
-        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: const Color(0xFF2D5D5F),
+        iconTheme: const IconThemeData(color: Colors.white),
+        surfaceTintColor: Colors.transparent,
       ),
-      key: scaffoldState,
       body: SafeArea(
         child: SingleChildScrollView(
           child:
@@ -90,8 +99,9 @@ class _ScreenGoldBuyingAndSellingState
                                 ),
                                 HorizontalSpacer(22.w),
                                 Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    VerticalSpacer(2.h),
+                                    VerticalSpacer(4.h),
                                     Text(
                                       'Current value',
                                       style: TextStyle(
@@ -101,21 +111,22 @@ class _ScreenGoldBuyingAndSellingState
                                     ),
                                     VerticalSpacer(1.h),
                                     Text(
-                                      '1800 mg',
+                                      '${goldController.formattedValue}',
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 20.sp,
                                         fontWeight: FontWeight.bold,
                                       ),
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                     VerticalSpacer(1.h),
-                                    Text(
-                                      '20 % profit',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18.sp,
-                                      ),
-                                    ),
+                                    // Text(
+                                    //   '20 % profit',
+                                    //   style: TextStyle(
+                                    //     color: Colors.white,
+                                    //     fontSize: 18.sp,
+                                    //   ),
+                                    // ),
                                   ],
                                 )
                               ],
@@ -123,52 +134,68 @@ class _ScreenGoldBuyingAndSellingState
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.all(15.sp),
-                        child: SizedBox(
-                          child: Column(
-                            children: [
-                              ListTile(
-                                title: const Text('Selling gold'),
-                                subtitle: const Text(
-                                  '20.10.2024',
-                                  style: TextStyle(color: Colors.grey),
-                                ),
-                                trailing: Column(
-                                  children: [
-                                    VerticalSpacer(1.h),
-                                    Text(
-                                      '₹ 1000',
-                                      style:
-                                          Theme.of(context).textTheme.bodyLarge,
-                                    ),
-                                    const Text('Sold 259 mg gold')
-                                  ],
-                                ),
-                              ),
-                              ListTile(
-                                title: const Text('Buying gold'),
-                                subtitle: const Text(
-                                  '20.10.2024',
-                                  style: TextStyle(color: Colors.grey),
-                                ),
-                                trailing: Column(
-                                  children: [
-                                    VerticalSpacer(1.h),
-                                    Text(
-                                      '₹ 1000',
-                                      style:
-                                          Theme.of(context).textTheme.bodyLarge,
-                                    ),
-                                    const Text('Brought 259 mg gold')
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      VerticalSpacer(6.h),
+                      goldController.goldlistingmodel == null
+                          ? const SizedBox()
+                          : SizedBox(
+                              child: ListView.separated(
+                                  padding: EdgeInsets.all(15.sp),
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    dynamic value = goldController
+                                        .calculateAmountAfterTax(goldController
+                                            .goldlistingmodel
+                                            ?.res
+                                            ?.transactions?[index]
+                                            .amount);
+                                    goldController.sum = value;
+                                    return Column(
+                                      children: [
+                                        ListTile(
+                                          contentPadding: EdgeInsets.only(
+                                              left: 15.sp, right: 15.sp),
+                                          subtitle: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              const Text('Buying Gold'),
+                                              VerticalSpacer(1.h),
+                                              Text(
+                                                "${goldController.goldlistingmodel?.res?.transactions?[index].addedon.toString().substring(0, 10)}",
+                                                style: TextStyle(
+                                                    color: Colors.grey),
+                                              ),
+                                            ],
+                                          ),
+                                          trailing: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                              // VerticalSpacer(1.h),
+                                              Text(
+                                                '₹ ${value}',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge,
+                                              ),
+                                              VerticalSpacer(1.h),
+                                              Text(
+                                                  'Brought ${goldController.goldlistingmodel?.res?.transactions?[index].purchasedGold.toStringAsFixed(2)} mg gold'),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                  separatorBuilder: (context, index) => Divider(
+                                        color: Colors.grey,
+                                        thickness: 1,
+                                      ),
+                                  itemCount: goldController.goldlistingmodel
+                                          ?.res?.transactions?.length ??
+                                      0),
+                            ),
+                      VerticalSpacer(3.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -183,8 +210,9 @@ class _ScreenGoldBuyingAndSellingState
                                 : false,
                             child: InkWell(
                               onTap: () {
-                                scaffoldState.currentState!.showBottomSheet(
-                                  (BuildContext context) {
+                                showBottomSheet(
+                                  context: context,
+                                  builder: (BuildContext context) {
                                     return Consumer<GoldController>(
                                         builder: (context, goldController, _) {
                                       return Container(
@@ -196,7 +224,7 @@ class _ScreenGoldBuyingAndSellingState
                                               CrossAxisAlignment.start,
                                           children: <Widget>[
                                             VerticalSpacer(1.h),
-                                            Text(
+                                            const Text(
                                               'Add Gold Rate',
                                               style: TextStyle(fontSize: 20),
                                             ),
@@ -206,7 +234,7 @@ class _ScreenGoldBuyingAndSellingState
                                                   .goldRateController,
                                               keyboardType:
                                                   TextInputType.number,
-                                              decoration: InputDecoration(
+                                              decoration: const InputDecoration(
                                                 hintText: 'Enter the gold rate',
                                                 // border: OutlineInputBorder(),
                                               ),
@@ -217,15 +245,31 @@ class _ScreenGoldBuyingAndSellingState
                                                 : ButtonWidget(
                                                     btName: 'Add',
                                                     onTap: () async {
-                                                      bool result =
-                                                          await goldController
-                                                              .addGoldRate(
+                                                      if (goldController
+                                                          .goldRateController
+                                                          .text
+                                                          .isNotEmpty) {
+                                                        bool result =
+                                                            await goldController
+                                                                .addGoldRate(
+                                                                    context);
+                                                        if (result == true) {
+                                                          // ignore: use_build_context_synchronously
+                                                          goldController
+                                                              .getGoldrate(
                                                                   context);
-                                                      if (result == true) {
-                                                        // ignore: use_build_context_synchronously
-                                                        Navigator.pop(context);
+                                                          // ignore: use_build_context_synchronously
+                                                          Navigator.pop(
+                                                              context);
+                                                          goldController
+                                                              .goldRateController
+                                                              .clear();
+                                                        } else {
+                                                          log('failed');
+                                                        }
                                                       } else {
-                                                        log('failed');
+                                                        showFlushbar(context,
+                                                            'Please enter the gold rate');
                                                       }
                                                     },
                                                   )
@@ -283,36 +327,37 @@ class _ScreenGoldBuyingAndSellingState
                             ),
                           ),
                           HorizontalSpacer(3.w),
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const ScreenSellGold(),
-                                  ));
-                            },
-                            child: Container(
-                              height: Adaptive.h(5),
-                              width: Adaptive.w(25),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20.sp),
-                                color: const Color(0xFF2D5D5F),
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  'Sell',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xFFF7BF05),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+                          // InkWell(
+                          //   onTap: () {
+                          //     Navigator.push(
+                          //         context,
+                          //         MaterialPageRoute(
+                          //           builder: (context) =>
+                          //               const ScreenSellGold(),
+                          //         ));
+                          //   },
+                          //   child: Container(
+                          //     height: Adaptive.h(5),
+                          //     width: Adaptive.w(25),
+                          //     decoration: BoxDecoration(
+                          //       borderRadius: BorderRadius.circular(20.sp),
+                          //       color: const Color(0xFF2D5D5F),
+                          //     ),
+                          //     child: const Center(
+                          //       child: Text(
+                          //         'Sell',
+                          //         style: TextStyle(
+                          //           fontWeight: FontWeight.bold,
+                          //           color: Color(0xFFF7BF05),
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                           HorizontalSpacer(5.w),
                         ],
-                      )
+                      ),
+                      VerticalSpacer(5.h),
                     ],
                   );
           }),
