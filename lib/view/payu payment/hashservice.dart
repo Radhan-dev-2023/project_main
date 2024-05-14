@@ -15,7 +15,7 @@ class HashService {
   static const merchantSecretKey = ""; // Add Merchant Secrete Key - Optional
 
   static Map generateHash(Map response) {
-    log('hashname${response[PayUHashConstantsKeys.hashName]} hashStringWithoutSalt ${response[PayUHashConstantsKeys.hashString]}hashType ${response[PayUHashConstantsKeys.hashType]}');
+    // log('hashname${response[PayUHashConstantsKeys.hashName]} hashStringWithoutSalt ${response[PayUHashConstantsKeys.hashString]}hashType ${response[PayUHashConstantsKeys.hashType]}');
     var hashName = response[PayUHashConstantsKeys.hashName];
     var hashStringWithoutSalt = response[PayUHashConstantsKeys.hashString];
     var hashType = response[PayUHashConstantsKeys.hashType];

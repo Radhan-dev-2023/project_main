@@ -28,7 +28,6 @@ class _ScreenHomeState extends State<ScreenHome> {
   Future<void> function() async {
     await Provider.of<DashBoardController>(context, listen: false)
         .getDashBoardDetails(context);
-        
   }
 
   @override
@@ -53,6 +52,7 @@ class _ScreenHomeState extends State<ScreenHome> {
             // leading: const SizedBox(),
             pinned: true,
             toolbarHeight: Adaptive.h(6),
+            automaticallyImplyLeading: false,
             // backgroundColor: Colors.transparent,
             title: Consumer<DashBoardController>(
               builder: (context, dashBoardController, child) {

@@ -143,15 +143,20 @@ class ScreenConfirmPinNumber extends StatelessWidget {
                     Navigator.pop(context);
                     Provider.of<KycController>(context, listen: false)
                         .updatePagenumber('1');
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            biometricLoginController.buttonEnabled == true
-                                ? const ScreenHomeView()
-                                : const ScreenPanCard(),
-                      ),
-                    );
+                    biometricLoginController.buttonEnabled == true
+                        ? Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ScreenHomeView(),
+                            ),
+                            (route) => false,
+                          )
+                        : Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ScreenPanCard(),
+                            ),
+                          );
                   } else {
                     alertForFringerAsking(
                         context, pinController, biometricLoginController);
@@ -209,15 +214,20 @@ class ScreenConfirmPinNumber extends StatelessWidget {
                     pinController.setPin();
                     Provider.of<KycController>(context, listen: false)
                         .updatePagenumber('1');
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            biometricLoginController.buttonEnabled == true
-                                ? const ScreenHomeView()
-                                : const ScreenPanCard(),
-                      ),
-                    );
+                    biometricLoginController.buttonEnabled == true
+                        ? Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ScreenHomeView(),
+                            ),
+                            (Route<dynamic> route) => false,
+                          )
+                        : Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ScreenPanCard(),
+                            ),
+                          );
                   },
                   child: const Text(
                     'YES',
@@ -240,15 +250,20 @@ class ScreenConfirmPinNumber extends StatelessWidget {
                   pinController.setPin();
                   Provider.of<KycController>(context, listen: false)
                       .updatePagenumber('1');
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          biometricLoginController.buttonEnabled == true
-                              ? const ScreenHomeView()
-                              : const ScreenPanCard(),
-                    ),
-                  );
+                  biometricLoginController.buttonEnabled == true
+                      ? Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ScreenHomeView(),
+                          ),
+                          (Route<dynamic> route) => false,
+                        )
+                      : Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ScreenPanCard(),
+                          ),
+                        );
                 },
                 child: const Text(
                   'NO',

@@ -6,6 +6,7 @@ import 'package:finfresh_mobile/controller/goldController/gold_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
 import 'package:finfresh_mobile/view/digi%20gold%20screen/gold%20buying%20screen/screen_gold_buying_selling.dart';
+import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
 import 'package:finfresh_mobile/view/payu%20payment/hashservice.dart';
 import 'package:flutter/material.dart';
 import 'package:payu_checkoutpro_flutter/PayUConstantKeys.dart';
@@ -181,7 +182,7 @@ class _ScreenBuyState extends State<ScreenBuy>
                 ),
                 VerticalSpacer(5.h),
                 Text(
-                  'Price ₹ ${goldController.goldvalue}/mg (excl 3% GST)',
+                  'Price ₹ ${goldController.goldvalue}/mg (exclusive of 3% GST)',
                   style: const TextStyle(
                     color: Colors.white,
                   ),
@@ -195,9 +196,13 @@ class _ScreenBuyState extends State<ScreenBuy>
                       // ijiPG7
                       goldController.generateSSID();
                       goldController.calulateWithGstAmount();
+                      // Provider.of<GoldController>(context, listen: false)
+                      //     .calculate();
+
                       _checkoutPro.openCheckoutScreen(payUPaymentParams: {
                         PayUPaymentParamKey.key: "TB7WBn",
-                        PayUPaymentParamKey.amount: goldController.totalAmount,
+                        PayUPaymentParamKey.amount:
+                            goldController.buygoldrateController.text,
                         PayUPaymentParamKey.productInfo: "Payu",
                         PayUPaymentParamKey.firstName: dashBordController
                                 .dashBoardModel?.result?.data?.name ??
@@ -208,7 +213,7 @@ class _ScreenBuyState extends State<ScreenBuy>
                         PayUPaymentParamKey.phone: dashBordController
                                 .dashBoardModel?.result?.data?.phoneNumber ??
                             '',
-                        PayUPaymentParamKey.environment: "1",
+                        PayUPaymentParamKey.environment: "0",
                         // String - "0" for Production and "1" for Test
                         PayUPaymentParamKey.transactionId:
                             goldController.transactionid,
@@ -277,12 +282,22 @@ class _ScreenBuyState extends State<ScreenBuy>
     bool result = await goldController.goldTrasaction(response, context);
     if (result == true) {
       Navigator.pop(context);
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const ScreenGoldBuyingAndSelling(),
-        ),
-      );
+      goldController.isCompletedGoldPurchase == 'true'
+          ? Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ScreenHomeView(
+                  curentindex: 1,
+                ),
+              ),
+              (Route<dynamic> route) => false,
+            )
+          : Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ScreenGoldBuyingAndSelling(),
+              ),
+            );
     }
   }
 

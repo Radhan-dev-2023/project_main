@@ -15,7 +15,8 @@ import 'package:provider/provider.dart';
 int? indexfor;
 
 class ScreenHomeView extends StatefulWidget {
-  const ScreenHomeView({super.key});
+  final int? curentindex;
+  const ScreenHomeView({super.key, this.curentindex});
 
   @override
   State<ScreenHomeView> createState() => _ScreenHomeViewState();
@@ -23,20 +24,24 @@ class ScreenHomeView extends StatefulWidget {
 
 // final _controller = NotchBottomBarController(index: 1);
 // final _pageController = PageController(initialPage: 1);
-int _currentIndex = 0;
+int _currentIndex = 2;
 
 class _ScreenHomeViewState extends State<ScreenHomeView> {
   @override
   void initState() {
     super.initState();
-
-    _currentIndex =
-        Provider.of<DashBoardController>(context, listen: false).currentIndex;
-    _currentIndex = _currentIndex;
-    indexfor = _currentIndex;
+    if (widget.curentindex != null) {
+      _currentIndex = widget.curentindex ?? 0;
+      indexfor = _currentIndex;
+    } else {
+      _currentIndex =
+          Provider.of<DashBoardController>(context, listen: false).currentIndex;
+      _currentIndex = _currentIndex;
+      indexfor = _currentIndex;
+    }
   }
 
-  final _controller = NotchBottomBarController(index: 2);
+  final _controller = NotchBottomBarController(index: _currentIndex);
   // final _pageController = PageController(initialPage: 2);
   @override
   Widget build(BuildContext context) {
@@ -45,7 +50,10 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
     Brightness platformBrightness = MediaQuery.of(context).platformBrightness;
     final List<Widget> bottomBarPages = [
       const ScreenMutualFund(),
-      const ScreenDigiGold(),
+      goldProvider.isCompletedGoldPurchase == 'true' ||
+              goldProvider.buttonEnable == true
+          ? const ScreenGoldBuyingAndSelling()
+          : const ScreenDigiGold(),
       const ScreenHome(),
       const ScreeenTranscations(),
       const ScreenSettings()

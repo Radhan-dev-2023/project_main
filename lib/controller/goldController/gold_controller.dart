@@ -109,6 +109,7 @@ class GoldController extends ChangeNotifier {
   }
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  bool buttonEnable = false;
   double? goldMg;
   void calculate() async {
     try {
@@ -119,6 +120,7 @@ class GoldController extends ChangeNotifier {
 
       // Parse gold rate from text field
       double purchaseRate = double.parse(buygoldrateController.text);
+      double amountAfterTax = (purchaseRate * 100) / (100 + 3);
 
       // Check if gold value is not zero
       if (goldvalue == 0) {
@@ -126,13 +128,15 @@ class GoldController extends ChangeNotifier {
       }
 
       // Calculate gold in milligrams
-      goldMg = purchaseRate / goldvalue!;
-      SecureStorage.addToken('goldMg', goldMg.toString());
+      goldMg = amountAfterTax / goldvalue!;
+      // goldMg = purchaseRate / goldvalue!;
+      SecureStorage.addToken('goldMg', goldMg!.toStringAsFixed(2));
       SecureStorage.addToken('paymentCompleted', 'true');
       // Log the calculated gold value
       log('Gold in milligrams: $goldMg');
 
       // Notify listeners if there are any
+      buttonEnable = true;
       notifyListeners();
     } catch (e) {
       // Handle any errors
@@ -167,14 +171,27 @@ class GoldController extends ChangeNotifier {
   }
 
   int sum = 0;
-  int calculateAmountAfterTax(dynamic amount) {
+  double calculateAmountAfterTax(dynamic amount) {
     // Calculate the tax amount (3% of the original amount)
-    double taxAmount = double.parse(amount) * 0.03;
 
-    // Subtract the tax amount from the original amount
-    double amountAfterTax = double.parse(amount) - taxAmount;
+    double amountAfterTax = (double.parse(amount) * 100) / (100 + 3);
+    // double taxAmount = double.parse(amount) * 0.03;
 
-    return amountAfterTax.ceil();
+    // // Subtract the tax amount from the original amount
+    // double amountAfterTax = double.parse(amount) - taxAmount;
+
+    return amountAfterTax;
+  }
+
+  double calculateAmountOfTax(dynamic amount) {
+    // Calculate the tax amount (3% of the original amount)
+    double taxAmount = (double.parse(amount) * 3) / (100 + 3);
+    // double taxAmount = double.parse(amount) * 0.03;
+
+    // // Subtract the tax amount from the original amount
+    // double amountAfterTax = double.parse(amount) - taxAmount;
+
+    return taxAmount;
   }
 
   Future<bool> goldTrasaction(dynamic response, context) async {
