@@ -1,4 +1,4 @@
-package com.example.finfresh_mobile
+package com.finfresh.mobile
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 

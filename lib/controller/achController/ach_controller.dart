@@ -28,6 +28,14 @@ class AchController extends ChangeNotifier {
   List<String> cancellist = ['Yes', 'No'];
   List<String> processmode = ['Physical', 'eMandate'];
   List<String> channel = ['Addhar', 'Netbanking', 'Debit card'];
+  bool clickchangeButton = false;
+
+  void changeClickButton() {
+    channelvalue = null;
+    channelValuetoBackend = '';
+    clickchangeButton = !clickchangeButton;
+    notifyListeners();
+  }
 
   void updateCancelValue(String newValue) {
     cancelvalue = newValue;

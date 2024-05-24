@@ -110,7 +110,8 @@ class ScreenGolas extends StatelessWidget {
                             },
                           );
                         },
-                        separatorBuilder: (context, index) => SizedBox(),
+                        separatorBuilder: (context, index) =>
+                            VerticalSpacer(1.h),
                         itemCount: 5),
                   )
                 : SizedBox(),
@@ -184,7 +185,8 @@ class ScreenGolas extends StatelessWidget {
                             },
                           );
                         },
-                        separatorBuilder: (context, index) => SizedBox(),
+                        separatorBuilder: (context, index) =>
+                            VerticalSpacer(1.h),
                         itemCount: 5),
                   )
                 : SizedBox(),
@@ -258,7 +260,8 @@ class ScreenGolas extends StatelessWidget {
                             },
                           );
                         },
-                        separatorBuilder: (context, index) => SizedBox(),
+                        separatorBuilder: (context, index) =>
+                            VerticalSpacer(1.h),
                         itemCount: 5),
                   )
                 : SizedBox(),
@@ -333,7 +336,8 @@ class ScreenGolas extends StatelessWidget {
                             },
                           );
                         },
-                        separatorBuilder: (context, index) => SizedBox(),
+                        separatorBuilder: (context, index) =>
+                            VerticalSpacer(1.h),
                         itemCount: 5),
                   )
                 : SizedBox(),

@@ -29,6 +29,7 @@ class ScreenMyHoldings extends StatefulWidget {
 class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
   @override
   void initState() {
+    log('widget.isinumber :${widget.isinNumber}');
     super.initState();
     Provider.of<HoldingsController>(context, listen: false)
         .fetchReportDetails(context, widget.isinNumber, widget.trxnumber);
@@ -153,19 +154,34 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15.sp),
-                            color: const Color(0xFF4D84BD),
-                          ),
-                          height: Adaptive.h(6),
-                          width: Adaptive.w(40),
-                          child: const Center(
-                            child: Text(
-                              'ADD',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => StockDetailsScreen(
+                                    scheme: holdingController.reportDetailsModel
+                                            ?.result?.schemeName ??
+                                        '',
+                                    isinNumber: widget.isinNumber,
+                                    category: '',
+                                  ),
+                                ));
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.sp),
+                              color: const Color(0xFF4D84BD),
+                            ),
+                            height: Adaptive.h(6),
+                            width: Adaptive.w(40),
+                            child: const Center(
+                              child: Text(
+                                'ADD',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
@@ -207,21 +223,19 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                                 holdingController
                                     .updateRedeemValue(value ?? '');
                                 holdingController.sendMailToClinet(
-                                  Provider.of<DashBoardController>(context,
-                                              listen: false,
-                                              )
+                                  Provider.of<DashBoardController>(
+                                        context,
+                                        listen: false,
+                                      )
                                           .dashBoardModel
                                           ?.result
                                           ?.data
                                           ?.phoneNumber ??
                                       '',
-                                  Provider.of<DashBoardController>(context,
-                                              listen: false,
-                                              )
-                                          .dashBoardModel
-                                          ?.result
-                                          ?.data
-                                          ?.name ??
+                                  Provider.of<DashBoardController>(
+                                        context,
+                                        listen: false,
+                                      ).dashBoardModel?.result?.data?.name ??
                                       '',
                                   widget.productname,
                                   value ?? '',

@@ -230,7 +230,7 @@ class TopMFsController extends ChangeNotifier {
     'UTI Nifty 50 Index Fund - Regular Plan - Growth Option',
     'HDFC Infrastructure Fund - Growth Plan',
     'Baroda BNP Paribas Business Cycle Fund - Regular Plan - Growth',
-    'Nippon India Power & Infra Fund-Growth Plan -Growth Option',
+    'Nippon India Power \u0026 Infra Fund-Growth Plan -Growth Option',
   ];
   List<String> isinForSip500 = [
     'INF204K01HY3',

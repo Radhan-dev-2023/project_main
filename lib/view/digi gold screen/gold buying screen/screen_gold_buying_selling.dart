@@ -5,6 +5,7 @@ import 'package:finfresh_mobile/controller/goldController/gold_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
 import 'package:finfresh_mobile/view/digi%20gold%20screen/buy%20screen/buy_screen.dart';
+import 'package:finfresh_mobile/view/digi%20gold%20screen/sell%20screen/sell_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
@@ -109,7 +110,7 @@ class _ScreenGoldBuyingAndSellingState
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(15.sp),
                                 child: Image.asset(
-                                  'assets/images/SL.jpg',
+                                  'assets/images/goldimagein.jpg',
                                   height: Adaptive.h(14),
                                   width: Adaptive.w(31),
                                   fit: BoxFit.fill,
@@ -285,7 +286,8 @@ class _ScreenGoldBuyingAndSellingState
                                     ],
                                   );
                                 },
-                                separatorBuilder: (context, index) => Divider(
+                                separatorBuilder: (context, index) =>
+                                    const Divider(
                                       color: Colors.grey,
                                       thickness: 1,
                                     ),
@@ -308,6 +310,7 @@ class _ScreenGoldBuyingAndSellingState
                               : false,
                           child: InkWell(
                             onTap: () {
+                              goldController.selectvalue = null;
                               showBottomSheet(
                                 context: context,
                                 builder: (BuildContext context) {
@@ -315,8 +318,8 @@ class _ScreenGoldBuyingAndSellingState
                                       builder: (context, goldController, _) {
                                     return Container(
                                       margin: EdgeInsets.all(15.sp),
-                                      height: 300,
-                                      color: Colors.white,
+                                      height: 350,
+                                      // color: Colors.white,
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -336,6 +339,42 @@ class _ScreenGoldBuyingAndSellingState
                                               // border: OutlineInputBorder(),
                                             ),
                                           ),
+                                          VerticalSpacer(2.h),
+                                          DropdownButtonFormField<String>(
+                                            autovalidateMode: AutovalidateMode
+                                                .onUserInteraction,
+                                            validator: (value) {
+                                              if (value == null) {
+                                                return 'Please select cost type';
+                                              }
+                                              return null;
+                                            },
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge!,
+                                            value: goldController.selectvalue,
+                                            decoration: InputDecoration(
+                                              helperText: '',
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              hintText: 'Select a cost type',
+                                            ),
+                                            onChanged: (String? newValue) {
+                                              goldController.updateselectValue(
+                                                newValue ?? '',
+                                              );
+                                            },
+                                            items: goldController
+                                                .listForAddingRate
+                                                .map((String items) {
+                                              return DropdownMenuItem<String>(
+                                                value: items,
+                                                child: Text(items),
+                                              );
+                                            }).toList(),
+                                          ),
                                           VerticalSpacer(5.h),
                                           goldController.loading == true
                                               ? const LoadingButton()
@@ -343,9 +382,12 @@ class _ScreenGoldBuyingAndSellingState
                                                   btName: 'Add',
                                                   onTap: () async {
                                                     if (goldController
-                                                        .goldRateController
-                                                        .text
-                                                        .isNotEmpty) {
+                                                            .goldRateController
+                                                            .text
+                                                            .isNotEmpty &&
+                                                        goldController
+                                                                .selectvalue !=
+                                                            null) {
                                                       bool result =
                                                           await goldController
                                                               .addGoldRate(
@@ -363,6 +405,11 @@ class _ScreenGoldBuyingAndSellingState
                                                       } else {
                                                         log('failed');
                                                       }
+                                                    } else if (goldController
+                                                            .selectvalue ==
+                                                        null) {
+                                                      showFlushbar(context,
+                                                          'Please select a cost type');
                                                     } else {
                                                       showFlushbar(context,
                                                           'Please enter the gold rate');
@@ -423,33 +470,32 @@ class _ScreenGoldBuyingAndSellingState
                           ),
                         ),
                         HorizontalSpacer(3.w),
-                        // InkWell(
-                        //   onTap: () {
-                        //     Navigator.push(
-                        //         context,
-                        //         MaterialPageRoute(
-                        //           builder: (context) =>
-                        //               const ScreenSellGold(),
-                        //         ));
-                        //   },
-                        //   child: Container(
-                        //     height: Adaptive.h(5),
-                        //     width: Adaptive.w(25),
-                        //     decoration: BoxDecoration(
-                        //       borderRadius: BorderRadius.circular(20.sp),
-                        //       color: const Color(0xFF2D5D5F),
-                        //     ),
-                        //     child: const Center(
-                        //       child: Text(
-                        //         'Sell',
-                        //         style: TextStyle(
-                        //           fontWeight: FontWeight.bold,
-                        //           color: Color(0xFFF7BF05),
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const ScreenSellGold(),
+                                ));
+                          },
+                          child: Container(
+                            height: Adaptive.h(5),
+                            width: Adaptive.w(25),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20.sp),
+                              color: const Color(0xFF2D5D5F),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'Sell',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFFF7BF05),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                         HorizontalSpacer(5.w),
                       ],
                     ),

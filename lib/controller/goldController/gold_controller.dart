@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:ffi';
 
 import 'package:finfresh_mobile/model/gold%20listing%20model/gold_liting_model.dart';
 import 'package:finfresh_mobile/services/get%20gold%20rate/get_gold_rate.dart';
@@ -18,7 +17,15 @@ class GoldController extends ChangeNotifier {
   DigiGoldService service = DigiGoldService();
   TextEditingController goldRateController = TextEditingController();
   TextEditingController buygoldrateController = TextEditingController();
+  TextEditingController sellgoldrateController = TextEditingController();
   bool loading = false;
+  String? selectvalue;
+  void updateselectValue(String value) {
+    selectvalue = value;
+    notifyListeners();
+  }
+
+  List<String> listForAddingRate = ['purchase', 'sell'];
   Future<bool> addGoldRate(context) async {
     String token = await SecureStorage.readToken('token');
     bool isTokenExpired = JwtDecoder.isExpired(token);
@@ -27,8 +34,11 @@ class GoldController extends ChangeNotifier {
     try {
       if (isTokenExpired) {
         await refershTokenService.postRefershTocken(context);
-        bool result =
-            await service.addDigiGoldRate(context, goldRateController.text);
+        bool result = await service.addDigiGoldRate(
+          context,
+          goldRateController.text,
+          selectvalue ?? '',
+        );
         if (result == true) {
           loading = false;
           notifyListeners();
@@ -39,8 +49,11 @@ class GoldController extends ChangeNotifier {
           return false;
         }
       } else {
-        bool result =
-            await service.addDigiGoldRate(context, goldRateController.text);
+        bool result = await service.addDigiGoldRate(
+          context,
+          goldRateController.text,
+          selectvalue ?? '',
+        );
         if (result == true) {
           loading = false;
           notifyListeners();
@@ -59,10 +72,32 @@ class GoldController extends ChangeNotifier {
     }
   }
 
+  dynamic sellrate;
+
   String formattedValue = '';
   RefershTokenService refershTokenService = RefershTokenService();
   dynamic goldvalue;
   bool isloading = false;
+  // Future<void> getGoldSellrate(context) async {
+  //   String token = await SecureStorage.readToken('token');
+  //   bool isTokenExpired = JwtDecoder.isExpired(token);
+
+  //   try {
+  //     if (isTokenExpired) {
+  //       await refershTokenService.postRefershTocken(context);
+  //       sellrate = await service.getsellGoldRate(context);
+
+  //       notifyListeners();
+  //     } else {
+  //       sellrate = await service.getsellGoldRate(context);
+
+  //       notifyListeners();
+  //     }
+  //   } catch (e) {
+  //     logger.d('get gold rate failed with an eception$e');
+  //   }
+  // }
+
   Future<void> getGoldrate(context) async {
     String token = await SecureStorage.readToken('token');
     bool isTokenExpired = JwtDecoder.isExpired(token);
@@ -72,10 +107,10 @@ class GoldController extends ChangeNotifier {
       if (isTokenExpired) {
         await refershTokenService.postRefershTocken(context);
         goldvalue = await service.getDigiGoldRate(context);
-
+        sellrate = await service.getsellGoldRate(context);
         await goldListing(context);
 
-        dynamic value = goldlistingmodel?.res?.total * goldvalue;
+        dynamic value = goldlistingmodel?.res?.total * sellrate;
         formattedValue = '₹ ${value.toStringAsFixed(2)}';
 
         notifyListeners();
@@ -83,8 +118,9 @@ class GoldController extends ChangeNotifier {
         notifyListeners();
       } else {
         goldvalue = await service.getDigiGoldRate(context);
+        sellrate = await service.getsellGoldRate(context);
         await goldListing(context);
-        dynamic value = goldlistingmodel?.res?.total * goldvalue;
+        dynamic value = goldlistingmodel?.res?.total * sellrate;
         formattedValue = '₹ ${value.toStringAsFixed(2)}';
         notifyListeners();
         isloading = false;
@@ -239,6 +275,48 @@ class GoldController extends ChangeNotifier {
     } else {
       goldlistingmodel = await goldSaveTransaction.getGoldList(context);
       notifyListeners();
+    }
+  }
+
+  dynamic soldAmount;
+  void calculateSellAmount() {
+    soldAmount = double.parse(sellgoldrateController.text) * sellrate;
+    log(soldAmount.toString());
+    notifyListeners();
+  }
+
+  bool selbuttonClicked = false;
+  Future<bool> sellGold(context, String name, String phoneNumber) async {
+    selbuttonClicked = true;
+    notifyListeners();
+    String token = await SecureStorage.readToken('token');
+    bool isTokenExpired = JwtDecoder.isExpired(token);
+
+    if (isTokenExpired) {
+      await refershTokenService.postRefershTocken(context);
+      bool value = await service.sellGold(
+        context,
+        sellrate,
+        sellgoldrateController.text,
+        soldAmount,
+        name,
+        phoneNumber,
+      );
+      selbuttonClicked = false;
+      notifyListeners();
+      return value == true ? true : false;
+    } else {
+      bool value = await service.sellGold(
+        context,
+        sellrate,
+        sellgoldrateController.text,
+        soldAmount,
+        name,
+        phoneNumber,
+      );
+      selbuttonClicked = false;
+      notifyListeners();
+      return value == true ? true : false;
     }
   }
 }

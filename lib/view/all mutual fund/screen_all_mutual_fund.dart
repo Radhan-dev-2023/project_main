@@ -410,7 +410,7 @@ class _ScreenAllMutualFundState extends State<ScreenAllMutualFund> {
                                                         Text(
                                                           '${topMfsController.returnPercentageinAllFunds}%',
                                                           style: TextStyle(
-                                                            color: Color(
+                                                            color: const Color(
                                                                 0xFF5DBB63),
                                                             fontSize: 15.sp,
                                                             fontWeight:

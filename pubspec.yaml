@@ -62,7 +62,7 @@ dependencies:
   envied: ^0.5.4+1
   fl_chart: ^0.67.0
   flutter_launcher_icons: ^0.13.1
-  payu_checkoutpro_flutter: ^1.1.4
+  payu_checkoutpro_flutter: 
   uuid: ^4.4.0
   
 

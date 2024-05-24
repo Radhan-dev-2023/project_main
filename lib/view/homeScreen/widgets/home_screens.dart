@@ -1,6 +1,7 @@
 import 'package:finfresh_mobile/controller/achController/ach_controller.dart';
 import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
+import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
 import 'package:finfresh_mobile/view/fatcha%20registration/fatcha_registeration.dart';
 import 'package:finfresh_mobile/view/holding%20screen/screen_holdings.dart';
 import 'package:finfresh_mobile/view/homeScreen/widgets/attension_widget.dart';
@@ -277,15 +278,15 @@ class _ScreenHomeState extends State<ScreenHome> {
                           child: Consumer<AchController>(
                               builder: (context, achController, _) {
                             return Visibility(
-                              visible: dashBoardController
-                                          .dashBoardModel
-                                          ?.result
-                                          ?.data
-                                          ?.achmandate
-                                          ?.achCompleted ==
-                                      "Not completed"
-                                  ? true
-                                  : false,
+                              // visible: dashBoardController
+                              //             .dashBoardModel
+                              //             ?.result
+                              //             ?.data
+                              //             ?.achmandate
+                              //             ?.achCompleted ==
+                              //         "Not completed"
+                              //     ? true
+                              //     : false,
                               child: Center(
                                 child: Card(
                                   elevation: 5,
@@ -321,20 +322,21 @@ class _ScreenHomeState extends State<ScreenHome> {
                                         leading: const SizedBox(),
                                         trailing: InkWell(
                                           onTap: () async {
-                                            bool result = await achController
-                                                .registerAch(context, false);
-                                            if (result == true) {
-                                              // ignore: use_build_context_synchronously
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ScreenWebview(
-                                                          url: achController
-                                                              .result),
-                                                ),
-                                              );
-                                            }
+                                            achController.changeClickButton();
+                                            // bool result = await achController
+                                            //     .registerAch(context, false);
+                                            // if (result == true) {
+                                            //   // ignore: use_build_context_synchronously
+                                            //   Navigator.push(
+                                            //     context,
+                                            //     MaterialPageRoute(
+                                            //       builder: (context) =>
+                                            //           ScreenWebview(
+                                            //               url: achController
+                                            //                   .result),
+                                            //     ),
+                                            //   );
+                                            // }
                                           },
                                           child: SizedBox(
                                             width: Adaptive.w(23),
@@ -347,20 +349,144 @@ class _ScreenHomeState extends State<ScreenHome> {
                                                 color: const Color(0xFF6C8FF8),
                                               ),
                                               child: Center(
-                                                child: achController
-                                                            .loadingAch ==
-                                                        true
-                                                    ? const CupertinoActivityIndicator(
-                                                        color: Colors.white)
-                                                    : Text(
-                                                        'Register',
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 15.sp,
-                                                        ),
-                                                      ),
+                                                // child: achController
+                                                //             .loadingAch ==
+                                                //         true
+                                                //     ? const CupertinoActivityIndicator(
+                                                //         color: Colors.white)
+                                                //     :
+                                                child: Text(
+                                                  achController
+                                                              .clickchangeButton ==
+                                                          false
+                                                      ? 'Click'
+                                                      : 'Click',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 15.sp,
+                                                  ),
+                                                ),
                                               ),
                                             ),
+                                          ),
+                                        ),
+                                      ),
+                                      // VerticalSpacer(1.h),
+                                      Visibility(
+                                        visible:
+                                            achController.clickchangeButton,
+                                        child: Container(
+                                          margin: EdgeInsets.all(15.sp),
+                                          child: Column(
+                                            children: [
+                                              DropdownButtonFormField<String>(
+                                                autovalidateMode:
+                                                    AutovalidateMode
+                                                        .onUserInteraction,
+                                                validator: (value) {
+                                                  if (value == null) {
+                                                    return 'Please Select Channel Type';
+                                                  }
+                                                  return null;
+                                                },
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .labelLarge!,
+                                                value:
+                                                    achController.channelvalue,
+                                                decoration:
+                                                    const InputDecoration(
+                                                  hintText:
+                                                      'Select Channel Type',
+                                                ),
+                                                onChanged: (String? newValue) {
+                                                  achController
+                                                      .updateChannelType(
+                                                          newValue!);
+                                                },
+                                                items: achController.channel
+                                                    .map((String value) {
+                                                  return DropdownMenuItem<
+                                                      String>(
+                                                    value: value,
+                                                    child: Text(
+                                                      value,
+                                                    ),
+                                                  );
+                                                }).toList(),
+                                              ),
+                                              VerticalSpacer(2.h),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  InkWell(
+                                                    onTap: () async {
+                                                      if (achController
+                                                              .channelvalue ==
+                                                          null) {
+                                                        showFlushbar(
+                                                          context,
+                                                          'Please Select Channel Type',
+                                                        );
+                                                      } else {
+                                                        bool result =
+                                                            await achController
+                                                                .registerAch(
+                                                          context,
+                                                          false,
+                                                        );
+                                                        if (result == true) {
+                                                          // ignore: use_build_context_synchronously
+                                                          Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  ScreenWebview(
+                                                                      url: achController
+                                                                          .result),
+                                                            ),
+                                                          );
+                                                        }
+                                                      }
+                                                    },
+                                                    child: SizedBox(
+                                                      width: Adaptive.w(23),
+                                                      height: Adaptive.h(5),
+                                                      child: Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      10.sp),
+                                                          color: const Color(
+                                                              0xFF6C8FF8),
+                                                        ),
+                                                        child: Center(
+                                                          child: achController
+                                                                      .loadingAch ==
+                                                                  true
+                                                              ? const CupertinoActivityIndicator(
+                                                                  color: Colors
+                                                                      .white)
+                                                              : Text(
+                                                                  'Register',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        15.sp,
+                                                                  ),
+                                                                ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ),

@@ -141,7 +141,8 @@ class _ScreenAddingBankState extends State<ScreenAddingBank> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: ButtonWidget(
         onTap: () {
-          final kyccontroller = Provider.of<KycController>(context);
+          final kyccontroller =
+              Provider.of<KycController>(context, listen: false);
           if (kyccontroller.banknameFormkey.currentState!.validate()) {
             kyccontroller.addbankname();
             kyccontroller.updatePagenumber('10');

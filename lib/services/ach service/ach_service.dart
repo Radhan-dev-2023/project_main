@@ -50,7 +50,7 @@ class AchService {
             "ach_todate": '31-Dec-2999',
             "ach_amount": '100000',
             "process_mode": 'E',
-            "channel_type": 'NET'
+            "channel_type": channel
           };
     log('paylod$payload');
     try {

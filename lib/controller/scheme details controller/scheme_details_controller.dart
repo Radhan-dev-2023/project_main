@@ -201,6 +201,7 @@ class SchemeDetailsController extends ChangeNotifier {
     String? lastdate;
 
     String? startdate;
+    log('select value $selectValueForChart ');
 
     if (selectValueForChart == '3M') {
       today = DateTime.now();
@@ -239,7 +240,8 @@ class SchemeDetailsController extends ChangeNotifier {
       startdate = DateFormat('dd-MM-yyyy').format(today);
     }
     log('last date ==$lastdate');
-    log('inception date =${schemeInfoModel?.schemeInceptionDate ?? ''}');
+    log('start date ===$startdate');
+    // log('inception date =${schemeInfoModel?.schemeInceptionDate ?? ''}');
     // notifyListeners();
     try {
       historicalNavModel = await schemeService.historicalNav(

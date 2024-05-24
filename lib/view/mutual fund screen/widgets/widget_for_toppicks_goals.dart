@@ -44,11 +44,11 @@ class WigetForTopPIcksAndGoals extends StatelessWidget {
             ),
             ConstrainedBox(
               constraints: BoxConstraints(
-                maxHeight: Adaptive.h(36),
-                minHeight: Adaptive.h(36),
+                maxHeight: Adaptive.h(42),
+                minHeight: Adaptive.h(42),
               ),
               child: ListView.separated(
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return ListTile(
@@ -104,7 +104,7 @@ class WigetForTopPIcksAndGoals extends StatelessWidget {
                     },
                   );
                 },
-                separatorBuilder: (context, index) => VerticalSpacer(0),
+                separatorBuilder: (context, index) => VerticalSpacer(1.h),
                 itemCount: 5,
               ),
             )
