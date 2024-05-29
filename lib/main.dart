@@ -57,6 +57,7 @@ import 'package:finfresh_mobile/view/webview/screen_webview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -70,8 +71,19 @@ Future<void> main() async {
   if (!Hive.isAdapterRegistered(InvestorModelAdapter().typeId)) {
     Hive.registerAdapter(InvestorModelAdapter());
   }
-
+  await requestPermissions();
   runApp(const MyApp());
+}
+
+Future<void> requestPermissions() async {
+  final statuses = await [
+    Permission.sms,
+  ].request();
+
+  if (statuses[Permission.sms] != PermissionStatus.granted) {
+    // Handle the case when permissions are not granted
+    print('One or more permissions are not granted.');
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -161,7 +173,7 @@ class MyApp extends StatelessWidget {
           // home: ScreenAddingParentDetails(),
           // home: ScreenJointHolders(),
           // home: ScreenOtp(title: 'sign up'),
-          // home: const AddingNomineeAndGuadianScreen(),
+          //  home: const AddingNomineeAndGuadianScreen(),
           // home: const ScreenUploadinProofs(),
           // home: ScreenBankAccountNumber(),
           //  home: const ScreenIfcAdding(),

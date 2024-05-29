@@ -40,7 +40,7 @@ dependencies:
   google_fonts: ^6.1.0
   pinput: ^3.0.1
   image_picker: ^1.0.5
-  animated_notch_bottom_bar: ^1.0.0
+  animated_notch_bottom_bar: ^1.0.3
   http: ^1.1.0
   provider: ^6.1.1
   flutter_secure_storage: ^9.0.0
@@ -64,6 +64,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   payu_checkoutpro_flutter: 
   uuid: ^4.4.0
+  permission_handler: ^11.3.1
   
 
 

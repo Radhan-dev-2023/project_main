@@ -90,6 +90,7 @@ class TopMFsController extends ChangeNotifier {
 
   bool lodingList = false;
   Future<void> getTopMfsFRomPeriod(context, String category) async {
+    log('calling top mfs');
     filteredListForAllFunds.clear();
     lodingList = true;
     notifyListeners();
@@ -100,6 +101,7 @@ class TopMFsController extends ChangeNotifier {
           .topPerformingMutualFund(context, category, returntoBackend);
 
       filteredListForAllFunds.addAll(topPerformingMutualFundModel?.list ?? []);
+
       lodingList = false;
       notifyListeners();
       log(topPerformingMutualFundModel.toString());
@@ -209,7 +211,7 @@ class TopMFsController extends ChangeNotifier {
     returns = '3 year';
     returntoBackend = '3y';
     getTopMfsFRomPeriod(context, 'All');
-    getSchemeAllCategory(context);
+    // getSchemeAllCategory(context);
   }
 
   bool selectedRadio = false;

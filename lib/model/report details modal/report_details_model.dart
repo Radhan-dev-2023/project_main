@@ -41,6 +41,8 @@ class Result {
   String? growthAbsolute;
   double? averageNav;
   double? currentNav;
+
+  String? schemecategory;
   List<PurchaseDetail>? purchaseDetails;
 
   Result({
@@ -53,6 +55,7 @@ class Result {
     this.growthAbsolute,
     this.averageNav,
     this.currentNav,
+    this.schemecategory,
     this.purchaseDetails,
   });
 
@@ -66,6 +69,7 @@ class Result {
         growthAbsolute: json["growth_absolute"],
         averageNav: json["avg_nav"]?.toDouble(),
         currentNav: json["current_nav"]?.toDouble(),
+        schemecategory: json['scheme_category'],
         purchaseDetails: List<PurchaseDetail>.from(
             json["purchaseDetails"].map((x) => PurchaseDetail.fromJson(x))),
       );
@@ -80,6 +84,7 @@ class Result {
         "growth_absolute": growthAbsolute,
         "average_nav": averageNav,
         "current_nav": currentNav,
+        'scheme_category': schemecategory,
         "purchaseDetails":
             List<dynamic>.from(purchaseDetails!.map((x) => x.toJson())),
       };

@@ -10,16 +10,26 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class ScreenMutualFund extends StatelessWidget {
+class ScreenMutualFund extends StatefulWidget {
   const ScreenMutualFund({super.key});
+
+  @override
+  State<ScreenMutualFund> createState() => _ScreenMutualFundState();
+}
+
+class _ScreenMutualFundState extends State<ScreenMutualFund> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<TopMFsController>(context, listen: false)
+        .callinginInit(context);
+  }
 
   @override
   Widget build(BuildContext context) {
     Brightness platformBrightness = MediaQuery.of(context).platformBrightness;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<TopMFsController>(context, listen: false)
-          .callinginInit(context);
-    });
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mutual Funds'),

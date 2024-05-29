@@ -1,4 +1,5 @@
 import 'package:finfresh_mobile/controller/auth/auth_controller.dart';
+import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
 import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/onboarding%20screen/on_boarding_view_screen.dart';
@@ -113,7 +114,10 @@ class ScreenSignin extends StatelessWidget {
             : ButtonWidget(
                 onTap: () async {
                   if (authController.formKeyforlogin.currentState!.validate()) {
+                    Provider.of<DashBoardController>(context, listen: false)
+                        .currentIndex = 2;
                     bool result = await authController.generateOtp(context);
+
                     if (result == true) {
                       // ignore: use_build_context_synchronously
                       Navigator.of(context).push(

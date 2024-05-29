@@ -116,6 +116,7 @@ class ScreenSellGold extends StatelessWidget {
                               '');
                       if (result == true) {
                         goldController.sellgoldrateController.clear();
+                        goldController.getSellGoldListing(context);
                         Navigator.pop(context);
                       }
                     }
@@ -133,7 +134,7 @@ class ScreenSellGold extends StatelessWidget {
                   ),
                   child: goldController.selbuttonClicked == true
                       ? const CupertinoActivityIndicator(
-                          color: Color(0xFFF7BF05),
+                          color: Color(0xFF2D5D5F),
                         )
                       : const Center(
                           child: Text(

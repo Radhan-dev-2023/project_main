@@ -5,6 +5,7 @@ import 'package:finfresh_mobile/controller/goldController/gold_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
 import 'package:finfresh_mobile/view/digi%20gold%20screen/buy%20screen/buy_screen.dart';
+import 'package:finfresh_mobile/view/digi%20gold%20screen/sell%20gold%20listing%20screen/screen_sellgold_listing.dart';
 import 'package:finfresh_mobile/view/digi%20gold%20screen/sell%20screen/sell_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_button_widget.dart';
@@ -89,7 +90,7 @@ class _ScreenGoldBuyingAndSellingState
                                   onTap: () {
                                     Navigator.pop(context);
                                   },
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.arrow_back,
                                     color: Colors.white,
                                   ),
@@ -130,7 +131,7 @@ class _ScreenGoldBuyingAndSellingState
                                   ),
                                   VerticalSpacer(1.h),
                                   Text(
-                                    '${goldController.formattedValue}',
+                                    goldController.formattedValue,
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 20.sp,
@@ -187,8 +188,8 @@ class _ScreenGoldBuyingAndSellingState
                                             VerticalSpacer(1.h),
                                             Text(
                                               "${goldController.goldlistingmodel?.res?.transactions?[index].addedon.toString().substring(0, 10)}",
-                                              style:
-                                                  TextStyle(color: Colors.grey),
+                                              style: const TextStyle(
+                                                  color: Colors.grey),
                                             ),
                                           ],
                                         ),
@@ -475,7 +476,8 @@ class _ScreenGoldBuyingAndSellingState
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const ScreenSellGold(),
+                                  builder: (context) =>
+                                      const ScreenListingGold(),
                                 ));
                           },
                           child: Container(

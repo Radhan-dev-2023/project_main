@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:finfresh_mobile/db/functions/db_functions.dart';
@@ -128,5 +129,27 @@ class AuthController extends ChangeNotifier {
     );
 
     dbFunctions.addTodb(investorModel);
+  }
+
+  int _start = 60;
+  bool _isButtonDisabled = true;
+  Timer? _timer;
+
+  int get start => _start;
+  bool get isButtonDisabled => _isButtonDisabled;
+
+  void startTimer() {
+    _start = 60;
+    _isButtonDisabled = true;
+    _timer?.cancel(); // Cancel previous timer if any
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_start == 0) {
+        _isButtonDisabled = false;
+        _timer?.cancel();
+      } else {
+        _start--;
+      }
+      notifyListeners();
+    });
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:finfresh_mobile/model/gold%20listing%20model/gold_liting_model.dart';
+import 'package:finfresh_mobile/model/gold%20sell%20listing%20model/gold_sell_listing_model.dart';
 import 'package:finfresh_mobile/services/get%20gold%20rate/get_gold_rate.dart';
 import 'package:finfresh_mobile/services/gold%20save%20transaction/save_gold_transaction.dart';
 import 'package:finfresh_mobile/services/refersh%20token/refersh_token.dart';
@@ -317,6 +318,34 @@ class GoldController extends ChangeNotifier {
       selbuttonClicked = false;
       notifyListeners();
       return value == true ? true : false;
+    }
+  }
+
+  GoldSellListingModel? sellGoldListingModel;
+  bool sellListingLoading = false;
+  Future<void> getSellGoldListing(context) async {
+    String token = await SecureStorage.readToken('token');
+    bool isTokenExpired = JwtDecoder.isExpired(token);
+    sellListingLoading = true;
+    notifyListeners();
+    try {
+      if (isTokenExpired) {
+        await refershTokenService.postRefershTocken(context);
+        sellGoldListingModel = await service.getSellGoldList(context);
+
+        notifyListeners();
+        sellListingLoading = false;
+        notifyListeners();
+      } else {
+        sellGoldListingModel = await service.getSellGoldList(context);
+        notifyListeners();
+        sellListingLoading = false;
+        notifyListeners();
+      }
+    } catch (e) {
+      logger.d('get gold rate failed with an eception$e');
+      sellListingLoading = false;
+      notifyListeners();
     }
   }
 }

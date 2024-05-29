@@ -13,9 +13,21 @@ import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class ScreenOtp extends StatelessWidget {
+class ScreenOtp extends StatefulWidget {
   final String title;
   const ScreenOtp({super.key, required this.title});
+
+  @override
+  State<ScreenOtp> createState() => _ScreenOtpState();
+}
+
+class _ScreenOtpState extends State<ScreenOtp> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<AuthController>(context, listen: false).startTimer();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -126,6 +138,42 @@ class ScreenOtp extends StatelessWidget {
                           TextStyle(color: Colors.red, fontSize: 15.sp),
                     ),
                   ),
+                  VerticalSpacer(5.h),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Consumer<AuthController>(
+                        builder: (context, snapshot, _) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: snapshot.isButtonDisabled == false
+                                ? () {
+                                    snapshot.generateOtp(context);
+                                    snapshot.startTimer();
+                                  }
+                                : () {},
+                            child: Text(
+                              'Resend OTP',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .copyWith(
+                                      color: Colors.grey, fontSize: 16.sp),
+                            ),
+                          ),
+                          VerticalSpacer(1.h),
+                          Text(
+                            "You can request OTP again in ${snapshot.start} secs",
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium!
+                                .copyWith(color: Colors.grey, fontSize: 15.sp),
+                          ),
+                        ],
+                      );
+                    }),
+                  ),
                   VerticalSpacer(30.h),
                 ],
               ),
@@ -145,14 +193,14 @@ class ScreenOtp extends StatelessWidget {
                       onTap: () async {
                         if (authController.formKeyForPinput.currentState!
                             .validate()) {
-                          bool result = title == 'signup'
+                          bool result = widget.title == 'signup'
                               // ignore: use_build_context_synchronously
                               ? await authController.otpVerfy(context)
                               // ignore: use_build_context_synchronously
                               : await authController.otpVerifyForLogin(context);
                           logger.d('resultotp===$result');
                           if (result == true) {
-                            if (title == 'signup' ||
+                            if (widget.title == 'signup' ||
                                 biometricLoginController.buttonEnabled ==
                                     true) {
                               // ignore: use_build_context_synchronously

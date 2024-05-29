@@ -48,10 +48,20 @@ class _StockDetailsScreenState extends State<StockDetailsScreen>
     Provider.of<SchemeDetailsController>(context, listen: false)
         .getSipDate(widget.isinNumber, context);
     debugPrint('infnumbrer=${widget.isinNumber}');
-    Provider.of<AchController>(context, listen: false).getAchHistoy(
-      context,
-      'A',
-    );
+    if (Provider.of<DashBoardController>(context, listen: false)
+            .dashBoardModel
+            ?.result
+            ?.data
+            ?.achmandate
+            ?.achCompleted ==
+        "Not completed") {
+      log('ach is not completed');
+    } else {
+      Provider.of<AchController>(context, listen: false).getAchHistoy(
+        context,
+        'A',
+      );
+    }
     Provider.of<SchemeDetailsController>(context, listen: false)
         .accountnumberController
         .text = Provider.of<DashBoardController>(context, listen: false)
@@ -216,35 +226,70 @@ void modalBottomSheetMenu(
                         ),
                       ),
                       VerticalSpacer(2.h),
-                      DropdownButtonFormField<String>(
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (value) {
-                          if (value == null) {
-                            return 'Please select debit mandate';
-                          }
-                          return null;
-                        },
-                        style: Theme.of(context).textTheme.labelLarge!,
-                        value: schemeController.selectedValue,
-                        decoration: InputDecoration(
-                          helperText: '',
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          hintText: 'Select Debit Mandate',
-                        ),
-                        onChanged: (String? newValue) {
-                          Provider.of<SchemeDetailsController>(context,
-                                  listen: false)
-                              .updateSelectedValue(newValue);
-                        },
-                        items:
-                            schemeController.investmentType.map((String items) {
-                          return DropdownMenuItem<String>(
-                            value: items,
-                            child: Text(items),
-                          );
-                        }).toList(),
-                      ),
+
+                      Provider.of<SchemeDetailsController>(context)
+                                  .sipdateModel ==
+                              null
+                          ? DropdownButtonFormField<String>(
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (value) {
+                                if (value == null) {
+                                  return 'Please select debit mandate';
+                                }
+                                return null;
+                              },
+                              style: Theme.of(context).textTheme.labelLarge!,
+                              value: schemeController.selectedValue,
+                              decoration: InputDecoration(
+                                helperText: '',
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                hintText: 'Select Investment Type',
+                              ),
+                              onChanged: (String? newValue) {
+                                Provider.of<SchemeDetailsController>(context,
+                                        listen: false)
+                                    .updateSelectedValue(newValue);
+                              },
+                              items: schemeController.investmentTypeLumbpsum
+                                  .map((String items) {
+                                return DropdownMenuItem<String>(
+                                  value: items,
+                                  child: Text(items),
+                                );
+                              }).toList(),
+                            )
+                          : DropdownButtonFormField<String>(
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (value) {
+                                if (value == null) {
+                                  return 'Please select debit mandate';
+                                }
+                                return null;
+                              },
+                              style: Theme.of(context).textTheme.labelLarge!,
+                              value: schemeController.selectedValue,
+                              decoration: InputDecoration(
+                                helperText: '',
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                hintText: 'Select Investment Type',
+                              ),
+                              onChanged: (String? newValue) {
+                                Provider.of<SchemeDetailsController>(context,
+                                        listen: false)
+                                    .updateSelectedValue(newValue);
+                              },
+                              items: schemeController.investmentType
+                                  .map((String items) {
+                                return DropdownMenuItem<String>(
+                                  value: items,
+                                  child: Text(items),
+                                );
+                              }).toList(),
+                            ),
 
                       // VerticalSpacer(2.h),
                       schemeController.selectedValue != 'Investment type'
@@ -335,164 +380,181 @@ void modalBottomSheetMenu(
                                   schemeController.selectedValue == 'SIP'
                                       ? Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                              Provider.of<SchemeDetailsController>(
+                                                              context)
+                                                          .sipdateModel ==
+                                                      null
+                                                  ? MainAxisAlignment.start
+                                                  : MainAxisAlignment
+                                                      .spaceBetween,
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            SizedBox(
-                                              // height: Adaptive.h(10.5),
-                                              width: 45.w,
-                                              child: DropdownButtonFormField<
-                                                  String>(
-                                                autovalidateMode:
-                                                    AutovalidateMode
-                                                        .onUserInteraction,
-                                                validator: (value) {
-                                                  if (value == null) {
-                                                    return 'Please select a duration';
-                                                  }
-                                                  return null;
-                                                },
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .labelLarge!,
-                                                value:
-                                                    schemeController.datevalue,
-                                                decoration: InputDecoration(
-                                                  helperText: '',
-                                                  border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10)),
-                                                  hintText: 'Dates',
-                                                ),
-                                                onChanged: (String? newValue) {
-                                                  schemeController
-                                                      .updateDatevalue(
-                                                          newValue!);
-                                                },
-                                                items: schemeController
-                                                    .sipdateModel!.sipDates!
-                                                    .map((int value) {
-                                                  return DropdownMenuItem<
-                                                      String>(
-                                                    value: value.toString(),
-                                                    child: Text(
-                                                      value.toString(),
+                                            Provider.of<SchemeDetailsController>(
+                                                            context)
+                                                        .sipdateModel ==
+                                                    null
+                                                ? SizedBox()
+                                                : SizedBox(
+                                                    // height: Adaptive.h(10.5),
+                                                    width: 45.w,
+                                                    child:
+                                                        DropdownButtonFormField<
+                                                            String>(
+                                                      autovalidateMode:
+                                                          AutovalidateMode
+                                                              .onUserInteraction,
+                                                      validator: (value) {
+                                                        if (value == null) {
+                                                          return 'Please select a duration';
+                                                        }
+                                                        return null;
+                                                      },
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .labelLarge!,
+                                                      value: schemeController
+                                                          .datevalue,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        helperText: '',
+                                                        border: OutlineInputBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10)),
+                                                        hintText: 'Dates',
+                                                      ),
+                                                      onChanged:
+                                                          (String? newValue) {
+                                                        schemeController
+                                                            .updateDatevalue(
+                                                                newValue!);
+                                                      },
+                                                      items: schemeController
+                                                          .sipdateModel!
+                                                          .sipDates!
+                                                          .map((int value) {
+                                                        return DropdownMenuItem<
+                                                            String>(
+                                                          value:
+                                                              value.toString(),
+                                                          child: Text(
+                                                            value.toString(),
+                                                          ),
+                                                        );
+                                                      }).toList(),
                                                     ),
-                                                  );
-                                                }).toList(),
-                                              ),
-                                              // child: TextFormField(
-                                              //   onTap: () {
-                                              //     showDialog(
-                                              //       context: context,
-                                              //       builder:
-                                              //           (BuildContext context) {
-                                              //         return AlertDialog(
-                                              //           title: const Text(
-                                              //               'Select Date'),
-                                              //           content: SizedBox(
-                                              //             // width: Adaptive.w(50),
-                                              //             child:
-                                              //                 DropdownButtonFormField<
-                                              //                     String>(
-                                              //               autovalidateMode:
-                                              //                   AutovalidateMode
-                                              //                       .onUserInteraction,
-                                              //               validator: (value) {
-                                              //                 if (value ==
-                                              //                     null) {
-                                              //                   return 'Please select a duration';
-                                              //                 }
-                                              //                 return null;
-                                              //               },
-                                              //               style: Theme.of(
-                                              //                       context)
-                                              //                   .textTheme
-                                              //                   .labelLarge!,
-                                              //               value:
-                                              //                   schemeController
-                                              //                       .datevalue,
-                                              //               decoration:
-                                              //                   InputDecoration(
-                                              //                 helperText: '',
-                                              //                 border: OutlineInputBorder(
-                                              //                     borderRadius:
-                                              //                         BorderRadius
-                                              //                             .circular(
-                                              //                                 10)),
-                                              //                 hintText: 'Dates',
-                                              //               ),
-                                              //               onChanged: (String?
-                                              //                   newValue) {
-                                              //                 schemeController
-                                              //                     .updateDatevalue(
-                                              //                         newValue!);
-                                              //               },
-                                              //               items:
-                                              //                   schemeController
-                                              //                       .sipdateModel!
-                                              //                       .sipDates!
-                                              //                       .map((int
-                                              //                           value) {
-                                              //                 return DropdownMenuItem<
-                                              //                     String>(
-                                              //                   value: value
-                                              //                       .toString(),
-                                              //                   child: Text(
-                                              //                     value
-                                              //                         .toString(),
-                                              //                   ),
-                                              //                 );
-                                              //               }).toList(),
-                                              //             ),
-                                              //           ),
-                                              //           actions: <Widget>[
-                                              //             TextButton(
-                                              //               onPressed: () {
-                                              //                 Navigator.of(
-                                              //                         context)
-                                              //                     .pop();
-                                              //               },
-                                              //               child: const Text(
-                                              //                 'Close',
-                                              //                 style: TextStyle(
-                                              //                     color: Color(
-                                              //                         0xFF4D84BD)),
-                                              //               ),
-                                              //             ),
-                                              //           ],
-                                              //         );
-                                              //       },
-                                              //     );
-                                              //   },
-                                              //   readOnly: true,
-                                              //   autovalidateMode:
-                                              //       AutovalidateMode
-                                              //           .onUserInteraction,
-                                              //   controller: schemeController
-                                              //       .dateController,
-                                              //   style: Theme.of(context)
-                                              //       .textTheme
-                                              //       .labelLarge!,
-                                              //   validator: (value) {
-                                              //     if (value == null ||
-                                              //         value.isEmpty) {
-                                              //       return 'Please select starting date';
-                                              //     }
+                                                    // child: TextFormField(
+                                                    //   onTap: () {
+                                                    //     showDialog(
+                                                    //       context: context,
+                                                    //       builder:
+                                                    //           (BuildContext context) {
+                                                    //         return AlertDialog(
+                                                    //           title: const Text(
+                                                    //               'Select Date'),
+                                                    //           content: SizedBox(
+                                                    //             // width: Adaptive.w(50),
+                                                    //             child:
+                                                    //                 DropdownButtonFormField<
+                                                    //                     String>(
+                                                    //               autovalidateMode:
+                                                    //                   AutovalidateMode
+                                                    //                       .onUserInteraction,
+                                                    //               validator: (value) {
+                                                    //                 if (value ==
+                                                    //                     null) {
+                                                    //                   return 'Please select a duration';
+                                                    //                 }
+                                                    //                 return null;
+                                                    //               },
+                                                    //               style: Theme.of(
+                                                    //                       context)
+                                                    //                   .textTheme
+                                                    //                   .labelLarge!,
+                                                    //               value:
+                                                    //                   schemeController
+                                                    //                       .datevalue,
+                                                    //               decoration:
+                                                    //                   InputDecoration(
+                                                    //                 helperText: '',
+                                                    //                 border: OutlineInputBorder(
+                                                    //                     borderRadius:
+                                                    //                         BorderRadius
+                                                    //                             .circular(
+                                                    //                                 10)),
+                                                    //                 hintText: 'Dates',
+                                                    //               ),
+                                                    //               onChanged: (String?
+                                                    //                   newValue) {
+                                                    //                 schemeController
+                                                    //                     .updateDatevalue(
+                                                    //                         newValue!);
+                                                    //               },
+                                                    //               items:
+                                                    //                   schemeController
+                                                    //                       .sipdateModel!
+                                                    //                       .sipDates!
+                                                    //                       .map((int
+                                                    //                           value) {
+                                                    //                 return DropdownMenuItem<
+                                                    //                     String>(
+                                                    //                   value: value
+                                                    //                       .toString(),
+                                                    //                   child: Text(
+                                                    //                     value
+                                                    //                         .toString(),
+                                                    //                   ),
+                                                    //                 );
+                                                    //               }).toList(),
+                                                    //             ),
+                                                    //           ),
+                                                    //           actions: <Widget>[
+                                                    //             TextButton(
+                                                    //               onPressed: () {
+                                                    //                 Navigator.of(
+                                                    //                         context)
+                                                    //                     .pop();
+                                                    //               },
+                                                    //               child: const Text(
+                                                    //                 'Close',
+                                                    //                 style: TextStyle(
+                                                    //                     color: Color(
+                                                    //                         0xFF4D84BD)),
+                                                    //               ),
+                                                    //             ),
+                                                    //           ],
+                                                    //         );
+                                                    //       },
+                                                    //     );
+                                                    //   },
+                                                    //   readOnly: true,
+                                                    //   autovalidateMode:
+                                                    //       AutovalidateMode
+                                                    //           .onUserInteraction,
+                                                    //   controller: schemeController
+                                                    //       .dateController,
+                                                    //   style: Theme.of(context)
+                                                    //       .textTheme
+                                                    //       .labelLarge!,
+                                                    //   validator: (value) {
+                                                    //     if (value == null ||
+                                                    //         value.isEmpty) {
+                                                    //       return 'Please select starting date';
+                                                    //     }
 
-                                              //     return null;
-                                              //   },
-                                              //   decoration: InputDecoration(
-                                              //     helperText: '',
-                                              //     border: OutlineInputBorder(
-                                              //         borderRadius:
-                                              //             BorderRadius.circular(
-                                              //                 10)),
-                                              //     hintText: 'Select the date',
-                                              //   ),
-                                              // ),
-                                            ),
+                                                    //     return null;
+                                                    //   },
+                                                    //   decoration: InputDecoration(
+                                                    //     helperText: '',
+                                                    //     border: OutlineInputBorder(
+                                                    //         borderRadius:
+                                                    //             BorderRadius.circular(
+                                                    //                 10)),
+                                                    //     hintText: 'Select the date',
+                                                    //   ),
+                                                    // ),
+                                                  ),
                                             HorizontalSpacer(2.w),
                                             SizedBox(
                                               // height: Adaptive.h(10.5),

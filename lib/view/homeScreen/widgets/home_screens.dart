@@ -34,7 +34,8 @@ class _ScreenHomeState extends State<ScreenHome> {
   @override
   void initState() {
     super.initState();
-
+    Provider.of<AchController>(context, listen: false).clickchangeButton =
+        false;
     Provider.of<DashBoardController>(context, listen: false).getusername();
     function();
   }
@@ -278,15 +279,15 @@ class _ScreenHomeState extends State<ScreenHome> {
                           child: Consumer<AchController>(
                               builder: (context, achController, _) {
                             return Visibility(
-                              // visible: dashBoardController
-                              //             .dashBoardModel
-                              //             ?.result
-                              //             ?.data
-                              //             ?.achmandate
-                              //             ?.achCompleted ==
-                              //         "Not completed"
-                              //     ? true
-                              //     : false,
+                              visible: dashBoardController
+                                          .dashBoardModel
+                                          ?.result
+                                          ?.data
+                                          ?.achmandate
+                                          ?.achCompleted ==
+                                      "Not completed"
+                                  ? true
+                                  : false,
                               child: Center(
                                 child: Card(
                                   elevation: 5,

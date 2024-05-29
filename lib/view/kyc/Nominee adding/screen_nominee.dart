@@ -1,4 +1,5 @@
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
+import 'package:finfresh_mobile/model/state%20model/state_model.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
 import 'package:finfresh_mobile/view/kyc/Nominee%20adding/Nominee%202/screen_nominee_2.dart';
@@ -21,6 +22,9 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
   @override
   void initState() {
     // TODO: implement initState
+    Provider.of<KycController>(context, listen: false).stateMasterDetailNom1 =
+        null;
+    Provider.of<KycController>(context, listen: false).fetchStateNom1();
     Provider.of<KycController>(context, listen: false).typevalue =
         'Select a type';
     Provider.of<KycController>(context, listen: false)
@@ -374,42 +378,68 @@ class _ScreenAddingNomineeState extends State<ScreenAddingNominee> {
                         ),
                       ),
                       VerticalSpacer(3.h),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              color: brightness == Brightness.dark
-                                  ? Colors.white
-                                  : Colors.black),
-                          borderRadius: BorderRadius.circular(8),
-                          color: brightness == Brightness.light
-                              ? Colors.white
-                              : const Color(0xFF0E1330),
+                      DropdownButtonFormField<StateMasterDetail>(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Please Select State ';
+                          }
+                          return null;
+                        },
+                        style: Theme.of(context).textTheme.labelLarge!,
+                        value: kycController.stateMasterDetailNom1,
+                        decoration: const InputDecoration(
+                          hintText: 'Select State ',
                         ),
-                        height: 60,
-                        // width: 120,
-                        width: double.infinity,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: DropdownButton(
-                            value: kycController.nominee1stateValue,
-                            isExpanded: true,
-                            underline: Container(
-                              height: 0,
+                        onChanged: (StateMasterDetail? newValue) {
+                          kycController.updateStatevalueNom1(newValue);
+                        },
+                        items: kycController.stateModelNom1?.masterDetails
+                            ?.map((StateMasterDetail value) {
+                          return DropdownMenuItem<StateMasterDetail>(
+                            value: value,
+                            child: Text(
+                              value.stateName.toString(),
                             ),
-                            items: kycController.stateList.map((String items) {
-                              return DropdownMenuItem(
-                                value: items,
-                                child: Text(
-                                  items,
-                                ),
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              kycController.updateNominee1StateValue(value);
-                            },
-                          ),
-                        ),
+                          );
+                        }).toList(),
                       ),
+                      // Container(
+                      //   decoration: BoxDecoration(
+                      //     border: Border.all(
+                      //         color: brightness == Brightness.dark
+                      //             ? Colors.white
+                      //             : Colors.black),
+                      //     borderRadius: BorderRadius.circular(8),
+                      //     color: brightness == Brightness.light
+                      //         ? Colors.white
+                      //         : const Color(0xFF0E1330),
+                      //   ),
+                      //   height: 60,
+                      //   // width: 120,
+                      //   width: double.infinity,
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.all(8.0),
+                      //     child: DropdownButton(
+                      //       value: kycController.nominee1stateValue,
+                      //       isExpanded: true,
+                      //       underline: Container(
+                      //         height: 0,
+                      //       ),
+                      //       items: kycController.stateList.map((String items) {
+                      //         return DropdownMenuItem(
+                      //           value: items,
+                      //           child: Text(
+                      //             items,
+                      //           ),
+                      //         );
+                      //       }).toList(),
+                      //       onChanged: (value) {
+                      //         kycController.updateNominee1StateValue(value);
+                      //       },
+                      //     ),
+                      //   ),
+                      // ),
                       VerticalSpacer(3.h),
                       Row(
                         mainAxisSize: MainAxisSize.min,

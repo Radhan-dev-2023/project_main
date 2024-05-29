@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:finfresh_mobile/controller/auth/auth_controller.dart';
 import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
+import 'package:finfresh_mobile/controller/goldController/gold_controller.dart';
 import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
@@ -308,6 +309,8 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                 SecureStorage.clearSecureStoragevalue('iin');
                 Provider.of<BiometricLogin>(context, listen: false)
                     .changeButtonEnabled(false);
+                Provider.of<GoldController>(context, listen: false)
+                    .formattedValue = '';
                 Provider.of<DashBoardController>(context, listen: false)
                     .currentIndex = 2;
                 Navigator.pushAndRemoveUntil(

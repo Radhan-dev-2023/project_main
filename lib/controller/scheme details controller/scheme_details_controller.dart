@@ -157,6 +157,7 @@ class SchemeDetailsController extends ChangeNotifier {
 
   String selectedValue = 'Investment type';
   final List<String> investmentType = ['Investment type', 'SIP', 'Lumpsum'];
+  final List<String> investmentTypeLumbpsum = ['Investment type', 'Lumpsum'];
   void updateSelectedValue(String? value) {
     selectedValue = value ?? '';
     notifyListeners();

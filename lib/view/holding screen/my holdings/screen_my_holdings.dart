@@ -156,6 +156,11 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                       children: [
                         InkWell(
                           onTap: () {
+                            log(
+                              holdingController.reportDetailsModel?.result
+                                      ?.schemecategory ??
+                                  '',
+                            );
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -164,7 +169,11 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                                             ?.result?.schemeName ??
                                         '',
                                     isinNumber: widget.isinNumber,
-                                    category: '',
+                                    category: holdingController
+                                            .reportDetailsModel
+                                            ?.result
+                                            ?.schemecategory ??
+                                        '',
                                   ),
                                 ));
                           },

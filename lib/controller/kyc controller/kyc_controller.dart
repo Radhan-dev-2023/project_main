@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:ffi';
 
 import 'package:finfresh_mobile/db/functions/db_functions.dart';
 import 'package:finfresh_mobile/db/model/investors_data_model.dart';
@@ -10,6 +9,7 @@ import 'package:finfresh_mobile/model/holding%20nature%20model/holding_nature_mo
 import 'package:finfresh_mobile/model/investors%20details/investors_details_model.dart';
 import 'package:finfresh_mobile/model/occupation%20model/occupation.dart';
 import 'package:finfresh_mobile/model/pincode%20model/pincode_model.dart';
+import 'package:finfresh_mobile/model/state%20model/state_model.dart';
 import 'package:finfresh_mobile/model/tax%20status%20model/tax_status_model.dart';
 import 'package:finfresh_mobile/services/get%20bank%20details/get_bank_details.dart';
 import 'package:finfresh_mobile/services/kyc/create_customer.dart';
@@ -146,6 +146,67 @@ class KycController extends ChangeNotifier {
     }
   }
 
+  String? stateCode;
+  StateModel? stateModel;
+  StateMasterDetail? stateMasterDetail;
+  Future<void> fetchState() async {
+    stateModel = await masterService.fetchStates();
+    notifyListeners();
+  }
+
+  String? stateCodeNome1;
+  StateModel? stateModelNom1;
+  StateMasterDetail? stateMasterDetailNom1;
+  Future<void> fetchStateNom1() async {
+    stateModelNom1 = await masterService.fetchStates();
+    notifyListeners();
+  }
+
+  String? stateCodeNom2;
+  StateModel? stateModelNom2;
+  StateMasterDetail? stateMasterDetailNomo2;
+  Future<void> fetchStateNom2() async {
+    stateModelNom2 = await masterService.fetchStates();
+    notifyListeners();
+  }
+
+  String? stateCodeNom3;
+  StateModel? stateModelNom3;
+  StateMasterDetail? stateMasterDetailNom3;
+  Future<void> fetchStateNom3() async {
+    stateModelNom2 = await masterService.fetchStates();
+    notifyListeners();
+  }
+
+  void updateStatevalue(value) {
+    stateMasterDetail = value;
+    stateValue = stateMasterDetail?.stateName ?? '';
+    stateCode = stateMasterDetail?.stateCode;
+    notifyListeners();
+  }
+
+  void updateStatevalueNom1(value) {
+    stateMasterDetailNom1 = value;
+    // stateValue = stateMasterDetail?.stateName ?? '';
+    stateCodeNome1 = stateMasterDetailNom1?.stateCode;
+    log(stateCodeNome1.toString());
+    notifyListeners();
+  }
+
+  void updateStatevalueNom2(value) {
+    stateMasterDetailNomo2 = value;
+    // stateValue = stateMasterDetail?.stateName ?? '';
+    stateCodeNom2 = stateMasterDetail?.stateCode;
+    notifyListeners();
+  }
+
+  void updateStatevalueNom3(value) {
+    stateMasterDetailNom3 = value;
+    // stateValue = stateMasterDetail?.stateName ?? '';
+    stateCodeNom3 = stateMasterDetail?.stateCode;
+    notifyListeners();
+  }
+
   void addAress(bool value) async {
     isChecked = value;
     notifyListeners();
@@ -156,7 +217,7 @@ class KycController extends ChangeNotifier {
       nominee1address1Controller.text = retrievedValue?.addr1 ?? '';
       nominee1address2Controller.text = retrievedValue?.addr2 ?? '';
       nominee1cityController.text = retrievedValue?.city ?? '';
-      nominee1stateValue = retrievedValue?.state ?? 'State';
+      // nominee1stateValue = retrievedValue?.state ?? 'State';
       nominee1CountryController.text = retrievedValue?.country ?? '';
       nominee1pincodeController.text = retrievedValue?.pincode ?? '';
       notifyListeners();
@@ -668,7 +729,7 @@ class KycController extends ChangeNotifier {
     nominee1panCotroller.clear();
     typevalue = "select a type";
     selectRelationValue = 'Select relation';
-    nominee1guardRelationvalue = "Select Guardian RelationShip";
+    // nominee1guardRelationvalue = "Select Guardian RelationShip";
     nominee1stateValue = 'State';
   }
 
@@ -871,7 +932,7 @@ class KycController extends ChangeNotifier {
       addr2: address2Controller.text,
       addr3: address3Controller.text,
       city: cityController.text,
-      state: stateValue,
+      state: stateCode,
       country: countryController.text,
       pincode: pinCodeController.text,
       resPhone: residencenumberController.text,
@@ -1025,6 +1086,7 @@ class KycController extends ChangeNotifier {
       ifscCode: retrievedValue?.ifscCode,
       bankName: bankCodeForCustomer,
       branchName: bankDeatilsModel?.bankDetails?.branch,
+      branchAddr1: addressForBank.text,
     );
     dbFunctions.addTodb(investorModel);
   }
@@ -1065,6 +1127,7 @@ class KycController extends ChangeNotifier {
       bankName: retrievedValue?.bankName,
 
       branchName: retrievedValue?.branchName,
+      branchAddr1: retrievedValue?.branchAddr1,
       accNo: retrievedValue?.accNo,
       accType: retrievedValue?.accType,
       jh1Name: retrievedValue?.jh1Name,
@@ -1116,7 +1179,7 @@ class KycController extends ChangeNotifier {
       nominee1Addr2: nominee1address2Controller.text,
       nominee1Addr3: nominee1address3Controller.text,
       nominee1City: nominee1cityController.text,
-      nominee1State: nominee1stateValue == 'State' ? '' : nominee1stateValue,
+      nominee1State: stateCodeNome1 ?? '',
       nominee1Pincode: nominee1pincodeController.text,
       // nominee1Relation: '',
       nominee1Relation:
@@ -1193,6 +1256,7 @@ class KycController extends ChangeNotifier {
       ifscCode: retrievedValue?.ifscCode,
       bankName: retrievedValue?.bankName,
       branchName: retrievedValue?.branchName,
+      branchAddr1: retrievedValue?.branchAddr1,
       accNo: retrievedValue?.accNo,
       accType: retrievedValue?.accType,
       jh1Name: retrievedValue?.jh1Name,
@@ -1318,6 +1382,7 @@ class KycController extends ChangeNotifier {
       ifscCode: retrievedValue?.ifscCode,
       bankName: retrievedValue?.bankName,
       branchName: retrievedValue?.branchName,
+      branchAddr1: retrievedValue?.branchAddr1,
       accNo: accountnumberCotroller.text,
       accType: accountypeToBackend ?? 'SB',
     );
@@ -1359,6 +1424,7 @@ class KycController extends ChangeNotifier {
       ifscCode: retrievedValue?.ifscCode,
       bankName: retrievedValue?.bankName,
       branchName: retrievedValue?.branchName,
+      branchAddr1: retrievedValue?.branchAddr1,
       accNo: retrievedValue?.accNo,
       accType: retrievedValue?.accType,
       jh1Name: jh1nameController.text,
@@ -1475,7 +1541,7 @@ class KycController extends ChangeNotifier {
       city: cityController.text.isEmpty
           ? retrievedValue?.city
           : cityController.text,
-      state: stateValue == 'State' ? retrievedValue?.state : stateValue,
+      state: retrievedValue?.state,
       // state: 'TN',
       pincode: pinCodeController.text.isEmpty
           ? retrievedValue?.pincode
@@ -1531,7 +1597,9 @@ class KycController extends ChangeNotifier {
           : ifscCodeController.text,
       branchName:
           bankDeatilsModel?.bankDetails?.branch ?? retrievedValue?.branchName,
-      branchAddr1: "String",
+      branchAddr1: addressForBank.text.isEmpty
+          ? retrievedValue?.branchAddr1
+          : addressForBank.text,
       branchAddr2: '',
       branchAddr3: '',
       branchCity: bankDeatilsModel?.bankDetails?.city ?? '',
@@ -1605,9 +1673,7 @@ class KycController extends ChangeNotifier {
       nominee1City: nominee1cityController.text.isEmpty
           ? retrievedValue?.nominee1City
           : nominee1cityController.text,
-      nominee1State: nominee1stateValue == 'State'
-          ? retrievedValue?.nominee1State
-          : nominee1stateValue,
+      nominee1State: stateCodeNome1 ?? retrievedValue?.nominee1State,
       nominee1Pincode: nominee1pincodeController.text.isEmpty
           ? retrievedValue?.nominee1Pincode
           : nominee1pincodeController.text,
@@ -1878,7 +1944,8 @@ class KycController extends ChangeNotifier {
     if (pincodeModel != null) {
       // Map<String, dynamic> jsonResponse = json.decode(holdingResponse);
       countryController.text = pincodeModel!.masterDetails!.country ?? '';
-      stateValue = pincodeModel!.masterDetails!.state ?? 'State';
+      stateMasterDetail?.stateName =
+          pincodeModel!.masterDetails!.state ?? 'State';
       cityController.text = pincodeModel!.masterDetails!.district ?? '';
 
       notifyListeners();

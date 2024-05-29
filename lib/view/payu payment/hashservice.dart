@@ -9,8 +9,8 @@ class HashService {
 //Find the test credentials from dev guide: https://devguide.payu.in/flutter-sdk-integration/getting-started-flutter-sdk/mobile-sdk-test-environment/
 //Keep the hash in backend for Security reasons.
   static const merchantSalt = "UlxBIVUX1cxVtYMIgJEkc1iJWnMbp1j1";
-  // "pBfJzti7i9Lgo5IYRb66d0faa00M46Zb";
-  //UlxBIVUX1cxVtYMIgJEkc1iJWnMbp1j1
+  // "pBfJzti7i9Lgo5IYRb66d0faa00M46Zb" test;
+  //UlxBIVUX1cxVtYMIgJEkc1iJWnMbp1j1 prod
   // // Add you Salt here.
   static const merchantSecretKey = ""; // Add Merchant Secrete Key - Optional
 

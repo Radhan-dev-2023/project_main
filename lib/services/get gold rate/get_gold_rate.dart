@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:finfresh_mobile/model/gold%20sell%20listing%20model/gold_sell_listing_model.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:finfresh_mobile/utilities/urls/url.dart';
@@ -175,5 +176,55 @@ class DigiGoldService {
     }
     // return null;
     return false;
+  }
+
+  GoldSellListingModel sellListingModel = GoldSellListingModel();
+  Future<GoldSellListingModel?> getSellGoldList(
+    context,
+  ) async {
+    String token = await SecureStorage.readToken('token');
+    String userId = await SecureStorage.readToken('userId');
+    String iin = await SecureStorage.readToken('customerId');
+    log(userId);
+    log(token);
+    log(iin);
+    String url = '${ApiEndpoint.baseUrl}/api/v1/soldgoldSearch';
+
+    Map<String, dynamic> payload = {
+      "iin": iin,
+    };
+    log('payload =$payload');
+    try {
+      http.Response response = await http.post(
+        Uri.parse(url),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'x-key': userId,
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(payload),
+      );
+      logger.d('get gold list==== ${response.body}');
+      Map<String, dynamic> jsonResponse = json.decode(response.body);
+      if (jsonResponse['status'] == 200) {
+        sellListingModel = GoldSellListingModel.fromJson(jsonResponse);
+        return sellListingModel;
+        // dashBoardModel = DashBoardModel.fromJson(jsonResponse);
+      } else if (jsonResponse['status'] == 500) {
+        showSnackBar(context, jsonResponse['message']);
+        // return null;
+        return null;
+      }
+    } on SocketException {
+      showSnackBar(context, 'No Internet Connection');
+      // return null;
+      return null;
+    } catch (e) {
+      logger.d('exception in get bank details $e');
+      // return null;
+      return null;
+    }
+    // return null;
+    return null;
   }
 }

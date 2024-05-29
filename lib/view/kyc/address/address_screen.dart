@@ -1,4 +1,5 @@
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
+import 'package:finfresh_mobile/model/state%20model/state_model.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
 import 'package:finfresh_mobile/view/kyc/nri%20address/nri_address_screen.dart';
@@ -20,6 +21,8 @@ class _ScreenAddressState extends State<ScreenAddress> {
   @override
   void initState() {
     Provider.of<KycController>(context, listen: false).updatePagenumber('5');
+    Provider.of<KycController>(context, listen: false).stateMasterDetail = null;
+    Provider.of<KycController>(context, listen: false).fetchState();
     // TODO: implement initState
     super.initState();
   }
@@ -139,42 +142,68 @@ class _ScreenAddressState extends State<ScreenAddress> {
                     ),
                   ),
                   VerticalSpacer(3.h),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          color: brightness == Brightness.dark
-                              ? Colors.white
-                              : Colors.black),
-                      borderRadius: BorderRadius.circular(8),
-                      color: brightness == Brightness.light
-                          ? Colors.white
-                          : const Color(0xFF0E1330),
+                  DropdownButtonFormField<StateMasterDetail>(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value) {
+                      if (value == null) {
+                        return 'Please Select State  ';
+                      }
+                      return null;
+                    },
+                    style: Theme.of(context).textTheme.labelLarge!,
+                    value: kycController.stateMasterDetail,
+                    decoration: const InputDecoration(
+                      hintText: 'Select State ',
                     ),
-                    height: 60,
-                    // width: 120,
-                    width: double.infinity,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: DropdownButton(
-                        value: kycController.stateValue,
-                        isExpanded: true,
-                        underline: Container(
-                          height: 0,
+                    onChanged: (StateMasterDetail? newValue) {
+                      kycController.updateStatevalue(newValue);
+                    },
+                    items: kycController.stateModel?.masterDetails
+                        ?.map((StateMasterDetail value) {
+                      return DropdownMenuItem<StateMasterDetail>(
+                        value: value,
+                        child: Text(
+                          value.stateName.toString(),
                         ),
-                        items: kycController.stateList.map((String items) {
-                          return DropdownMenuItem(
-                            value: items,
-                            child: Text(
-                              items,
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          kycController.updateStateValue(value);
-                        },
-                      ),
-                    ),
+                      );
+                    }).toList(),
                   ),
+                  // Container(
+                  //   decoration: BoxDecoration(
+                  //     border: Border.all(
+                  //         color: brightness == Brightness.dark
+                  //             ? Colors.white
+                  //             : Colors.black),
+                  //     borderRadius: BorderRadius.circular(8),
+                  //     color: brightness == Brightness.light
+                  //         ? Colors.white
+                  //         : const Color(0xFF0E1330),
+                  //   ),
+                  //   height: 60,
+                  //   // width: 120,
+                  //   width: double.infinity,
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.all(8.0),
+                  //     child: DropdownButton(
+                  //       value: kycController.stateValue,
+                  //       isExpanded: true,
+                  //       underline: Container(
+                  //         height: 0,
+                  //       ),
+                  //       items: kycController.stateList.map((String items) {
+                  //         return DropdownMenuItem(
+                  //           value: items,
+                  //           child: Text(
+                  //             items,
+                  //           ),
+                  //         );
+                  //       }).toList(),
+                  //       onChanged: (value) {
+                  //         kycController.updateStateValue(value);
+                  //       },
+                  //     ),
+                  //   ),
+                  // ),
                   VerticalSpacer(3.h),
                   Row(
                     mainAxisSize: MainAxisSize.min,
@@ -311,7 +340,7 @@ class _ScreenAddressState extends State<ScreenAddress> {
                           onPressed: () {
                             if (kycController.addressFormkey.currentState!
                                 .validate()) {
-                              if (kycController.stateValue != "State") {
+                              // if (kycController.stateValue != "State") {
                                 kycController.addAddress();
                                 Navigator.push(
                                   context,
@@ -320,10 +349,10 @@ class _ScreenAddressState extends State<ScreenAddress> {
                                         const ScreenNriAdress(),
                                   ),
                                 );
-                              } else {
-                                showSnackBar(context,
-                                    'Enter the All The Mandatory Fields');
-                              }
+                              // } else {
+                              //   showSnackBar(context,
+                              //       'Enter the All The Mandatory Fields');
+                              // }
                             } else {
                               showAlertDialog(context);
                             }
@@ -346,17 +375,17 @@ class _ScreenAddressState extends State<ScreenAddress> {
       floatingActionButton: ButtonWidget(
         onTap: () {
           if (kycController.addressFormkey.currentState!.validate()) {
-            if (kycController.stateValue != "State") {
-              kycController.addAddress();
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ScreenAddingParentDetails(),
-                ),
-              );
-            } else {
-              showSnackBar(context, 'Please select a state');
-            }
+            // if (kycController.stateValue != "State") {
+            kycController.addAddress();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ScreenAddingParentDetails(),
+              ),
+            );
+            // } else {
+            //   showSnackBar(context, 'Please select a state');
+            // }
           }
         },
         btName: 'Continue'.toUpperCase(),

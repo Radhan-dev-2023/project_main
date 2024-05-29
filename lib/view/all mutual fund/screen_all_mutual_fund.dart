@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:finfresh_mobile/controller/top%20MFs%20controller/top_mfs_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
+import 'package:finfresh_mobile/view/all%20mutual%20fund/widget/search_feild.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/stock_detail_screen.dart';
 import 'package:finfresh_mobile/view/top%20mfs/widget/duration_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
@@ -18,12 +19,17 @@ class ScreenAllMutualFund extends StatefulWidget {
   State<ScreenAllMutualFund> createState() => _ScreenAllMutualFundState();
 }
 
+final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
 class _ScreenAllMutualFundState extends State<ScreenAllMutualFund> {
   @override
   void initState() {
     super.initState();
+    log('calling init');
     Provider.of<TopMFsController>(context, listen: false)
         .callinginInit(context);
+    Provider.of<TopMFsController>(context, listen: false)
+        .getSchemeAllCategory(context);
   }
 
   @override
@@ -32,13 +38,13 @@ class _ScreenAllMutualFundState extends State<ScreenAllMutualFund> {
       appBar: AppBar(
         title: const Text('Mutual Funds'),
         actions: [
-          GestureDetector(
+          InkWell(
             onTap: () {
               showModalBottomSheet(
                 context: context,
                 builder: (BuildContext context) {
                   return Consumer<TopMFsController>(
-                      builder: (context, topMfsController, _) {
+                      builder: (context, snapshot, _) {
                     return Container(
                       child: Center(
                         child: Column(
@@ -61,24 +67,18 @@ class _ScreenAllMutualFundState extends State<ScreenAllMutualFund> {
                               child: ListView.separated(
                                 itemBuilder: (context, index) {
                                   return ListTile(
-                                    title: Text(
-                                        topMfsController.categoryList[index]),
+                                    title: Text(snapshot.categoryList[index]),
                                     trailing: Checkbox(
                                       checkColor: Colors.white,
                                       activeColor: const Color(0xFF4D84BD),
-                                      value: topMfsController.currentIndex ==
-                                          index,
+                                      value: snapshot.currentIndex == index,
                                       onChanged: (bool? value) {
-                                        if (value != null && value) {
-                                          topMfsController
-                                              .changeCurrentIndex(index);
-                                          topMfsController.getTopMfsFRomPeriod(
-                                              context,
-                                              topMfsController
-                                                  .categoryList[index]);
+                                        if (value != null) {
+                                          snapshot.changeCurrentIndex(index);
+                                          snapshot.getTopMfsFRomPeriod(context,
+                                              snapshot.categoryList[index]);
                                         } else {
-                                          topMfsController
-                                              .changeCurrentIndex(-1);
+                                          snapshot.changeCurrentIndex(-1);
                                         }
                                         Navigator.pop(context);
                                         // topMfsController
@@ -95,7 +95,7 @@ class _ScreenAllMutualFundState extends State<ScreenAllMutualFund> {
                                 },
                                 separatorBuilder: (context, index) =>
                                     VerticalSpacer(0.h),
-                                itemCount: topMfsController.categoryList.length,
+                                itemCount: snapshot.categoryList.length,
                               ),
                             )
                             // ElevatedButton(
@@ -118,52 +118,54 @@ class _ScreenAllMutualFundState extends State<ScreenAllMutualFund> {
           HorizontalSpacer(2.w),
         ],
       ),
-      body: Container(
-        // margin: EdgeInsets.all(15.sp),
-        child: Consumer<TopMFsController>(
-            builder: (context, topMfsController, child) {
-          if (topMfsController.loading == true) {
-            return const LoadingWidget();
-          } else {
-            return Column(
+      body: Consumer<TopMFsController>(
+          builder: (context, topMfsController, child) {
+        if (topMfsController.loading == true) {
+          return const LoadingWidget();
+        } else {
+          return Form(
+            key: formKey,
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // SearchField(),
                 Padding(
                   padding: EdgeInsets.only(left: 15.sp, right: 15.sp),
                   child: Container(
-                    height: Adaptive.h(5),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.sp),
-                        border: Border.all(
-                            color: const Color.fromARGB(255, 192, 191, 191))),
-                    child: TextFormField(
-                      controller: topMfsController.queryController,
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelLarge!
-                          .copyWith(fontSize: 16.sp),
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      decoration: InputDecoration(
-                        // helperText: '',
-                        prefixIcon: Icon(
-                          Icons.search,
-                          size: Adaptive.h(2.3),
+                      height: Adaptive.h(5),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15.sp),
+                          border: Border.all(
+                              color: const Color.fromARGB(255, 192, 191, 191))),
+                      child: TextFormField(
+                        controller: topMfsController.queryController,
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelLarge!
+                            .copyWith(fontSize: 16.sp),
+                        // autovalidateMode: AutovalidateMode.onUserInteraction,
+                        decoration: InputDecoration(
+                          // helperText: '',
+                          prefixIcon: Icon(
+                            Icons.search,
+                            size: Adaptive.h(2.3),
+                          ),
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide.none, // Focus border color
+                          ),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide.none),
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 12.0.sp),
+                          hintText: 'Search',
                         ),
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide.none, // Focus border color
-                        ),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide.none),
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: 12.0.sp),
-                        hintText: 'Search',
-                      ),
-                      onChanged: (value) {
-                        topMfsController.searchItems();
-                      },
-                    ),
-                  ),
+                        onChanged: (value) {
+                          if (value.isNotEmpty) {
+                            topMfsController.searchItems();
+                          }
+                        },
+                      )),
                 ),
                 VerticalSpacer(Adaptive.h(2)),
                 Padding(
@@ -440,10 +442,10 @@ class _ScreenAllMutualFundState extends State<ScreenAllMutualFund> {
                             ),
                 ),
               ],
-            );
-          }
-        }),
-      ),
+            ),
+          );
+        }
+      }),
     );
   }
 }

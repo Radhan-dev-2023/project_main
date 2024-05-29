@@ -192,8 +192,8 @@ class _ScreenBuyState extends State<ScreenBuy>
                 InkWell(
                   onTap: () async {
                     if (goldController.buygoldrateController.text.isNotEmpty) {
-                      //"TB7WBn",
-                      // ijiPG7
+                      //"TB7WBn"test,
+                      // ijiPG7 prod
                       goldController.generateSSID();
                       goldController.calulateWithGstAmount();
                       // Provider.of<GoldController>(context, listen: false)

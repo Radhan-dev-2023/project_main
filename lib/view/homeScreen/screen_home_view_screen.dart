@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
 import 'package:finfresh_mobile/controller/goldController/gold_controller.dart';
-import 'package:finfresh_mobile/view/all%20mutual%20fund/screen_all_mutual_fund.dart';
 import 'package:finfresh_mobile/view/digi%20gold%20screen/digi_gold_screen.dart';
 import 'package:finfresh_mobile/view/digi%20gold%20screen/gold%20buying%20screen/screen_gold_buying_selling.dart';
 import 'package:finfresh_mobile/view/homeScreen/widgets/home_screens.dart';
@@ -36,18 +35,21 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
     } else {
       _currentIndex =
           Provider.of<DashBoardController>(context, listen: false).currentIndex;
+      log(_currentIndex.toString());
+
       _currentIndex = _currentIndex;
       indexfor = _currentIndex;
+      // _controller = NotchBottomBarController(index: _currentIndex);
     }
   }
 
-  final _controller = NotchBottomBarController(index: _currentIndex);
   // final _pageController = PageController(initialPage: 2);
   @override
   Widget build(BuildContext context) {
+    final _controller = NotchBottomBarController(index: _currentIndex);
     final goldProvider = Provider.of<GoldController>(context);
 
-    Brightness platformBrightness = MediaQuery.of(context).platformBrightness;
+    // Brightness platformBrightness = MediaQuery.of(context).platformBrightness;
     final List<Widget> bottomBarPages = [
       const ScreenMutualFund(),
       goldProvider.isCompletedGoldPurchase == 'true' ||
@@ -183,7 +185,10 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
         extendBody: true,
         body: bottomBarPages[_currentIndex],
         bottomNavigationBar: AnimatedNotchBottomBar(
-          notchColor: Color(0xFF060B27),
+          kBottomRadius: 0,
+
+          kIconSize: 27,
+          notchColor: const Color(0xFF060B27),
           showShadow: false,
           blurFilterX: 0,
           blurFilterY: 0,
