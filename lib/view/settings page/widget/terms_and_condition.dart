@@ -69,8 +69,8 @@ class TermsAndCondition extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        const ScreenWebview(url: 'https://finfresh.in/refund'),
+                    builder: (context) => const ScreenWebview(
+                        url: 'https://www.finfresh.in/rcp.php'),
                   ));
             },
           ),
@@ -123,7 +123,7 @@ class TermsAndCondition extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => const ScreenWebview(
-                        url: 'https://finfresh.in/privacy-policy'),
+                        url: 'https://www.finfresh.in/privacy_policy.php'),
                   ));
             },
             trailing: Icon(
@@ -181,7 +181,7 @@ class TermsAndCondition extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => const ScreenWebview(
-                      url: 'https://finfresh.in/terms-of-use',
+                      url: 'https://www.finfresh.in/terms.php',
                     ),
                   ));
             },
@@ -228,19 +228,27 @@ class TermsAndCondition extends StatelessWidget {
                     letterSpacing: 3.sp,
                   ),
             ),
-            subtitle: Text(
-              'info@finfresh.in',
-              style: Theme.of(context)
-                  .textTheme
-                  .labelLarge!
-                  .copyWith(color: Colors.grey),
-            ),
-            onTap: () {},
-            // trailing: Icon(
-            //   Icons.arrow_forward_ios,
-            //   size: 15.sp,
-            //   color: Colors.grey,
+            // subtitle: Text(
+            //   'info@finfresh.in',
+            //   style: Theme.of(context)
+            //       .textTheme
+            //       .labelLarge!
+            //       .copyWith(color: Colors.grey),
             // ),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ScreenWebview(
+                      url: 'https://www.finfresh.in/#contact',
+                    ),
+                  ));
+            },
+            trailing: Icon(
+              Icons.arrow_forward_ios,
+              size: 15.sp,
+              color: Colors.grey,
+            ),
           ),
         ],
       ),

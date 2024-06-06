@@ -103,7 +103,7 @@ class _ScreenOtpState extends State<ScreenOtp> {
                   ),
                   VerticalSpacer(2.h),
                   Text(
-                    'Enter the verification code sent to your number',
+                    'Enter the otp recieved via call',
                     style: Theme.of(context)
                         .textTheme
                         .labelMedium!
@@ -164,7 +164,7 @@ class _ScreenOtpState extends State<ScreenOtp> {
                           ),
                           VerticalSpacer(1.h),
                           Text(
-                            "You can request OTP again in ${snapshot.start} secs",
+                            "You can request OTP again in ${snapshot.formattedTime} minutes",
                             style: Theme.of(context)
                                 .textTheme
                                 .labelMedium!

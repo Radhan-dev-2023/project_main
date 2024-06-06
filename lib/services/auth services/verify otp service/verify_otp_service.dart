@@ -14,6 +14,7 @@ class VerifyOtp {
   // }
 
   static Future<bool> verifyOtp(String phoneNumber, String otp, context) async {
+    log('calling');
     final url = Uri.parse('${ApiEndpoint.baseUrl}/v1/otp/verify');
     Map<String, dynamic> payload = {
       "phoneNumber": phoneNumber,

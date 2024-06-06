@@ -5,9 +5,12 @@ import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_
 import 'package:finfresh_mobile/controller/goldController/gold_controller.dart';
 import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
+import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:finfresh_mobile/view/onboarding%20screen/on_boarding_view_screen.dart';
 import 'package:finfresh_mobile/view/settings%20page/widget/terms_and_condition.dart';
+import 'package:finfresh_mobile/view/stock%20details%20screen/widgets/overview_in_tabbar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -85,7 +88,7 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                             width: 10.w,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.sp),
-                              color: Color(0xFF0E1330),
+                              color: const Color(0xFF0E1330),
                             ),
                             child: const Icon(
                               Icons.person,
@@ -125,7 +128,7 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                           width: 10.w,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.sp),
-                            color: Color(0xFF0E1330),
+                            color: const Color(0xFF0E1330),
                           ),
                           child: const Icon(
                             Icons.mobile_friendly,
@@ -166,7 +169,7 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                             width: 10.w,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.sp),
-                              color: Color(0xFF0E1330),
+                              color: const Color(0xFF0E1330),
                             ),
                             child: const Icon(
                               Icons.email,
@@ -206,7 +209,119 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                             width: 10.w,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.sp),
-                              color: Color(0xFF0E1330),
+                              color: const Color(0xFF0E1330),
+                            ),
+                            child: const Icon(
+                              Icons.delete_forever_outlined,
+                              color: Colors.white,
+                            )),
+                        title: Text(
+                          'Delete Account',
+                          style:
+                              Theme.of(context).textTheme.labelLarge!.copyWith(
+                                    fontSize: 17.sp,
+                                    fontWeight: FontWeight.w400,
+                                    letterSpacing: 3.sp,
+                                  ),
+                        ),
+                        subtitle: Text(
+                          'Delete your account',
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelLarge!
+                              .copyWith(color: Colors.grey),
+                        ),
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text("Account Deletion"),
+                                content: const Text(
+                                    "Are you sure you want to delete your account? This action cannot be undone."),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: const CustomTextWidget(
+                                      text: "Cancel",
+                                      // fontWeight: FontWeight.bold,
+                                      color: Color(0xFF4D84BD),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).pop(false);
+                                    },
+                                  ),
+                                  TextButton(
+                                    child:
+                                        dashBoardController.loadingPage == true
+                                            ? const CupertinoActivityIndicator(
+                                                color: Color(0xFF4D84BD),
+                                              )
+                                            : const CustomTextWidget(
+                                                text: "Delete",
+                                                // fontWeight: FontWeight.bold,
+                                                color: Color(0xFF4D84BD),
+                                              ),
+                                    onPressed: () async {
+                                      bool result = await dashBoardController
+                                          .deleteaccount(context);
+                                      if (result == true) {
+                                        // settingsController.image = null;
+
+                                        SecureStorage.clearSecureStoragevalue(
+                                            'token');
+                                        SecureStorage.clearSecureStoragevalue(
+                                            'username');
+                                        SecureStorage.clearSecureStoragevalue(
+                                            'iin');
+                                        Provider.of<BiometricLogin>(context,
+                                                listen: false)
+                                            .changeButtonEnabled(false);
+                                        Provider.of<GoldController>(context,
+                                                listen: false)
+                                            .formattedValue = '';
+                                        Provider.of<DashBoardController>(
+                                                context,
+                                                listen: false)
+                                            .currentIndex = 2;
+                                        Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const BoardingViewScreen(),
+                                          ),
+                                          (route) => false,
+                                        );
+                                        Provider.of<AuthController>(context,
+                                                listen: false)
+                                            .clearTheControllerValue();
+                                        showFlushbar(
+                                          context,
+                                          "Account deleted successfully",
+                                        );
+                                      }
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 33.sp),
+                        child: const Divider(
+                          height: 1,
+                          color: Color.fromARGB(255, 219, 217, 217),
+                          thickness: 1,
+                        ),
+                      ),
+                      ListTile(
+                        leading: Container(
+                            height: 5.h,
+                            width: 10.w,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.sp),
+                              color: const Color(0xFF0E1330),
                             ),
                             child: const Icon(
                               Icons.edit_document,
@@ -246,7 +361,7 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                             width: 10.w,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.sp),
-                              color: Color(0xFF0E1330),
+                              color: const Color(0xFF0E1330),
                             ),
                             child: const Icon(
                               Icons.fingerprint,
@@ -262,7 +377,7 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                                   ),
                         ),
                         subtitle: Text(
-                          'Enable Fringerprint',
+                          'Enable Fingerprint',
                           style: Theme.of(context)
                               .textTheme
                               .labelLarge!

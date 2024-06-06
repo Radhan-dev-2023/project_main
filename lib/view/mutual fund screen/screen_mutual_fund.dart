@@ -78,7 +78,7 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
                             wigetInTrailing: const SizedBox(),
                             imageList: topMfsController.sipUnder500Logo,
                             isinList: topMfsController.isinForSip500,
-                            categoryList: topMfsController.categoryList,
+                            categoryList: topMfsController.categorySip,
                           ),
                           WigetForTopPIcksAndGoals(
                             title: 'Finfresh pick',

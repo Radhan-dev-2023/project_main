@@ -47,6 +47,11 @@ class AchController extends ChangeNotifier {
     }
   }
 
+  void achTodate() {
+    todateController.text = '31-Dec-2999';
+    notifyListeners();
+  }
+
   void updateProcessMode(String newValue) {
     processmodevalue = newValue;
     notifyListeners();

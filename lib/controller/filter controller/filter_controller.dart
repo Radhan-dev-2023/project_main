@@ -91,7 +91,7 @@ class FilterController extends ChangeNotifier {
       await refershTokenService.postRefershTocken(context);
       fliterModel =
           await filterService.fetchFilterdata(typeList, statusList, context);
-      filteredList = fliterModel?.result ?? [];
+      filteredList = fliterModel?.result?.reversed.toList() ?? [];
       log('filtere list =$filteredList');
       filterPageLoading = false;
       notifyListeners();
@@ -128,6 +128,4 @@ class FilterController extends ChangeNotifier {
     failedvalue = false;
     searchController.clear();
   }
-
-  
 }

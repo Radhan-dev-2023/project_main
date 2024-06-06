@@ -319,7 +319,7 @@ class ScreeenTranscations extends StatelessWidget {
         return Colors.yellow;
       case 'Processed by RTA':
         return Colors.green;
-      case 'Failed':
+      case 'Rejected / Reversal':
         return Colors.red;
       default:
         return Colors.black; // Default color if status is unknown

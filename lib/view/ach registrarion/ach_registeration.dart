@@ -1,4 +1,5 @@
 import 'package:finfresh_mobile/controller/achController/ach_controller.dart';
+import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/webview/screen_webview.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
@@ -67,6 +68,11 @@ class ScreenAchRegistration extends StatelessWidget {
                     ),
                     onChanged: (String? newValue) {
                       achController.updateCancelValue(newValue ?? '');
+                      if (newValue == 'Yes') {
+                        achController.achTodate();
+                      } else {
+                        achController.todateController.clear();
+                      }
                     },
                     items: achController.cancellist.map((String value) {
                       return DropdownMenuItem<String>(
@@ -198,6 +204,7 @@ class ScreenAchRegistration extends StatelessWidget {
 class CustomDateWidget extends StatelessWidget {
   final String hittext;
   final TextEditingController controller;
+
   const CustomDateWidget({
     super.key,
     required this.hittext,
@@ -214,6 +221,7 @@ class CustomDateWidget extends StatelessWidget {
           initialDate: DateTime.now(),
           firstDate: DateTime.now(),
           lastDate: DateTime(2999),
+          initialEntryMode: DatePickerEntryMode.calendarOnly,
           builder: (context, child) {
             return Theme(
               data: Theme.of(context).copyWith(

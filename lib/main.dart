@@ -153,6 +153,8 @@ class MyApp extends StatelessWidget {
           theme: isDarkMode ? AppTheme.darkTheme : AppTheme.lightTheme,
           // darkTheme: AppTheme.darkTheme,
           home: const SplashScreen(),
+          // home: const ScreenSignin(),
+
           // home: PayUPayment(),
           // home: ScreenSetPinNumber(),
           // home: ScreenGuardianAdding(),
@@ -173,7 +175,7 @@ class MyApp extends StatelessWidget {
           // home: ScreenAddingParentDetails(),
           // home: ScreenJointHolders(),
           // home: ScreenOtp(title: 'sign up'),
-          //  home: const AddingNomineeAndGuadianScreen(),
+          // home: const AddingNomineeAndGuadianScreen(),
           // home: const ScreenUploadinProofs(),
           // home: ScreenBankAccountNumber(),
           //  home: const ScreenIfcAdding(),

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:finfresh_mobile/model/dash%20Board%20Model/dash_board_model.dart';
 import 'package:finfresh_mobile/model/summary%20model/summary_model.dart';
 import 'package:finfresh_mobile/services/dash%20board%20Services/dash_board_services.dart';
+import 'package:finfresh_mobile/services/delete%20account/delete_account.dart';
 import 'package:finfresh_mobile/services/refersh%20token/refersh_token.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
@@ -11,6 +12,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 
 class DashBoardController extends ChangeNotifier {
   DasBoardService dashBoardService = DasBoardService();
+  DeleteAccountService deleteAccountService = DeleteAccountService();
   DashBoardModel? dashBoardModel;
   bool loadingDashboard = false;
   RefershTokenService refershTokenService = RefershTokenService();
@@ -119,6 +121,15 @@ class DashBoardController extends ChangeNotifier {
     }
   }
 
+  bool loadingPage = false;
+  Future<bool> deleteaccount(context) async {
+    loadingPage = true;
+    notifyListeners();
+    bool result = await deleteAccountService.deleteAccount(context);
+    loadingPage = false;
+    notifyListeners();
+    return result;
+  }
   // Future<void> callBothFunction(context) async {
   //   await getDashBoardDetails(context);
   //   await getSummary(context);

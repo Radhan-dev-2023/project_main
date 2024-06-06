@@ -155,7 +155,12 @@ class _ScreenGoldBuyingAndSellingState
                       ),
                     ),
                     goldController.goldlistingmodel == null
-                        ? const SizedBox()
+                        ? SizedBox(
+                            height: Adaptive.h(22),
+                            child: const Center(
+                              child: Text('No data found'),
+                            ),
+                          )
                         : SizedBox(
                             child: ListView.separated(
                                 padding: EdgeInsets.all(15.sp),
@@ -307,7 +312,7 @@ class _ScreenGoldBuyingAndSellingState
                                       ?.data
                                       ?.name ==
                                   'SHANMUGA BHUVANESWAR RAMALINGAM'
-                              ? true
+                              ? false
                               : false,
                           child: InkWell(
                             onTap: () {
@@ -446,11 +451,18 @@ class _ScreenGoldBuyingAndSellingState
                         HorizontalSpacer(3.w),
                         InkWell(
                           onTap: () {
-                            Navigator.push(
+                            if (goldController.goldvalue == null) {
+                              showFlushbar(
                                 context,
-                                MaterialPageRoute(
-                                  builder: (context) => const ScreenBuy(),
-                                ));
+                                'The gold buy rate is not added',
+                              );
+                            } else {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const ScreenBuy(),
+                                  ));
+                            }
                           },
                           child: Container(
                             height: Adaptive.h(5),
@@ -473,12 +485,19 @@ class _ScreenGoldBuyingAndSellingState
                         HorizontalSpacer(3.w),
                         InkWell(
                           onTap: () {
-                            Navigator.push(
+                            if (goldController.sellrate == null) {
+                              showFlushbar(
                                 context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ScreenListingGold(),
-                                ));
+                                'The gold sell rate is not added',
+                              );
+                            } else {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ScreenListingGold(),
+                                  ));
+                            }
                           },
                           child: Container(
                             height: Adaptive.h(5),

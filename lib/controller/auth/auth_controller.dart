@@ -131,7 +131,7 @@ class AuthController extends ChangeNotifier {
     dbFunctions.addTodb(investorModel);
   }
 
-  int _start = 60;
+  int _start = 120;
   bool _isButtonDisabled = true;
   Timer? _timer;
 
@@ -139,7 +139,7 @@ class AuthController extends ChangeNotifier {
   bool get isButtonDisabled => _isButtonDisabled;
 
   void startTimer() {
-    _start = 60;
+    _start = 120;
     _isButtonDisabled = true;
     _timer?.cancel(); // Cancel previous timer if any
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -151,5 +151,11 @@ class AuthController extends ChangeNotifier {
       }
       notifyListeners();
     });
+  }
+
+  String get formattedTime {
+    int minutes = _start ~/ 60;
+    int seconds = _start % 60;
+    return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
   }
 }

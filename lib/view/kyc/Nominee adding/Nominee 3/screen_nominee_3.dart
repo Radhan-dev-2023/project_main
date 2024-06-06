@@ -162,6 +162,29 @@ class _ScreenNominee3State extends State<ScreenNominee3> {
                       initialDate: DateTime.now(),
                       firstDate: DateTime(1900),
                       lastDate: DateTime.now(),
+                      initialEntryMode: DatePickerEntryMode.calendarOnly,
+                      builder: (context, child) {
+                        return Theme(
+                          data: Theme.of(context).copyWith(
+                            primaryTextTheme: TextTheme(
+                                bodyMedium: TextStyle(fontSize: 15.sp),
+                                bodyLarge: TextStyle(fontSize: 15.sp)),
+                            colorScheme: const ColorScheme.light(
+                              primary:
+                                  Color(0xFF4D84BD), // header background color
+                              onPrimary: Colors.white, // header text color
+                              onSurface: Colors.black, // body text color
+                            ),
+                            textButtonTheme: TextButtonThemeData(
+                              style: TextButton.styleFrom(
+                                foregroundColor: const Color(
+                                    0xFF4D84BD), // button text color
+                              ),
+                            ),
+                          ),
+                          child: child!,
+                        );
+                      },
                     );
                     if (picked != null) {
                       String selectdate =

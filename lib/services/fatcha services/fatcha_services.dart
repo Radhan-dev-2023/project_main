@@ -96,7 +96,7 @@ class FatchaServices {
         "ubo_tin_no": uboTinNumber //refer transaction api document
       }
     };
-
+    log('payload of fatch is $payload');
     try {
       http.Response response = await http.post(
         Uri.parse(url),

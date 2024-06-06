@@ -241,7 +241,7 @@ class TopMFsController extends ChangeNotifier {
     'INF955L01KH7',
     'INF204K01AE0',
   ];
-  List<String> categorySip500 = [
+  List<String> categorySip = [
     'Equity: Small Cap',
     'Index Fund',
     'Equity: Sectoral-Infrastructure',
@@ -303,7 +303,7 @@ class TopMFsController extends ChangeNotifier {
     'INF179K01BB8',
     'INF277K01I52',
     'INF00XX01374',
-    ' INF044D01AC9',
+    'INF044D01AC9',
   ];
   List<String> taxSavingIntopPicksLogo = [
     'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/quant.png',

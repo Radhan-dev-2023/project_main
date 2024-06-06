@@ -131,7 +131,7 @@ class FatchaRegistrationController extends ChangeNotifier {
     sponservalue = null;
     gendervalue = null;
     pepvalue = null;
-    identityValue = null;
+    // identityValue = null;
     uboIdentity = null;
     taxresidencyValue = null;
     addressvalue = null;
@@ -172,6 +172,12 @@ class FatchaRegistrationController extends ChangeNotifier {
       log('value === $pepvalue');
       pepValuetobackend = "R";
     }
+  }
+
+  void intialvalueofIdentity() {
+    identityValue = 'PAN Card';
+    identitytoBackend = 'C';
+    notifyListeners();
   }
 
   void updatetheIdentitytype(value) {

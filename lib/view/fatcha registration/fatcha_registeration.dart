@@ -27,6 +27,8 @@ class _ScreenFatchaRegistrationState extends State<ScreenFatchaRegistration> {
   void initState() {
     super.initState();
     Provider.of<FatchaRegistrationController>(context, listen: false)
+        .intialvalueofIdentity();
+    Provider.of<FatchaRegistrationController>(context, listen: false)
         .incomeModelMaster = null;
     Provider.of<FatchaRegistrationController>(context, listen: false)
         .sourceWealth = null;
@@ -333,14 +335,14 @@ class _ScreenFatchaRegistrationState extends State<ScreenFatchaRegistration> {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value == null) {
-                        return 'Please Select Tax Residency ';
+                        return 'Please Select Foreign Tax Residency ';
                       }
                       return null;
                     },
                     style: Theme.of(context).textTheme.labelLarge!,
                     value: fatchRegitration.taxresidencyValue,
-                    decoration:
-                        const InputDecoration(hintText: 'Tax Residency'),
+                    decoration: const InputDecoration(
+                        hintText: 'Foreign Tax Residency'),
                     onChanged: (String? newValue) {
                       fatchRegitration.updateTaxresidencyValue(newValue);
                     },
@@ -493,30 +495,30 @@ class _ScreenFatchaRegistrationState extends State<ScreenFatchaRegistration> {
                   //   }).toList(),
                   // ),
                   VerticalSpacer(2.h),
-                  DropdownButtonFormField<String>(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please Select Stock Exchange ';
-                      }
-                      return null;
-                    },
-                    style: Theme.of(context).textTheme.labelLarge!,
-                    value: fatchRegitration.stockvalue,
-                    decoration: const InputDecoration(
-                        hintText: 'Select Stock Exchange'),
-                    onChanged: (String? newValue) {
-                      // schemeController.updatePaymentMode(newValue);
-                    },
-                    items: fatchRegitration.stockList.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                        ),
-                      );
-                    }).toList(),
-                  ),
+                  // DropdownButtonFormField<String>(
+                  //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                  //   validator: (value) {
+                  //     if (value == null || value.isEmpty) {
+                  //       return 'Please Select Stock Exchange ';
+                  //     }
+                  //     return null;
+                  //   },
+                  //   style: Theme.of(context).textTheme.labelLarge!,
+                  //   value: fatchRegitration.stockvalue,
+                  //   decoration: const InputDecoration(
+                  //       hintText: 'Select Stock Exchange'),
+                  //   onChanged: (String? newValue) {
+                  //     // schemeController.updatePaymentMode(newValue);
+                  //   },
+                  //   items: fatchRegitration.stockList.map((String value) {
+                  //     return DropdownMenuItem<String>(
+                  //       value: value,
+                  //       child: Text(
+                  //         value,
+                  //       ),
+                  //     );
+                  //   }).toList(),
+                  // ),
                   // VerticalSpacer(2.h),
                   // DropdownButtonFormField<String>(
                   //   style: Theme.of(context).textTheme.labelLarge!,
@@ -571,207 +573,207 @@ class _ScreenFatchaRegistrationState extends State<ScreenFatchaRegistration> {
                   //     hintText: 'GIIN Exem Catagory',
                   //   ),
                   // ),
-                  VerticalSpacer(2.h),
-                  DropdownButtonFormField<String>(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please Select Sponsor Availability ';
-                      }
-                      return null;
-                    },
-                    style: Theme.of(context).textTheme.labelLarge!,
-                    value: fatchRegitration.sponservalue,
-                    decoration: const InputDecoration(
-                        hintText: 'Select Sponsor Availability'),
-                    onChanged: (String? newValue) {
-                      fatchRegitration.updateSponser(newValue);
-                    },
-                    items: fatchRegitration.taxresidency.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                  fatchRegitration.sponservalue == "Yes"
-                      ? VerticalSpacer(2.h)
-                      : const SizedBox(),
-                  fatchRegitration.sponservalue == "Yes"
-                      ? TextFormField(
-                          controller: fatchRegitration.sponserentityController,
-                          style: Theme.of(context).textTheme.labelLarge!,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter sponser entity';
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                            // filled: true,
-                            // fillColor: const Color(0xFF0E1330),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            hintText: 'Sponcer Entity',
-                          ),
-                        )
-                      : const SizedBox(),
-                  VerticalSpacer(2.h),
-                  DropdownButtonFormField<UboMasterDetail>(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value == null) {
-                        return 'Please Select UBO Master Code ';
-                      }
-                      return null;
-                    },
-                    isExpanded: true,
-                    style: Theme.of(context).textTheme.labelLarge!,
-                    value: fatchRegitration.masterdetails,
-                    decoration: const InputDecoration(
-                        hintText: 'Select UBO Master Code'),
-                    onChanged: (UboMasterDetail? newValue) {
-                      fatchRegitration.updateubo(newValue);
-                    },
-                    items: fatchRegitration.uboModel?.masterDetails
-                        ?.map((UboMasterDetail value) {
-                      return DropdownMenuItem<UboMasterDetail>(
-                        value: value,
-                        child: Text(
-                          value.description.toString(),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                  VerticalSpacer(2.h),
-                  TextFormField(
-                    controller: fatchRegitration.ubocountrybirthController,
-                    style: Theme.of(context).textTheme.labelLarge!,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter country of birth';
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      // filled: true,
-                      // fillColor: const Color(0xFF0E1330),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      hintText: 'UBO Country Of Birth',
-                    ),
-                  ),
-                  VerticalSpacer(2.h),
-                  TextFormField(
-                    controller: fatchRegitration.uboCountryController,
-                    style: Theme.of(context).textTheme.labelLarge!,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter UBO country';
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      // filled: true,
-                      // fillColor: const Color(0xFF0E1330),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      hintText: 'Enter UBO Country ',
-                    ),
-                  ),
-                  VerticalSpacer(2.h),
-                  DropdownButtonFormField<String>(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please Select UBO Gender ';
-                      }
-                      return null;
-                    },
-                    style: Theme.of(context).textTheme.labelLarge!,
-                    value: fatchRegitration.gendervalue,
-                    decoration:
-                        const InputDecoration(hintText: 'Select UBO Gender'),
-                    onChanged: (String? newValue) {
-                      fatchRegitration.updateGenderValue(newValue);
-                    },
-                    items: fatchRegitration.genderlist.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                  VerticalSpacer(2.h),
-                  TextFormField(
-                    controller: fatchRegitration.holdingPercentageController,
-                    style: Theme.of(context).textTheme.labelLarge!,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter holding percentage';
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      // filled: true,
-                      // fillColor: const Color(0xFF0E1330),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      hintText: 'Enter UBO Holding Percentage',
-                    ),
-                  ),
-                  VerticalSpacer(2.h),
-                  DropdownButtonFormField<String>(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please UBO Id Type';
-                      }
-                      return null;
-                    },
-                    style: Theme.of(context).textTheme.labelLarge!,
-                    value: fatchRegitration.uboIdentity,
-                    decoration:
-                        const InputDecoration(hintText: 'Select UBO Id Type'),
-                    onChanged: (String? newValue) {
-                      fatchRegitration.updateuboidentity(newValue);
-                    },
-                    items: fatchRegitration.identityList.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                  VerticalSpacer(2.h),
-                  TextFormField(
-                    controller: fatchRegitration.ubotinnumberController,
-                    style: Theme.of(context).textTheme.labelLarge!,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter UBO TIN Number';
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      // filled: true,
-                      // fillColor: const Color(0xFF0E1330),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      hintText: 'Enter UBO TIN Number',
-                    ),
-                  ),
+                  // VerticalSpacer(2.h),
+                  // DropdownButtonFormField<String>(
+                  //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                  //   validator: (value) {
+                  //     if (value == null || value.isEmpty) {
+                  //       return 'Please Select Sponsor Availability ';
+                  //     }
+                  //     return null;
+                  //   },
+                  //   style: Theme.of(context).textTheme.labelLarge!,
+                  //   value: fatchRegitration.sponservalue,
+                  //   decoration: const InputDecoration(
+                  //       hintText: 'Select Sponsor Availability'),
+                  //   onChanged: (String? newValue) {
+                  //     fatchRegitration.updateSponser(newValue);
+                  //   },
+                  //   items: fatchRegitration.taxresidency.map((String value) {
+                  //     return DropdownMenuItem<String>(
+                  //       value: value,
+                  //       child: Text(
+                  //         value,
+                  //       ),
+                  //     );
+                  //   }).toList(),
+                  // ),
+                  // fatchRegitration.sponservalue == "Yes"
+                  //     ? VerticalSpacer(2.h)
+                  //     : const SizedBox(),
+                  // fatchRegitration.sponservalue == "Yes"
+                  //     ? TextFormField(
+                  //         controller: fatchRegitration.sponserentityController,
+                  //         style: Theme.of(context).textTheme.labelLarge!,
+                  //         autovalidateMode: AutovalidateMode.onUserInteraction,
+                  //         validator: (value) {
+                  //           if (value == null || value.isEmpty) {
+                  //             return 'Please enter sponser entity';
+                  //           }
+                  //           return null;
+                  //         },
+                  //         decoration: InputDecoration(
+                  //           // filled: true,
+                  //           // fillColor: const Color(0xFF0E1330),
+                  //           border: OutlineInputBorder(
+                  //               borderRadius: BorderRadius.circular(10)),
+                  //           hintText: 'Sponcer Entity',
+                  //         ),
+                  //       )
+                  //     : const SizedBox(),
+                  // VerticalSpacer(2.h),
+                  // DropdownButtonFormField<UboMasterDetail>(
+                  //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                  //   validator: (value) {
+                  //     if (value == null) {
+                  //       return 'Please Select UBO Master Code ';
+                  //     }
+                  //     return null;
+                  //   },
+                  //   isExpanded: true,
+                  //   style: Theme.of(context).textTheme.labelLarge!,
+                  //   value: fatchRegitration.masterdetails,
+                  //   decoration: const InputDecoration(
+                  //       hintText: 'Select UBO Master Code'),
+                  //   onChanged: (UboMasterDetail? newValue) {
+                  //     fatchRegitration.updateubo(newValue);
+                  //   },
+                  //   items: fatchRegitration.uboModel?.masterDetails
+                  //       ?.map((UboMasterDetail value) {
+                  //     return DropdownMenuItem<UboMasterDetail>(
+                  //       value: value,
+                  //       child: Text(
+                  //         value.description.toString(),
+                  //       ),
+                  //     );
+                  //   }).toList(),
+                  // ),
+                  // VerticalSpacer(2.h),
+                  // TextFormField(
+                  //   controller: fatchRegitration.ubocountrybirthController,
+                  //   style: Theme.of(context).textTheme.labelLarge!,
+                  //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                  //   validator: (value) {
+                  //     if (value == null || value.isEmpty) {
+                  //       return 'Please enter country of birth';
+                  //     }
+                  //     return null;
+                  //   },
+                  //   decoration: InputDecoration(
+                  //     // filled: true,
+                  //     // fillColor: const Color(0xFF0E1330),
+                  //     border: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(10)),
+                  //     hintText: 'UBO Country Of Birth',
+                  //   ),
+                  // ),
+                  // VerticalSpacer(2.h),
+                  // TextFormField(
+                  //   controller: fatchRegitration.uboCountryController,
+                  //   style: Theme.of(context).textTheme.labelLarge!,
+                  //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                  //   validator: (value) {
+                  //     if (value == null || value.isEmpty) {
+                  //       return 'Please enter UBO country';
+                  //     }
+                  //     return null;
+                  //   },
+                  //   decoration: InputDecoration(
+                  //     // filled: true,
+                  //     // fillColor: const Color(0xFF0E1330),
+                  //     border: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(10)),
+                  //     hintText: 'Enter UBO Country ',
+                  //   ),
+                  // ),
+                  // VerticalSpacer(2.h),
+                  // DropdownButtonFormField<String>(
+                  //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                  //   validator: (value) {
+                  //     if (value == null || value.isEmpty) {
+                  //       return 'Please Select UBO Gender ';
+                  //     }
+                  //     return null;
+                  //   },
+                  //   style: Theme.of(context).textTheme.labelLarge!,
+                  //   value: fatchRegitration.gendervalue,
+                  //   decoration:
+                  //       const InputDecoration(hintText: 'Select UBO Gender'),
+                  //   onChanged: (String? newValue) {
+                  //     fatchRegitration.updateGenderValue(newValue);
+                  //   },
+                  //   items: fatchRegitration.genderlist.map((String value) {
+                  //     return DropdownMenuItem<String>(
+                  //       value: value,
+                  //       child: Text(
+                  //         value,
+                  //       ),
+                  //     );
+                  //   }).toList(),
+                  // ),
+                  // VerticalSpacer(2.h),
+                  // TextFormField(
+                  //   controller: fatchRegitration.holdingPercentageController,
+                  //   style: Theme.of(context).textTheme.labelLarge!,
+                  //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                  //   validator: (value) {
+                  //     if (value == null || value.isEmpty) {
+                  //       return 'Please enter holding percentage';
+                  //     }
+                  //     return null;
+                  //   },
+                  //   decoration: InputDecoration(
+                  //     // filled: true,
+                  //     // fillColor: const Color(0xFF0E1330),
+                  //     border: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(10)),
+                  //     hintText: 'Enter UBO Holding Percentage',
+                  //   ),
+                  // ),
+                  // VerticalSpacer(2.h),
+                  // DropdownButtonFormField<String>(
+                  //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                  //   validator: (value) {
+                  //     if (value == null || value.isEmpty) {
+                  //       return 'Please UBO Id Type';
+                  //     }
+                  //     return null;
+                  //   },
+                  //   style: Theme.of(context).textTheme.labelLarge!,
+                  //   value: fatchRegitration.uboIdentity,
+                  //   decoration:
+                  //       const InputDecoration(hintText: 'Select UBO Id Type'),
+                  //   onChanged: (String? newValue) {
+                  //     fatchRegitration.updateuboidentity(newValue);
+                  //   },
+                  //   items: fatchRegitration.identityList.map((String value) {
+                  //     return DropdownMenuItem<String>(
+                  //       value: value,
+                  //       child: Text(
+                  //         value,
+                  //       ),
+                  //     );
+                  //   }).toList(),
+                  // ),
+                  // VerticalSpacer(2.h),
+                  // TextFormField(
+                  //   controller: fatchRegitration.ubotinnumberController,
+                  //   style: Theme.of(context).textTheme.labelLarge!,
+                  //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                  //   validator: (value) {
+                  //     if (value == null || value.isEmpty) {
+                  //       return 'Please enter UBO TIN Number';
+                  //     }
+                  //     return null;
+                  //   },
+                  //   decoration: InputDecoration(
+                  //     // filled: true,
+                  //     // fillColor: const Color(0xFF0E1330),
+                  //     border: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(10)),
+                  //     hintText: 'Enter UBO TIN Number',
+                  //   ),
+                  // ),
                   VerticalSpacer(3.h),
                   fatchRegitration.loading == true
                       ? const LoadingButton()

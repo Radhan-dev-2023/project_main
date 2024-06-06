@@ -25,7 +25,7 @@ class Registrationwidget extends StatelessWidget {
               width: 10.w,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.sp),
-                color: Color(0xFF0E1330),
+                color: const Color(0xFF0E1330),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(6.5),
@@ -79,7 +79,7 @@ class Registrationwidget extends StatelessWidget {
               width: 10.w,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.sp),
-                color: Color(0xFF0E1330),
+                color:const Color(0xFF0E1330),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(6.5),
@@ -133,7 +133,7 @@ class Registrationwidget extends StatelessWidget {
               width: 10.w,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.sp),
-                color: Color(0xFF0E1330),
+                color: const Color(0xFF0E1330),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(6.5),
@@ -192,7 +192,7 @@ class Registrationwidget extends StatelessWidget {
                 width: 10.w,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.sp),
-                  color: Color(0xFF0E1330),
+                  color: const Color(0xFF0E1330),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(6.5),

@@ -17,11 +17,13 @@ import 'package:finfresh_mobile/services/kyc/getinn_service.dart';
 import 'package:finfresh_mobile/services/kyc/master_services.dart';
 import 'package:finfresh_mobile/services/kyc/non_individual_service.dart';
 import 'package:finfresh_mobile/services/kyc/tax_status_service.dart';
+import 'package:finfresh_mobile/services/refersh%20token/refersh_token.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 import '../../utilities/constant/flushbar.dart';
 
@@ -637,6 +639,111 @@ class KycController extends ChangeNotifier {
   void updateStateValue(String? value) {
     stateValue = value ?? '';
     notifyListeners();
+  }
+
+  String taxvalue = 'Individual';
+  List<String> taxList = [
+    "Individual",
+    "AOP/BOI",
+    "Artificial Juridical Person",
+    "Bank / Financial Institution",
+    "Body Corporate",
+    "Company",
+    "Foreign Inst. Invest",
+    "Global Development Network",
+    "Government Body",
+    "Gratuity Fund",
+    "HUF",
+    "Limited Liability Partnership",
+    "Local Authority",
+    "Mutual Fund",
+    "Mutual Fund FOF Scheme",
+    "NPS Trust",
+    "NRE-HUF(NRE)",
+    "NRI (MINOR)",
+    "NRI - Minor (NRO)",
+    "NRI Repatriable",
+    "NRI Through NRO A/c",
+    "NRO-HUF(NRO)",
+    "Non-Profit organization [NPO]",
+    "OCI - Non-Repatriation",
+    "OCI - Repatriation",
+    "On Behalf Of Minor",
+    "Others",
+    "Overseas Corp. Body",
+    "PIO_NRI",
+    "PIO_NRO",
+    "Partnership Firm",
+    "Pension Fund",
+    "Proprietorship",
+    "Provident Fund / EPF",
+    "QFI - Corporate",
+    "QFI - Hedge Funds",
+    "QFI - Individual",
+    "QFI - Minors",
+    "QFI - Mutual Funds",
+    "QFI - Pension Funds",
+    "Society",
+    "Superannuation / Pension Fund",
+    "Trust",
+  ];
+  Map<String, String> taxCodeMap = {
+    "Individual": "01",
+    "AOP/BOI": "05",
+    "Artificial Juridical Person": "80",
+    "Bank / Financial Institution": "12",
+    "Body Corporate": "07",
+    "Company": "04",
+    "Foreign Inst. Invest": "23",
+    "Global Development Network": "38",
+    "Government Body": "72",
+    "Gratuity Fund": "33",
+    "HUF": "03",
+    "Limited Liability Partnership": "47",
+    "Local Authority": "81",
+    "Mutual Fund": "35",
+    "Mutual Fund FOF Scheme": "36",
+    "NPS Trust": "37",
+    "NRE-HUF(NRE)": "29",
+    "NRI (MINOR)": "26",
+    "NRI - Minor (NRO)": "28",
+    "NRI Repatriable": "21",
+    "NRI Through NRO A/c": "11",
+    "NRO-HUF(NRO)": "27",
+    "Non-Profit organization [NPO]": "48",
+    "OCI - Non-Repatriation": "62",
+    "OCI - Repatriation": "61",
+    "On Behalf Of Minor": "02",
+    "Others": "10",
+    "Overseas Corp. Body": "22",
+    "PIO_NRI": "70",
+    "PIO_NRO": "76",
+    "Partnership Firm": "06",
+    "Pension Fund": "34",
+    "Proprietorship": "13",
+    "Provident Fund / EPF": "31",
+    "QFI - Corporate": "43",
+    "QFI - Hedge Funds": "45",
+    "QFI - Individual": "41",
+    "QFI - Minors": "42",
+    "QFI - Mutual Funds": "46",
+    "QFI - Pension Funds": "44",
+    "Society": "09",
+    "Superannuation / Pension Fund": "32",
+    "Trust": "08",
+  };
+  void updatetaxValue(value) {
+    taxvalue = value;
+    taxcode = taxCodeMap[value] ?? '';
+    log('taxcode ==$taxcode');
+    notifyListeners();
+  }
+
+  void commingToTaxPage() {
+    taxvalue = 'Individual';
+    taxcode = "01";
+    log('taax==$taxcode');
+    // notifyListeners();
   }
 
   void updateTaxValue(value) {
@@ -1806,20 +1913,37 @@ class KycController extends ChangeNotifier {
     notifyListeners();
   }
 
+  RefershTokenService refershTokenService = RefershTokenService();
   Future<bool> getNonIndividualTax(context) async {
+    String token = await SecureStorage.readToken('token');
+    bool isTokenExpired = JwtDecoder.isExpired(token);
     iinLoading = true;
     notifyListeners();
     try {
-      bool result = await nonIndividualService.getNonindividualTax(
-        phonenumber,
-        panController.text,
-        nameController.text,
-        taxcode,
-        context,
-      );
-      iinLoading = false;
-      notifyListeners();
-      return result;
+      if (isTokenExpired) {
+        await refershTokenService.postRefershTocken(context);
+        bool result = await nonIndividualService.getNonindividualTax(
+          phonenumber,
+          panController.text,
+          nameController.text,
+          taxcode,
+          context,
+        );
+        iinLoading = false;
+        notifyListeners();
+        return result;
+      } else {
+        bool result = await nonIndividualService.getNonindividualTax(
+          phonenumber,
+          panController.text,
+          nameController.text,
+          taxcode,
+          context,
+        );
+        iinLoading = false;
+        notifyListeners();
+        return result;
+      }
     } catch (e) {
       logger.d('non individual failsed with an exception$e');
       iinLoading = false;
@@ -1829,35 +1953,65 @@ class KycController extends ChangeNotifier {
   }
 
   bool iinLoading = false;
-  Future<bool> getInn() async {
+  Future<bool> getInn(context) async {
+    String token = await SecureStorage.readToken('token');
+    bool isTokenExpired = JwtDecoder.isExpired(token);
     String phoneNumber = await SecureStorage.readToken('phoneNumber');
     iinLoading = true;
     notifyListeners();
-    bool isVerified = await getInnService.getInn(
-        phoneNumber, panController.text, taxcode, holdingValuetoBackend);
-    iinLoading = false;
-    notifyListeners();
-    return isVerified;
+    if (isTokenExpired) {
+      await refershTokenService.postRefershTocken(context);
+      bool isVerified = await getInnService.getInn(
+          phoneNumber, panController.text, taxcode, holdingValuetoBackend);
+      iinLoading = false;
+      notifyListeners();
+      return isVerified;
+    } else {
+      bool isVerified = await getInnService.getInn(
+          phoneNumber, panController.text, taxcode, holdingValuetoBackend);
+      iinLoading = false;
+      notifyListeners();
+      return isVerified;
+    }
   }
 
   bool createcustomerLoading = false;
   Future<bool> createCustomer(context) async {
+    String token = await SecureStorage.readToken('token');
+    bool isTokenExpired = JwtDecoder.isExpired(token);
     createcustomerLoading = true;
     notifyListeners();
-
-    bool isCreated =
-        await createCustomerService.createCustomer(investorDetails, context);
-    log('isCreated == $isCreated');
-    if (isCreated == true) {
-      createcustomerLoading = false;
-      notifyListeners();
-      logger.d('customer created successfully');
-      return true;
+    if (isTokenExpired) {
+      await refershTokenService.postRefershTocken(context);
+      bool isCreated =
+          await createCustomerService.createCustomer(investorDetails, context);
+      log('isCreated == $isCreated');
+      if (isCreated == true) {
+        createcustomerLoading = false;
+        notifyListeners();
+        logger.d('customer created successfully');
+        return true;
+      } else {
+        logger.d('customer creation failed');
+        createcustomerLoading = false;
+        notifyListeners();
+        return false;
+      }
     } else {
-      logger.d('customer creation failed');
-      createcustomerLoading = false;
-      notifyListeners();
-      return false;
+      bool isCreated =
+          await createCustomerService.createCustomer(investorDetails, context);
+      log('isCreated == $isCreated');
+      if (isCreated == true) {
+        createcustomerLoading = false;
+        notifyListeners();
+        logger.d('customer created successfully');
+        return true;
+      } else {
+        logger.d('customer creation failed');
+        createcustomerLoading = false;
+        notifyListeners();
+        return false;
+      }
     }
   }
 

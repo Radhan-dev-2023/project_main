@@ -91,6 +91,8 @@ class UserRegisterService {
       } else if (jsonResponse['result']['status'] == 1001 &&
           jsonResponse['result']['message'] == "user not found") {
         showSnackBar(context, jsonResponse['result']['message']);
+      } else if (jsonResponse['result']['status'] == 1001) {
+        showSnackBar(context, jsonResponse['result']['message']);
       }
     } on SocketException {
       showSnackBar(context, 'No Internet Connection');
