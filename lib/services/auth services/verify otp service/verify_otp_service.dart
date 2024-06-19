@@ -21,6 +21,7 @@ class VerifyOtp {
       "userType": "customer",
       "otp": otp
     };
+    log(payload.toString());
     try {
       http.Response response = await http.post(
         url,

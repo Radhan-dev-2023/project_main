@@ -32,7 +32,7 @@ class _ScreenOtpState extends State<ScreenOtp> {
   @override
   Widget build(BuildContext context) {
     Brightness brightness = MediaQuery.of(context).platformBrightness;
-    final authController = Provider.of<AuthController>(context, listen: false);
+    final authController = Provider.of<AuthController>(context);
     final biometricLoginController = Provider.of<BiometricLogin>(context);
 
     final defaultPinTheme = PinTheme(

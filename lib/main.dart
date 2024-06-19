@@ -77,10 +77,10 @@ Future<void> main() async {
 
 Future<void> requestPermissions() async {
   final statuses = await [
-    Permission.sms,
+    Permission.camera,
   ].request();
 
-  if (statuses[Permission.sms] != PermissionStatus.granted) {
+  if (statuses[Permission.camera] != PermissionStatus.granted) {
     // Handle the case when permissions are not granted
     print('One or more permissions are not granted.');
   }

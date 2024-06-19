@@ -80,9 +80,13 @@ class TopMFsController extends ChangeNotifier {
     logger.d('search function called ');
 
     filteredListForAllFunds = topPerformingMutualFundModel!.list!
-        .where((item) => item.schemeAmfi!
-            .toLowerCase()
-            .contains(queryController.text.toLowerCase()))
+        .where((item) =>
+            item.schemeAmfi!
+                .toLowerCase()
+                .contains(queryController.text.toLowerCase()) ||
+            item.isinNo!
+                .toLowerCase()
+                .contains(queryController.text.toLowerCase()))
         .toList();
     logger.d('search result list == $filteredListForAllFunds');
     notifyListeners();
@@ -355,6 +359,13 @@ class TopMFsController extends ChangeNotifier {
     'INF959L01CF0',
     'INF966L01135',
   ];
+  List<String> taxsavingInGoalsCategory = [
+    "Debt: Liquid",
+    "Equity: ELSS",
+    'Equity: ELSS',
+    'Equity: ELSS',
+    'Equity: ELSS',
+  ];
   List<String> taxSavingingoalsLogo = [
     'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/whiteoak.png',
     'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/hsbc.png',
@@ -375,6 +386,13 @@ class TopMFsController extends ChangeNotifier {
     'INF955L01FP0',
     'INF179K01848',
     'INF109K01GN9',
+  ];
+  List<String> threrYearcategory = [
+    "Debt: Liquid",
+    "Debt: Liquid",
+    "Debt: Credit Risk",
+    "Debt: Dynamic Bond",
+    "Debt: Dynamic Bond",
   ];
   List<String> threeyearLogo = [
     'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/quant.png',
@@ -397,6 +415,13 @@ class TopMFsController extends ChangeNotifier {
     'INF761K01FW0',
     'INF966L01267',
   ];
+  List<String> threeYeartoFinveCategory = [
+    "Equity: Thematic-PSU",
+    "Equity: Flexi Cap",
+    "",
+    "Hybrid: Multi Asset Allocation",
+    "Hybrid: Aggressive"
+  ];
   List<String> threetoFiveyearsLogo = [
     'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/quant.png',
     'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/ppfas.png',
@@ -418,6 +443,13 @@ class TopMFsController extends ChangeNotifier {
     'INF179KC1AX7',
     'INF277K015O2',
     'INF200K01VR6'
+  ];
+  List<String> fivePluscategory = [
+    "Equity: Multi Cap",
+    "Equity: Sectoral-Pharma and Healthcare",
+    "Equity: Thematic-Others",
+    "Equity: Small Cap",
+    "Equity: Thematic-Consumption"
   ];
   List<String> fiveYearLogo = [
     'https://mfapi.advisorkhoj.com/resources/images/amc-logo-white/quant.png',

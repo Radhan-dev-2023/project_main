@@ -6,7 +6,6 @@ import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
 import 'package:finfresh_mobile/view/digi%20gold%20screen/buy%20screen/buy_screen.dart';
 import 'package:finfresh_mobile/view/digi%20gold%20screen/sell%20gold%20listing%20screen/screen_sellgold_listing.dart';
-import 'package:finfresh_mobile/view/digi%20gold%20screen/sell%20screen/sell_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
@@ -47,398 +46,445 @@ class _ScreenGoldBuyingAndSellingState
       //   iconTheme: const IconThemeData(color: Colors.white),
       //   surfaceTintColor: Colors.transparent,
       // ),
-      body: SingleChildScrollView(
-        child: Consumer<GoldController>(builder: (context, goldController, _) {
-          return goldController.isloading == true
-              ? const LoadingWidget()
-              : Column(
-                  children: [
-                    Stack(
-                      children: [
-                        Container(
-                          color: const Color(0xFF2D5D5F),
-                          height: Adaptive.h(40),
-                          width: MediaQuery.of(context).size.width,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                '₹${goldController.goldvalue ?? ''}/mg',
-                                style: TextStyle(
-                                  fontSize: 23.sp,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  letterSpacing: 3.sp,
-                                ),
-                              ),
-                              VerticalSpacer(1.h),
-                              const Text(
-                                'Current gold buying price\n (exclusive 3% of Gst)',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              VerticalSpacer(5.h),
-                            ],
-                          ),
-                        ),
-                        goldController.isCompletedGoldPurchase == 'true'
-                            ? const SizedBox()
-                            : Positioned(
-                                top: 26.sp,
-                                left: 17.sp,
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Icon(
-                                    Icons.arrow_back,
+      body: RefreshIndicator(
+        onRefresh: () async {
+          Provider.of<GoldController>(context, listen: false).isCompleted();
+          Provider.of<GoldController>(context, listen: false)
+              .getGoldrate(context);
+        },
+        color: const Color(0xFFF7BF05),
+        child: SingleChildScrollView(
+          child:
+              Consumer<GoldController>(builder: (context, goldController, _) {
+            return goldController.isloading == true
+                ? const LoadingWidget()
+                : Column(
+                    children: [
+                      Stack(
+                        children: [
+                          Container(
+                            color: const Color(0xFF2D5D5F),
+                            height: Adaptive.h(40),
+                            width: MediaQuery.of(context).size.width,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  '₹${goldController.goldvalue ?? ''}/mg',
+                                  style: TextStyle(
+                                    fontSize: 23.sp,
+                                    fontWeight: FontWeight.bold,
                                     color: Colors.white,
+                                    letterSpacing: 3.sp,
                                   ),
                                 ),
-                              )
-                      ],
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(15.sp),
-                      child: SizedBox(
-                        height: Adaptive.h(18),
-                        width: MediaQuery.of(context).size.width,
-                        child: Card(
-                          color: const Color(0xFF2D5D5F),
-                          child: Row(
-                            children: [
-                              HorizontalSpacer(3.w),
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(15.sp),
-                                child: Image.asset(
-                                  'assets/images/goldimagein.jpg',
-                                  height: Adaptive.h(14),
-                                  width: Adaptive.w(31),
-                                  fit: BoxFit.fill,
+                                VerticalSpacer(1.h),
+                                const Text(
+                                  'Current gold buying price\n (exclusive 3% of Gst)',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(color: Colors.white),
                                 ),
-                              ),
-                              HorizontalSpacer(22.w),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  VerticalSpacer(4.h),
-                                  Text(
-                                    'Current value',
-                                    style: TextStyle(
+                                VerticalSpacer(5.h),
+                              ],
+                            ),
+                          ),
+                          goldController.isCompletedGoldPurchase == 'true'
+                              ? const SizedBox()
+                              : Positioned(
+                                  top: 26.sp,
+                                  left: 17.sp,
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Icon(
+                                      Icons.arrow_back,
                                       color: Colors.white,
-                                      fontSize: 18.sp,
                                     ),
                                   ),
-                                  VerticalSpacer(1.h),
-                                  Text(
-                                    goldController.formattedValue,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
+                                )
+                        ],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(15.sp),
+                        child: SizedBox(
+                          height: Adaptive.h(18),
+                          width: MediaQuery.of(context).size.width,
+                          child: Card(
+                            color: const Color(0xFF2D5D5F),
+                            child: Row(
+                              children: [
+                                HorizontalSpacer(3.w),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(15.sp),
+                                  child: Image.asset(
+                                    'assets/images/goldimagein.jpg',
+                                    height: Adaptive.h(14),
+                                    width: Adaptive.w(31),
+                                    fit: BoxFit.fill,
                                   ),
-                                  VerticalSpacer(1.h),
-                                  // Text(
-                                  //   '20 % profit',
-                                  //   style: TextStyle(
-                                  //     color: Colors.white,
-                                  //     fontSize: 18.sp,
-                                  //   ),
-                                  // ),
-                                ],
-                              )
-                            ],
+                                ),
+                                HorizontalSpacer(22.w),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    VerticalSpacer(4.h),
+                                    Text(
+                                      'Current value',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18.sp,
+                                      ),
+                                    ),
+                                    VerticalSpacer(1.h),
+                                    Text(
+                                      goldController.formattedValue,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20.sp,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    VerticalSpacer(1.h),
+                                    // Text(
+                                    //   '20 % profit',
+                                    //   style: TextStyle(
+                                    //     color: Colors.white,
+                                    //     fontSize: 18.sp,
+                                    //   ),
+                                    // ),
+                                  ],
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    goldController.goldlistingmodel == null
-                        ? SizedBox(
-                            height: Adaptive.h(22),
-                            child: const Center(
-                              child: Text('No data found'),
+                      goldController.goldlistingmodel == null
+                          ? SizedBox(
+                              height: Adaptive.h(22),
+                              child: const Center(
+                                child: Text('No data found'),
+                              ),
+                            )
+                          : SizedBox(
+                              child: ListView.separated(
+                                  padding: EdgeInsets.all(15.sp),
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    dynamic value = goldController
+                                        .calculateAmountAfterTax(goldController
+                                            .goldlistingmodel
+                                            ?.res
+                                            ?.transactions?[index]
+                                            .amount);
+                                    dynamic gst = goldController
+                                        .calculateAmountOfTax(goldController
+                                            .goldlistingmodel
+                                            ?.res
+                                            ?.transactions?[index]
+                                            .amount);
+                                    // goldController.sum = value;
+                                    return Column(
+                                      children: [
+                                        ListTile(
+                                          contentPadding: EdgeInsets.only(
+                                              left: 15.sp, right: 15.sp),
+                                          subtitle: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              const Text('Buying Gold'),
+                                              VerticalSpacer(1.h),
+                                              Text(
+                                                "${goldController.goldlistingmodel?.res?.transactions?[index].addedon.toString().substring(0, 10)}",
+                                                style: const TextStyle(
+                                                    color: Colors.grey),
+                                              ),
+                                            ],
+                                          ),
+                                          trailing: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  // VerticalSpacer(1.h),
+                                                  Text(
+                                                    'Amount ',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall,
+                                                  ),
+                                                  VerticalSpacer(0.1.h),
+                                                  Text(
+                                                    'Gst ',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall,
+                                                  ),
+                                                  // VerticalSpacer(0.2.h),
+                                                  Text(
+                                                    'Total ',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium,
+                                                  ),
+                                                ],
+                                              ),
+                                              Column(
+                                                children: [
+                                                  Text(
+                                                    ': ',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall,
+                                                  ),
+                                                  Text(
+                                                    ': ',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall,
+                                                  ),
+                                                  VerticalSpacer(0.4.h),
+                                                  Text(
+                                                    ': ',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall,
+                                                  ),
+                                                ],
+                                              ),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.end,
+                                                children: [
+                                                  // VerticalSpacer(1.h),
+                                                  Text(
+                                                    ' ₹ ${value.toStringAsFixed(2)}',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall,
+                                                  ),
+                                                  VerticalSpacer(0.1.h),
+                                                  Text(
+                                                    ' ₹ ${gst.toStringAsFixed(2)}',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall,
+                                                  ),
+                                                  // VerticalSpacer(0.2.h),
+                                                  Text(
+                                                    ' ₹ ${goldController.goldlistingmodel?.res?.transactions?[index].amount}',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium,
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsets.only(right: 15.sp),
+                                          child: Align(
+                                            alignment: Alignment.bottomRight,
+                                            child: Text(
+                                                'Brought ${goldController.goldlistingmodel?.res?.transactions?[index].purchasedGold.toStringAsFixed(2)} mg gold'),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                  separatorBuilder: (context, index) =>
+                                      const Divider(
+                                        color: Colors.grey,
+                                        thickness: 1,
+                                      ),
+                                  itemCount: goldController.goldlistingmodel
+                                          ?.res?.transactions?.length ??
+                                      0),
                             ),
-                          )
-                        : SizedBox(
-                            child: ListView.separated(
-                                padding: EdgeInsets.all(15.sp),
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemBuilder: (context, index) {
-                                  dynamic value = goldController
-                                      .calculateAmountAfterTax(goldController
-                                          .goldlistingmodel
-                                          ?.res
-                                          ?.transactions?[index]
-                                          .amount);
-                                  dynamic gst = goldController
-                                      .calculateAmountOfTax(goldController
-                                          .goldlistingmodel
-                                          ?.res
-                                          ?.transactions?[index]
-                                          .amount);
-                                  // goldController.sum = value;
-                                  return Column(
-                                    children: [
-                                      ListTile(
-                                        contentPadding: EdgeInsets.only(
-                                            left: 15.sp, right: 15.sp),
-                                        subtitle: Column(
+                      VerticalSpacer(3.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Visibility(
+                            visible: Provider.of<DashBoardController>(context)
+                                        .dashBoardModel
+                                        ?.result
+                                        ?.data
+                                        ?.name ==
+                                    'SHANMUGA BHUVANESWAR RAMALINGAM'
+                                ? false
+                                : false,
+                            child: InkWell(
+                              onTap: () {
+                                goldController.selectvalue = null;
+                                showBottomSheet(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Consumer<GoldController>(
+                                        builder: (context, goldController, _) {
+                                      return Container(
+                                        margin: EdgeInsets.all(15.sp),
+                                        height: 350,
+                                        // color: Colors.white,
+                                        child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
-                                          children: [
-                                            const Text('Buying Gold'),
+                                          children: <Widget>[
                                             VerticalSpacer(1.h),
-                                            Text(
-                                              "${goldController.goldlistingmodel?.res?.transactions?[index].addedon.toString().substring(0, 10)}",
-                                              style: const TextStyle(
-                                                  color: Colors.grey),
+                                            const Text(
+                                              'Add Gold Rate',
+                                              style: TextStyle(fontSize: 20),
                                             ),
-                                          ],
-                                        ),
-                                        trailing: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                // VerticalSpacer(1.h),
-                                                Text(
-                                                  'Amount ',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodySmall,
-                                                ),
-                                                VerticalSpacer(0.1.h),
-                                                Text(
-                                                  'Gst ',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodySmall,
-                                                ),
-                                                // VerticalSpacer(0.2.h),
-                                                Text(
-                                                  'Total ',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyMedium,
-                                                ),
-                                              ],
+                                            VerticalSpacer(3.h),
+                                            TextFormField(
+                                              controller: goldController
+                                                  .goldRateController,
+                                              keyboardType:
+                                                  TextInputType.number,
+                                              decoration: const InputDecoration(
+                                                hintText: 'Enter the gold rate',
+                                                // border: OutlineInputBorder(),
+                                              ),
                                             ),
-                                            Column(
-                                              children: [
-                                                Text(
-                                                  ': ',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodySmall,
-                                                ),
-                                                Text(
-                                                  ': ',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodySmall,
-                                                ),
-                                                VerticalSpacer(0.4.h),
-                                                Text(
-                                                  ': ',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodySmall,
-                                                ),
-                                              ],
+                                            VerticalSpacer(2.h),
+                                            DropdownButtonFormField<String>(
+                                              autovalidateMode: AutovalidateMode
+                                                  .onUserInteraction,
+                                              validator: (value) {
+                                                if (value == null) {
+                                                  return 'Please select cost type';
+                                                }
+                                                return null;
+                                              },
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelLarge!,
+                                              value: goldController.selectvalue,
+                                              decoration: InputDecoration(
+                                                helperText: '',
+                                                border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                                hintText: 'Select a cost type',
+                                              ),
+                                              onChanged: (String? newValue) {
+                                                goldController
+                                                    .updateselectValue(
+                                                  newValue ?? '',
+                                                );
+                                              },
+                                              items: goldController
+                                                  .listForAddingRate
+                                                  .map((String items) {
+                                                return DropdownMenuItem<String>(
+                                                  value: items,
+                                                  child: Text(items),
+                                                );
+                                              }).toList(),
                                             ),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              children: [
-                                                // VerticalSpacer(1.h),
-                                                Text(
-                                                  ' ₹ ${value.toStringAsFixed(2)}',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodySmall,
-                                                ),
-                                                VerticalSpacer(0.1.h),
-                                                Text(
-                                                  ' ₹ ${gst.toStringAsFixed(2)}',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodySmall,
-                                                ),
-                                                // VerticalSpacer(0.2.h),
-                                                Text(
-                                                  ' ₹ ${goldController.goldlistingmodel?.res?.transactions?[index].amount}',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyMedium,
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(right: 15.sp),
-                                        child: Align(
-                                          alignment: Alignment.bottomRight,
-                                          child: Text(
-                                              'Brought ${goldController.goldlistingmodel?.res?.transactions?[index].purchasedGold.toStringAsFixed(2)} mg gold'),
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                },
-                                separatorBuilder: (context, index) =>
-                                    const Divider(
-                                      color: Colors.grey,
-                                      thickness: 1,
-                                    ),
-                                itemCount: goldController.goldlistingmodel?.res
-                                        ?.transactions?.length ??
-                                    0),
-                          ),
-                    VerticalSpacer(3.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Visibility(
-                          visible: Provider.of<DashBoardController>(context)
-                                      .dashBoardModel
-                                      ?.result
-                                      ?.data
-                                      ?.name ==
-                                  'SHANMUGA BHUVANESWAR RAMALINGAM'
-                              ? false
-                              : false,
-                          child: InkWell(
-                            onTap: () {
-                              goldController.selectvalue = null;
-                              showBottomSheet(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return Consumer<GoldController>(
-                                      builder: (context, goldController, _) {
-                                    return Container(
-                                      margin: EdgeInsets.all(15.sp),
-                                      height: 350,
-                                      // color: Colors.white,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          VerticalSpacer(1.h),
-                                          const Text(
-                                            'Add Gold Rate',
-                                            style: TextStyle(fontSize: 20),
-                                          ),
-                                          VerticalSpacer(3.h),
-                                          TextFormField(
-                                            controller: goldController
-                                                .goldRateController,
-                                            keyboardType: TextInputType.number,
-                                            decoration: const InputDecoration(
-                                              hintText: 'Enter the gold rate',
-                                              // border: OutlineInputBorder(),
-                                            ),
-                                          ),
-                                          VerticalSpacer(2.h),
-                                          DropdownButtonFormField<String>(
-                                            autovalidateMode: AutovalidateMode
-                                                .onUserInteraction,
-                                            validator: (value) {
-                                              if (value == null) {
-                                                return 'Please select cost type';
-                                              }
-                                              return null;
-                                            },
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelLarge!,
-                                            value: goldController.selectvalue,
-                                            decoration: InputDecoration(
-                                              helperText: '',
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                              hintText: 'Select a cost type',
-                                            ),
-                                            onChanged: (String? newValue) {
-                                              goldController.updateselectValue(
-                                                newValue ?? '',
-                                              );
-                                            },
-                                            items: goldController
-                                                .listForAddingRate
-                                                .map((String items) {
-                                              return DropdownMenuItem<String>(
-                                                value: items,
-                                                child: Text(items),
-                                              );
-                                            }).toList(),
-                                          ),
-                                          VerticalSpacer(5.h),
-                                          goldController.loading == true
-                                              ? const LoadingButton()
-                                              : ButtonWidget(
-                                                  btName: 'Add',
-                                                  onTap: () async {
-                                                    if (goldController
-                                                            .goldRateController
-                                                            .text
-                                                            .isNotEmpty &&
-                                                        goldController
-                                                                .selectvalue !=
-                                                            null) {
-                                                      bool result =
-                                                          await goldController
-                                                              .addGoldRate(
+                                            VerticalSpacer(5.h),
+                                            goldController.loading == true
+                                                ? const LoadingButton()
+                                                : ButtonWidget(
+                                                    btName: 'Add',
+                                                    onTap: () async {
+                                                      if (goldController
+                                                              .goldRateController
+                                                              .text
+                                                              .isNotEmpty &&
+                                                          goldController
+                                                                  .selectvalue !=
+                                                              null) {
+                                                        bool result =
+                                                            await goldController
+                                                                .addGoldRate(
+                                                                    context);
+                                                        if (result == true) {
+                                                          // ignore: use_build_context_synchronously
+                                                          goldController
+                                                              .getGoldrate(
                                                                   context);
-                                                      if (result == true) {
-                                                        // ignore: use_build_context_synchronously
-                                                        goldController
-                                                            .getGoldrate(
-                                                                context);
-                                                        // ignore: use_build_context_synchronously
-                                                        Navigator.pop(context);
-                                                        goldController
-                                                            .goldRateController
-                                                            .clear();
+                                                          // ignore: use_build_context_synchronously
+                                                          Navigator.pop(
+                                                              context);
+                                                          goldController
+                                                              .goldRateController
+                                                              .clear();
+                                                        } else {
+                                                          log('failed');
+                                                        }
+                                                      } else if (goldController
+                                                              .selectvalue ==
+                                                          null) {
+                                                        showFlushbar(context,
+                                                            'Please select a cost type');
                                                       } else {
-                                                        log('failed');
+                                                        showFlushbar(context,
+                                                            'Please enter the gold rate');
                                                       }
-                                                    } else if (goldController
-                                                            .selectvalue ==
-                                                        null) {
-                                                      showFlushbar(context,
-                                                          'Please select a cost type');
-                                                    } else {
-                                                      showFlushbar(context,
-                                                          'Please enter the gold rate');
-                                                    }
-                                                  },
-                                                )
-                                        ],
-                                      ),
-                                    );
-                                  });
-                                },
-                              );
+                                                    },
+                                                  )
+                                          ],
+                                        ),
+                                      );
+                                    });
+                                  },
+                                );
+                              },
+                              child: Container(
+                                height: Adaptive.h(5),
+                                width: Adaptive.w(30),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20.sp),
+                                  color: const Color(0xFF2D5D5F),
+                                ),
+                                child: const Center(
+                                  child: Text(
+                                    'Add Gold Rate',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFFF7BF05),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          HorizontalSpacer(3.w),
+                          InkWell(
+                            onTap: () {
+                              if (goldController.goldvalue == null) {
+                                showFlushbar(
+                                  context,
+                                  'The gold buy rate is not added',
+                                );
+                              } else {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const ScreenBuy(),
+                                    ));
+                              }
                             },
                             child: Container(
                               height: Adaptive.h(5),
-                              width: Adaptive.w(30),
+                              width: Adaptive.w(25),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20.sp),
                                 color: const Color(0xFF2D5D5F),
                               ),
                               child: const Center(
                                 child: Text(
-                                  'Add Gold Rate',
+                                  'Buy',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Color(0xFFF7BF05),
@@ -447,83 +493,49 @@ class _ScreenGoldBuyingAndSellingState
                               ),
                             ),
                           ),
-                        ),
-                        HorizontalSpacer(3.w),
-                        InkWell(
-                          onTap: () {
-                            if (goldController.goldvalue == null) {
-                              showFlushbar(
-                                context,
-                                'The gold buy rate is not added',
-                              );
-                            } else {
-                              Navigator.push(
+                          HorizontalSpacer(3.w),
+                          InkWell(
+                            onTap: () {
+                              if (goldController.sellrate == null) {
+                                showFlushbar(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const ScreenBuy(),
-                                  ));
-                            }
-                          },
-                          child: Container(
-                            height: Adaptive.h(5),
-                            width: Adaptive.w(25),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20.sp),
-                              color: const Color(0xFF2D5D5F),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                'Buy',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xFFF7BF05),
+                                  'The gold sell rate is not added',
+                                );
+                              } else {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ScreenListingGold(),
+                                    ));
+                              }
+                            },
+                            child: Container(
+                              height: Adaptive.h(5),
+                              width: Adaptive.w(25),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.sp),
+                                color: const Color(0xFF2D5D5F),
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  'Sell',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFFF7BF05),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                        HorizontalSpacer(3.w),
-                        InkWell(
-                          onTap: () {
-                            if (goldController.sellrate == null) {
-                              showFlushbar(
-                                context,
-                                'The gold sell rate is not added',
-                              );
-                            } else {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const ScreenListingGold(),
-                                  ));
-                            }
-                          },
-                          child: Container(
-                            height: Adaptive.h(5),
-                            width: Adaptive.w(25),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20.sp),
-                              color: const Color(0xFF2D5D5F),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                'Sell',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xFFF7BF05),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        HorizontalSpacer(5.w),
-                      ],
-                    ),
-                    VerticalSpacer(15.h),
-                  ],
-                );
-        }),
+                          HorizontalSpacer(5.w),
+                        ],
+                      ),
+                      VerticalSpacer(15.h),
+                    ],
+                  );
+          }),
+        ),
       ),
     );
   }

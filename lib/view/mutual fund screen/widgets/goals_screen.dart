@@ -104,7 +104,8 @@ class ScreenGolas extends StatelessWidget {
                                           .taxsavingInGoals[index],
                                       isinNumber: topMfsController
                                           .taxsavingInGoalsIsin[index],
-                                      category: '',
+                                      category: topMfsController
+                                          .taxsavingInGoalsCategory[index],
                                     ),
                                   ));
                             },
@@ -179,7 +180,8 @@ class ScreenGolas extends StatelessWidget {
                                           topMfsController.threeyearList[index],
                                       isinNumber:
                                           topMfsController.threrYearIsin[index],
-                                      category: '',
+                                      category: topMfsController
+                                          .threrYearcategory[index],
                                     ),
                                   ));
                             },
@@ -254,7 +256,8 @@ class ScreenGolas extends StatelessWidget {
                                           .threetofiveyears[index],
                                       isinNumber: topMfsController
                                           .threeYeartoFinveisin[index],
-                                      category: '',
+                                      category: topMfsController
+                                          .threeYeartoFinveCategory[index],
                                     ),
                                   ));
                             },
@@ -330,7 +333,8 @@ class ScreenGolas extends StatelessWidget {
                                           topMfsController.fivePlusYears[index],
                                       isinNumber:
                                           topMfsController.fivePlusIsin[index],
-                                      category: '',
+                                      category: topMfsController
+                                          .fivePluscategory[index],
                                     ),
                                   ));
                             },
