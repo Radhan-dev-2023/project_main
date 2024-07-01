@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:finfresh_mobile/env/env.dart';
+import 'package:finfresh_mobile/model/TopPicks%20model/topPicks_model.dart';
 import 'package:finfresh_mobile/model/historical%20nav%20model/historical_nav_model.dart';
 import 'package:finfresh_mobile/model/latest%20nav%20model/latest_nav_model.dart';
 import 'package:finfresh_mobile/model/mutual%20Fund%20Model/Mutual_fund_model.dart';
@@ -14,7 +15,9 @@ import 'package:finfresh_mobile/model/top%20performing%20model/top_performing_mu
 import 'package:finfresh_mobile/model/top%20performing%20sib%20model/top_performing_sip_on_category.dart';
 import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
+import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
+import 'package:finfresh_mobile/utilities/urls/url.dart';
 import 'package:http/http.dart' as http;
 
 class SchemeServices {
@@ -184,6 +187,7 @@ class SchemeServices {
     log('calling');
     String url =
         'https://mfapi.advisorkhoj.com/getHistoricalNav?key=${Env.key}&scheme=$scheme&startdate=$startDate&enddate=$lastdate';
+    log(url);
     try {
       log('try');
       http.Response response = await http.get(
@@ -279,6 +283,45 @@ class SchemeServices {
       if (jsonResponse['status'] == 200) {
         mutualFundModel = MutualFundModel.fromJson(jsonResponse);
         return mutualFundModel;
+      } else if (jsonResponse['status'] == 500) {
+        showSnackBar(context, jsonResponse['status_msg']);
+        return null;
+      }
+    } on SocketException {
+      showSnackBar(context, 'No Internet Connection');
+      return null;
+    } catch (e) {
+      logger.d('exception in scheme info $e');
+      return null;
+    }
+    return null;
+  }
+
+  TopPicksModel topPicksModel = TopPicksModel();
+  Future<TopPicksModel?> topPicksServices(
+    context,
+  ) async {
+    log('calling');
+    String userId = await SecureStorage.readToken('userId');
+    String token = await SecureStorage.readToken('token');
+    log('userid ===$userId ,,, token ===$token');
+    String url = '${ApiEndpoint.baseUrl}/api/v1/fund/fund/list';
+    try {
+      log('try');
+      http.Response response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'x-key': userId,
+        },
+      );
+      log('completed');
+      log('top Picks== ${response.body}');
+      Map<String, dynamic> jsonResponse = json.decode(response.body);
+      log('sttus== ${jsonResponse['result']['status']}');
+      if (jsonResponse['result']['status'] == 200) {
+        topPicksModel = TopPicksModel.fromJson(jsonResponse);
+        return topPicksModel;
       } else if (jsonResponse['status'] == 500) {
         showSnackBar(context, jsonResponse['status_msg']);
         return null;

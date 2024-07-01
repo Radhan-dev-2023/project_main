@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:finfresh_mobile/model/TopPicks%20model/topPicks_model.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/stock_detail_screen.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/widgets/overview_in_tabbar.dart';
@@ -7,20 +10,20 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 class WigetForTopPIcksAndGoals extends StatelessWidget {
   final String title;
-  final List<String> listname;
+  final Fund? listname;
   final Widget wigetInTrailing;
-  final List<String> imageList;
-  final List<String>? isinList;
-  final List<String>? categoryList;
+  // final List<String> imageList;
+  // final List<String>? isinList;
+  // final List<String>? categoryList;
 
   const WigetForTopPIcksAndGoals({
     super.key,
     required this.title,
-    required this.listname,
+    this.listname,
     required this.wigetInTrailing,
-    required this.imageList,
-    this.isinList,
-    this.categoryList,
+    // required this.imageList,
+    // this.isinList,
+    // this.categoryList,
   });
 
   @override
@@ -53,7 +56,7 @@ class WigetForTopPIcksAndGoals extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return ListTile(
                     contentPadding: EdgeInsets.only(left: 15.sp, right: 12.sp),
-                    leading: imageList[index].isEmpty
+                    leading: listname?.fundList?[index].image == null
                         ? CircleAvatar(
                             radius: 29,
                             backgroundColor: Colors.white,
@@ -63,9 +66,22 @@ class WigetForTopPIcksAndGoals extends StatelessWidget {
                               width: Adaptive.w(6),
                             ),
                           )
-                        : Image.network(imageList[index]),
+                        : Image.network(
+                            listname?.fundList?[index].image ?? '',
+                            errorBuilder: (context, error, stackTrace) {
+                              return CircleAvatar(
+                                radius: 29,
+                                backgroundColor: Colors.white,
+                                child: Image.asset(
+                                  'assets/images/ffdash.png',
+                                  height: Adaptive.h(6),
+                                  width: Adaptive.w(6),
+                                ),
+                              );
+                            },
+                          ),
                     title: Text(
-                      listname[index],
+                      listname?.fundList?[index].fundName ?? '',
                       style: Theme.of(context).textTheme.labelLarge!.copyWith(
                             fontSize: 15.5.sp,
                             fontWeight: FontWeight.w400,
@@ -96,9 +112,10 @@ class WigetForTopPIcksAndGoals extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => StockDetailsScreen(
-                              scheme: listname[index],
-                              isinNumber: isinList?[index] ?? '',
-                              category: categoryList?[index] ?? '',
+                              scheme: listname?.fundList?[index].fundName ?? '',
+                              isinNumber: listname?.fundList?[index].isin ?? '',
+                              category:
+                                  listname?.fundList?[index].category ?? '',
                             ),
                           ));
                     },

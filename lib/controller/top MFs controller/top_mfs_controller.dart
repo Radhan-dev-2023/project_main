@@ -1,10 +1,14 @@
 import 'dart:developer';
 
+import 'package:finfresh_mobile/model/TopPicks%20model/topPicks_model.dart';
 import 'package:finfresh_mobile/model/schem%20allCategory/scheme_allcategory_model.dart';
 import 'package:finfresh_mobile/model/top%20performing%20model/top_performing_mutual_fund.dart';
+import 'package:finfresh_mobile/services/refersh%20token/refersh_token.dart';
 import 'package:finfresh_mobile/services/scheme%20services/scheme_services.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
+import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 class TopMFsController extends ChangeNotifier {
   int currentIndex = 0;
@@ -92,6 +96,7 @@ class TopMFsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  TopPicksModel? topPicksModel;
   bool lodingList = false;
   Future<void> getTopMfsFRomPeriod(context, String category) async {
     log('calling top mfs');
@@ -105,7 +110,7 @@ class TopMFsController extends ChangeNotifier {
           .topPerformingMutualFund(context, category, returntoBackend);
 
       filteredListForAllFunds.addAll(topPerformingMutualFundModel?.list ?? []);
-
+      await topPicks(context);
       lodingList = false;
       notifyListeners();
       log(topPerformingMutualFundModel.toString());
@@ -225,6 +230,20 @@ class TopMFsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  RefershTokenService refershTokenService = RefershTokenService();
+  Future<void> topPicks(context) async {
+    log('toppickscalling');
+    String token = await SecureStorage.readToken('token');
+    bool isTokenExpired = JwtDecoder.isExpired(token);
+    if (isTokenExpired) {
+      await refershTokenService.postRefershTocken(context);
+      topPicksModel = await schemeServices.topPicksServices(context);
+      
+    } else {
+      topPicksModel = await schemeServices.topPicksServices(context);
+    }
+  }
+
   // @override
   // void dispose() {
   //   // TODO: implement dispose
@@ -236,7 +255,7 @@ class TopMFsController extends ChangeNotifier {
     'UTI Nifty 50 Index Fund - Regular Plan - Growth Option',
     'HDFC Infrastructure Fund - Growth Plan',
     'Baroda BNP Paribas Business Cycle Fund - Regular Plan - Growth',
-    'Nippon India Power \u0026 Infra Fund-Growth Plan -Growth Option',
+    'Nippon India Power %26 Infra Fund-Growth Plan -Growth Option',
   ];
   List<String> isinForSip500 = [
     'INF204K01HY3',
@@ -318,17 +337,17 @@ class TopMFsController extends ChangeNotifier {
   ];
   List<String> sectorlFundlist = [
     'quant PSU Fund - Growth Option - Regular Plan ',
-    'BANK OF INDIA Manufacturing & Infrastructure Fund-Growth',
+    'BANK OF INDIA Manufacturing %26 Infrastructure Fund-Growth',
     'BANDHAN TRANSPORTATION AND LOGISTICS FUND - GROWTH - REGULAR PLAN',
-    'Tata Resources & Energy Fund-Regular Plan-Growth',
-    'WhiteOak Capital Banking \u0026 Financial Services Fund - Regular Growth',
+    'Tata Resources %26 Energy Fund-Regular Plan-Growth',
+    'WhiteOak Capital Banking %26 Financial Services Fund - Regular Growth'
   ];
   List<String> sectorCategory = [
     'Equity: Thematic-Psu',
     'Equity: Sectoral-Infrastructure',
     'Equity: Thematic-Transportation',
     'Equity: Thematic-Energy',
-    '',
+    "Equity: Sectoral-Banking and Financial Services",
   ];
   List<String> sectoralIsin = [
     'INF966L01DQ0',
@@ -350,7 +369,7 @@ class TopMFsController extends ChangeNotifier {
     'HSBC Tax Saver Equity Fund - Growth',
     'Kotak ELSS Tax Saver Fund Growth ',
     'Navi ELSS Tax Saver Fund- Regular Plan- Growth Option',
-    'Quant ELSS Tax Saver Fund - Growth Option - Regular Plans',
+    'Quant ELSS Tax Saver Fund - Growth Option - Regular Plan',
   ];
   List<String> taxsavingInGoalsIsin = [
     'INF03VN01647',
@@ -431,7 +450,7 @@ class TopMFsController extends ChangeNotifier {
   ];
   List<String> fivePlusYears = [
     "Quant Active Fund-GROWTH OPTION - Regular Plan",
-    'Tata India Pharma Healthcare Fund-Regular Plan-Growth',
+    'Tata India Pharma %26 Healthcare Fund-Regular Plan-Growth',
     'HDFC Housing Opportunities Fund  - Growth Option',
     'Tata Small Cap Fund-Regular Plan-Growth',
     'SBI Consumption Opportunities Fund - Regular - Growth'
@@ -465,7 +484,7 @@ class TopMFsController extends ChangeNotifier {
     'assets/images/threetofiveyear.png',
     'assets/images/fiveyesrs.png'
   ];
-  List<Color> colorList = [
+  List<Color> colorList = const [
     Color(0xFF5A765E),
     Color(0xFF9688C1),
     Color(0xFF1F8D92),

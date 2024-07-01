@@ -74,32 +74,27 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
                         children: [
                           WigetForTopPIcksAndGoals(
                             title: 'Sip under 500',
-                            listname: topMfsController.sipUnder500list,
+                            listname: topMfsController
+                                .topPicksModel?.result?.funds![0],
                             wigetInTrailing: const SizedBox(),
-                            imageList: topMfsController.sipUnder500Logo,
-                            isinList: topMfsController.isinForSip500,
-                            categoryList: topMfsController.categorySip,
                           ),
                           WigetForTopPIcksAndGoals(
                             title: 'Finfresh pick',
-                            listname: topMfsController.finfreshpickslist,
+                            listname: topMfsController
+                                .topPicksModel?.result?.funds![1],
                             wigetInTrailing: const SizedBox(),
-                            imageList: topMfsController.finfreshpickslistlogo,
-                            isinList: topMfsController.finffreshtoppicksisin,
                           ),
                           WigetForTopPIcksAndGoals(
                             title: 'Tax savings',
-                            listname: topMfsController.taxsavinginToppicks,
+                            listname: topMfsController
+                                .topPicksModel?.result?.funds![2],
                             wigetInTrailing: const SizedBox(),
-                            imageList: topMfsController.taxSavingIntopPicksLogo,
-                            isinList: topMfsController.taxSavingIsin,
                           ),
                           WigetForTopPIcksAndGoals(
                             title: 'Sectoral',
-                            listname: topMfsController.sectorlFundlist,
+                            listname: topMfsController
+                                .topPicksModel?.result?.funds![3],
                             wigetInTrailing: const SizedBox(),
-                            imageList: topMfsController.sectoralLogoList,
-                            isinList: topMfsController.sectoralIsin,
                           ),
                         ],
                       ),

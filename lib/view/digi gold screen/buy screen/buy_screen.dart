@@ -191,6 +191,7 @@ class _ScreenBuyState extends State<ScreenBuy>
                 VerticalSpacer(15.h),
                 InkWell(
                   onTap: () async {
+                    log('${dashBordController.dashBoardModel?.result?.data?.phoneNumber}');
                     if (goldController.buygoldrateController.text.isNotEmpty) {
                       //"TB7WBn"test,
                       // ijiPG7 prod
@@ -313,6 +314,7 @@ class _ScreenBuyState extends State<ScreenBuy>
 
   @override
   onError(dynamic response) {
+    showFlushbar(context, response['errorMsg']);
     log(response.toString());
   }
 }
