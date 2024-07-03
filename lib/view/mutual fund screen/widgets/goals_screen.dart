@@ -43,11 +43,16 @@ class ScreenGolas extends StatelessWidget {
             heading == 'Tax Savings'
                 ? Expanded(
                     child: ListView.separated(
-                        padding: EdgeInsets.all(0),
+                        padding: const EdgeInsets.all(0),
                         itemBuilder: (context, index) {
                           return ListTile(
-                            leading: Image.network(
-                                topMfsController.taxSavingingoalsLogo[index]),
+                            leading: Image.network(topMfsController
+                                    .goalsModel
+                                    ?.result
+                                    ?.funds?[0]
+                                    .fundList?[index]
+                                    .image ??
+                                ''),
                             // leading: Container(
                             //   height: 5.h,
                             //   width: 10.w,
@@ -66,7 +71,9 @@ class ScreenGolas extends StatelessWidget {
                             //   ),
                             // ),
                             title: Text(
-                              topMfsController.taxsavingInGoals[index],
+                              topMfsController.goalsModel?.result?.funds?[0]
+                                      .fundList?[index].fundName ??
+                                  '',
                               style: Theme.of(context)
                                   .textTheme
                                   .labelLarge!
@@ -101,11 +108,26 @@ class ScreenGolas extends StatelessWidget {
                                   MaterialPageRoute(
                                     builder: (context) => StockDetailsScreen(
                                       scheme: topMfsController
-                                          .taxsavingInGoals[index],
+                                              .goalsModel
+                                              ?.result
+                                              ?.funds?[0]
+                                              .fundList?[index]
+                                              .fundName ??
+                                          '',
                                       isinNumber: topMfsController
-                                          .taxsavingInGoalsIsin[index],
+                                              .goalsModel
+                                              ?.result
+                                              ?.funds?[0]
+                                              .fundList?[index]
+                                              .isin ??
+                                          '',
                                       category: topMfsController
-                                          .taxsavingInGoalsCategory[index],
+                                              .goalsModel
+                                              ?.result
+                                              ?.funds?[0]
+                                              .fundList?[index]
+                                              .category ??
+                                          '',
                                     ),
                                   ));
                             },
@@ -115,15 +137,20 @@ class ScreenGolas extends StatelessWidget {
                             VerticalSpacer(1.h),
                         itemCount: 5),
                   )
-                : SizedBox(),
+                : const SizedBox(),
             heading == '0-3 Years'
                 ? Expanded(
                     child: ListView.separated(
-                        padding: EdgeInsets.all(0),
+                        padding: const EdgeInsets.all(0),
                         itemBuilder: (context, index) {
                           return ListTile(
-                            leading: Image.network(
-                                topMfsController.threeyearLogo[index]),
+                            leading: Image.network(topMfsController
+                                    .goalsModel
+                                    ?.result
+                                    ?.funds?[1]
+                                    .fundList?[index]
+                                    .image ??
+                                ''),
                             // leading: Container(
                             //   height: 5.h,
                             //   width: 10.w,
@@ -142,83 +169,9 @@ class ScreenGolas extends StatelessWidget {
                             //   ),
                             // ),
                             title: Text(
-                              topMfsController.threeyearList[index],
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelLarge!
-                                  .copyWith(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w400,
-                                    letterSpacing: 3.sp,
-                                  ),
-                              maxLines: 2,
-                            ),
-                            trailing: Container(
-                              height: Adaptive.h(3),
-                              width: Adaptive.w(15),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20.sp),
-                                color: Colors.grey.withOpacity(0.2),
-                              ),
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(bottom: 2),
-                                  child: CustomTextWidget(
-                                    text: 'Invest',
-                                    fontSize: 14.sp,
-                                    color: const Color(0xFF6C8FF8),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => StockDetailsScreen(
-                                      scheme:
-                                          topMfsController.threeyearList[index],
-                                      isinNumber:
-                                          topMfsController.threrYearIsin[index],
-                                      category: topMfsController
-                                          .threrYearcategory[index],
-                                    ),
-                                  ));
-                            },
-                          );
-                        },
-                        separatorBuilder: (context, index) =>
-                            VerticalSpacer(1.h),
-                        itemCount: 5),
-                  )
-                : SizedBox(),
-            heading == '3-5 Years'
-                ? Expanded(
-                    child: ListView.separated(
-                        padding: EdgeInsets.all(0),
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            leading: Image.network(
-                                topMfsController.threetoFiveyearsLogo[index]),
-                            // leading: Container(
-                            //   height: 5.h,
-                            //   width: 10.w,
-                            //   decoration: BoxDecoration(
-                            //     borderRadius: BorderRadius.circular(10.sp),
-                            //     color: Color(0xFF0E1330),
-                            //   ),
-                            //   child: Padding(
-                            //     padding: const EdgeInsets.all(6.5),
-                            //     child: Image.asset(
-                            //       'assets/images/ffdash.png',
-                            //       color: Colors.white,
-                            //       height: Adaptive.h(4),
-                            //       width: Adaptive.w(4),
-                            //     ),
-                            //   ),
-                            // ),
-                            title: Text(
-                              topMfsController.threetofiveyears[index],
+                              topMfsController.goalsModel?.result?.funds?[1]
+                                      .fundList?[index].fundName ??
+                                  '',
                               style: Theme.of(context)
                                   .textTheme
                                   .labelLarge!
@@ -253,11 +206,26 @@ class ScreenGolas extends StatelessWidget {
                                   MaterialPageRoute(
                                     builder: (context) => StockDetailsScreen(
                                       scheme: topMfsController
-                                          .threetofiveyears[index],
+                                              .goalsModel
+                                              ?.result
+                                              ?.funds?[1]
+                                              .fundList?[index]
+                                              .fundName ??
+                                          '',
                                       isinNumber: topMfsController
-                                          .threeYeartoFinveisin[index],
+                                              .goalsModel
+                                              ?.result
+                                              ?.funds?[1]
+                                              .fundList?[index]
+                                              .isin ??
+                                          '',
                                       category: topMfsController
-                                          .threeYeartoFinveCategory[index],
+                                              .goalsModel
+                                              ?.result
+                                              ?.funds?[1]
+                                              .fundList?[index]
+                                              .category ??
+                                          '',
                                     ),
                                   ));
                             },
@@ -267,16 +235,20 @@ class ScreenGolas extends StatelessWidget {
                             VerticalSpacer(1.h),
                         itemCount: 5),
                   )
-                : SizedBox(),
-            heading == '5+ Years'
+                : const SizedBox(),
+            heading == '3-5 Years'
                 ? Expanded(
                     child: ListView.separated(
-                        padding: EdgeInsets.all(0),
+                        padding: const EdgeInsets.all(0),
                         itemBuilder: (context, index) {
                           return ListTile(
-                            leading: Image.network(
-                              topMfsController.fiveYearLogo[index],
-                            ),
+                            leading: Image.network(topMfsController
+                                    .goalsModel
+                                    ?.result
+                                    ?.funds?[2]
+                                    .fundList?[index]
+                                    .image ??
+                                ''),
                             // leading: Container(
                             //   height: 5.h,
                             //   width: 10.w,
@@ -295,7 +267,9 @@ class ScreenGolas extends StatelessWidget {
                             //   ),
                             // ),
                             title: Text(
-                              topMfsController.fivePlusYears[index],
+                              topMfsController.goalsModel?.result?.funds?[2]
+                                      .fundList?[index].fundName ??
+                                  '',
                               style: Theme.of(context)
                                   .textTheme
                                   .labelLarge!
@@ -329,12 +303,27 @@ class ScreenGolas extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => StockDetailsScreen(
-                                      scheme:
-                                          topMfsController.fivePlusYears[index],
-                                      isinNumber:
-                                          topMfsController.fivePlusIsin[index],
+                                      scheme: topMfsController
+                                              .goalsModel
+                                              ?.result
+                                              ?.funds?[2]
+                                              .fundList?[index]
+                                              .fundName ??
+                                          '',
+                                      isinNumber: topMfsController
+                                              .goalsModel
+                                              ?.result
+                                              ?.funds?[2]
+                                              .fundList?[index]
+                                              .isin ??
+                                          '',
                                       category: topMfsController
-                                          .fivePluscategory[index],
+                                              .goalsModel
+                                              ?.result
+                                              ?.funds?[2]
+                                              .fundList?[index]
+                                              .category ??
+                                          '',
                                     ),
                                   ));
                             },
@@ -344,7 +333,103 @@ class ScreenGolas extends StatelessWidget {
                             VerticalSpacer(1.h),
                         itemCount: 5),
                   )
-                : SizedBox(),
+                : const SizedBox(),
+            heading == '5+ Years'
+                ? Expanded(
+                    child: ListView.separated(
+                        padding: const EdgeInsets.all(0),
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            leading: Image.network(
+                              topMfsController.goalsModel?.result?.funds?[3]
+                                      .fundList?[index].image ??
+                                  '',
+                            ),
+                            // leading: Container(
+                            //   height: 5.h,
+                            //   width: 10.w,
+                            //   decoration: BoxDecoration(
+                            //     borderRadius: BorderRadius.circular(10.sp),
+                            //     color: Color(0xFF0E1330),
+                            //   ),
+                            //   child: Padding(
+                            //     padding: const EdgeInsets.all(6.5),
+                            //     child: Image.asset(
+                            //       'assets/images/ffdash.png',
+                            //       color: Colors.white,
+                            //       height: Adaptive.h(4),
+                            //       width: Adaptive.w(4),
+                            //     ),
+                            //   ),
+                            // ),
+                            title: Text(
+                              topMfsController.goalsModel?.result?.funds?[3]
+                                      .fundList?[index].fundName ??
+                                  '',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelLarge!
+                                  .copyWith(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w400,
+                                    letterSpacing: 3.sp,
+                                  ),
+                              maxLines: 2,
+                            ),
+                            trailing: Container(
+                              height: Adaptive.h(3),
+                              width: Adaptive.w(15),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.sp),
+                                color: Colors.grey.withOpacity(0.2),
+                              ),
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(bottom: 2),
+                                  child: CustomTextWidget(
+                                    text: 'Invest',
+                                    fontSize: 14.sp,
+                                    color: const Color(0xFF6C8FF8),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => StockDetailsScreen(
+                                      scheme: topMfsController
+                                              .goalsModel
+                                              ?.result
+                                              ?.funds?[3]
+                                              .fundList?[index]
+                                              .fundName ??
+                                          '',
+                                      isinNumber: topMfsController
+                                              .goalsModel
+                                              ?.result
+                                              ?.funds?[3]
+                                              .fundList?[index]
+                                              .isin ??
+                                          '',
+                                      category: topMfsController
+                                              .goalsModel
+                                              ?.result
+                                              ?.funds?[3]
+                                              .fundList?[index]
+                                              .category ??
+                                          '',
+                                    ),
+                                  ));
+                            },
+                          );
+                        },
+                        separatorBuilder: (context, index) =>
+                            VerticalSpacer(1.h),
+                        itemCount: 5),
+                  )
+                : const SizedBox(),
           ],
         );
       }),

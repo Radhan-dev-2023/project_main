@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:finfresh_mobile/env/env.dart';
 import 'package:finfresh_mobile/model/TopPicks%20model/topPicks_model.dart';
+import 'package:finfresh_mobile/model/goal%20model/goal_model.dart';
 import 'package:finfresh_mobile/model/historical%20nav%20model/historical_nav_model.dart';
 import 'package:finfresh_mobile/model/latest%20nav%20model/latest_nav_model.dart';
 import 'package:finfresh_mobile/model/mutual%20Fund%20Model/Mutual_fund_model.dart';
@@ -323,6 +324,45 @@ class SchemeServices {
         topPicksModel = TopPicksModel.fromJson(jsonResponse);
         return topPicksModel;
       } else if (jsonResponse['status'] == 500) {
+        showSnackBar(context, jsonResponse['status_msg']);
+        return null;
+      }
+    } on SocketException {
+      showSnackBar(context, 'No Internet Connection');
+      return null;
+    } catch (e) {
+      logger.d('exception in scheme info $e');
+      return null;
+    }
+    return null;
+  }
+
+  GoalsModel goalsModel = GoalsModel();
+  Future<GoalsModel?> goalsServices(
+    context,
+  ) async {
+    log('calling');
+    String userId = await SecureStorage.readToken('userId');
+    String token = await SecureStorage.readToken('token');
+    log('userid ===$userId ,,, token ===$token');
+    String url = '${ApiEndpoint.baseUrl}/api/v1/fund/goal/list';
+    try {
+      log('try');
+      http.Response response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'x-key': userId,
+        },
+      );
+      log('completed');
+      log('goal== ${response.body}');
+      Map<String, dynamic> jsonResponse = json.decode(response.body);
+      log('sttus== ${jsonResponse['result']['status']}');
+      if (jsonResponse['result']['status'] == 200) {
+        goalsModel = GoalsModel.fromJson(jsonResponse);
+        return goalsModel;
+      } else if (jsonResponse['result']['status'] == 500) {
         showSnackBar(context, jsonResponse['status_msg']);
         return null;
       }

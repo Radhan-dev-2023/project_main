@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:finfresh_mobile/model/TopPicks%20model/topPicks_model.dart';
+import 'package:finfresh_mobile/model/goal%20model/goal_model.dart';
 import 'package:finfresh_mobile/model/schem%20allCategory/scheme_allcategory_model.dart';
 import 'package:finfresh_mobile/model/top%20performing%20model/top_performing_mutual_fund.dart';
 import 'package:finfresh_mobile/services/refersh%20token/refersh_token.dart';
@@ -111,6 +112,7 @@ class TopMFsController extends ChangeNotifier {
 
       filteredListForAllFunds.addAll(topPerformingMutualFundModel?.list ?? []);
       await topPicks(context);
+
       lodingList = false;
       notifyListeners();
       log(topPerformingMutualFundModel.toString());
@@ -230,6 +232,7 @@ class TopMFsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  GoalsModel? goalsModel;
   RefershTokenService refershTokenService = RefershTokenService();
   Future<void> topPicks(context) async {
     log('toppickscalling');
@@ -238,9 +241,10 @@ class TopMFsController extends ChangeNotifier {
     if (isTokenExpired) {
       await refershTokenService.postRefershTocken(context);
       topPicksModel = await schemeServices.topPicksServices(context);
-      
+      goalsModel = await schemeServices.goalsServices(context);
     } else {
       topPicksModel = await schemeServices.topPicksServices(context);
+      goalsModel = await schemeServices.goalsServices(context);
     }
   }
 
@@ -284,14 +288,14 @@ class TopMFsController extends ChangeNotifier {
     'Bajaj Finserv Flexi Cap Fund -Regular Plan-Growth',
     'Quant Active Fund-GROWTH OPTION - Regular Plan',
     'Quant Business Cycle Fund - Growth Option - Regular Plan',
-    'Union Innovation Opportunities Fund - Regular Plan - Growth Option ',
+    'Union Innovation %26 Opportunities Fund - Regular Plan - Growth Option',
   ];
   List<String> finfreshtoppickCategory = [
     'Equity: Thematic-Others',
     'Equity: Flexi Cap',
     'Equity: Multi Cap',
     'Equity: Thematic-Others',
-    ''
+    "Equity: Thematic-Others",
   ];
   List<String> finffreshtoppicksisin = [
     'INF179KC1GL9',
@@ -423,7 +427,8 @@ class TopMFsController extends ChangeNotifier {
   List<String> threetofiveyears = [
     "Quant PSU Fund - Growth Option - Regular Plan",
     "Parag Parikh Flexi Cap Fund - Regular Plan - Growth",
-    "Mirae Asset Multi Asset Allocation Fund-Regular Plan-Growth",
+    "Mirae Asset Multi Asset Allocation Fund - Regular Plan - Growth",
+    // "Mirae Asset Multi Asset Allocation Fund-Regular Plan-Growth",
     "Bank of India Multi Asset Allocation Fund-Regular Plan-Growth",
     'Quant Absolute Fund - Growth Option - Regular Plan',
   ];
@@ -437,7 +442,7 @@ class TopMFsController extends ChangeNotifier {
   List<String> threeYeartoFinveCategory = [
     "Equity: Thematic-PSU",
     "Equity: Flexi Cap",
-    "",
+    "Hybrid: Multi Asset Allocation",
     "Hybrid: Multi Asset Allocation",
     "Hybrid: Aggressive"
   ];

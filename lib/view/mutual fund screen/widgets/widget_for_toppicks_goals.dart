@@ -124,7 +124,10 @@ class WigetForTopPIcksAndGoals extends StatelessWidget {
                 separatorBuilder: (context, index) => VerticalSpacer(1.h),
                 itemCount: 5,
               ),
-            )
+            ),
+            VerticalSpacer(
+              Adaptive.h(2),
+            ),
           ],
         ),
       ),
