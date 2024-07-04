@@ -59,34 +59,34 @@ class ScreenDigiGold extends StatelessWidget {
             VerticalSpacer(7.h),
             InkWell(
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ScreenGoldBuyingAndSelling(),
-                    ));
-                // if (Provider.of<DashBoardController>(context, listen: false)
-                //             .dashBoardModel
-                //             ?.result
-                //             ?.data
-                //             ?.activationStatus
-                //             ?.statusCode ==
-                //         'S06' ||
-                //     Provider.of<DashBoardController>(context, listen: false)
-                //             .dashBoardModel
-                //             ?.result
-                //             ?.data
-                //             ?.activationStatus
-                //             ?.statusCode ==
-                //         'S12') {
-                //   Navigator.push(
-                //       context,
-                //       MaterialPageRoute(
-                //         builder: (context) =>
-                //             const ScreenGoldBuyingAndSelling(),
-                //       ));
-                // } else {
-                //   showFlushbar(context, 'Your Account Not Activated');
-                // }
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //       builder: (context) => const ScreenGoldBuyingAndSelling(),
+                //     ));
+                if (Provider.of<DashBoardController>(context, listen: false)
+                            .dashBoardModel
+                            ?.result
+                            ?.data
+                            ?.activationStatus
+                            ?.statusCode ==
+                        'S06' ||
+                    Provider.of<DashBoardController>(context, listen: false)
+                            .dashBoardModel
+                            ?.result
+                            ?.data
+                            ?.activationStatus
+                            ?.statusCode ==
+                        'S12') {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            const ScreenGoldBuyingAndSelling(),
+                      ));
+                } else {
+                  showFlushbar(context, 'Your Account Not Activated');
+                }
                 // showDialog(
                 //   context: context,
                 //   builder: (BuildContext context) {

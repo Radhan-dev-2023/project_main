@@ -16,10 +16,10 @@ class ScreeenTranscations extends StatelessWidget {
     final filterController =
         Provider.of<FilterController>(context, listen: false);
 
-    // WidgetsBinding.instance.addPostFrameCallback((_) async {
-    //   filterController.resetFilter();
-    //   await filterController.getfilter(context);
-    // });
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      filterController.resetFilter();
+      await filterController.getfilter(context);
+    });
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
@@ -242,7 +242,7 @@ class ScreeenTranscations extends StatelessWidget {
                                                         left: 13,
                                                         right: 13,
                                                         // top: 5,
-                                                        bottom: 5,
+                                                        // bottom: 5,
                                                       ),
                                                       child: Text(
                                                         filterController

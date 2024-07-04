@@ -13,6 +13,7 @@ class SixMutualFundWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Brightness platformBrightness = MediaQuery.of(context).platformBrightness;
     return Padding(
       padding: EdgeInsets.all(10.sp),
       child: SizedBox(
@@ -28,8 +29,9 @@ class SixMutualFundWidget extends StatelessWidget {
                     SizedBox(
                       child: CircleAvatar(
                         radius: 40,
-                        backgroundColor:
-                            const Color(0xFFD8E2DC).withOpacity(0.2),
+                        backgroundColor: platformBrightness == Brightness.light
+                            ? const Color(0xFFD8E2DC).withOpacity(0.2)
+                            : const Color(0xFFD8E2DC).withOpacity(0.8),
                         child: SizedBox(
                           height: Adaptive.h(8),
                           width: Adaptive.w(18),
@@ -40,7 +42,9 @@ class SixMutualFundWidget extends StatelessWidget {
                             // ),
                             // elevation: 0,
                             backgroundColor:
-                                const Color(0xFFD8E2DC).withOpacity(0.4),
+                                platformBrightness == Brightness.light
+                                    ? const Color(0xFFD8E2DC).withOpacity(0.4)
+                                    : const Color(0xFFD8E2DC),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -59,8 +63,10 @@ class SixMutualFundWidget extends StatelessWidget {
                                     );
                                   },
                                   child: const Collectionwidget(
-                                    image: 'assets/images/indexfund.png',
-                                    color: Color.fromARGB(255, 89, 94, 91),
+                                    // image: 'assets/images/indexfund.png',
+                                    image:
+                                        'assets/images/fundsicons/indexfordash.png',
+                                    // color: Color.fromARGB(255, 89, 94, 91),
                                   ),
                                 ),
                                 VerticalSpacer(1.h),
@@ -82,15 +88,22 @@ class SixMutualFundWidget extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 40,
-                        backgroundColor:
-                            Color.fromARGB(255, 250, 234, 231).withOpacity(0.5),
+                        backgroundColor: platformBrightness == Brightness.light
+                            ? const Color.fromARGB(255, 250, 234, 231)
+                                .withOpacity(0.5)
+                            : const Color.fromARGB(255, 250, 234, 231)
+                                .withOpacity(0.8),
                         child: SizedBox(
                           height: Adaptive.h(8),
                           width: Adaptive.w(18),
                           child: CircleAvatar(
                             radius: 10,
-                            backgroundColor: Color.fromARGB(255, 252, 215, 209)
-                                .withOpacity(0.4),
+                            backgroundColor:
+                                platformBrightness == Brightness.light
+                                    ? const Color.fromARGB(255, 252, 215, 209)
+                                        .withOpacity(0.4)
+                                    : const Color.fromARGB(255, 250, 234, 231),
+
                             // color: const Color(0xFFE9DCFF),
 
                             child: Column(
@@ -111,8 +124,10 @@ class SixMutualFundWidget extends StatelessWidget {
                                     );
                                   },
                                   child: const Collectionwidget(
-                                    image: 'assets/images/piggy.png',
-                                    color: Color.fromARGB(255, 180, 114, 102),
+                                    // image: 'assets/images/piggy.png',
+                                    image:
+                                        'assets/images/fundsicons/taxsavingfordash.png',
+                                    // color: Color.fromARGB(255, 180, 114, 102),
                                   ),
                                 ),
                                 VerticalSpacer(1.h),
@@ -134,8 +149,11 @@ class SixMutualFundWidget extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 40,
-                        backgroundColor:
-                            Color.fromARGB(255, 250, 191, 234).withOpacity(0.2),
+                        backgroundColor: platformBrightness == Brightness.light
+                            ? const Color.fromARGB(255, 250, 191, 234)
+                                .withOpacity(0.2)
+                            : const Color.fromARGB(255, 250, 191, 234)
+                                .withOpacity(0.8),
                         child: SizedBox(
                           height: Adaptive.h(8),
                           width: Adaptive.w(18),
@@ -143,8 +161,12 @@ class SixMutualFundWidget extends StatelessWidget {
                             // shape: RoundedRectangleBorder(
                             //   borderRadius: BorderRadius.circular(27.sp),
                             // ),
-                            backgroundColor: Color.fromARGB(255, 245, 168, 224)
-                                .withOpacity(0.3),
+                            backgroundColor:
+                                platformBrightness == Brightness.light
+                                    ? const Color.fromARGB(255, 245, 168, 224)
+                                        .withOpacity(0.3)
+                                    : const Color.fromARGB(255, 245, 168, 224),
+
                             // elevation: 0,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -164,8 +186,10 @@ class SixMutualFundWidget extends StatelessWidget {
                                     );
                                   },
                                   child: const Collectionwidget(
-                                    image: 'assets/images/flexicappp.png',
-                                    color: Color.fromARGB(255, 204, 45, 162),
+                                    image:
+                                        'assets/images/fundsicons/flexicapfordash.png',
+                                    // image: 'assets/images/flexicappp.png',
+                                    // color: Color.fromARGB(255, 204, 45, 162),
                                   ),
                                 ),
                                 VerticalSpacer(1.h),
@@ -182,13 +206,16 @@ class SixMutualFundWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(
-                  child: Column(
-                    children: [
-                      CircleAvatar(
+                Column(
+                  children: [
+                    SizedBox(
+                      child: CircleAvatar(
                         radius: 40,
-                        backgroundColor:
-                            const Color(0xFFA3FFBB).withOpacity(0.2),
+                        backgroundColor: platformBrightness == Brightness.light
+                            ? const Color.fromARGB(255, 247, 195, 154)
+                                .withOpacity(0.2)
+                            : const Color.fromARGB(255, 247, 195, 154)
+                                .withOpacity(0.8),
                         child: SizedBox(
                           height: Adaptive.h(8),
                           width: Adaptive.w(18),
@@ -197,8 +224,77 @@ class SixMutualFundWidget extends StatelessWidget {
                             //   borderRadius: BorderRadius.circular(27.sp),
                             // ),
                             // elevation: 0,
-                            backgroundColor: Color.fromARGB(255, 186, 252, 203)
-                                .withOpacity(0.5),
+                            backgroundColor:
+                                platformBrightness == Brightness.light
+                                    ? const Color.fromARGB(255, 250, 188, 137)
+                                        .withOpacity(0.4)
+                                    : const Color.fromARGB(255, 250, 188, 137),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                VerticalSpacer(1.h),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const TopMfsScreen(
+                                          category:
+                                              'Equity: Sectoral-Infrastructure',
+                                          appbarname: 'Sectoral',
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: const Collectionwidget(
+                                    image:
+                                        'assets/images/fundsicons/sectorfundfordash.png',
+                                    // image: 'assets/images/sectoralinfund.png',
+                                    // color: Color.fromARGB(255, 250, 155, 78),
+                                  ),
+                                ),
+                                VerticalSpacer(1.h),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    VerticalSpacer(1.h),
+                    Text('Sectoral Fund',
+                        style: TextStyle(
+                          fontSize: 14.5.sp,
+                        )),
+                  ],
+                ),
+              ],
+            ),
+            VerticalSpacer(1.5.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 40,
+                        backgroundColor: platformBrightness == Brightness.light
+                            ? const Color(0xFFA3FFBB).withOpacity(0.2)
+                            : const Color(0xFFA3FFBB).withOpacity(0.8),
+                        child: SizedBox(
+                          height: Adaptive.h(8),
+                          width: Adaptive.w(18),
+                          child: CircleAvatar(
+                            // shape: RoundedRectangleBorder(
+                            //   borderRadius: BorderRadius.circular(27.sp),
+                            // ),
+                            // elevation: 0,
+                            backgroundColor:
+                                platformBrightness == Brightness.light
+                                    ? const Color.fromARGB(255, 186, 252, 203)
+                                        .withOpacity(0.5)
+                                    : const Color.fromARGB(255, 186, 252, 203),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -217,8 +313,10 @@ class SixMutualFundWidget extends StatelessWidget {
                                     );
                                   },
                                   child: const Collectionwidget(
-                                    image: 'assets/images/largecap.png',
-                                    color: Color.fromARGB(255, 35, 165, 67),
+                                    image:
+                                        'assets/images/fundsicons/largefundfordash.png',
+                                    // image: 'assets/images/largecap.png',
+                                    // color: Color.fromARGB(255, 35, 165, 67),
                                   ),
                                 ),
                                 VerticalSpacer(1.h),
@@ -235,19 +333,16 @@ class SixMutualFundWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-              ],
-            ),
-            VerticalSpacer(1.5.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
                 Column(
                   children: [
                     SizedBox(
                       child: CircleAvatar(
                         radius: 40,
-                        backgroundColor:
-                            Color.fromARGB(255, 221, 176, 224).withOpacity(0.2),
+                        backgroundColor: platformBrightness == Brightness.light
+                            ? const Color.fromARGB(255, 221, 176, 224)
+                                .withOpacity(0.2)
+                            : const Color.fromARGB(255, 221, 176, 224)
+                                .withOpacity(0.8),
                         child: SizedBox(
                           height: Adaptive.h(8),
                           width: Adaptive.w(18),
@@ -255,8 +350,11 @@ class SixMutualFundWidget extends StatelessWidget {
                             // shape: RoundedRectangleBorder(
                             //   borderRadius: BorderRadius.circular(27.sp),
                             // ),
-                            backgroundColor: Color.fromARGB(255, 213, 169, 216)
-                                .withOpacity(0.4),
+                            backgroundColor:
+                                platformBrightness == Brightness.light
+                                    ? const Color.fromARGB(255, 213, 169, 216)
+                                        .withOpacity(0.4)
+                                    : const Color.fromARGB(255, 213, 169, 216),
 
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -276,8 +374,10 @@ class SixMutualFundWidget extends StatelessWidget {
                                     );
                                   },
                                   child: const Collectionwidget(
-                                    image: 'assets/images/midcapinfund.png',
-                                    color: Color.fromARGB(255, 127, 17, 134),
+                                    image:
+                                        'assets/images/fundsicons/midcapfordash.png',
+                                    // image: 'assets/images/midcapinfund.png',
+                                    // color: Color.fromARGB(255, 127, 17, 134),
                                   ),
                                 ),
                                 VerticalSpacer(1.h),
@@ -299,8 +399,11 @@ class SixMutualFundWidget extends StatelessWidget {
                     SizedBox(
                       child: CircleAvatar(
                         radius: 40,
-                        backgroundColor:
-                            Color.fromARGB(255, 253, 180, 191).withOpacity(0.2),
+                        backgroundColor: platformBrightness == Brightness.light
+                            ? const Color.fromARGB(255, 253, 180, 191)
+                                .withOpacity(0.2)
+                            : const Color.fromARGB(255, 253, 180, 191)
+                                .withOpacity(0.8),
                         child: SizedBox(
                           height: Adaptive.h(8),
                           width: Adaptive.w(18),
@@ -308,8 +411,11 @@ class SixMutualFundWidget extends StatelessWidget {
                             // shape: RoundedRectangleBorder(
                             //   borderRadius: BorderRadius.circular(27.sp),
                             // ),
-                            backgroundColor: Color.fromARGB(255, 250, 163, 176)
-                                .withOpacity(0.4),
+                            backgroundColor:
+                                platformBrightness == Brightness.light
+                                    ? const Color.fromARGB(255, 250, 163, 176)
+                                        .withOpacity(0.4)
+                                    : const Color.fromARGB(255, 250, 163, 176),
                             // elevation: 0,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -329,8 +435,10 @@ class SixMutualFundWidget extends StatelessWidget {
                                     );
                                   },
                                   child: const Collectionwidget(
-                                    image: 'assets/images/smalcapinfunds.png',
-                                    color: Color.fromARGB(255, 252, 75, 102),
+                                    image:
+                                        'assets/images/fundsicons/smallcapfordash.png',
+                                    // image: 'assets/images/smalcapinfunds.png',
+                                    // color: Color.fromARGB(255, 252, 75, 102),
                                   ),
                                 ),
                                 VerticalSpacer(1.h),
@@ -352,8 +460,11 @@ class SixMutualFundWidget extends StatelessWidget {
                     SizedBox(
                       child: CircleAvatar(
                         radius: 40,
-                        backgroundColor:
-                            Color.fromARGB(255, 247, 195, 154).withOpacity(0.2),
+                        backgroundColor: platformBrightness == Brightness.light
+                            ? const Color.fromARGB(255, 181, 252, 241)
+                                .withOpacity(0.2)
+                            : const Color.fromARGB(255, 181, 252, 241)
+                                .withOpacity(0.8),
                         child: SizedBox(
                           height: Adaptive.h(8),
                           width: Adaptive.w(18),
@@ -362,62 +473,11 @@ class SixMutualFundWidget extends StatelessWidget {
                             //   borderRadius: BorderRadius.circular(27.sp),
                             // ),
                             // elevation: 0,
-                            backgroundColor: Color.fromARGB(255, 250, 188, 137)
-                                .withOpacity(0.4),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                VerticalSpacer(1.h),
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const TopMfsScreen(
-                                          category:
-                                              'Equity: Sectoral-Infrastructure',
-                                          appbarname: 'Sectoral',
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  child: const Collectionwidget(
-                                    image: 'assets/images/sectoralinfund.png',
-                                    color: Color.fromARGB(255, 250, 155, 78),
-                                  ),
-                                ),
-                                VerticalSpacer(1.h),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    VerticalSpacer(1.h),
-                    Text('Sectoral Fund',
-                        style: TextStyle(
-                          fontSize: 14.5.sp,
-                        )),
-                  ],
-                ),
-                Column(
-                  children: [
-                    SizedBox(
-                      child: CircleAvatar(
-                        radius: 40,
-                        backgroundColor:
-                            Color.fromARGB(255, 181, 252, 241).withOpacity(0.2),
-                        child: SizedBox(
-                          height: Adaptive.h(8),
-                          width: Adaptive.w(18),
-                          child: CircleAvatar(
-                            // shape: RoundedRectangleBorder(
-                            //   borderRadius: BorderRadius.circular(27.sp),
-                            // ),
-                            // elevation: 0,
-                            backgroundColor: Color.fromARGB(255, 162, 252, 238)
-                                .withOpacity(0.3),
+                            backgroundColor:
+                                platformBrightness == Brightness.light
+                                    ? const Color.fromARGB(255, 162, 252, 238)
+                                        .withOpacity(0.3)
+                                    : const Color.fromARGB(255, 162, 252, 238),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -433,8 +493,10 @@ class SixMutualFundWidget extends StatelessWidget {
                                     );
                                   },
                                   child: const Collectionwidget(
-                                    image: 'assets/images/mutual-fund.png',
-                                    color: Color.fromARGB(255, 45, 126, 114),
+                                    image:
+                                        'assets/images/fundsicons/allfundsfordash.png',
+                                    // image: 'assets/images/mutual-fund.png',
+                                    // color: Color.fromARGB(255, 45, 126, 114),
                                   ),
                                 ),
                                 VerticalSpacer(1.h),

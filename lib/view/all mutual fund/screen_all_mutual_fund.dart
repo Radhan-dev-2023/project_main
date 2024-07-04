@@ -320,7 +320,7 @@ class _ScreenAllMutualFundState extends State<ScreenAllMutualFund> {
                                                               fontSize: 16.sp,
                                                               // fontWeight:
                                                               //     FontWeight.w500,
-                                                              color: Color(
+                                                              color:const Color(
                                                                   0xFF222222)),
                                                       overflow:
                                                           TextOverflow.visible,

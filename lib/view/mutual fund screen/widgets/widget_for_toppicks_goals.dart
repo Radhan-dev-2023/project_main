@@ -47,8 +47,8 @@ class WigetForTopPIcksAndGoals extends StatelessWidget {
             ),
             ConstrainedBox(
               constraints: BoxConstraints(
-                maxHeight: Adaptive.h(42),
-                minHeight: Adaptive.h(42),
+                maxHeight: Adaptive.h(43.5),
+                minHeight: Adaptive.h(43.5),
               ),
               child: ListView.separated(
                 physics: const NeverScrollableScrollPhysics(),
@@ -66,19 +66,23 @@ class WigetForTopPIcksAndGoals extends StatelessWidget {
                               width: Adaptive.w(6),
                             ),
                           )
-                        : Image.network(
-                            listname?.fundList?[index].image ?? '',
-                            errorBuilder: (context, error, stackTrace) {
-                              return CircleAvatar(
-                                radius: 29,
-                                backgroundColor: Colors.white,
-                                child: Image.asset(
-                                  'assets/images/ffdash.png',
-                                  height: Adaptive.h(6),
-                                  width: Adaptive.w(6),
-                                ),
-                              );
-                            },
+                        : SizedBox(
+                            height: 5.h,
+                            width: 10.w,
+                            child: Image.network(
+                              listname?.fundList?[index].image ?? '',
+                              errorBuilder: (context, error, stackTrace) {
+                                return CircleAvatar(
+                                  radius: 29,
+                                  backgroundColor: Colors.white,
+                                  child: Image.asset(
+                                    'assets/images/ffdash.png',
+                                    height: Adaptive.h(4),
+                                    width: Adaptive.w(5),
+                                  ),
+                                );
+                              },
+                            ),
                           ),
                     title: Text(
                       listname?.fundList?[index].fundName ?? '',
@@ -125,9 +129,9 @@ class WigetForTopPIcksAndGoals extends StatelessWidget {
                 itemCount: 5,
               ),
             ),
-            VerticalSpacer(
-              Adaptive.h(2),
-            ),
+            // VerticalSpacer(
+            //   Adaptive.h(2),
+            // ),
           ],
         ),
       ),

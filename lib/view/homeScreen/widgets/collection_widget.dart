@@ -13,8 +13,8 @@ class Collectionwidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 3.h,
-      width: 7.w,
+      height: 3.5.h,
+      width: 7.5.w,
       child: Image.asset(
         image,
         fit: BoxFit.fill,

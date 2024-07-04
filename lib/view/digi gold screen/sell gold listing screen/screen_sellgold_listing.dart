@@ -149,112 +149,155 @@ class _ScreenListingGoldState extends State<ScreenListingGold> {
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (context, index) {
-                                  return Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const CustomTextWidget(
-                                            text: 'Sold Gold',
-                                          ),
-                                          VerticalSpacer(0.5.h),
-                                          CustomTextWidget(
-                                            text:
-                                                "${goldController.sellGoldListingModel?.result?[index].sellDate.toString().substring(0, 10)}",
-                                            color: Colors.grey,
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisSize: MainAxisSize.min,
+                                  return Card(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 15,
+                                          right: 15,
+                                          top: 10,
+                                          bottom: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              // VerticalSpacer(1.h),
-                                              Text(
-                                                'Amount ',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodySmall,
+                                              CustomTextWidget(
+                                                text: 'Sold Gold',
+                                                fontSize: 15.5.sp,
+                                                letterSpacing: 2.sp,
                                               ),
-                                              VerticalSpacer(0.1.h),
-                                              Text(
-                                                'Status ',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodySmall,
-                                              ),
-                                              // VerticalSpacer(0.2.h),
-                                              Text(
-                                                'SoldMg ',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyMedium,
+                                              VerticalSpacer(0.5.h),
+                                              CustomTextWidget(
+                                                text:
+                                                    "${goldController.sellGoldListingModel?.result?[index].sellDate.toString().substring(0, 10)}",
+                                                color: Colors.grey,
+                                                fontSize: 14.5.sp,
                                               ),
                                             ],
                                           ),
-                                          Column(
+                                          Row(
+                                            mainAxisSize: MainAxisSize.min,
                                             children: [
-                                              Text(
-                                                ': ',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodySmall,
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  VerticalSpacer(0.5.h),
+
+                                                  // VerticalSpacer(1.h),
+                                                  Text(
+                                                    'Amount ',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .copyWith(
+                                                          fontSize: 14.5.sp,
+                                                        ),
+                                                  ),
+                                                  VerticalSpacer(0.1.h),
+                                                  Text(
+                                                    'Status ',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .copyWith(
+                                                          fontSize: 14.5.sp,
+                                                        ),
+                                                  ),
+                                                  // VerticalSpacer(0.2.h),
+                                                  Text(
+                                                    'SoldMg ',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .copyWith(
+                                                          fontSize: 14.5.sp,
+                                                        ),
+                                                  ),
+                                                ],
                                               ),
-                                              Text(
-                                                ': ',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodySmall,
+                                              Column(
+                                                children: [
+                                                  VerticalSpacer(0.5.h),
+                                                  Text(
+                                                    ': ',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .copyWith(
+                                                          fontSize: 14.5.sp,
+                                                        ),
+                                                  ),
+                                                  Text(
+                                                    ': ',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .copyWith(
+                                                          fontSize: 14.5.sp,
+                                                        ),
+                                                  ),
+                                                  VerticalSpacer(0.4.h),
+                                                  Text(
+                                                    ': ',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .copyWith(
+                                                          fontSize: 14.5.sp,
+                                                        ),
+                                                  ),
+                                                ],
                                               ),
-                                              VerticalSpacer(0.4.h),
-                                              Text(
-                                                ': ',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodySmall,
-                                              ),
-                                            ],
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            children: [
-                                              // VerticalSpacer(1.h),
-                                              Text(
-                                                ' ₹ ${goldController.sellGoldListingModel?.result?[index].amount.toStringAsFixed(2)}',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodySmall,
-                                              ),
-                                              VerticalSpacer(0.1.h),
-                                              Text(
-                                                '${goldController.sellGoldListingModel?.result?[index].status}',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodySmall,
-                                              ),
-                                              // VerticalSpacer(0.2.h),
-                                              Text(
-                                                '${goldController.sellGoldListingModel?.result?[index].soldmg}',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyMedium,
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.end,
+                                                children: [
+                                                  VerticalSpacer(0.5.h),
+                                                  // VerticalSpacer(1.h),
+                                                  Text(
+                                                    ' ₹ ${goldController.sellGoldListingModel?.result?[index].amount.toStringAsFixed(2)}',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .copyWith(
+                                                          fontSize: 14.5.sp,
+                                                        ),
+                                                  ),
+                                                  VerticalSpacer(0.1.h),
+                                                  Text(
+                                                    '${goldController.sellGoldListingModel?.result?[index].status}',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .copyWith(
+                                                          fontSize: 14.5.sp,
+                                                        ),
+                                                  ),
+                                                  // VerticalSpacer(0.2.h),
+                                                  Text(
+                                                    '${goldController.sellGoldListingModel?.result?[index].soldmg}',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .copyWith(
+                                                          fontSize: 14.5.sp,
+                                                        ),
+                                                  ),
+                                                ],
                                               ),
                                             ],
                                           ),
                                         ],
                                       ),
-                                    ],
+                                    ),
                                   );
                                 },
                                 separatorBuilder: (context, index) =>
-                                    const Divider(),
+                                    VerticalSpacer(1.h),
                                 itemCount: goldController
                                         .sellGoldListingModel?.result?.length ??
                                     0,

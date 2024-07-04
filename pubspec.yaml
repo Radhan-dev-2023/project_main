@@ -101,6 +101,8 @@ flutter:
   assets:
     - assets/images/
     - assets/images/goalimages/
+    - assets/images/fundsicons/
+    - assets/images/navicons/
     - assets/lottie/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

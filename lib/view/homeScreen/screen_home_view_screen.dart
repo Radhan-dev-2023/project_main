@@ -49,7 +49,7 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
     final _controller = NotchBottomBarController(index: _currentIndex);
     final goldProvider = Provider.of<GoldController>(context);
 
-    // Brightness platformBrightness = MediaQuery.of(context).platformBrightness;
+    Brightness platformBrightness = MediaQuery.of(context).platformBrightness;
     final List<Widget> bottomBarPages = [
       const ScreenMutualFund(),
       goldProvider.isCompletedGoldPurchase == 'true' ||
@@ -63,115 +63,128 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
     List<BottomBarItem> bottomList = [
       BottomBarItem(
         inActiveItem: Image.asset(
-          'assets/images/compensation.png',
+          'assets/images/navicons/money.png',
+          // 'assets/images/navicons/noun-mutual-fund-5991548 1.png',
           // 'assets/images/dashboard_11118018.png',
-          color: Colors.black,
+          color: platformBrightness == Brightness.light
+              ? Colors.black
+              : Colors.white,
           // color: indexfor == 0
           //     ? const Color(0xFFA6BBFB)
           //     : platformBrightness == Brightness.light
           //         ? Colors.black
           //         : Colors.white,
-          height: 25,
-          width: 23,
+          // height: 25,
+          // width: 23,
         ),
-        activeItem: Image.asset(
-          'assets/images/compensation.png',
-          color: Colors.white,
-          height: 45,
-          width: 30,
-        ),
+        activeItem: Image.asset("assets/images/navicons/money.png",
+            // 'assets/images/navicons/noun-mutual-fund-5991548 1.png',
+            color: platformBrightness == Brightness.light
+                ? Colors.white
+                : Colors.black
+            // height: 45,
+            // width: 30,
+            ),
       ),
       BottomBarItem(
         inActiveItem: Image.asset(
-          'assets/images/digicold.png',
-          color: Colors.black,
-          height: 25,
-          width: 23,
+          'assets/images/navicons/gold.png',
+          color: platformBrightness == Brightness.light
+              ? Colors.black
+              : Colors.white,
+          // height: 25,
+          // width: 23,
         ),
-        activeItem: Image.asset(
-          'assets/images/digicold.png',
-          // 'assets/images/money_13299664.png',
-          color: Colors.white,
-          // color: indexfor == 1
-          //     ? const Color(0xFFA6BBFB)
-          //     : platformBrightness == Brightness.light
-          //         ? Colors.black
-          //         : Colors.white,
-          height: 45,
-          width: 30,
-        ),
+        activeItem: Image.asset('assets/images/navicons/gold.png',
+            // 'assets/images/money_13299664.png',
+            color: platformBrightness == Brightness.light
+                ? Colors.white
+                : Colors.black
+            // color: indexfor == 1
+            //     ? const Color(0xFFA6BBFB)
+            //     : platformBrightness == Brightness.light
+            //         ? Colors.black
+            //         : Colors.white,
+            // height: 45,
+            // width: 30,
+            ),
       ),
       BottomBarItem(
         inActiveItem: Image.asset(
           'assets/images/ffdash.png',
-          color: Colors.black,
+          color: platformBrightness == Brightness.light
+              ? Colors.black
+              : Colors.white,
           // color: indexfor == 2
           //     ? const Color(0xFFA6BBFB)
           //     : platformBrightness == Brightness.light
           //         ? Colors.black
           //         : Colors.white,
-          height: 30,
-          width: 23,
+          // height: 30,
+          // width: 23,
         ),
-        activeItem: Image.asset(
-          'assets/images/ffdash.png',
-          color: Colors.white,
-          // color: indexfor == 2
-          //     ? const Color(0xFFA6BBFB)
-          //     : platformBrightness == Brightness.light
-          //         ? Colors.black
-          //         : Colors.white,
-          height: 45,
-          width: 30,
-        ),
+        activeItem: Image.asset('assets/images/ffdash.png',
+            color: platformBrightness == Brightness.light
+                ? Colors.white
+                : Colors.black
+            // color: indexfor == 2
+            //     ? const Color(0xFFA6BBFB)
+            //     : platformBrightness == Brightness.light
+            //         ? Colors.black
+            //         : Colors.white,
+            // height: 45,
+            // width: 30,
+            ),
       ),
       BottomBarItem(
         inActiveItem: Image.asset(
-          'assets/images/transaction.png',
-          color: Colors.black,
+          'assets/images/navicons/transaction.png',
+          color: platformBrightness == Brightness.light
+              ? Colors.black
+              : Colors.white,
           // color: indexfor == 2
           //     ? const Color(0xFFA6BBFB)
           //     : platformBrightness == Brightness.light
           //         ? Colors.black
           //         : Colors.white,
-          height: 25,
-          width: 23,
+          // height: 25,
+          // width: 23,
         ),
-        activeItem: Image.asset(
-          'assets/images/transaction.png',
-          color: Colors.white,
-          // color: indexfor == 2
-          //     ? const Color(0xFFA6BBFB)
-          //     : platformBrightness == Brightness.light
-          //         ? Colors.black
-          //         : Colors.white,
-          height: 45,
-          width: 30,
-        ),
+        activeItem: Image.asset('assets/images/navicons/transaction.png',
+            color: platformBrightness == Brightness.light
+                ? Colors.white
+                : Colors.black
+            // color: indexfor == 2
+            //     ? const Color(0xFFA6BBFB)
+            //     : platformBrightness == Brightness.light
+            //         ? Colors.black
+            //         : Colors.white,
+            // height: 45,
+            // width: 30,
+            ),
       ),
       BottomBarItem(
         inActiveItem: Image.asset(
-          'assets/images/Setting.png',
-          color: Colors.black,
+          'assets/images/navicons/settings.png',
+          color: platformBrightness == Brightness.light
+              ? Colors.black
+              : Colors.white,
           // color: indexfor == 3
           //     ? const Color(0xFFA6BBFB)
           //     : platformBrightness == Brightness.light
           //         ? Colors.black
           //         : Colors.white,
-          height: 25,
-          width: 23,
+          // height: 25,
+          // width: 23,
         ),
-        activeItem: Image.asset(
-          'assets/images/Setting.png',
-          color: Colors.white,
-          // color: indexfor == 3
-          //     ? const Color(0xFFA6BBFB)
-          //     : platformBrightness == Brightness.light
-          //         ? Colors.black
-          //         : Colors.white,
-          height: 45,
-          width: 30,
-        ),
+        activeItem: Image.asset('assets/images/navicons/settings.png',
+            color: platformBrightness == Brightness.light
+                ? Colors.white
+                : Colors.black
+
+            // height: 45,
+            // width: 30,
+            ),
       ),
     ];
     return Scaffold(
@@ -185,10 +198,21 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
         extendBody: true,
         body: bottomBarPages[_currentIndex],
         bottomNavigationBar: AnimatedNotchBottomBar(
-          kBottomRadius: 0,
-          kIconSize: 25,
-          circleMargin: 8.0,
-          notchColor: const Color(0xFF060B27),
+          color: platformBrightness == Brightness.light
+              // ? Color.fromARGB(255, 232, 241, 250)
+
+              // ? const Color.fromARGB(255, 240, 234, 234)
+              ? const Color.fromARGB(255, 239, 240, 241)
+              : const Color(0xFF0E1330),
+
+          kBottomRadius: 20,
+          topMargin: 8.7,
+          showTopRadius: true,
+          kIconSize: 23,
+          circleMargin: 4.0,
+          notchColor: platformBrightness == Brightness.light
+              ? const Color(0xFF060B27)
+              : Colors.white,
           showShadow: false,
           blurFilterX: 0,
           blurFilterY: 0,
@@ -196,7 +220,7 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
           // blurOpacity: 0.5,
           bottomBarWidth: 100,
           notchBottomBarController: _controller,
-          removeMargins: true,
+          removeMargins: false,
           onTap: (index) {
             setState(() {
               _currentIndex = index;

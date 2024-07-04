@@ -63,7 +63,6 @@ class DasBoardService {
       logger.d('response summary == ${response.body}');
       Map<String, dynamic> jsonResponse = json.decode(response.body);
       if (jsonResponse['status'] == 200) {
-        
         summaryModel = SummaryModel.fromJson(jsonResponse);
 
         return summaryModel;

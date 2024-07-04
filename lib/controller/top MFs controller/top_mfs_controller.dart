@@ -484,10 +484,10 @@ class TopMFsController extends ChangeNotifier {
   ];
   List<String> item = ['Tax Savings', '0-3 Years', '3-5 Years', '5+ Years'];
   List<String> imageList = [
-    'assets/images/goalimages/1.jpg',
-    'assets/images/goalimages/4.jpg',
-    'assets/images/goalimages/3.jpg',
-    'assets/images/goalimages/2.jpg',
+    'assets/images/goalimages/tax.jpg',
+    'assets/images/goalimages/0-3.jpg',
+    'assets/images/goalimages/3-5.jpg',
+    'assets/images/goalimages/5+.jpg',
 
     // 'assets/images/taxsavings.png',
     // 'assets/images/zerotofiveyears.png',

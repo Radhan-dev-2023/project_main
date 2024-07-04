@@ -187,124 +187,185 @@ class _ScreenGoldBuyingAndSellingState
                                             ?.transactions?[index]
                                             .amount);
                                     // goldController.sum = value;
-                                    return Column(
-                                      children: [
-                                        ListTile(
-                                          contentPadding: EdgeInsets.only(
-                                              left: 15.sp, right: 15.sp),
-                                          subtitle: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              const Text('Buying Gold'),
-                                              VerticalSpacer(1.h),
-                                              Text(
-                                                "${goldController.goldlistingmodel?.res?.transactions?[index].addedon.toString().substring(0, 10)}",
-                                                style: const TextStyle(
-                                                    color: Colors.grey),
-                                              ),
-                                            ],
+                                    return Card(
+                                      child: Column(
+                                        children: [
+                                          VerticalSpacer(1.h),
+                                          ListTile(
+                                            contentPadding: EdgeInsets.only(
+                                                left: 15.sp, right: 15.sp),
+                                            subtitle: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Buying Gold',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .copyWith(
+                                                        fontSize: 15.5.sp,
+                                                        letterSpacing: 2.sp,
+                                                      ),
+                                                ),
+                                                VerticalSpacer(1.h),
+                                                Text(
+                                                  "${goldController.goldlistingmodel?.res?.transactions?[index].addedon.toString().substring(0, 10)}",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .copyWith(
+                                                        fontSize: 15.sp,
+                                                        color: Colors.grey,
+                                                      ),
+                                                ),
+                                              ],
+                                            ),
+                                            trailing: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    // VerticalSpacer(1.h),
+                                                    Text(
+                                                      'Amount ',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .copyWith(
+                                                            fontSize: 14.5.sp,
+                                                          ),
+                                                    ),
+                                                    VerticalSpacer(0.1.h),
+                                                    Text(
+                                                      'Gst ',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .copyWith(
+                                                            fontSize: 14.5.sp,
+                                                          ),
+                                                    ),
+                                                    // VerticalSpacer(0.2.h),
+                                                    Text(
+                                                      'Total ',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .copyWith(
+                                                            fontSize: 14.5.sp,
+                                                          ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Column(
+                                                  children: [
+                                                    Text(
+                                                      ': ',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .copyWith(
+                                                            fontSize: 14.5.sp,
+                                                          ),
+                                                    ),
+                                                    Text(
+                                                      ': ',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .copyWith(
+                                                            fontSize: 14.5.sp,
+                                                          ),
+                                                    ),
+                                                    VerticalSpacer(0.4.h),
+                                                    Text(
+                                                      ': ',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .copyWith(
+                                                            fontSize: 14.5.sp,
+                                                          ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.end,
+                                                  children: [
+                                                    // VerticalSpacer(1.h),
+                                                    Text(
+                                                      ' ₹ ${value.toStringAsFixed(2)}',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .copyWith(
+                                                              fontSize: 14.5.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400),
+                                                    ),
+                                                    VerticalSpacer(0.1.h),
+                                                    Text(
+                                                      ' ₹ ${gst.toStringAsFixed(2)}',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .copyWith(
+                                                            fontSize: 14.5.sp,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                          ),
+                                                    ),
+                                                    // VerticalSpacer(0.2.h),
+                                                    Text(
+                                                      ' ₹ ${goldController.goldlistingmodel?.res?.transactions?[index].amount}',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .copyWith(
+                                                            fontSize: 14.5.sp,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                          ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                          trailing: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  // VerticalSpacer(1.h),
-                                                  Text(
-                                                    'Amount ',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodySmall,
-                                                  ),
-                                                  VerticalSpacer(0.1.h),
-                                                  Text(
-                                                    'Gst ',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodySmall,
-                                                  ),
-                                                  // VerticalSpacer(0.2.h),
-                                                  Text(
-                                                    'Total ',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyMedium,
-                                                  ),
-                                                ],
+                                          Padding(
+                                            padding:
+                                                EdgeInsets.only(right: 15.sp),
+                                            child: Align(
+                                              alignment: Alignment.bottomRight,
+                                              child: Text(
+                                                'Bought ${goldController.goldlistingmodel?.res?.transactions?[index].purchasedGold.toStringAsFixed(2)} mg gold',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .copyWith(
+                                                      fontSize: 15.5.sp,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                    ),
                                               ),
-                                              Column(
-                                                children: [
-                                                  Text(
-                                                    ': ',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodySmall,
-                                                  ),
-                                                  Text(
-                                                    ': ',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodySmall,
-                                                  ),
-                                                  VerticalSpacer(0.4.h),
-                                                  Text(
-                                                    ': ',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodySmall,
-                                                  ),
-                                                ],
-                                              ),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
-                                                children: [
-                                                  // VerticalSpacer(1.h),
-                                                  Text(
-                                                    ' ₹ ${value.toStringAsFixed(2)}',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodySmall,
-                                                  ),
-                                                  VerticalSpacer(0.1.h),
-                                                  Text(
-                                                    ' ₹ ${gst.toStringAsFixed(2)}',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodySmall,
-                                                  ),
-                                                  // VerticalSpacer(0.2.h),
-                                                  Text(
-                                                    ' ₹ ${goldController.goldlistingmodel?.res?.transactions?[index].amount}',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyMedium,
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
+                                            ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsets.only(right: 15.sp),
-                                          child: Align(
-                                            alignment: Alignment.bottomRight,
-                                            child: Text(
-                                                'Brought ${goldController.goldlistingmodel?.res?.transactions?[index].purchasedGold.toStringAsFixed(2)} mg gold'),
-                                          ),
-                                        ),
-                                      ],
+                                          VerticalSpacer(1.h),
+                                        ],
+                                      ),
                                     );
                                   },
                                   separatorBuilder: (context, index) =>
-                                      const Divider(
-                                        color: Colors.grey,
-                                        thickness: 1,
-                                      ),
+                                      VerticalSpacer(1.h),
+                                  // const Divider(
+                                  //   color: Colors.grey,
+                                  //   thickness: 1,
+                                  // ),
                                   itemCount: goldController.goldlistingmodel
                                           ?.res?.transactions?.length ??
                                       0),
