@@ -2,7 +2,9 @@ import 'package:finfresh_mobile/controller/filter%20controller/filter_controller
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -14,10 +16,10 @@ class ScreeenTranscations extends StatelessWidget {
     final filterController =
         Provider.of<FilterController>(context, listen: false);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      filterController.resetFilter();
-      await filterController.getfilter(context);
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) async {
+    //   filterController.resetFilter();
+    //   await filterController.getfilter(context);
+    // });
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
@@ -33,9 +35,15 @@ class ScreeenTranscations extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(
+                        Container(
                           height: Adaptive.h(6),
-                          width: Adaptive.w(62),
+                          width: Adaptive.w(63),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.sp),
+                            border: Border.all(
+                              color: const Color.fromARGB(255, 192, 191, 191),
+                            ),
+                          ),
                           child: TextFormField(
                             controller: filterController.searchController,
                             style: Theme.of(context)
@@ -63,9 +71,10 @@ class ScreeenTranscations extends StatelessWidget {
                                         size: Adaptive.h(2.3),
                                       ))
                                   : const SizedBox(),
+
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide: BorderSide.none),
                               contentPadding:
                                   EdgeInsets.symmetric(horizontal: 12.0.sp),
                               hintText: 'Search',
@@ -139,37 +148,33 @@ class ScreeenTranscations extends StatelessWidget {
                                 return Card(
                                   surfaceTintColor: Colors.transparent,
                                   child: Padding(
-                                    padding: EdgeInsets.all(13.sp),
+                                    padding: EdgeInsets.only(
+                                        left: 18.sp, right: 18.sp),
                                     child: Column(
                                       children: [
                                         VerticalSpacer(2.h),
                                         Row(
                                           children: [
-                                            HorizontalSpacer(1.w),
                                             Expanded(
                                               child: Text(
-                                                // '${filterController.fliterModel?.result?[index].schemeName}',
-                                                ' ${filterController.filteredList[index].schemeName}',
+                                                '${filterController.filteredList[index].schemeName}',
                                                 overflow: TextOverflow.visible,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .bodyMedium!
                                                     .copyWith(
-                                                      fontSize: 17.sp,
+                                                      fontSize: 16.sp,
                                                       fontWeight:
-                                                          FontWeight.bold,
+                                                          FontWeight.w400,
+                                                      letterSpacing: 2.sp,
                                                     ),
                                               ),
                                             ),
                                           ],
                                         ),
                                         VerticalSpacer(1.h),
-                                        const Divider(
-                                          thickness: 0.5,
-                                          height: 1,
-                                          color: Colors.grey,
-                                        ),
-                                        VerticalSpacer(2.h),
+
+                                        // VerticalSpacer(2.h),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -183,15 +188,33 @@ class ScreeenTranscations extends StatelessWidget {
                                                 //         ?.result?[index]
                                                 //         .entryDate ??
                                                 //     ''),
-                                                Text(filterController
-                                                        .filteredList[index]
-                                                        .entryDate ??
-                                                    ''),
+                                                Text(
+                                                  'ID ${filterController.filteredList[index].trxnNo ?? ''}',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .copyWith(
+                                                        fontSize: 15.sp,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                      ),
+                                                ),
                                                 VerticalSpacer(1.h),
+                                                Text(
+                                                  filterController
+                                                          .filteredList[index]
+                                                          .entryDate ??
+                                                      '',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .copyWith(
+                                                        fontSize: 15.sp,
+                                                      ),
+                                                ),
+
                                                 // Text(
                                                 //     'ID  ${filterController.fliterModel?.result?[index].trxnNo ?? ''}')
-                                                Text(
-                                                    'ID ${filterController.filteredList[index].trxnNo ?? ''}')
                                               ],
                                             ),
                                             Column(
@@ -203,21 +226,70 @@ class ScreeenTranscations extends StatelessWidget {
                                                 //         ?.result?[index]
                                                 //         .transactionType ??
                                                 //     ''),
-                                                Text(filterController
-                                                        .filteredList[index]
-                                                        .transactionType ??
-                                                    '-'),
+                                                Container(
+                                                  height: 3.h,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.blue[100]!
+                                                        .withOpacity(0.2),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15.sp),
+                                                  ),
+                                                  child: Center(
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                        left: 13,
+                                                        right: 13,
+                                                        // top: 5,
+                                                        bottom: 5,
+                                                      ),
+                                                      child: Text(
+                                                        filterController
+                                                                .filteredList[
+                                                                    index]
+                                                                .transactionType ??
+                                                            '-',
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyMedium!
+                                                            .copyWith(
+                                                              fontSize: 15.sp,
+                                                              // fontWeight:
+                                                              //     FontWeight
+                                                              //         .w500,
+                                                            ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
 
                                                 VerticalSpacer(1.h),
                                                 // Text(
                                                 //     '₹${filterController.fliterModel?.result?[index].amount}')
                                                 Text(
-                                                    '₹${filterController.filteredList[index].amount}')
+                                                  '₹${filterController.filteredList[index].amount}',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .copyWith(
+                                                        fontSize: 15.sp,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                )
                                               ],
                                             ),
                                           ],
                                         ),
-                                        VerticalSpacer(2.h),
+                                        VerticalSpacer(1.h),
+                                        const Divider(
+                                          thickness: 0.5,
+                                          height: 0,
+                                          color: Color.fromARGB(
+                                              255, 192, 191, 191),
+                                        ),
+                                        VerticalSpacer(1.h),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -226,9 +298,25 @@ class ScreeenTranscations extends StatelessWidget {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                const Text('Folio'),
+                                                Text(
+                                                  'Folio',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .copyWith(
+                                                        fontSize: 15.sp,
+                                                      ),
+                                                ),
                                                 VerticalSpacer(1.h),
-                                                const Text('Status')
+                                                Text(
+                                                  'Status',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .copyWith(
+                                                        fontSize: 15.sp,
+                                                      ),
+                                                )
                                               ],
                                             ),
                                             Column(
@@ -255,14 +343,27 @@ class ScreeenTranscations extends StatelessWidget {
                                                           .filteredList[index]
                                                           .trxnStatus ??
                                                       '',
-                                                  style: TextStyle(
-                                                    color: getColorForStatus(
-                                                      filterController
-                                                          .fliterModel
-                                                          ?.result?[index]
-                                                          .trxnStatus,
-                                                    ),
-                                                  ),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodySmall!
+                                                      .copyWith(
+                                                        fontSize: 15.sp,
+                                                        color:
+                                                            getColorForStatus(
+                                                          filterController
+                                                              .fliterModel
+                                                              ?.result?[index]
+                                                              .trxnStatus,
+                                                        ),
+                                                      ),
+                                                  // style: TextStyle(
+                                                  //   color: getColorForStatus(
+                                                  //     filterController
+                                                  //         .fliterModel
+                                                  //         ?.result?[index]
+                                                  //         .trxnStatus,
+                                                  //   ),
+                                                  // ),
                                                 )
                                               ],
                                             )
@@ -275,7 +376,7 @@ class ScreeenTranscations extends StatelessWidget {
                                 );
                               },
                               separatorBuilder: (context, index) =>
-                                  VerticalSpacer(2.h),
+                                  const VerticalSpacer(0),
                               // itemCount: filterController
                               //         .fliterModel?.result?.length ??
                               //     0,
@@ -316,7 +417,7 @@ class ScreeenTranscations extends StatelessWidget {
   Color getColorForStatus(String? status) {
     switch (status) {
       case 'Pending':
-        return Colors.yellow;
+        return Color(0xFFffb703);
       case 'Processed by RTA':
         return Colors.green;
       case 'Rejected / Reversal':

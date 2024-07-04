@@ -70,8 +70,10 @@ class AppTheme {
     ),
     iconTheme: const IconThemeData(color: Colors.black),
     inputDecorationTheme: InputDecorationTheme(
+      // filled: true,
+      // fillColor: Colors.grey.withOpacity(0.2),
       focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(13.sp),
+        borderRadius: BorderRadius.circular(10.sp),
         borderSide: const BorderSide(color: Color(0xFF060B27)),
       ),
       // errorStyle: const TextStyle(color: Color(0xFF060B27)),
@@ -80,12 +82,12 @@ class AppTheme {
       //   borderSide: const BorderSide(color: Color(0xFF0E1330)),
       // ),
       border: OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.grey),
+        borderSide: BorderSide(color: Colors.grey.withOpacity(0.5)),
         borderRadius: BorderRadius.circular(10.sp),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(13.sp),
-        borderSide: const BorderSide(
+        borderRadius: BorderRadius.circular(10.sp),
+        borderSide: const BorderSide(color: Color.fromARGB(255, 192, 191, 191)
             // color: _lightTextColorPrimary,
             // Use accentColor for focus color
             ),

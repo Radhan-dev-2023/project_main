@@ -1,11 +1,9 @@
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/all%20mutual%20fund/screen_all_mutual_fund.dart';
 import 'package:finfresh_mobile/view/homeScreen/widgets/collection_widget.dart';
-import 'package:finfresh_mobile/view/top%20funds/top_funds.dart';
 import 'package:finfresh_mobile/view/top%20mfs/screen_top_mfs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class SixMutualFundWidget extends StatelessWidget {
@@ -31,16 +29,18 @@ class SixMutualFundWidget extends StatelessWidget {
                       child: CircleAvatar(
                         radius: 40,
                         backgroundColor:
-                            const Color(0xFF8AC9FE).withOpacity(0.5),
+                            const Color(0xFFD8E2DC).withOpacity(0.2),
                         child: SizedBox(
-                          height: Adaptive.h(9),
+                          height: Adaptive.h(8),
                           width: Adaptive.w(18),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(27.sp),
-                            ),
-                            elevation: 0,
-                            color: const Color(0xFF8AC9FE),
+                          child: CircleAvatar(
+                            radius: 10,
+                            // shape: RoundedRectangleBorder(
+                            //   borderRadius: BorderRadius.circular(27.sp),
+                            // ),
+                            // elevation: 0,
+                            backgroundColor:
+                                const Color(0xFFD8E2DC).withOpacity(0.4),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -60,7 +60,7 @@ class SixMutualFundWidget extends StatelessWidget {
                                   },
                                   child: const Collectionwidget(
                                     image: 'assets/images/indexfund.png',
-                                    color: Color.fromARGB(255, 16, 49, 78),
+                                    color: Color.fromARGB(255, 89, 94, 91),
                                   ),
                                 ),
                                 VerticalSpacer(1.h),
@@ -83,16 +83,16 @@ class SixMutualFundWidget extends StatelessWidget {
                       CircleAvatar(
                         radius: 40,
                         backgroundColor:
-                            const Color(0xFFE9DCFF).withOpacity(0.5),
+                            Color.fromARGB(255, 250, 234, 231).withOpacity(0.5),
                         child: SizedBox(
-                          height: Adaptive.h(9),
+                          height: Adaptive.h(8),
                           width: Adaptive.w(18),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(27.sp),
-                            ),
-                            color: const Color(0xFFE9DCFF),
-                            elevation: 0,
+                          child: CircleAvatar(
+                            radius: 10,
+                            backgroundColor: Color.fromARGB(255, 252, 215, 209)
+                                .withOpacity(0.4),
+                            // color: const Color(0xFFE9DCFF),
+
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -112,7 +112,7 @@ class SixMutualFundWidget extends StatelessWidget {
                                   },
                                   child: const Collectionwidget(
                                     image: 'assets/images/piggy.png',
-                                    color: Color.fromARGB(200, 100, 60, 200),
+                                    color: Color.fromARGB(255, 180, 114, 102),
                                   ),
                                 ),
                                 VerticalSpacer(1.h),
@@ -135,16 +135,17 @@ class SixMutualFundWidget extends StatelessWidget {
                       CircleAvatar(
                         radius: 40,
                         backgroundColor:
-                            const Color(0xFFFE8AE0).withOpacity(0.5),
+                            Color.fromARGB(255, 250, 191, 234).withOpacity(0.2),
                         child: SizedBox(
-                          height: Adaptive.h(9),
+                          height: Adaptive.h(8),
                           width: Adaptive.w(18),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(27.sp),
-                            ),
-                            color: const Color(0xFFFE8AE0),
-                            elevation: 0,
+                          child: CircleAvatar(
+                            // shape: RoundedRectangleBorder(
+                            //   borderRadius: BorderRadius.circular(27.sp),
+                            // ),
+                            backgroundColor: Color.fromARGB(255, 245, 168, 224)
+                                .withOpacity(0.3),
+                            // elevation: 0,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -164,7 +165,7 @@ class SixMutualFundWidget extends StatelessWidget {
                                   },
                                   child: const Collectionwidget(
                                     image: 'assets/images/flexicappp.png',
-                                    color: Color.fromARGB(255, 170, 2, 125),
+                                    color: Color.fromARGB(255, 204, 45, 162),
                                   ),
                                 ),
                                 VerticalSpacer(1.h),
@@ -187,16 +188,17 @@ class SixMutualFundWidget extends StatelessWidget {
                       CircleAvatar(
                         radius: 40,
                         backgroundColor:
-                            const Color(0xFFA3FFBB).withOpacity(0.5),
+                            const Color(0xFFA3FFBB).withOpacity(0.2),
                         child: SizedBox(
-                          height: Adaptive.h(9),
+                          height: Adaptive.h(8),
                           width: Adaptive.w(18),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(27.sp),
-                            ),
-                            elevation: 0,
-                            color: const Color(0xFFA3FFBB),
+                          child: CircleAvatar(
+                            // shape: RoundedRectangleBorder(
+                            //   borderRadius: BorderRadius.circular(27.sp),
+                            // ),
+                            // elevation: 0,
+                            backgroundColor: Color.fromARGB(255, 186, 252, 203)
+                                .withOpacity(0.5),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -216,7 +218,7 @@ class SixMutualFundWidget extends StatelessWidget {
                                   },
                                   child: const Collectionwidget(
                                     image: 'assets/images/largecap.png',
-                                    color: Color.fromARGB(255, 44, 138, 67),
+                                    color: Color.fromARGB(255, 35, 165, 67),
                                   ),
                                 ),
                                 VerticalSpacer(1.h),
@@ -245,16 +247,17 @@ class SixMutualFundWidget extends StatelessWidget {
                       child: CircleAvatar(
                         radius: 40,
                         backgroundColor:
-                            const Color(0xFFF89FFE).withOpacity(0.5),
+                            Color.fromARGB(255, 221, 176, 224).withOpacity(0.2),
                         child: SizedBox(
-                          height: Adaptive.h(9),
+                          height: Adaptive.h(8),
                           width: Adaptive.w(18),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(27.sp),
-                            ),
-                            color: const Color(0xFFF89FFE),
-                            elevation: 0,
+                          child: CircleAvatar(
+                            // shape: RoundedRectangleBorder(
+                            //   borderRadius: BorderRadius.circular(27.sp),
+                            // ),
+                            backgroundColor: Color.fromARGB(255, 213, 169, 216)
+                                .withOpacity(0.4),
+
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -274,7 +277,7 @@ class SixMutualFundWidget extends StatelessWidget {
                                   },
                                   child: const Collectionwidget(
                                     image: 'assets/images/midcapinfund.png',
-                                    color: Color.fromARGB(255, 133, 70, 138),
+                                    color: Color.fromARGB(255, 127, 17, 134),
                                   ),
                                 ),
                                 VerticalSpacer(1.h),
@@ -297,16 +300,17 @@ class SixMutualFundWidget extends StatelessWidget {
                       child: CircleAvatar(
                         radius: 40,
                         backgroundColor:
-                            const Color(0xFFFE8A9B).withOpacity(0.5),
+                            Color.fromARGB(255, 253, 180, 191).withOpacity(0.2),
                         child: SizedBox(
-                          height: Adaptive.h(9),
+                          height: Adaptive.h(8),
                           width: Adaptive.w(18),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(27.sp),
-                            ),
-                            color: const Color(0xFFFE8A9B),
-                            elevation: 0,
+                          child: CircleAvatar(
+                            // shape: RoundedRectangleBorder(
+                            //   borderRadius: BorderRadius.circular(27.sp),
+                            // ),
+                            backgroundColor: Color.fromARGB(255, 250, 163, 176)
+                                .withOpacity(0.4),
+                            // elevation: 0,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -326,7 +330,7 @@ class SixMutualFundWidget extends StatelessWidget {
                                   },
                                   child: const Collectionwidget(
                                     image: 'assets/images/smalcapinfunds.png',
-                                    color: Color.fromARGB(255, 129, 17, 34),
+                                    color: Color.fromARGB(255, 252, 75, 102),
                                   ),
                                 ),
                                 VerticalSpacer(1.h),
@@ -349,16 +353,17 @@ class SixMutualFundWidget extends StatelessWidget {
                       child: CircleAvatar(
                         radius: 40,
                         backgroundColor:
-                            const Color(0xFFFBA054).withOpacity(0.5),
+                            Color.fromARGB(255, 247, 195, 154).withOpacity(0.2),
                         child: SizedBox(
-                          height: Adaptive.h(9),
+                          height: Adaptive.h(8),
                           width: Adaptive.w(18),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(27.sp),
-                            ),
-                            elevation: 0,
-                            color: const Color(0xFFFBA054),
+                          child: CircleAvatar(
+                            // shape: RoundedRectangleBorder(
+                            //   borderRadius: BorderRadius.circular(27.sp),
+                            // ),
+                            // elevation: 0,
+                            backgroundColor: Color.fromARGB(255, 250, 188, 137)
+                                .withOpacity(0.4),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -379,7 +384,7 @@ class SixMutualFundWidget extends StatelessWidget {
                                   },
                                   child: const Collectionwidget(
                                     image: 'assets/images/sectoralinfund.png',
-                                    color: Color.fromARGB(255, 148, 72, 9),
+                                    color: Color.fromARGB(255, 250, 155, 78),
                                   ),
                                 ),
                                 VerticalSpacer(1.h),
@@ -402,16 +407,17 @@ class SixMutualFundWidget extends StatelessWidget {
                       child: CircleAvatar(
                         radius: 40,
                         backgroundColor:
-                            const Color(0xFF8AFEED).withOpacity(0.5),
+                            Color.fromARGB(255, 181, 252, 241).withOpacity(0.2),
                         child: SizedBox(
-                          height: Adaptive.h(9),
+                          height: Adaptive.h(8),
                           width: Adaptive.w(18),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(27.sp),
-                            ),
-                            elevation: 0,
-                            color: const Color(0xFF8AFEED),
+                          child: CircleAvatar(
+                            // shape: RoundedRectangleBorder(
+                            //   borderRadius: BorderRadius.circular(27.sp),
+                            // ),
+                            // elevation: 0,
+                            backgroundColor: Color.fromARGB(255, 162, 252, 238)
+                                .withOpacity(0.3),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [

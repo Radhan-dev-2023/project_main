@@ -138,9 +138,9 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
                                     Image.asset(
                                       topMfsController.imageList[
                                           index], // Example image URL
-                                      fit: BoxFit.cover,
+                                      fit: BoxFit.fill,
                                       width: double.infinity,
-                                      height: Adaptive.h(16),
+                                      height: Adaptive.h(17),
                                     ),
                                     Positioned(
                                       bottom: 0,
@@ -148,18 +148,8 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
                                         width: 172,
                                         height: 45.5,
                                         decoration: BoxDecoration(
-                                            gradient: LinearGradient(
-                                              stops: [0.3, 0.7],
-                                              begin: Alignment.topCenter,
-                                              end: Alignment.bottomCenter,
-                                              colors: [
-                                                topMfsController
-                                                    .colorList[index],
-                                                topMfsController
-                                                    .colorList[index]
-                                                    .withOpacity(0.5)
-                                              ], // Define your gradient colors
-                                            ),
+                                            color: const Color.fromARGB(
+                                                255, 252, 250, 250),
                                             borderRadius: BorderRadius.only(
                                                 bottomLeft:
                                                     Radius.circular(15.sp),
@@ -173,8 +163,8 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
                                       child: Text(
                                         topMfsController.item[index],
                                         style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18.sp,
+                                          color: Colors.black,
+                                          fontSize: 19.sp,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),

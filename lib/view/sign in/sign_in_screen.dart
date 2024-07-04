@@ -81,14 +81,12 @@ class ScreenSignin extends StatelessWidget {
                       keyboardType: TextInputType.number,
                       controller: authController.phonenumberControllerforlogin,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         // fillColor: const Color(0xFF0E1330),
                         // filled: true,
-                        prefix: const Text('+91'),
+                        prefix: Text('+91'),
                         hintText: 'Enter Phone Number',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.sp),
-                        ),
+                       
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {

@@ -186,15 +186,14 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
         body: bottomBarPages[_currentIndex],
         bottomNavigationBar: AnimatedNotchBottomBar(
           kBottomRadius: 0,
-
-          kIconSize: 27,
+          kIconSize: 25,
+          circleMargin: 8.0,
           notchColor: const Color(0xFF060B27),
           showShadow: false,
           blurFilterX: 0,
           blurFilterY: 0,
-
           // showBlurBottomBar: true,
-          // blurOpacity: 0.1,
+          // blurOpacity: 0.5,
           bottomBarWidth: 100,
           notchBottomBarController: _controller,
           removeMargins: true,
@@ -205,7 +204,6 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
               // indexfor = index;
             });
           },
-
           bottomBarItems: bottomList,
         )
         // bottomNavigationBar: BottomNavigationBar(
