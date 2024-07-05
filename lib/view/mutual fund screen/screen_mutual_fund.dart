@@ -6,6 +6,7 @@ import 'package:finfresh_mobile/view/mutual%20fund%20screen/widgets/widget_for_t
 import 'package:finfresh_mobile/view/stock%20details%20screen/stock_detail_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -130,47 +131,51 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
                                     ),
                                   ));
                             },
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20.sp),
-                              child: Card(
-                                child: Stack(
-                                  children: [
-                                    Image.asset(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.sp),
+                                // color: Color.fromARGB(255, 23, 79, 94),
+                              ),
+                              child: Stack(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(20.sp),
+                                    child: Image.asset(
                                       topMfsController.imageList[
                                           index], // Example image URL
                                       fit: BoxFit.fill,
                                       width: double.infinity,
-                                      height: Adaptive.h(17),
+                                      // height: Adaptive.h(18),
                                     ),
-                                    Positioned(
-                                      bottom: 0,
-                                      child: Container(
-                                        width: 172,
-                                        height: 45.5,
-                                        decoration: BoxDecoration(
-                                            color: const Color.fromARGB(
-                                                255, 252, 250, 250),
-                                            borderRadius: BorderRadius.only(
-                                                bottomLeft:
-                                                    Radius.circular(15.sp),
-                                                bottomRight:
-                                                    Radius.circular(15.sp))),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      bottom: 12.sp,
-                                      left: 22.sp,
-                                      child: Text(
-                                        topMfsController.item[index],
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 19.sp,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                  // Positioned(
+                                  //   bottom: 0,
+                                  //   child: Container(
+                                  //     width: 172,
+                                  //     height: 45.5,
+                                  //     decoration: BoxDecoration(
+                                  //         color: const Color.fromARGB(
+                                  //             255, 252, 250, 250),
+                                  //         borderRadius: BorderRadius.only(
+                                  //             bottomLeft:
+                                  //                 Radius.circular(15.sp),
+                                  //             bottomRight:
+                                  //                 Radius.circular(15.sp))),
+                                  //   ),
+                                  // ),
+                                  // Positioned(
+                                  //   bottom: 12.sp,
+                                  //   left: 22.sp,
+                                  //   child: Text(
+                                  //     topMfsController.item[index],
+                                  //     style: TextStyle(
+                                  //       color: Colors.white,
+                                  //       fontSize: 19.sp,
+                                  //       fontWeight: FontWeight.bold,
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                ],
                               ),
                             ),
                           );

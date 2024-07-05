@@ -63,7 +63,7 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
     List<BottomBarItem> bottomList = [
       BottomBarItem(
         inActiveItem: Image.asset(
-          'assets/images/navicons/money.png',
+          'assets/images/navicons/mutualfund.png',
           // 'assets/images/navicons/noun-mutual-fund-5991548 1.png',
           // 'assets/images/dashboard_11118018.png',
           color: platformBrightness == Brightness.light
@@ -77,7 +77,7 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
           // height: 25,
           // width: 23,
         ),
-        activeItem: Image.asset("assets/images/navicons/money.png",
+        activeItem: Image.asset("assets/images/navicons/mutualfund.png",
             // 'assets/images/navicons/noun-mutual-fund-5991548 1.png',
             color: platformBrightness == Brightness.light
                 ? Colors.white
@@ -169,6 +169,7 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
           color: platformBrightness == Brightness.light
               ? Colors.black
               : Colors.white,
+
           // color: indexfor == 3
           //     ? const Color(0xFFA6BBFB)
           //     : platformBrightness == Brightness.light

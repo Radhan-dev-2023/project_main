@@ -28,10 +28,9 @@ class ScreenGolas extends StatelessWidget {
               height: Adaptive.h(45),
               width: double.infinity,
               // decoration: BoxDecoration(
-              //   image: DecorationImage(
-              //     image: AssetImage(image),
-              //     fit: BoxFit.contain,
-
+              //   borderRadius: BorderRadius.only(
+              //     bottomLeft: Radius.circular(20.sp),
+              //     bottomRight: Radius.circular(20.sp),
               //   ),
               // ),
               child: Image.asset(
