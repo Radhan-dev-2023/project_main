@@ -132,6 +132,9 @@ class _PinEnterForLoginScreenState extends State<PinEnterForLoginScreen> {
               ),
               VerticalSpacer(5.h),
               Pinput(
+                onChanged: (value) {
+                  biometricLoginController.changeButtonEnabled(false);
+                },
                 validator: (value) {
                   logger.d('pin===$pin');
                   if (value == pin) {
@@ -161,32 +164,38 @@ class _PinEnterForLoginScreenState extends State<PinEnterForLoginScreen> {
                 pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
                 errorPinTheme: errorPinTheme,
               ),
-              biometricLoginController.buttonEnabled == true
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        const Text(
+              // biometricLoginController.buttonEnabled == true
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  biometricLoginController.buttonEnabled == true
+                      ? const Text(
                           'Incorrect PIN',
                           style: TextStyle(color: Colors.red),
+                        )
+                      : const SizedBox(),
+                  TextButton(
+                    onPressed: () {
+                      biometricLoginController.changeButtonEnabled(true);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ScreenSignin(),
                         ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const ScreenSignin(),
-                              ),
-                            );
-                          },
-                          child: Text(
-                            'Reset Pin?',
-                            style: Theme.of(context).textTheme.bodyMedium,
+                      );
+                    },
+                    child: Text(
+                      'Reset Pin?',
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w500,
                           ),
-                        ),
-                        HorizontalSpacer(12.w)
-                      ],
-                    )
-                  : const SizedBox(),
+                    ),
+                  ),
+                  HorizontalSpacer(12.w)
+                ],
+              ),
+              // : const SizedBox(),
               VerticalSpacer(10.h),
               fingerAccepted == 'true'
                   ? TextButton(

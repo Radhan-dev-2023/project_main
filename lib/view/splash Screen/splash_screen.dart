@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Provider.of<GoldController>(context, listen: false).isCompleted();
     await Future.delayed(
       const Duration(seconds: 3),
-    );
+    );  
     if (token.isNotEmpty) {
       bool isTokenExpired = JwtDecoder.isExpired(token);
       if (isTokenExpired) {

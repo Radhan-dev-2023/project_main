@@ -59,69 +59,34 @@ class ScreenDigiGold extends StatelessWidget {
             VerticalSpacer(7.h),
             InkWell(
               onTap: () {
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => const ScreenGoldBuyingAndSelling(),
-                //     ));
-                if (Provider.of<DashBoardController>(context, listen: false)
-                            .dashBoardModel
-                            ?.result
-                            ?.data
-                            ?.activationStatus
-                            ?.statusCode ==
-                        'S06' ||
-                    Provider.of<DashBoardController>(context, listen: false)
-                            .dashBoardModel
-                            ?.result
-                            ?.data
-                            ?.activationStatus
-                            ?.statusCode ==
-                        'S12') {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            const ScreenGoldBuyingAndSelling(),
-                      ));
-                } else {
-                  showFlushbar(context, 'Your Account Not Activated');
-                }
-                // showDialog(
-                //   context: context,
-                //   builder: (BuildContext context) {
-                //     return AlertDialog(
-                //       backgroundColor: Colors.white,
-                //       surfaceTintColor: Colors.white,
-                //       content: Column(
-                //         mainAxisSize: MainAxisSize.min,
-                //         children: <Widget>[
-                //           Lottie.asset(
-                //             'assets/lottie/Animation - 1714021791830.json', // Replace with your Lottie animation file
-                //             width: 150,
-                //             height: 150,
-                //             fit: BoxFit.fill,
-                //           ),
-                //           VerticalSpacer(2.h),
-                //           // SizedBox(height: ),
-                //           Text(
-                //             'We are working on it',
-                //             style: TextStyle(
-                //               color: Colors.black,
-                //               fontSize: 18.sp,
-                //               fontWeight: FontWeight.w500,
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //     );
-                //   },
-                // );
-
-                // // Close the dialog after 2 seconds
-                // Future.delayed(const Duration(seconds: 5), () {
-                //   Navigator.of(context).pop();
-                // });
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ScreenGoldBuyingAndSelling(),
+                    ));
+                // if (Provider.of<DashBoardController>(context, listen: false)
+                //             .dashBoardModel
+                //             ?.result
+                //             ?.data
+                //             ?.activationStatus
+                //             ?.statusCode ==
+                //         'S06' ||
+                //     Provider.of<DashBoardController>(context, listen: false)
+                //             .dashBoardModel
+                //             ?.result
+                //             ?.data
+                //             ?.activationStatus
+                //             ?.statusCode ==
+                //         'S12') {
+                //   Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //         builder: (context) =>
+                //             const ScreenGoldBuyingAndSelling(),
+                //       ));
+                // } else {
+                //   showFlushbar(context, 'Your Account Not Activated');
+                // }
               },
               child: Container(
                 decoration: BoxDecoration(

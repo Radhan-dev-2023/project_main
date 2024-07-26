@@ -14,6 +14,7 @@ import 'package:finfresh_mobile/view/kyc/uploading%20proofs/screen_upload_proof.
 import 'package:finfresh_mobile/view/kyc/uploading%20proofs/upload%20bank%20proof/upload_bank_proof.dart';
 import 'package:finfresh_mobile/view/webview/screen_webview.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -549,6 +550,41 @@ class _ScreenHomeState extends State<ScreenHome> {
                                 ),
                               )
                             : const PortfolioWidget(),
+                        // SizedBox(
+                        //   height: 50,
+                        //   child: PieChart(
+                        //     PieChartData(
+                        //       sectionsSpace: 0,
+                        //       sections: [
+                        //         PieChartSectionData(
+                        //           value: 50,
+                        //           title: '${50.toStringAsFixed(2)}%',
+                        //           color: const Color(0xFFFFC700),
+                        //           radius: 40,
+                        //           titleStyle: TextStyle(
+                        //             color: Colors.white,
+                        //             fontSize: 14.sp,
+                        //             fontWeight: FontWeight.bold,
+                        //           ),
+                        //         ),
+                        //         PieChartSectionData(
+                        //           // showTitle: false,
+                        //           value: 50,
+                        //           title: '${50.toStringAsFixed(2)}%',
+                        //           color: const Color(0xFF6C8FF8),
+                        //           radius: 40,
+                        //           titleStyle: TextStyle(
+                        //             color: Colors.white,
+                        //             fontSize: 14.sp,
+                        //             fontWeight: FontWeight.bold,
+                        //           ),
+                        //         ),
+                        //       ],
+                        //       centerSpaceRadius: 50,
+                        //     ),
+                        //   ),
+                        // ),
+                        // : RoundChartWidget(),
                         VerticalSpacer(2.h),
                         Text(
                           'Funds',

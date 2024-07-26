@@ -3,6 +3,7 @@ import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/holding%20screen/screen_holdings.dart';
 import 'package:finfresh_mobile/view/homeScreen/widgets/roundchart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -24,7 +25,7 @@ class PortfolioWidget extends StatelessWidget {
         );
       },
       child: SizedBox(
-        height: 40.h,
+        height: 50.h,
         width: double.infinity,
         child: Consumer<DashBoardController>(
             builder: (context, dashBoardController, _) {

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -41,13 +43,19 @@ class RoundChartWidget extends StatelessWidget {
       // dynamic percentage = (gain / invest) * 100;
       dynamic percetageforinvest = (invest / totalAmount) * 100;
       dynamic prectageForGain = (gain / totalAmount) * 100;
+
+      log('percetageforinvest :$percetageforinvest,$prectageForGain ');
+      bool isLoss = prectageForGain < 0;
+      if (isLoss) {
+        prectageForGain = 0.0;
+      }
       // dynamic totelper = (total / totalAmount) * 100;
       return Column(
         children: [
           Padding(
             padding: EdgeInsets.only(left: 15.sp, right: 15.sp, top: 15.sp),
             child: SizedBox(
-              height: 5.h,
+              height: 50,
               child: PieChart(
                 PieChartData(
                   sectionsSpace: 0,
@@ -59,7 +67,7 @@ class RoundChartWidget extends StatelessWidget {
                       radius: 40,
                       titleStyle: TextStyle(
                         color: Colors.white,
-                        fontSize: 14.sp,
+                        fontSize: 13.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -71,30 +79,10 @@ class RoundChartWidget extends StatelessWidget {
                       radius: 40,
                       titleStyle: TextStyle(
                         color: Colors.white,
-                        fontSize: 14.sp,
+                        fontSize: 13.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    // PieChartSectionData(
-                    //   // showTitle: false,
-                    //   value: totelper,
-                    //   title: '${totelper.toStringAsFixed(2)}%',
-                    //   color: const Color(0xFF324053),
-                    //   radius: 40,
-                    //   titleStyle: TextStyle(
-                    //     color: Colors.white,
-                    //     fontSize: 14.sp,
-                    //     fontWeight: FontWeight.bold,
-                    //   ),
-                    // ),
-
-                    // PieChartSectionData(
-                    //   value: double.parse(dashBoardController
-                    //       .summaryModel!.result!.netEquityGains!
-                    //       .replaceAll('₹', '')
-                    //       .replaceAll(',', '')),
-                    //   color: Colors.amber,
-                    // ),
                   ],
                   centerSpaceRadius: 50,
                 ),

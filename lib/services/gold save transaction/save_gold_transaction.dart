@@ -105,7 +105,10 @@ class GoldSaveTransactionService {
     String token = await SecureStorage.readToken('token');
     String userId = await SecureStorage.readToken('userId');
     String iin = await SecureStorage.readToken('customerId');
-    String url = '${ApiEndpoint.baseUrl}/api/v1/$iin/getgoldTransaction';
+    String phonenumber = await SecureStorage.readToken('phoneNumber');
+    String url =
+        '${ApiEndpoint.baseUrl}/api/v1/$phonenumber/getgoldTransaction';
+    log('iin$iin');
     try {
       http.Response response = await http.get(
         Uri.parse(url),
@@ -121,7 +124,7 @@ class GoldSaveTransactionService {
         log('goldlisting completed');
         // dashBoardModel = DashBoardModel.fromJson(jsonResponse);
         golListingModel = GolListingModel.fromJson(jsonResponse);
-        
+
         return golListingModel;
       } else if (jsonResponse['status'] == 500) {
         showSnackBar(context, jsonResponse['message']);

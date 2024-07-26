@@ -136,7 +136,7 @@ class DigiGoldService {
     String url = '${ApiEndpoint.baseUrl}/api/v1/sellgold';
 
     Map<String, dynamic> payload = {
-      "iin": iin,
+      // "mobile_no:": phonenumber,
       "currentgoldrate": goldsellRate,
       "soldmg": soldMg,
       "amount": amount,
@@ -185,13 +185,14 @@ class DigiGoldService {
     String token = await SecureStorage.readToken('token');
     String userId = await SecureStorage.readToken('userId');
     String iin = await SecureStorage.readToken('customerId');
+    String phonenumber = await SecureStorage.readToken('phoneNumber');
     log(userId);
     log(token);
     log(iin);
     String url = '${ApiEndpoint.baseUrl}/api/v1/soldgoldSearch';
 
     Map<String, dynamic> payload = {
-      "iin": iin,
+      "mobile_no": phonenumber,
     };
     log('payload =$payload');
     try {

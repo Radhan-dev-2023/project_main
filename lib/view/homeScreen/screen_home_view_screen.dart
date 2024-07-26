@@ -95,19 +95,20 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
           // height: 25,
           // width: 23,
         ),
-        activeItem: Image.asset('assets/images/navicons/gold.png',
-            // 'assets/images/money_13299664.png',
-            color: platformBrightness == Brightness.light
-                ? Colors.white
-                : Colors.black
-            // color: indexfor == 1
-            //     ? const Color(0xFFA6BBFB)
-            //     : platformBrightness == Brightness.light
-            //         ? Colors.black
-            //         : Colors.white,
-            // height: 45,
-            // width: 30,
-            ),
+        activeItem: Image.asset(
+          'assets/images/navicons/gold.png',
+          // 'assets/images/money_13299664.png',
+          color: platformBrightness == Brightness.light
+              ? Colors.white
+              : Colors.black,
+          // color: indexfor == 1
+          //     ? const Color(0xFFA6BBFB)
+          //     : platformBrightness == Brightness.light
+          //         ? Colors.black
+          //         : Colors.white,
+          // height: 45,
+          // width: 30,
+        ),
       ),
       BottomBarItem(
         inActiveItem: Image.asset(
