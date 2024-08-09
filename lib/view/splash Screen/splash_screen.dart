@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:finfresh_mobile/controller/goldController/gold_controller.dart';
 import 'package:finfresh_mobile/services/refersh%20token/refersh_token.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
@@ -41,12 +43,13 @@ class _SplashScreenState extends State<SplashScreen> {
     Provider.of<GoldController>(context, listen: false).isCompleted();
     await Future.delayed(
       const Duration(seconds: 3),
-    );  
+    );
     if (token.isNotEmpty) {
       bool isTokenExpired = JwtDecoder.isExpired(token);
       if (isTokenExpired) {
         // ignore: use_build_context_synchronously
         bool result = await refershTokenService.postRefershTocken(context);
+        log(result.toString());
         if (result == true) {
           // ignore: use_build_context_synchronously
           Navigator.pushReplacement(
@@ -71,9 +74,8 @@ class _SplashScreenState extends State<SplashScreen> {
               builder: (context) => const PinEnterForLoginScreen(),
             ));
       }
-      // ignore: use_build_context_synchronously
     } else {
-      // ignore: use_build_context_synchronously
+      log('else calling');
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(

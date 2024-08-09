@@ -9,12 +9,9 @@ import 'package:finfresh_mobile/view/homeScreen/widgets/fatch_attension_widget.d
 import 'package:finfresh_mobile/view/homeScreen/widgets/portfolio_mutual_fund.dart';
 import 'package:finfresh_mobile/view/homeScreen/widgets/roundChart.dart';
 import 'package:finfresh_mobile/view/homeScreen/widgets/six_mutual_fund_widget.dart';
-import 'package:finfresh_mobile/view/kyc/adding%20bank/upload%20bank%20proof/uploading_bank_proof.dart';
-import 'package:finfresh_mobile/view/kyc/uploading%20proofs/screen_upload_proof.dart';
 import 'package:finfresh_mobile/view/kyc/uploading%20proofs/upload%20bank%20proof/upload_bank_proof.dart';
 import 'package:finfresh_mobile/view/webview/screen_webview.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

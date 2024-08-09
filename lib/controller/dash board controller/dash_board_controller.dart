@@ -45,25 +45,32 @@ class DashBoardController extends ChangeNotifier {
     loadingDashboard = true;
 
     // notifyListeners();
-    String token = await SecureStorage.readToken('token');
-    bool isTokenExpired = JwtDecoder.isExpired(token);
-    try {
-      if (isTokenExpired) {
-        await refershTokenService.postRefershTocken(context);
-        dashBoardModel = await dashBoardService.getDashBoardDetails(context);
 
-        logger.d(
-            'dassss=${dashBoardModel?.result?.data?.activationStatus!.statusCode}');
-        SecureStorage.addToken(
-            'bankAccNumber', dashBoardModel?.result?.data?.bank?.accNo ?? '');
-        SecureStorage.addToken(
-            'bankcode', dashBoardModel?.result?.data?.bank?.bankName ?? '');
-        SecureStorage.addToken(
-            'customerId', dashBoardModel?.result?.data?.iin ?? '');
-        await getSummary(context);
+    try {
+      String token = await SecureStorage.readToken('token');
+      bool isTokenExpired = JwtDecoder.isExpired(token);
+      if (isTokenExpired) {
+        bool result = await refershTokenService.postRefershTocken(context);
+        log(result.toString());
+        if (result) {
+          dashBoardModel = await dashBoardService.getDashBoardDetails(context);
+
+          logger.d(
+              'dassss=${dashBoardModel?.result?.data?.activationStatus!.statusCode}');
+          SecureStorage.addToken(
+              'bankAccNumber', dashBoardModel?.result?.data?.bank?.accNo ?? '');
+          SecureStorage.addToken(
+              'bankcode', dashBoardModel?.result?.data?.bank?.bankName ?? '');
+          SecureStorage.addToken(
+              'customerId', dashBoardModel?.result?.data?.iin ?? '');
+          await getSummary(context);
+          loadingDashboard = false;
+          notifyListeners();
+        }
         loadingDashboard = false;
         notifyListeners();
       } else {
+        log(isTokenExpired.toString());
         dashBoardModel = await dashBoardService.getDashBoardDetails(context);
 
         logger.d(
@@ -107,17 +114,17 @@ class DashBoardController extends ChangeNotifier {
         await refershTokenService.postRefershTocken(context);
         summaryModel = await dashBoardService.fetchSummary(context);
 
-        loadingDashboard = false;
-        notifyListeners();
+        // loadingDashboard = false;
+        // notifyListeners();
       } else {
         summaryModel = await dashBoardService.fetchSummary(context);
-        loadingDashboard = false;
-        notifyListeners();
+        // loadingDashboard = false;
+        // notifyListeners();
       }
     } catch (e) {
       logger.d('summary failed with an exception$e');
-      loadingDashboard = false;
-      notifyListeners();
+      // loadingDashboard = false;
+      // notifyListeners();
     }
   }
 
