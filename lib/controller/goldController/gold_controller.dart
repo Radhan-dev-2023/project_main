@@ -28,11 +28,11 @@ class GoldController extends ChangeNotifier {
 
   List<String> listForAddingRate = ['purchase', 'sell'];
   Future<bool> addGoldRate(context) async {
-    String token = await SecureStorage.readToken('token');
-    bool isTokenExpired = JwtDecoder.isExpired(token);
     loading = true;
     notifyListeners();
     try {
+      String token = await SecureStorage.readToken('token');
+      bool isTokenExpired = JwtDecoder.isExpired(token);
       if (isTokenExpired) {
         await refershTokenService.postRefershTocken(context);
         bool result = await service.addDigiGoldRate(
@@ -100,11 +100,11 @@ class GoldController extends ChangeNotifier {
   // }
 
   Future<void> getGoldrate(context) async {
-    String token = await SecureStorage.readToken('token');
-    bool isTokenExpired = JwtDecoder.isExpired(token);
     isloading = true;
     // notifyListeners();
     try {
+      String token = await SecureStorage.readToken('token');
+      bool isTokenExpired = JwtDecoder.isExpired(token);
       if (isTokenExpired) {
         await refershTokenService.postRefershTocken(context);
         goldvalue = await service.getDigiGoldRate(context);
@@ -234,48 +234,57 @@ class GoldController extends ChangeNotifier {
   Future<bool> goldTrasaction(dynamic response, context) async {
     log('calling');
     log('$goldvalue  ,$goldMg');
-    String token = await SecureStorage.readToken('token');
-    bool isTokenExpired = JwtDecoder.isExpired(token);
-    if (isTokenExpired) {
-      await refershTokenService.postRefershTocken(context);
-      bool result = await goldSaveTransaction.saveTransactionForgold(
-        goldvalue!,
-        goldMg!,
-        response,
-        context,
-      );
-      if (result == true) {
-        return true;
+    try {
+      String token = await SecureStorage.readToken('token');
+      bool isTokenExpired = JwtDecoder.isExpired(token);
+      if (isTokenExpired) {
+        await refershTokenService.postRefershTocken(context);
+        bool result = await goldSaveTransaction.saveTransactionForgold(
+          goldvalue!,
+          goldMg!,
+          response,
+          context,
+        );
+        if (result == true) {
+          return true;
+        } else {
+          return false;
+        }
       } else {
-        return false;
+        bool result = await goldSaveTransaction.saveTransactionForgold(
+          goldvalue!,
+          goldMg!,
+          response,
+          context,
+        );
+        if (result == true) {
+          return true;
+        } else {
+          return false;
+        }
       }
-    } else {
-      bool result = await goldSaveTransaction.saveTransactionForgold(
-        goldvalue!,
-        goldMg!,
-        response,
-        context,
-      );
-      if (result == true) {
-        return true;
-      } else {
-        return false;
-      }
+    } catch (e) {
+      log(e.toString());
+      return false;
     }
   }
 
   GolListingModel? goldlistingmodel;
   Future<void> goldListing(context) async {
-    String token = await SecureStorage.readToken('token');
-    bool isTokenExpired = JwtDecoder.isExpired(token);
-    if (isTokenExpired) {
-      await refershTokenService.postRefershTocken(context);
-      goldlistingmodel = await goldSaveTransaction.getGoldList(context);
+    try {
+      String token = await SecureStorage.readToken('token');
+      bool isTokenExpired = JwtDecoder.isExpired(token);
+      if (isTokenExpired) {
+        await refershTokenService.postRefershTocken(context);
+        goldlistingmodel = await goldSaveTransaction.getGoldList(context);
 
-      notifyListeners();
-    } else {
-      goldlistingmodel = await goldSaveTransaction.getGoldList(context);
-      notifyListeners();
+        notifyListeners();
+      } else {
+        goldlistingmodel = await goldSaveTransaction.getGoldList(context);
+        notifyListeners();
+      }
+    } catch (e) {
+      log('failed with exception$e');
     }
   }
 
@@ -288,47 +297,60 @@ class GoldController extends ChangeNotifier {
 
   bool selbuttonClicked = false;
   Future<bool> sellGold(context, String name, String phoneNumber) async {
-    selbuttonClicked = true;
-    notifyListeners();
-    String token = await SecureStorage.readToken('token');
-    bool isTokenExpired = JwtDecoder.isExpired(token);
+      selbuttonClicked = true;
+      notifyListeners();
+    try {
 
-    if (isTokenExpired) {
-      await refershTokenService.postRefershTocken(context);
-      bool value = await service.sellGold(
-        context,
-        sellrate,
-        sellgoldrateController.text,
-        soldAmount,
-        name,
-        phoneNumber,
-      );
+      String token = await SecureStorage.readToken('token');
+      bool isTokenExpired = JwtDecoder.isExpired(token);
+
+      if (isTokenExpired) {
+        await refershTokenService.postRefershTocken(context);
+        bool value = await service.sellGold(
+          context,
+          sellrate,
+          sellgoldrateController.text,
+          soldAmount,
+          name,
+          phoneNumber,
+        );
+        selbuttonClicked = false;
+        notifyListeners();
+        return value == true ? true : false;
+      } else {
+        bool value = await service.sellGold(
+          context,
+          sellrate,
+          sellgoldrateController.text,
+          soldAmount,
+          name,
+          phoneNumber,
+        );
+
+        selbuttonClicked = false;
+        notifyListeners();
+
+        return value == true ? true : false;
+      }
+    } catch (e) {
+      // Handle exceptions here (e.g., show a message to the user, log the error, etc.)
+      log('Error occurred while selling gold: $e');
+
       selbuttonClicked = false;
       notifyListeners();
-      return value == true ? true : false;
-    } else {
-      bool value = await service.sellGold(
-        context,
-        sellrate,
-        sellgoldrateController.text,
-        soldAmount,
-        name,
-        phoneNumber,
-      );
-      selbuttonClicked = false;
-      notifyListeners();
-      return value == true ? true : false;
+
+      return false;
     }
   }
 
   GoldSellListingModel? sellGoldListingModel;
   bool sellListingLoading = false;
   Future<void> getSellGoldListing(context) async {
-    String token = await SecureStorage.readToken('token');
-    bool isTokenExpired = JwtDecoder.isExpired(token);
     sellListingLoading = true;
     notifyListeners();
     try {
+      String token = await SecureStorage.readToken('token');
+      bool isTokenExpired = JwtDecoder.isExpired(token);
       if (isTokenExpired) {
         await refershTokenService.postRefershTocken(context);
         sellGoldListingModel = await service.getSellGoldList(context);

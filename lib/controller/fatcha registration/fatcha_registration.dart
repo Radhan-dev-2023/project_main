@@ -318,12 +318,13 @@ class FatchaRegistrationController extends ChangeNotifier {
   bool loading = false;
 
   Future<bool> fatchRegistration(context) async {
-    String token = await SecureStorage.readToken('token');
-    bool isTokenExpired = JwtDecoder.isExpired(token);
+    
     loading = true;
     notifyListeners();
     log('Pepvalue $pepValuetobackend');
     try {
+      String token = await SecureStorage.readToken('token');
+    bool isTokenExpired = JwtDecoder.isExpired(token);
       if (isTokenExpired) {
         await refershTokenService.postRefershTocken(context);
         bool result = await fatchaServices.fatchaRegister(

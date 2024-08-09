@@ -83,9 +83,9 @@ class AchController extends ChangeNotifier {
     String selectdate = DateFormat('dd-MMM-yyyy').format(currentDate);
     loadingAch = true;
     notifyListeners();
+    try {
     String token = await SecureStorage.readToken('token');
     bool isTokenExpired = JwtDecoder.isExpired(token);
-    try {
       if (isTokenExpired) {
         await refershTokenService.postRefershTocken(context);
         result = await achService.achMadateRegister(
@@ -154,12 +154,13 @@ class AchController extends ChangeNotifier {
   AchHistoryModel? achHistoryModel;
   bool historyLoading = false;
   Future<void> getAchHistoy(context, String status) async {
-    String token = await SecureStorage.readToken('token');
-    bool isTokenExpired = JwtDecoder.isExpired(token);
+    
     historyLoading = true;
     notifyListeners();
 
     try {
+      String token = await SecureStorage.readToken('token');
+    bool isTokenExpired = JwtDecoder.isExpired(token);
       if (isTokenExpired) {
         await refershTokenService.postRefershTocken(context);
         achHistoryModel =

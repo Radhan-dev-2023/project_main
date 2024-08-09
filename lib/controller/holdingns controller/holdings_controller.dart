@@ -15,11 +15,12 @@ class HoldingsController extends ChangeNotifier {
   TransactionReport? transactionReport;
   bool loadingHoldingpage = true;
   Future<void> fetchTransactionReport(context) async {
-    String token = await SecureStorage.readToken('token');
-    bool isTokenExpired = JwtDecoder.isExpired(token);
+    
     loadingHoldingpage = true;
     notifyListeners();
     try {
+      String token = await SecureStorage.readToken('token');
+    bool isTokenExpired = JwtDecoder.isExpired(token);
       if (isTokenExpired) {
         await refershTokenService.postRefershTocken(context);
         transactionReport =
@@ -50,11 +51,12 @@ class HoldingsController extends ChangeNotifier {
   ReportDetailsModel? reportDetailsModel;
   Future<void> fetchReportDetails(
       context, String isinNumber, String trxnumber) async {
-    String token = await SecureStorage.readToken('token');
-    bool isTokenExpired = JwtDecoder.isExpired(token);
+   
     loading = true;
     notifyListeners();
     try {
+       String token = await SecureStorage.readToken('token');
+    bool isTokenExpired = JwtDecoder.isExpired(token);
       if (isTokenExpired) {
         await refershTokenService.postRefershTocken(context);
         reportDetailsModel =
@@ -91,11 +93,12 @@ class HoldingsController extends ChangeNotifier {
     String transactiontype,
     context,
   ) async {
-    String token = await SecureStorage.readToken('token');
-    bool isTokenExpired = JwtDecoder.isExpired(token);
+    
     loadingmail = true;
     notifyListeners();
     try {
+      String token = await SecureStorage.readToken('token');
+    bool isTokenExpired = JwtDecoder.isExpired(token);
       if (isTokenExpired) {
         await refershTokenService.postRefershTocken(context);
         holdingServices.sendmailToClient(

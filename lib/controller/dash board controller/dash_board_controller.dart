@@ -104,27 +104,28 @@ class DashBoardController extends ChangeNotifier {
   SummaryModel? summaryModel;
   // List<dynamic> summaryResilt = [];
   Future<void> getSummary(context) async {
-    String token = await SecureStorage.readToken('token');
-    bool isTokenExpired = JwtDecoder.isExpired(token);
-    loadingDashboard = true;
+    
+    // loadingDashboard = true;
 
-    notifyListeners();
+    // notifyListeners();
     try {
+      String token = await SecureStorage.readToken('token');
+    bool isTokenExpired = JwtDecoder.isExpired(token);
       if (isTokenExpired) {
         await refershTokenService.postRefershTocken(context);
         summaryModel = await dashBoardService.fetchSummary(context);
 
-        // loadingDashboard = false;
-        // notifyListeners();
+        loadingDashboard = false;
+        notifyListeners();
       } else {
         summaryModel = await dashBoardService.fetchSummary(context);
-        // loadingDashboard = false;
-        // notifyListeners();
+        loadingDashboard = false;
+        notifyListeners();
       }
     } catch (e) {
       logger.d('summary failed with an exception$e');
-      // loadingDashboard = false;
-      // notifyListeners();
+      loadingDashboard = false;
+      notifyListeners();
     }
   }
 

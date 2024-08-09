@@ -1915,11 +1915,11 @@ class KycController extends ChangeNotifier {
 
   RefershTokenService refershTokenService = RefershTokenService();
   Future<bool> getNonIndividualTax(context) async {
-    String token = await SecureStorage.readToken('token');
-    bool isTokenExpired = JwtDecoder.isExpired(token);
     iinLoading = true;
     notifyListeners();
     try {
+      String token = await SecureStorage.readToken('token');
+      bool isTokenExpired = JwtDecoder.isExpired(token);
       if (isTokenExpired) {
         await refershTokenService.postRefershTocken(context);
         bool result = await nonIndividualService.getNonindividualTax(
@@ -1954,64 +1954,79 @@ class KycController extends ChangeNotifier {
 
   bool iinLoading = false;
   Future<bool> getInn(context) async {
-    String token = await SecureStorage.readToken('token');
-    bool isTokenExpired = JwtDecoder.isExpired(token);
-    String phoneNumber = await SecureStorage.readToken('phoneNumber');
     iinLoading = true;
     notifyListeners();
-    if (isTokenExpired) {
-      await refershTokenService.postRefershTocken(context);
-      bool isVerified = await getInnService.getInn(
-          phoneNumber, panController.text, taxcode, holdingValuetoBackend);
+    try {
+      String token = await SecureStorage.readToken('token');
+      bool isTokenExpired = JwtDecoder.isExpired(token);
+      String phoneNumber = await SecureStorage.readToken('phoneNumber');
+
+      if (isTokenExpired) {
+        await refershTokenService.postRefershTocken(context);
+        bool isVerified = await getInnService.getInn(
+            phoneNumber, panController.text, taxcode, holdingValuetoBackend);
+        iinLoading = false;
+        notifyListeners();
+        return isVerified;
+      } else {
+        bool isVerified = await getInnService.getInn(
+            phoneNumber, panController.text, taxcode, holdingValuetoBackend);
+        iinLoading = false;
+        notifyListeners();
+        return isVerified;
+      }
+    } catch (e) {
+      log('falide with an exception $e');
       iinLoading = false;
       notifyListeners();
-      return isVerified;
-    } else {
-      bool isVerified = await getInnService.getInn(
-          phoneNumber, panController.text, taxcode, holdingValuetoBackend);
-      iinLoading = false;
-      notifyListeners();
-      return isVerified;
+      return false;
     }
   }
 
   bool createcustomerLoading = false;
   Future<bool> createCustomer(context) async {
-    String token = await SecureStorage.readToken('token');
-    bool isTokenExpired = JwtDecoder.isExpired(token);
     createcustomerLoading = true;
     notifyListeners();
-    if (isTokenExpired) {
-      await refershTokenService.postRefershTocken(context);
-      bool isCreated =
-          await createCustomerService.createCustomer(investorDetails, context);
-      log('isCreated == $isCreated');
-      if (isCreated == true) {
-        createcustomerLoading = false;
-        notifyListeners();
-        logger.d('customer created successfully');
-        return true;
+    try {
+      String token = await SecureStorage.readToken('token');
+      bool isTokenExpired = JwtDecoder.isExpired(token);
+      if (isTokenExpired) {
+        await refershTokenService.postRefershTocken(context);
+        bool isCreated = await createCustomerService.createCustomer(
+            investorDetails, context);
+        log('isCreated == $isCreated');
+        if (isCreated == true) {
+          createcustomerLoading = false;
+          notifyListeners();
+          logger.d('customer created successfully');
+          return true;
+        } else {
+          logger.d('customer creation failed');
+          createcustomerLoading = false;
+          notifyListeners();
+          return false;
+        }
       } else {
-        logger.d('customer creation failed');
-        createcustomerLoading = false;
-        notifyListeners();
-        return false;
+        bool isCreated = await createCustomerService.createCustomer(
+            investorDetails, context);
+        log('isCreated == $isCreated');
+        if (isCreated == true) {
+          createcustomerLoading = false;
+          notifyListeners();
+          logger.d('customer created successfully');
+          return true;
+        } else {
+          logger.d('customer creation failed');
+          createcustomerLoading = false;
+          notifyListeners();
+          return false;
+        }
       }
-    } else {
-      bool isCreated =
-          await createCustomerService.createCustomer(investorDetails, context);
-      log('isCreated == $isCreated');
-      if (isCreated == true) {
-        createcustomerLoading = false;
-        notifyListeners();
-        logger.d('customer created successfully');
-        return true;
-      } else {
-        logger.d('customer creation failed');
-        createcustomerLoading = false;
-        notifyListeners();
-        return false;
-      }
+    } catch (e) {
+      log('failed with an exception$e');
+      createcustomerLoading = false;
+      notifyListeners();
+      return false;
     }
   }
 

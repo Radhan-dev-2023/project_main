@@ -299,71 +299,80 @@ class SchemeDetailsController extends ChangeNotifier {
 
       log('duedate ===$duedate');
     }
-    String token = await SecureStorage.readToken('token');
-    bool isTokenExpired = JwtDecoder.isExpired(token);
-    if (isTokenExpired) {
-      await refershTokenService.postRefershTocken(context);
-      bool result = await transactionService.transcationService(
-        paymenMode: paymentvalueTobackent.isEmpty ? 'M' : paymentvalueTobackent,
-        accountNumber: accountnumberController.text,
-        ifscCode: ifscCodde,
-        instalmentAmount: installmentController.text,
-        fromdate: dateController.text,
-        duedate: duedate,
-        date: dateController.text,
-        amc: productCodeModel?.product?.amcCode ?? '',
-        productCode: productCodeModel?.product?.productCode ?? '',
-        context: context,
-        investorname: investorName,
-        isinnumber: isinNumber,
-        category: category,
-        navpodname: navProdName,
-        productName: productCodeModel?.product?.productLongName ?? '',
-        transType: selectedValue,
-        umrn: umrnNumber,
-        systamatic: selectedValue == 'SIP' ? 'S' : "N",
-        sipPeriod: selectedValue == 'SIP' ? datevalue ?? '' : '',
-      );
-      if (result == true) {
-        loadingTransButton = false;
-        notifyListeners();
-        return true;
+    try {
+      String token = await SecureStorage.readToken('token');
+      bool isTokenExpired = JwtDecoder.isExpired(token);
+      if (isTokenExpired) {
+        await refershTokenService.postRefershTocken(context);
+        bool result = await transactionService.transcationService(
+          paymenMode:
+              paymentvalueTobackent.isEmpty ? 'M' : paymentvalueTobackent,
+          accountNumber: accountnumberController.text,
+          ifscCode: ifscCodde,
+          instalmentAmount: installmentController.text,
+          fromdate: dateController.text,
+          duedate: duedate,
+          date: dateController.text,
+          amc: productCodeModel?.product?.amcCode ?? '',
+          productCode: productCodeModel?.product?.productCode ?? '',
+          context: context,
+          investorname: investorName,
+          isinnumber: isinNumber,
+          category: category,
+          navpodname: navProdName,
+          productName: productCodeModel?.product?.productLongName ?? '',
+          transType: selectedValue,
+          umrn: umrnNumber,
+          systamatic: selectedValue == 'SIP' ? 'S' : "N",
+          sipPeriod: selectedValue == 'SIP' ? datevalue ?? '' : '',
+        );
+        if (result == true) {
+          loadingTransButton = false;
+          notifyListeners();
+          return true;
+        } else {
+          loadingTransButton = false;
+          notifyListeners();
+          return false;
+        }
       } else {
-        loadingTransButton = false;
-        notifyListeners();
-        return false;
+        bool result = await transactionService.transcationService(
+          paymenMode:
+              paymentvalueTobackent.isEmpty ? 'M' : paymentvalueTobackent,
+          accountNumber: accountnumberController.text,
+          ifscCode: ifscCodde,
+          instalmentAmount: installmentController.text,
+          fromdate: dateController.text,
+          duedate: duedate,
+          date: dateController.text,
+          amc: productCodeModel?.product?.amcCode ?? '',
+          productCode: productCodeModel?.product?.productCode ?? '',
+          context: context,
+          investorname: investorName,
+          isinnumber: isinNumber,
+          category: category,
+          navpodname: navProdName,
+          productName: productCodeModel?.product?.productLongName ?? '',
+          transType: selectedValue,
+          umrn: umrnNumber,
+          systamatic: selectedValue == 'SIP' ? 'S' : "N",
+          sipPeriod: selectedValue == 'SIP' ? datevalue ?? '' : '',
+        );
+        if (result == true) {
+          loadingTransButton = false;
+          notifyListeners();
+          return true;
+        } else {
+          loadingTransButton = false;
+          notifyListeners();
+          return false;
+        }
       }
-    } else {
-      bool result = await transactionService.transcationService(
-        paymenMode: paymentvalueTobackent.isEmpty ? 'M' : paymentvalueTobackent,
-        accountNumber: accountnumberController.text,
-        ifscCode: ifscCodde,
-        instalmentAmount: installmentController.text,
-        fromdate: dateController.text,
-        duedate: duedate,
-        date: dateController.text,
-        amc: productCodeModel?.product?.amcCode ?? '',
-        productCode: productCodeModel?.product?.productCode ?? '',
-        context: context,
-        investorname: investorName,
-        isinnumber: isinNumber,
-        category: category,
-        navpodname: navProdName,
-        productName: productCodeModel?.product?.productLongName ?? '',
-        transType: selectedValue,
-        umrn: umrnNumber,
-        systamatic: selectedValue == 'SIP' ? 'S' : "N",
-        sipPeriod: selectedValue == 'SIP' ? datevalue ?? '' : '',
-      );
-      if (result == true) {
-        loadingTransButton = false;
-        notifyListeners();
-        return true;
-      } else {
-        loadingTransButton = false;
-        notifyListeners();
-        return false;
-      }
+    } catch (e) {
+      log('failed with an exception$e');
+      loadingTransButton = false;
+      notifyListeners();
+      return false;
     }
   }
 

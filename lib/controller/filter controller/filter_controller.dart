@@ -85,21 +85,27 @@ class FilterController extends ChangeNotifier {
     filteredList.clear();
     filterPageLoading = true;
     notifyListeners();
-    String token = await SecureStorage.readToken('token');
-    bool isTokenExpired = JwtDecoder.isExpired(token);
-    if (isTokenExpired) {
-      await refershTokenService.postRefershTocken(context);
-      fliterModel =
-          await filterService.fetchFilterdata(typeList, statusList, context);
-      filteredList = fliterModel?.result?.reversed.toList() ?? [];
-      log('filtere list =$filteredList');
-      filterPageLoading = false;
-      notifyListeners();
-    } else {
-      fliterModel =
-          await filterService.fetchFilterdata(typeList, statusList, context);
-      filteredList = fliterModel?.result ?? [];
-      log('filtere list =${filteredList.toList()}');
+    try {
+      String token = await SecureStorage.readToken('token');
+      bool isTokenExpired = JwtDecoder.isExpired(token);
+      if (isTokenExpired) {
+        await refershTokenService.postRefershTocken(context);
+        fliterModel =
+            await filterService.fetchFilterdata(typeList, statusList, context);
+        filteredList = fliterModel?.result?.reversed.toList() ?? [];
+        log('filtere list =$filteredList');
+        filterPageLoading = false;
+        notifyListeners();
+      } else {
+        fliterModel =
+            await filterService.fetchFilterdata(typeList, statusList, context);
+        filteredList = fliterModel?.result ?? [];
+        log('filtere list =${filteredList.toList()}');
+        filterPageLoading = false;
+        notifyListeners();
+      }
+    } catch (e) {
+      log('failed with an exception$e');
       filterPageLoading = false;
       notifyListeners();
     }

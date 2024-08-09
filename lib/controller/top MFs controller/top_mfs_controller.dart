@@ -236,15 +236,19 @@ class TopMFsController extends ChangeNotifier {
   RefershTokenService refershTokenService = RefershTokenService();
   Future<void> topPicks(context) async {
     log('toppickscalling');
-    String token = await SecureStorage.readToken('token');
-    bool isTokenExpired = JwtDecoder.isExpired(token);
-    if (isTokenExpired) {
-      await refershTokenService.postRefershTocken(context);
-      topPicksModel = await schemeServices.topPicksServices(context);
-      goalsModel = await schemeServices.goalsServices(context);
-    } else {
-      topPicksModel = await schemeServices.topPicksServices(context);
-      goalsModel = await schemeServices.goalsServices(context);
+    try {
+      String token = await SecureStorage.readToken('token');
+      bool isTokenExpired = JwtDecoder.isExpired(token);
+      if (isTokenExpired) {
+        await refershTokenService.postRefershTocken(context);
+        topPicksModel = await schemeServices.topPicksServices(context);
+        goalsModel = await schemeServices.goalsServices(context);
+      } else {
+        topPicksModel = await schemeServices.topPicksServices(context);
+        goalsModel = await schemeServices.goalsServices(context);
+      }
+    } catch (e) {
+      log('failed with an exception$e');
     }
   }
 
