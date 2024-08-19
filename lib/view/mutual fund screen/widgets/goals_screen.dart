@@ -1,9 +1,7 @@
 import 'package:finfresh_mobile/controller/top%20MFs%20controller/top_mfs_controller.dart';
-import 'package:finfresh_mobile/controller/top%20fund%20controller/top_fund_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/stock_detail_screen.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/widgets/overview_in_tabbar.dart';
-import 'package:finfresh_mobile/view/top%20mfs/screen_top_mfs.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';

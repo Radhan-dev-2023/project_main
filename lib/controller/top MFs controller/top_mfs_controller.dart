@@ -18,6 +18,12 @@ class TopMFsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  int indexForFunds = 0;
+  void changeFundindex(int index) {
+    indexForFunds = index;
+    notifyListeners();
+  }
+
   String returns = '3 year';
   SchemeServices schemeServices = SchemeServices();
   TextEditingController queryController = TextEditingController();
