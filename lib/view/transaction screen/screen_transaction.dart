@@ -2,9 +2,7 @@ import 'package:finfresh_mobile/controller/filter%20controller/filter_controller
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -32,111 +30,115 @@ class ScreeenTranscations extends StatelessWidget {
               ? const LoadingWidget()
               : Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          height: Adaptive.h(6),
-                          width: Adaptive.w(63),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15.sp),
-                            border: Border.all(
-                              color: const Color.fromARGB(255, 192, 191, 191),
-                            ),
-                          ),
-                          child: TextFormField(
-                            controller: filterController.searchController,
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge!
-                                .copyWith(fontSize: 16.sp),
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            decoration: InputDecoration(
-                              // helperText: '',
-                              prefixIcon: Icon(
-                                Icons.search,
-                                size: Adaptive.h(2.3),
-                              ),
-                              suffixIcon: filterController
-                                      .searchController.text.isNotEmpty
-                                  ? InkWell(
-                                      onTap: () {
-                                        filterController.searchController
-                                            .clear();
-                                        filterController.getfilter(context);
-                                      },
-                                      child: Icon(
-                                        Icons.clear,
-                                        size: Adaptive.h(2.3),
-                                      ))
-                                  : const SizedBox(),
-
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide: BorderSide.none),
-                              contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 12.0.sp),
-                              hintText: 'Search',
-                            ),
-                            onChanged: (value) {
-                              filterController.searchItems();
-                            },
-                          ),
+                    Container(
+                      height: Adaptive.h(6),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.sp),
+                        border: Border.all(
+                          color: const Color.fromARGB(255, 192, 191, 191),
                         ),
-                        InkWell(
-                          onTap: () {
-                            Provider.of<FilterController>(context,
-                                    listen: false)
-                                .changeindex(0);
-                            showmodalBottomSheet(context);
-                          },
-                          child: Stack(
-                            children: [
-                              Container(
-                                height: Adaptive.h(6),
-                                width: Adaptive.w(27),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(14.sp),
-                                  color: const Color(0xFF4D84BD),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(
-                                      Icons.filter_list,
-                                      color: Colors.white,
-                                    ),
-                                    HorizontalSpacer(Adaptive.w(2.5)),
-                                    Text(
-                                      'Filter',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 17.sp,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Visibility(
-                                visible: filterController.typeList.isNotEmpty ||
-                                        filterController.statusList.isNotEmpty
-                                    ? true
-                                    : false,
-                                child: Positioned(
-                                  right: 0,
-                                  child: CircleAvatar(
-                                    backgroundColor: Colors.red,
-                                    radius: 10.sp,
-                                  ),
-                                ),
-                              )
-                            ],
+                      ),
+                      child: TextFormField(
+                        controller: filterController.searchController,
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelLarge!
+                            .copyWith(fontSize: 16.sp),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        decoration: InputDecoration(
+                          // helperText: '',
+                          prefixIcon: Icon(
+                            Icons.search,
+                            size: Adaptive.h(2.3),
                           ),
-                        )
-                      ],
+                          suffixIcon: InkWell(
+                            onTap: () {
+                              Provider.of<FilterController>(context,
+                                      listen: false)
+                                  .changeindex(0);
+                              showmodalBottomSheet(context);
+                            },
+                            child: const Icon(
+                              Icons.filter_list,
+                            ),
+                          ),
+                          // suffixIcon: filterController
+                          //         .searchController.text.isNotEmpty
+                          //     ? InkWell(
+                          //         onTap: () {
+                          //           filterController.searchController
+                          //               .clear();
+                          //           filterController.getfilter(context);
+                          //         },
+                          //         child: Icon(
+                          //           Icons.clear,
+                          //           size: Adaptive.h(2.3),
+                          //         ))
+                          //     : const SizedBox(),
+
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: BorderSide.none),
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 12.0.sp),
+                          hintText: 'Search',
+                        ),
+                        onChanged: (value) {
+                          filterController.searchItems();
+                        },
+                      ),
                     ),
+                    // InkWell(
+                    //   onTap: () {
+                    //     Provider.of<FilterController>(context,
+                    //             listen: false)
+                    //         .changeindex(0);
+                    //     showmodalBottomSheet(context);
+                    //   },
+                    //   child: Stack(
+                    //     children: [
+                    //       Container(
+                    //         height: Adaptive.h(6),
+                    //         width: Adaptive.w(27),
+                    //         decoration: BoxDecoration(
+                    //           borderRadius: BorderRadius.circular(14.sp),
+                    //           color: const Color(0xFF4D84BD),
+                    //         ),
+                    //         child: Row(
+                    //           mainAxisAlignment: MainAxisAlignment.center,
+                    //           children: [
+                    //             const Icon(
+                    //               Icons.filter_list,
+                    //               color: Colors.white,
+                    //             ),
+                    //             HorizontalSpacer(Adaptive.w(2.5)),
+                    //             Text(
+                    //               'Filter',
+                    //               style: TextStyle(
+                    //                 color: Colors.white,
+                    //                 fontWeight: FontWeight.w500,
+                    //                 fontSize: 17.sp,
+                    //               ),
+                    //             )
+                    //           ],
+                    //         ),
+                    //       ),
+                    //       Visibility(
+                    //         visible: filterController.typeList.isNotEmpty ||
+                    //                 filterController.statusList.isNotEmpty
+                    //             ? true
+                    //             : false,
+                    //         child: Positioned(
+                    //           right: 0,
+                    //           child: CircleAvatar(
+                    //             backgroundColor: Colors.red,
+                    //             radius: 10.sp,
+                    //           ),
+                    //         ),
+                    //       )
+                    //     ],
+                    //   ),
+                    // )
                     VerticalSpacer(3.h),
                     // filterController.fliterModel != null &&
                     //         filterController.fliterModel!.result != null &&
@@ -145,14 +147,52 @@ class ScreeenTranscations extends StatelessWidget {
                         ? Expanded(
                             child: ListView.separated(
                               itemBuilder: (context, index) {
-                                return Card(
-                                  surfaceTintColor: Colors.transparent,
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15.sp),
+                                    border: Border.all(
+                                      color: const Color(0xFFEAEAEA),
+                                    ),
+                                  ),
+                                  // surfaceTintColor: Colors.transparent,
                                   child: Padding(
                                     padding: EdgeInsets.only(
                                         left: 18.sp, right: 18.sp),
                                     child: Column(
                                       children: [
                                         VerticalSpacer(2.h),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              filterController
+                                                      .filteredList[index]
+                                                      .transactionType ??
+                                                  '-',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .copyWith(
+                                                      fontSize: 16.sp,
+                                                      color: Color(0xFF08A6EC)
+                                                      // fontWeight:
+                                                      //     FontWeight
+                                                      //         .w500,
+                                                      ),
+                                            ),
+                                            Text(
+                                              'Folio : ${filterController.filteredList[index].folioNo ?? '-'}',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .copyWith(
+                                                    fontSize: 15.sp,
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
+                                        VerticalSpacer(1.h),
                                         Row(
                                           children: [
                                             Expanded(
@@ -172,7 +212,7 @@ class ScreeenTranscations extends StatelessWidget {
                                             ),
                                           ],
                                         ),
-                                        VerticalSpacer(1.h),
+                                        VerticalSpacer(2.h),
 
                                         // VerticalSpacer(2.h),
                                         Row(
@@ -210,6 +250,8 @@ class ScreeenTranscations extends StatelessWidget {
                                                       .bodyMedium!
                                                       .copyWith(
                                                         fontSize: 15.sp,
+                                                        color: const Color(
+                                                            0xFF888888),
                                                       ),
                                                 ),
 
@@ -226,47 +268,43 @@ class ScreeenTranscations extends StatelessWidget {
                                                 //         ?.result?[index]
                                                 //         .transactionType ??
                                                 //     ''),
-                                                Container(
-                                                  height: 3.h,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.blue[100]!
-                                                        .withOpacity(0.2),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15.sp),
-                                                  ),
-                                                  child: Center(
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                        left: 13,
-                                                        right: 13,
-                                                        // top: 5,
-                                                        // bottom: 5,
-                                                      ),
-                                                      child: Text(
-                                                        filterController
-                                                                .filteredList[
-                                                                    index]
-                                                                .transactionType ??
-                                                            '-',
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodyMedium!
-                                                            .copyWith(
-                                                              fontSize: 15.sp,
-                                                              // fontWeight:
-                                                              //     FontWeight
-                                                              //         .w500,
-                                                            ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-
-                                                VerticalSpacer(1.h),
-                                                // Text(
-                                                //     '₹${filterController.fliterModel?.result?[index].amount}')
+                                                // Container(
+                                                //   height: 3.h,
+                                                //   decoration: BoxDecoration(
+                                                //     color: Colors.blue[100]!
+                                                //         .withOpacity(0.2),
+                                                //     borderRadius:
+                                                //         BorderRadius.circular(
+                                                //             15.sp),
+                                                //   ),
+                                                //   child: Center(
+                                                //     child: Padding(
+                                                //       padding:
+                                                //           const EdgeInsets.only(
+                                                //         left: 13,
+                                                //         right: 13,
+                                                //         // top: 5,
+                                                //         // bottom: 5,
+                                                //       ),
+                                                //       child: Text(
+                                                //         filterController
+                                                //                 .filteredList[
+                                                //                     index]
+                                                //                 .transactionType ??
+                                                //             '-',
+                                                //         style: Theme.of(context)
+                                                //             .textTheme
+                                                //             .bodyMedium!
+                                                //             .copyWith(
+                                                //               fontSize: 15.sp,
+                                                //               // fontWeight:
+                                                //               //     FontWeight
+                                                //               //         .w500,
+                                                //             ),
+                                                //       ),
+                                                //     ),
+                                                //   ),
+                                                // ),
                                                 Text(
                                                   '₹${filterController.filteredList[index].amount}',
                                                   style: Theme.of(context)
@@ -277,62 +315,10 @@ class ScreeenTranscations extends StatelessWidget {
                                                         fontWeight:
                                                             FontWeight.w500,
                                                       ),
-                                                )
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        VerticalSpacer(1.h),
-                                        const Divider(
-                                          thickness: 0.5,
-                                          height: 0,
-                                          color: Color.fromARGB(
-                                              255, 192, 191, 191),
-                                        ),
-                                        VerticalSpacer(1.h),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'Folio',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyMedium!
-                                                      .copyWith(
-                                                        fontSize: 15.sp,
-                                                      ),
                                                 ),
                                                 VerticalSpacer(1.h),
-                                                Text(
-                                                  'Status',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyMedium!
-                                                      .copyWith(
-                                                        fontSize: 15.sp,
-                                                      ),
-                                                )
-                                              ],
-                                            ),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              children: [
-                                                // Text(filterController
-                                                //         .fliterModel
-                                                //         ?.result?[index]
-                                                //         .folioNo ??
-                                                //     '-'),
-                                                Text(filterController
-                                                        .filteredList[index]
-                                                        .folioNo ??
-                                                    '-'),
-                                                VerticalSpacer(1.h),
+                                                // Text(
+                                                //     '₹${filterController.fliterModel?.result?[index].amount}')
                                                 Text(
                                                   // filterController
                                                   //         .fliterModel
@@ -356,19 +342,98 @@ class ScreeenTranscations extends StatelessWidget {
                                                               .trxnStatus,
                                                         ),
                                                       ),
-                                                  // style: TextStyle(
-                                                  //   color: getColorForStatus(
-                                                  //     filterController
-                                                  //         .fliterModel
-                                                  //         ?.result?[index]
-                                                  //         .trxnStatus,
-                                                  //   ),
-                                                  // ),
                                                 )
                                               ],
-                                            )
+                                            ),
                                           ],
                                         ),
+                                        // VerticalSpacer(1.h),
+                                        // const Divider(
+                                        //   thickness: 0.5,
+                                        //   height: 0,
+                                        //   color: Color.fromARGB(
+                                        //       255, 192, 191, 191),
+                                        // ),
+                                        // VerticalSpacer(1.h),
+                                        // Row(
+                                        //   mainAxisAlignment:
+                                        //       MainAxisAlignment.spaceBetween,
+                                        //   children: [
+                                        //     Column(
+                                        //       crossAxisAlignment:
+                                        //           CrossAxisAlignment.start,
+                                        //       children: [
+                                        //         Text(
+                                        //           'Folio',
+                                        //           style: Theme.of(context)
+                                        //               .textTheme
+                                        //               .bodyMedium!
+                                        //               .copyWith(
+                                        //                 fontSize: 15.sp,
+                                        //               ),
+                                        //         ),
+                                        //         VerticalSpacer(1.h),
+                                        //         Text(
+                                        //           'Status',
+                                        //           style: Theme.of(context)
+                                        //               .textTheme
+                                        //               .bodyMedium!
+                                        //               .copyWith(
+                                        //                 fontSize: 15.sp,
+                                        //               ),
+                                        //         )
+                                        //       ],
+                                        //     ),
+                                        //     Column(
+                                        //       crossAxisAlignment:
+                                        //           CrossAxisAlignment.end,
+                                        //       children: [
+                                        //         // Text(filterController
+                                        //         //         .fliterModel
+                                        //         //         ?.result?[index]
+                                        //         //         .folioNo ??
+                                        //         //     '-'),
+                                        //         Text(filterController
+                                        //                 .filteredList[index]
+                                        //                 .folioNo ??
+                                        //             '-'),
+                                        //         VerticalSpacer(1.h),
+                                        //         Text(
+                                        //           // filterController
+                                        //           //         .fliterModel
+                                        //           //         ?.result?[index]
+                                        //           //         .trxnStatus ??
+                                        //           //     '-',
+                                        //           filterController
+                                        //                   .filteredList[index]
+                                        //                   .trxnStatus ??
+                                        //               '',
+                                        //           style: Theme.of(context)
+                                        //               .textTheme
+                                        //               .bodySmall!
+                                        //               .copyWith(
+                                        //                 fontSize: 15.sp,
+                                        //                 color:
+                                        //                     getColorForStatus(
+                                        //                   filterController
+                                        //                       .fliterModel
+                                        //                       ?.result?[index]
+                                        //                       .trxnStatus,
+                                        //                 ),
+                                        //               ),
+                                        //           // style: TextStyle(
+                                        //           //   color: getColorForStatus(
+                                        //           //     filterController
+                                        //           //         .fliterModel
+                                        //           //         ?.result?[index]
+                                        //           //         .trxnStatus,
+                                        //           //   ),
+                                        //           // ),
+                                        //         )
+                                        //       ],
+                                        //     )
+                                        //   ],
+                                        // ),
                                         VerticalSpacer(2.h),
                                       ],
                                     ),
@@ -376,7 +441,7 @@ class ScreeenTranscations extends StatelessWidget {
                                 );
                               },
                               separatorBuilder: (context, index) =>
-                                  const VerticalSpacer(0),
+                                  VerticalSpacer(1.h),
                               // itemCount: filterController
                               //         .fliterModel?.result?.length ??
                               //     0,
