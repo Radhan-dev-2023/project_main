@@ -15,229 +15,186 @@ class Registrationwidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 1,
-      child: Column(
-        children: [
-          ListTile(
-            leading: Container(
-              height: 5.h,
-              width: 10.w,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.sp),
-                color: const Color(0xFF0E1330),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(6.5),
-                child: Image.asset(
-                  'assets/images/mandate.png',
-                  color: Colors.white,
-                  height: Adaptive.h(4),
-                  width: Adaptive.w(4),
+    return Column(
+      children: [
+        ListTile(
+          leading: Image.asset(
+            'assets/images/settingsicon/system-uicons_clipboard-notes.png',
+            color: platformBrightness == Brightness.light
+                ? Colors.black
+                : Colors.white,
+            height: Adaptive.h(4),
+            width: Adaptive.w(6),
+            fit: BoxFit.fill,
+          ),
+          // title: Text(
+          //   'ACH Mandate',
+          //   style: Theme.of(context).textTheme.labelLarge!.copyWith(
+          //         fontSize: 17.sp,
+          //         fontWeight: FontWeight.w400,
+          //         letterSpacing: 3.sp,
+          //       ),
+          // ),
+          // trailing: Icon(
+          //   Icons.arrow_forward_ios,
+          //   size: 15.sp,
+          //   color: Colors.grey,
+          // ),
+          title: Text(
+            'ACH Mandate Registration',
+            style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                  fontSize: 17.sp,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 3.sp,
                 ),
-              ),
-            ),
-            title: Text(
-              'ACH Mandate',
-              style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                    fontSize: 17.sp,
-                    fontWeight: FontWeight.w400,
-                    letterSpacing: 3.sp,
-                  ),
-            ),
-            trailing: Icon(
-              Icons.arrow_forward_ios,
-              size: 15.sp,
-              color: Colors.grey,
-            ),
-            subtitle: Text(
-              'ACH Mandate Registration',
-              style: Theme.of(context)
-                  .textTheme
-                  .labelLarge!
-                  .copyWith(color: Colors.grey),
-            ),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ScreenAchRegistration(),
-                  ));
-            },
           ),
-          Padding(
-            padding: EdgeInsets.only(left: 31.sp),
-            child: const Divider(
-              height: 1,
-              color: Color.fromARGB(255, 219, 217, 217),
-              thickness: 1,
-            ),
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ScreenAchRegistration(),
+                ));
+          },
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: 18.sp),
+          child: const Divider(
+            height: 1,
+            color: Color.fromARGB(255, 219, 217, 217),
+            thickness: 1,
           ),
-          ListTile(
-            leading: Container(
-              height: 5.h,
-              width: 10.w,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.sp),
-                color:const Color(0xFF0E1330),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(6.5),
-                child: Image.asset(
-                  'assets/images/bankdetails.png',
-                  color: Colors.white,
-                  height: Adaptive.h(5),
-                  width: Adaptive.w(5),
+        ),
+        ListTile(
+          leading: Image.asset(
+            'assets/images/settingsicon/ph_bank-light.png',
+            color: platformBrightness == Brightness.light
+                ? Colors.black
+                : Colors.white,
+            height: Adaptive.h(4),
+            width: Adaptive.w(6),
+          ),
+          // title: Text(
+          //   'Bank Details',
+          //   style: Theme.of(context).textTheme.labelLarge!.copyWith(
+          //         fontSize: 17.sp,
+          //         fontWeight: FontWeight.w400,
+          //         letterSpacing: 3.sp,
+          //       ),
+          // ),
+          title: Text(
+            'Banks Details',
+            style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                  fontSize: 17.sp,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 3.sp,
                 ),
-              ),
-            ),
-            title: Text(
-              'Bank Details',
-              style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                    fontSize: 17.sp,
-                    fontWeight: FontWeight.w400,
-                    letterSpacing: 3.sp,
-                  ),
-            ),
-            subtitle: Text(
-              'Add Banks',
-              style: Theme.of(context)
-                  .textTheme
-                  .labelLarge!
-                  .copyWith(color: Colors.grey),
-            ),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ScreenListingOfBanks(),
-                  ));
-            },
-            trailing: Icon(
-              Icons.arrow_forward_ios,
-              size: 15.sp,
-              color: Colors.grey,
-            ),
           ),
-          Padding(
-            padding: EdgeInsets.only(left: 31.sp),
-            child: const Divider(
-              height: 1,
-              color: Color.fromARGB(255, 219, 217, 217),
-              thickness: 1,
-            ),
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ScreenListingOfBanks(),
+                ));
+          },
+          // trailing: Icon(
+          //   Icons.arrow_forward_ios,
+          //   size: 15.sp,
+          //   color: Colors.grey,
+          // ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: 18.sp),
+          child: const Divider(
+            height: 1,
+            color: Color.fromARGB(255, 219, 217, 217),
+            thickness: 1,
           ),
-          ListTile(
-            leading: Container(
-              height: 5.h,
-              width: 10.w,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.sp),
-                color: const Color(0xFF0E1330),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(6.5),
-                child: Image.asset(
-                  'assets/images/fatcharegistrario.png',
-                  // color: platformBrightness == Brightness.light
-                  //     ? Colors.black
-                  //     : Colors.white,
-                  color: Colors.white,
-                  height: Adaptive.h(6),
-                  width: Adaptive.w(6),
+        ),
+        ListTile(
+          leading: Image.asset(
+            'assets/images/settingsicon/ph_note-light.png',
+            color: platformBrightness == Brightness.light
+                ? Colors.black
+                : Colors.white,
+            height: Adaptive.h(4),
+            width: Adaptive.w(6),
+          ),
+          // title: Text(
+          //   'FATCA',
+          //   style: Theme.of(context).textTheme.labelLarge!.copyWith(
+          //         fontSize: 17.sp,
+          //         fontWeight: FontWeight.w400,
+          //         letterSpacing: 3.sp,
+          //       ),
+          // ),
+          title: Text(
+            'FATCA Registration',
+            style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                  fontSize: 17.sp,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 3.sp,
                 ),
-              ),
-            ),
-            title: Text(
-              'FATCA',
-              style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                    fontSize: 17.sp,
-                    fontWeight: FontWeight.w400,
-                    letterSpacing: 3.sp,
-                  ),
-            ),
-            subtitle: Text(
-              'FATCA Registration',
-              style: Theme.of(context)
-                  .textTheme
-                  .labelLarge!
-                  .copyWith(color: Colors.grey),
-            ),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ScreenFatchaRegistration(),
-                  ));
-            },
-            trailing: Icon(
-              Icons.arrow_forward_ios,
-              size: 15.sp,
-              color: Colors.grey,
-            ),
           ),
-          Padding(
-            padding: EdgeInsets.only(left: 31.sp),
-            child: const Divider(
-              height: 1,
-              color: Color.fromARGB(255, 219, 217, 217),
-              thickness: 1,
-            ),
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ScreenFatchaRegistration(),
+                ));
+          },
+          // trailing: Icon(
+          //   Icons.arrow_forward_ios,
+          //   size: 15.sp,
+          //   color: Colors.grey,
+          // ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: 18.sp),
+          child: const Divider(
+            height: 1,
+            color: Color.fromARGB(255, 219, 217, 217),
+            thickness: 1,
           ),
-          ListTile(
-            leading: Padding(
-              padding: const EdgeInsets.all(6.5),
-              child: Container(
-                height: 5.h,
-                width: 10.w,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.sp),
-                  color: const Color(0xFF0E1330),
+        ),
+        ListTile(
+          leading: Image.asset(
+            'assets/images/settingsicon/pixelarticons_notes.png',
+            color: platformBrightness == Brightness.light
+                ? Colors.black
+                : Colors.white,
+            // color: Colors.white,
+            height: Adaptive.h(4),
+            width: Adaptive.w(6),
+          ),
+          title: Text(
+            'ACH',
+            style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                  fontSize: 17.sp,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 3.sp,
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(6.5),
-                  child: Image.asset(
-                    'assets/images/achhistory.png',
-                    // color: platformBrightness == Brightness.light
-                    //     ? Colors.black
-                    //     : Colors.white,
-                    color: Colors.white,
-                    height: Adaptive.h(6),
-                    width: Adaptive.w(6),
-                  ),
-                ),
-              ),
-            ),
-            title: Text(
-              'ACH',
-              style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                    fontSize: 17.sp,
-                    fontWeight: FontWeight.w400,
-                    letterSpacing: 3.sp,
-                  ),
-            ),
-            subtitle: Text(
-              'ACH History',
-              style: Theme.of(context)
-                  .textTheme
-                  .labelLarge!
-                  .copyWith(color: Colors.grey),
-            ),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ScreenAchHistory(),
-                  ));
-            },
-            trailing: Icon(
-              Icons.arrow_forward_ios,
-              size: 15.sp,
-              color: Colors.grey,
-            ),
           ),
-        ],
-      ),
+          // title: Text(
+          //   'ACH History',
+          //   style: Theme.of(context)
+          //       .textTheme
+          //       .labelLarge!
+          //       .copyWith(color: Colors.grey),
+          // ),
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ScreenAchHistory(),
+                ));
+          },
+          // trailing: Icon(
+          //   Icons.arrow_forward_ios,
+          //   size: 15.sp,
+          //   color: Colors.grey,
+          // ),
+        ),
+      ],
     );
   }
 }

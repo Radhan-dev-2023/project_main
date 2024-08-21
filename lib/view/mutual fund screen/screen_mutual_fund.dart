@@ -238,8 +238,7 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(20.sp),
                                     child: Image.asset(
-                                      topMfsController.imageList[
-                                          index], 
+                                      topMfsController.imageList[index],
                                       fit: BoxFit.fill,
                                       width: double.infinity,
                                       // height: Adaptive.h(18),
@@ -342,7 +341,7 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
                               );
                             },
                             child: Card(
-                              elevation: 2,
+                              elevation: 7,
                               child: Padding(
                                 padding: EdgeInsets.all(10.sp),
                                 child: Column(
@@ -441,7 +440,7 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
                           );
                         },
                         separatorBuilder: (context, index) =>
-                            VerticalSpacer(1.h),
+                            VerticalSpacer(0.5.h),
                         itemCount:
                             topMfsController.filteredListForAllFunds.length > 5
                                 ? 5

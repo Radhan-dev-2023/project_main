@@ -49,7 +49,7 @@ class WigetForTopPIcksAndGoals extends StatelessWidget {
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 return Card(
-                  elevation: 6,
+                  elevation: 7,
                   shadowColor: Colors.black.withOpacity(0.2),
                   child: SizedBox(
                     height: 10.h,

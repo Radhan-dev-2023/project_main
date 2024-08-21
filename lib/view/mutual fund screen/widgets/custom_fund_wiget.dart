@@ -20,6 +20,7 @@ class CustomFundWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Brightness platformBrightness = MediaQuery.of(context).platformBrightness;
     return InkWell(
       onTap: category == null
           ? () {
@@ -47,7 +48,12 @@ class CustomFundWidget extends StatelessWidget {
             height: Adaptive.h(10),
             width: Adaptive.w(30),
             decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey), shape: BoxShape.circle),
+              border: Border.all(color: Colors.grey),
+              shape: BoxShape.circle,
+              color: platformBrightness == Brightness.light
+                  ? Colors.transparent
+                  : Colors.white,
+            ),
             child: Center(
               child: Image.asset(
                 imageurl,
