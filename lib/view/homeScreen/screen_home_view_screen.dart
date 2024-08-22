@@ -63,7 +63,7 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
     List<BottomBarItem> bottomList = [
       BottomBarItem(
         inActiveItem: Image.asset(
-          'assets/images/navicons/mutualfund.png',
+          'assets/images/navicons/home.png',
           // 'assets/images/navicons/noun-mutual-fund-5991548 1.png',
           // 'assets/images/dashboard_11118018.png',
           color: platformBrightness == Brightness.light
@@ -77,7 +77,7 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
           // height: 25,
           // width: 23,
         ),
-        activeItem: Image.asset("assets/images/navicons/mutualfund.png",
+        activeItem: Image.asset("assets/images/navicons/home.png",
             // 'assets/images/navicons/noun-mutual-fund-5991548 1.png',
             color: platformBrightness == Brightness.light
                 ? Colors.white
@@ -88,7 +88,7 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
       ),
       BottomBarItem(
         inActiveItem: Image.asset(
-          'assets/images/navicons/gold.png',
+          'assets/images/navicons/Group 48096048 (1).png',
           color: platformBrightness == Brightness.light
               ? Colors.black
               : Colors.white,
@@ -96,7 +96,7 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
           // width: 23,
         ),
         activeItem: Image.asset(
-          'assets/images/navicons/gold.png',
+          'assets/images/navicons/Group 48096048 (1).png',
           // 'assets/images/money_13299664.png',
           color: platformBrightness == Brightness.light
               ? Colors.white
@@ -112,7 +112,7 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
       ),
       BottomBarItem(
         inActiveItem: Image.asset(
-          'assets/images/ffdash.png',
+          'assets/images/navicons/Group 48096050.png',
           color: platformBrightness == Brightness.light
               ? Colors.black
               : Colors.white,
@@ -124,7 +124,7 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
           // height: 30,
           // width: 23,
         ),
-        activeItem: Image.asset('assets/images/ffdash.png',
+        activeItem: Image.asset('assets/images/navicons/Group 48096050.png',
             color: platformBrightness == Brightness.light
                 ? Colors.white
                 : Colors.black
@@ -139,7 +139,7 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
       ),
       BottomBarItem(
         inActiveItem: Image.asset(
-          'assets/images/navicons/transaction.png',
+          'assets/images/navicons/exchange (1) 1.png',
           color: platformBrightness == Brightness.light
               ? Colors.black
               : Colors.white,
@@ -151,7 +151,7 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
           // height: 25,
           // width: 23,
         ),
-        activeItem: Image.asset('assets/images/navicons/transaction.png',
+        activeItem: Image.asset('assets/images/navicons/exchange (1) 1.png',
             color: platformBrightness == Brightness.light
                 ? Colors.white
                 : Colors.black
