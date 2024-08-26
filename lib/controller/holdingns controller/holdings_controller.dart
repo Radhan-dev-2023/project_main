@@ -15,12 +15,11 @@ class HoldingsController extends ChangeNotifier {
   TransactionReport? transactionReport;
   bool loadingHoldingpage = true;
   Future<void> fetchTransactionReport(context) async {
-    
     loadingHoldingpage = true;
     notifyListeners();
     try {
       String token = await SecureStorage.readToken('token');
-    bool isTokenExpired = JwtDecoder.isExpired(token);
+      bool isTokenExpired = JwtDecoder.isExpired(token);
       if (isTokenExpired) {
         await refershTokenService.postRefershTocken(context);
         transactionReport =
@@ -40,8 +39,11 @@ class HoldingsController extends ChangeNotifier {
     }
   }
 
-  String? redeemValue = 'Redeem';
-  List<String> radeemList = ['Redeem', 'Switch', 'Stp', 'Swp'];
+  String? redeemValue;
+  List<String> radeemList = [
+    'Redeem',
+    'Switch',
+  ];
   void updateRedeemValue(String value) {
     redeemValue = value;
     notifyListeners();
@@ -51,12 +53,11 @@ class HoldingsController extends ChangeNotifier {
   ReportDetailsModel? reportDetailsModel;
   Future<void> fetchReportDetails(
       context, String isinNumber, String trxnumber) async {
-   
     loading = true;
     notifyListeners();
     try {
-       String token = await SecureStorage.readToken('token');
-    bool isTokenExpired = JwtDecoder.isExpired(token);
+      String token = await SecureStorage.readToken('token');
+      bool isTokenExpired = JwtDecoder.isExpired(token);
       if (isTokenExpired) {
         await refershTokenService.postRefershTocken(context);
         reportDetailsModel =
@@ -93,12 +94,11 @@ class HoldingsController extends ChangeNotifier {
     String transactiontype,
     context,
   ) async {
-    
     loadingmail = true;
     notifyListeners();
     try {
       String token = await SecureStorage.readToken('token');
-    bool isTokenExpired = JwtDecoder.isExpired(token);
+      bool isTokenExpired = JwtDecoder.isExpired(token);
       if (isTokenExpired) {
         await refershTokenService.postRefershTocken(context);
         holdingServices.sendmailToClient(

@@ -2,12 +2,10 @@ import 'dart:developer';
 
 import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
 import 'package:finfresh_mobile/controller/holdingns%20controller/holdings_controller.dart';
-import 'package:finfresh_mobile/services/dash%20board%20Services/dash_board_services.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/stock_detail_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -26,6 +24,9 @@ class ScreenMyHoldings extends StatefulWidget {
   State<ScreenMyHoldings> createState() => _ScreenMyHoldingsState();
 }
 
+final GlobalKey<ScaffoldState> scaffoldStateholdings =
+    GlobalKey<ScaffoldState>();
+
 class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
   @override
   void initState() {
@@ -40,6 +41,7 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
   Widget build(BuildContext context) {
     Brightness brightness = Theme.of(context).brightness;
     return Scaffold(
+      key: scaffoldStateholdings,
       appBar: AppBar(
         title: const Text('My Holdings'),
       ),
@@ -231,25 +233,26 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                               onChanged: (value) {
                                 holdingController
                                     .updateRedeemValue(value ?? '');
-                                holdingController.sendMailToClinet(
-                                  Provider.of<DashBoardController>(
-                                        context,
-                                        listen: false,
-                                      )
-                                          .dashBoardModel
-                                          ?.result
-                                          ?.data
-                                          ?.phoneNumber ??
-                                      '',
-                                  Provider.of<DashBoardController>(
-                                        context,
-                                        listen: false,
-                                      ).dashBoardModel?.result?.data?.name ??
-                                      '',
-                                  widget.productname,
-                                  value ?? '',
-                                  context,
-                                );
+                                showmodelsheet(value ?? '', widget.productname);
+                                // holdingController.sendMailToClinet(
+                                //   Provider.of<DashBoardController>(
+                                //         context,
+                                //         listen: false,
+                                //       )
+                                //           .dashBoardModel
+                                //           ?.result
+                                //           ?.data
+                                //           ?.phoneNumber ??
+                                //       '',
+                                //   Provider.of<DashBoardController>(
+                                //         context,
+                                //         listen: false,
+                                //       ).dashBoardModel?.result?.data?.name ??
+                                //       '',
+                                //   widget.productname,
+                                //   value ?? '',
+                                //   context,
+                                // );
                               },
                             ),
                           ),
@@ -408,5 +411,155 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
         );
       }),
     );
+  }
+
+  void showmodelsheet(String value, String fundname) {
+    List<String> listfund = ['a', 'b', 'c'];
+    String? selectFund;
+    scaffoldStateholdings.currentState?.showBottomSheet(
+        // context: context,
+        (BuildContext context) {
+      return Container(
+          height: 550,
+          margin: EdgeInsets.all(15.sp),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      value,
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(Icons.close),
+                    ),
+                  ],
+                ),
+                Text(
+                  fundname,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        fontSize: 15.sp,
+                      ),
+                ),
+                VerticalSpacer(2.h),
+                value == 'Switch'
+                    ? DropdownButtonFormField<String>(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Please select To Sheme';
+                          }
+                          return null;
+                        },
+                        style: Theme.of(context).textTheme.labelLarge!,
+                        value: selectFund,
+                        decoration: InputDecoration(
+                            helperText: '',
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            hintText: 'Select To Sheme',
+                            labelText: 'Select To Sheme'),
+                        onChanged: (String? newValue) {},
+                        items: listfund.map((String items) {
+                          return DropdownMenuItem<String>(
+                            value: items,
+                            child: Text(items),
+                          );
+                        }).toList(),
+                      )
+                    : const SizedBox(),
+                VerticalSpacer(1.h),
+                DropdownButtonFormField<String>(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Please select Folio';
+                    }
+                    return null;
+                  },
+                  style: Theme.of(context).textTheme.labelLarge!,
+                  value: selectFund,
+                  decoration: InputDecoration(
+                      helperText: '',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      hintText: 'Select Folio',
+                      labelText: 'Select Folio'),
+                  onChanged: (String? newValue) {},
+                  items: listfund.map((String items) {
+                    return DropdownMenuItem<String>(
+                      value: items,
+                      child: Text(items),
+                    );
+                  }).toList(),
+                ),
+                VerticalSpacer(1.h),
+                DropdownButtonFormField<String>(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Please select Redeem By';
+                    }
+                    return null;
+                  },
+                  style: Theme.of(context).textTheme.labelLarge!,
+                  value: selectFund,
+                  decoration: InputDecoration(
+                      helperText: '',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      hintText: 'Redeem By',
+                      labelText: 'Redeem By'),
+                  onChanged: (String? newValue) {},
+                  items: listfund.map((String items) {
+                    return DropdownMenuItem<String>(
+                      value: items,
+                      child: Text(items),
+                    );
+                  }).toList(),
+                ),
+                VerticalSpacer(1.h),
+                TextFormField(
+                  // controller:
+                  //     schemeController.installmentController,
+                  // readOnly: true,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  // controller: kycController.banknameController,
+                  style: Theme.of(context).textTheme.labelLarge!,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter amount';
+                    }
+                    if (!RegExp(r'^[0-9\s\-&.,]+$').hasMatch(value)) {
+                      return 'Please enter a valid amount';
+                    }
+                    return null;
+                  },
+
+                  decoration: InputDecoration(
+                    prefix: const Text('₹ '),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    hintText: 'Enter the amount',
+                    labelText: 'Enter the amount',
+                  ),
+                ),
+                VerticalSpacer(2.h),
+                ButtonWidget(
+                  btName: 'Submit',
+                  onTap: () {},
+                )
+              ],
+            ),
+          ));
+    });
   }
 }

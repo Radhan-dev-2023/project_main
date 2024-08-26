@@ -3,7 +3,6 @@ import 'package:finfresh_mobile/controller/fatcha%20registration/fatcha_registra
 import 'package:finfresh_mobile/model/source%20wealth%20model/source_wealth_model.dart';
 import 'package:finfresh_mobile/model/state%20model/state_model.dart';
 import 'package:finfresh_mobile/model/ubo%20income%20model/ubo_income_model.dart';
-import 'package:finfresh_mobile/model/ubo%20model/ubo_model.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/fatcha%20registration/upload%20fatcha%20proof/screen.upload_fatcha_proof.dart';
 import 'package:finfresh_mobile/view/fatcha%20registration/widget/congratulation_screen.dart';
