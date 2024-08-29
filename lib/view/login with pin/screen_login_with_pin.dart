@@ -6,7 +6,9 @@ import 'package:finfresh_mobile/controller/pin%20controller/pin_controller.dart'
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/view/homeScreen/screen_home_view_screen.dart';
+import 'package:finfresh_mobile/view/setting%20pin%20number/setting_pin.dart';
 import 'package:finfresh_mobile/view/sign%20in/sign_in_screen.dart';
+import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
@@ -47,24 +49,43 @@ class _PinEnterForLoginScreenState extends State<PinEnterForLoginScreen> {
     }
   }
 
+  Future<void> checkPin() async {
+    await Provider.of<BiometricLogin>(context, listen: false).getpin();
+    if (Provider.of<BiometricLogin>(context, listen: false).pin.isEmpty) {
+      Provider.of<BiometricLogin>(context, listen: false)
+          .changeisPinEmpty(true);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const ScreenSetPinNumber(),
+        ),
+      );
+    } else {
+      log('Pin is not empty');
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     functionCallingboth();
+    checkPin();
+    // Provider.of<BiometricLogin>(context, listen: false).getpin();
   }
 
   @override
   Widget build(BuildContext context) {
-    String pin = '';
+    // String pin = '';
 
     Brightness brightness = MediaQuery.of(context).platformBrightness;
     final biometricLoginController = Provider.of<BiometricLogin>(context);
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      // showFingerprintBottomSheet(context);
-      // await biometricLoginController.authenticate();
-      pin = await biometricLoginController.getpin();
-    });
+    log(biometricLoginController.pin);
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+    //   // showFingerprintBottomSheet(context);
+    //   // await biometricLoginController.authenticate();
+    //   pin = await biometricLoginController.getpin();
+    // });
 
     final defaultPinTheme = PinTheme(
       width: 56,
@@ -136,8 +157,8 @@ class _PinEnterForLoginScreenState extends State<PinEnterForLoginScreen> {
                   biometricLoginController.changeButtonEnabled(false);
                 },
                 validator: (value) {
-                  logger.d('pin===$pin');
-                  if (value == pin) {
+                  logger.d('pin===$biometricLoginController.pin');
+                  if (value == biometricLoginController.pin) {
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(

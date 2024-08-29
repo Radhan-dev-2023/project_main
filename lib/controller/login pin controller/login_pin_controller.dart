@@ -5,10 +5,17 @@ import 'package:local_auth/local_auth.dart';
 class BiometricLogin extends ChangeNotifier {
   bool loginSuccess = false;
   bool buttonEnabled = false;
+  String pin = '';
+  Future<void> getpin() async {
+    pin = await SecureStorage.readToken('pin');
 
-  Future<String> getpin() async {
-    String pin = await SecureStorage.readToken('pin');
-    return pin;
+    // return pin;
+  }
+
+  bool isPinEmpty = false;
+  void changeisPinEmpty(bool value) {
+    isPinEmpty = value;
+    notifyListeners();
   }
 
   void changeButtonEnabled(bool value) {

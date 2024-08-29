@@ -80,7 +80,9 @@ class ScreenSetPinNumber extends StatelessWidget {
               Navigator.pop(context);
             }
           },
-          child: const Icon(Icons.arrow_back),
+          child: biometricLoginController.isPinEmpty
+              ? const SizedBox()
+              : const Icon(Icons.arrow_back),
         ),
       ),
       body: SafeArea(
@@ -95,19 +97,31 @@ class ScreenSetPinNumber extends StatelessWidget {
                 children: [
                   const LogoWidget(),
                   VerticalSpacer(8.h),
-                  Text(
-                    biometricLoginController.buttonEnabled == true
-                        ? 'Reset Finfresh PIN'
-                        : 'Enter Finfresh PIN',
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelLarge!
-                        .copyWith(fontSize: 20.sp, fontWeight: FontWeight.bold),
-                  ),
+                  biometricLoginController.isPinEmpty
+                      ? Text(
+                          'Set Finfresh PIN',
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelLarge!
+                              .copyWith(
+                                  fontSize: 20.sp, fontWeight: FontWeight.bold),
+                        )
+                      : Text(
+                          biometricLoginController.buttonEnabled == true
+                              ? 'Reset Finfresh PIN'
+                              : 'Enter Finfresh PIN',
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelLarge!
+                              .copyWith(
+                                  fontSize: 20.sp, fontWeight: FontWeight.bold),
+                        ),
                   VerticalSpacer(1.h),
-                  const Text(
-                    'Enter PIN for confirmation',
-                    style: TextStyle(color: Colors.grey),
+                  Text(
+                    biometricLoginController.isPinEmpty
+                        ? "Create a pin to secure access to Finfresh"
+                        : 'Enter PIN for confirmation',
+                    style: const TextStyle(color: Colors.grey),
                   ),
                   VerticalSpacer(10.h),
                   Center(

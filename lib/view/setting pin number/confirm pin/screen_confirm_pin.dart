@@ -143,7 +143,8 @@ class ScreenConfirmPinNumber extends StatelessWidget {
                     Navigator.pop(context);
                     Provider.of<KycController>(context, listen: false)
                         .updatePagenumber('1');
-                    biometricLoginController.buttonEnabled == true
+                    biometricLoginController.buttonEnabled == true ||
+                            biometricLoginController.isPinEmpty == true
                         ? Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
@@ -214,7 +215,8 @@ class ScreenConfirmPinNumber extends StatelessWidget {
                     pinController.setPin();
                     Provider.of<KycController>(context, listen: false)
                         .updatePagenumber('1');
-                    biometricLoginController.buttonEnabled == true
+                    biometricLoginController.buttonEnabled == true ||
+                            biometricLoginController.isPinEmpty == true
                         ? Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
@@ -250,7 +252,8 @@ class ScreenConfirmPinNumber extends StatelessWidget {
                   pinController.setPin();
                   Provider.of<KycController>(context, listen: false)
                       .updatePagenumber('1');
-                  biometricLoginController.buttonEnabled == true
+                  biometricLoginController.buttonEnabled == true ||
+                          biometricLoginController.isPinEmpty == true
                       ? Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(

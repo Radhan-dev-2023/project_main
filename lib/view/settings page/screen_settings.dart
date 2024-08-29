@@ -579,8 +579,11 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                 SecureStorage.clearSecureStoragevalue('token');
                 SecureStorage.clearSecureStoragevalue('username');
                 SecureStorage.clearSecureStoragevalue('iin');
+                SecureStorage.clearSecureStoragevalue('pin');
                 Provider.of<BiometricLogin>(context, listen: false)
                     .changeButtonEnabled(false);
+                Provider.of<BiometricLogin>(context, listen: false)
+                    .changeisPinEmpty(false);
                 Provider.of<GoldController>(context, listen: false)
                     .formattedValue = '';
                 Provider.of<DashBoardController>(context, listen: false)
