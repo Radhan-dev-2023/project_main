@@ -193,7 +193,7 @@ class _ScreenTaxStatusState extends State<ScreenTaxStatus> {
             ? const LoadingButton()
             : ButtonWidget(
                 onTap: () async {
-                  if (kycController.taxStatusValue == null) {
+                  if (kycController.taxvalue.isEmpty) {
                     showSnackBar(context, 'Select a Tax Status');
                     return;
                   } else if (kycController.holdingValue == null) {
