@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 class HoldingsController extends ChangeNotifier {
+  final GlobalKey<FormState> formKeyforSwitch = GlobalKey<FormState>();
+  final TextEditingController amountController = TextEditingController();
   HoldingServices holdingServices = HoldingServices();
   RefershTokenService refershTokenService = RefershTokenService();
   TransactionReport? transactionReport;
@@ -49,10 +51,38 @@ class HoldingsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  String? redeemBy;
+  List<String> redeemByList = [
+    'Amount',
+    'All Units',
+  ];
+  void updateRadeemBy(String? value) {
+    redeemBy = value;
+    notifyListeners();
+  }
+
+  String? foliovalue;
+  void updateFolio(String? value) {
+    foliovalue = value;
+    log('foliovalue ==$foliovalue');
+    notifyListeners();
+  }
+
+  void clearValue() {
+    foliovalue = null;
+    redeemValue = null;
+    redeemBy = null;
+    amountController.clear();
+    notifyListeners();
+  }
+
+  List<String> folioList = [];
+
   bool loading = false;
   ReportDetailsModel? reportDetailsModel;
   Future<void> fetchReportDetails(
       context, String isinNumber, String trxnumber) async {
+    folioList.clear();
     loading = true;
     notifyListeners();
     try {
@@ -62,12 +92,34 @@ class HoldingsController extends ChangeNotifier {
         await refershTokenService.postRefershTocken(context);
         reportDetailsModel =
             await holdingServices.fetchReprot(context, isinNumber, trxnumber);
+        if (reportDetailsModel != null) {
+          log('hi');
+          var purchaseDetails = reportDetailsModel?.result?.purchaseDetails;
+
+          if (purchaseDetails != null) {
+            for (var purchaseDetail in purchaseDetails) {
+              folioList.add(purchaseDetail.folio);
+              log("folioList======$folioList");
+            }
+          }
+        }
         notifyListeners();
         loading = false;
         notifyListeners();
       } else {
         reportDetailsModel =
             await holdingServices.fetchReprot(context, isinNumber, trxnumber);
+        if (reportDetailsModel != null) {
+          log('hi');
+          var purchaseDetails = reportDetailsModel?.result?.purchaseDetails;
+
+          if (purchaseDetails != null) {
+            for (var purchaseDetail in purchaseDetails) {
+              folioList.add(purchaseDetail.folio);
+              log("folioList======$folioList");
+            }
+          }
+        }
         notifyListeners();
         loading = false;
         notifyListeners();
@@ -116,6 +168,31 @@ class HoldingsController extends ChangeNotifier {
     } catch (e) {
       logger.d('report failed with an exception$e');
       loadingmail = false;
+      notifyListeners();
+    }
+  }
+
+  bool loadingSwicth = false;
+  Future<void> switchTransaction(context) async {
+    loadingSwicth = true;
+    notifyListeners();
+    try {
+      String token = await SecureStorage.readToken('token');
+      bool isTokenExpired = JwtDecoder.isExpired(token);
+      if (isTokenExpired) {
+        await refershTokenService.postRefershTocken(context);
+
+        await holdingServices.transactionSwitch(context);
+        loadingSwicth = false;
+        notifyListeners();
+      } else {
+        await holdingServices.transactionSwitch(context);
+        loadingSwicth = false;
+        notifyListeners();
+      }
+    } catch (e) {
+      logger.d('report failed with an exception$e');
+      loadingSwicth = false;
       notifyListeners();
     }
   }

@@ -132,4 +132,79 @@ class HoldingServices {
       logger.d(' report failed with an exception$e');
     }
   }
+
+  Future<void> transactionSwitch(BuildContext context) async {
+    String token = await SecureStorage.readToken('token');
+    String userId = await SecureStorage.readToken('userId');
+    String url = '${ApiEndpoint.baseUrl}/api/v1/switch/transaction';
+    String iin = await SecureStorage.readToken('customerId');
+
+    Map<String, dynamic> payload = {
+      "transaction": "switch",
+      "phonenumber": "8098994900",
+      "service_request": {
+        "iin": iin,
+        "poa": "N",
+        "poa_bank_trxn_type": "",
+        "trxn_acceptance": "OL",
+        "dp_id": "",
+        "sub_broker_arn_code": "",
+        "sub_broker_code": "",
+        "euin_opted": "N",
+        "euin": "",
+        "trxn_execution": "",
+        "remarks": "",
+        "trxn_initiator": "",
+        "trans_count": "1",
+        "investor_auth_log": ""
+      },
+      "child": [
+        {
+          "childtrans": {
+            "amc": "Y",
+            "folio": "1000476713",
+            "source_product_code": "LGR",
+            "source_ft_acc_no": "",
+            "target_product_code": "105G",
+            "target_ft_acc_no": "",
+            "reinvest": "Z",
+            "amt_unit_type": "Amount",
+            "amt_unit": "1000",
+            "all_units": "N",
+            "input_ref_no": ""
+          }
+        }
+      ]
+    };
+    log('payload ===$payload');
+    try {
+      http.Response response = await http.post(Uri.parse(url),
+          headers: {
+            'Authorization': 'Bearer $token',
+            'x-key': userId,
+            'Content-Type': 'application/json',
+          },
+          body: jsonEncode(payload));
+      logger.d('response switch == ${response.body}');
+      Map<String, dynamic> jsonResponse = json.decode(response.body);
+      if (jsonResponse['status'] == 200) {
+        // reportDetailsModel = ReportDetailsModel.fromJson(jsonResponse);
+        // return reportDetailsModel;
+      } else if (jsonResponse['status'] == 500) {
+        if (context.mounted) {
+          showSnackBar(context, jsonResponse['message']);
+        }
+        // return null;
+      }
+    } on SocketException {
+      if (context.mounted) {
+        showSnackBar(context, 'No Internet Connection');
+      }
+      // return null;
+    } catch (e) {
+      logger.d(' report failed with an exception$e');
+      // return null;
+    }
+    // return null;
+  }
 }

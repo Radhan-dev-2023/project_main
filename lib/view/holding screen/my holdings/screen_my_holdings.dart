@@ -1,10 +1,10 @@
 import 'dart:developer';
 
-import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
 import 'package:finfresh_mobile/controller/holdingns%20controller/holdings_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/stock_detail_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
+import 'package:finfresh_mobile/view/widgets/custom_loading_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -423,142 +423,172 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
           height: 550,
           margin: EdgeInsets.all(15.sp),
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Consumer<HoldingsController>(
+                builder: (context, holdingsController, child) {
+              return Form(
+                key: holdingsController.formKeyforSwitch,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          value,
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    fontSize: 18.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            holdingsController.clearValue();
+                            Navigator.pop(context);
+                          },
+                          icon: const Icon(Icons.close),
+                        ),
+                      ],
+                    ),
                     Text(
-                      value,
+                      fundname,
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 15.sp,
                           ),
                     ),
-                    IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
+                    VerticalSpacer(2.h),
+                    value == 'Switch'
+                        ? DropdownButtonFormField<String>(
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (value) {
+                              if (value == null) {
+                                return 'Please select To Sheme';
+                              }
+                              return null;
+                            },
+                            style: Theme.of(context).textTheme.labelLarge!,
+                            value: selectFund,
+                            decoration: InputDecoration(
+                                helperText: '',
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                hintText: 'Select To Sheme',
+                                labelText: 'Select To Sheme'),
+                            onChanged: (String? newValue) {},
+                            items: listfund.map((String items) {
+                              return DropdownMenuItem<String>(
+                                value: items,
+                                child: Text(items),
+                              );
+                            }).toList(),
+                          )
+                        : const SizedBox(),
+                    VerticalSpacer(1.h),
+                    DropdownButtonFormField<String>(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value == null) {
+                          return 'Please select Folio';
+                        }
+                        return null;
                       },
-                      icon: const Icon(Icons.close),
+                      style: Theme.of(context).textTheme.labelLarge!,
+                      value: holdingsController.foliovalue,
+                      decoration: InputDecoration(
+                          helperText: '',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          hintText: 'Select Folio',
+                          labelText: 'Select Folio'),
+                      onChanged: (String? newValue) {
+                        holdingsController.updateFolio(newValue);
+                      },
+                      items: holdingsController.folioList.map((String items) {
+                        return DropdownMenuItem<String>(
+                          value: items,
+                          child: Text(items),
+                        );
+                      }).toList(),
                     ),
+                    VerticalSpacer(1.h),
+                    DropdownButtonFormField<String>(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value == null) {
+                          return 'Please select Redeem By';
+                        }
+                        return null;
+                      },
+                      style: Theme.of(context).textTheme.labelLarge!,
+                      value: holdingsController.redeemBy,
+                      decoration: InputDecoration(
+                          helperText: '',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          hintText: 'Redeem By',
+                          labelText: 'Redeem By'),
+                      onChanged: (String? newValue) {
+                        holdingsController.updateRadeemBy(newValue);
+                      },
+                      items:
+                          holdingsController.redeemByList.map((String items) {
+                        return DropdownMenuItem<String>(
+                          value: items,
+                          child: Text(items),
+                        );
+                      }).toList(),
+                    ),
+                    VerticalSpacer(1.h),
+                    TextFormField(
+                      controller: holdingsController.amountController,
+
+                      // readOnly: true,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      // controller: kycController.banknameController,
+                      style: Theme.of(context).textTheme.labelLarge!,
+                      validator: (value) {
+                        double? totalAmount = double.tryParse(holdingsController
+                                .reportDetailsModel?.result!.totalAmount!
+                                .replaceAll(RegExp(r'[₹,]'), '') ??
+                            '');
+
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter amount';
+                        } else if (double.parse(value) > totalAmount!) {
+                          return 'Enter amount less than ₹$totalAmount ';
+                        }
+                        if (!RegExp(r'^[0-9\s\-&.,]+$').hasMatch(value)) {
+                          return 'Please enter a valid amount';
+                        }
+                        return null;
+                      },
+
+                      decoration: InputDecoration(
+                        prefix: const Text('₹ '),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        hintText: 'Enter the amount',
+                        labelText: 'Enter the amount',
+                      ),
+                    ),
+                    VerticalSpacer(2.h),
+                    holdingsController.loadingSwicth
+                        ? const LoadingButton()
+                        : ButtonWidget(
+                            btName: 'Submit',
+                            onTap: () {
+                              if (holdingsController
+                                  .formKeyforSwitch.currentState!
+                                  .validate()) {
+                                holdingsController.switchTransaction(context);
+                              }
+                            },
+                          )
                   ],
                 ),
-                Text(
-                  fundname,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        fontSize: 15.sp,
-                      ),
-                ),
-                VerticalSpacer(2.h),
-                value == 'Switch'
-                    ? DropdownButtonFormField<String>(
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (value) {
-                          if (value == null) {
-                            return 'Please select To Sheme';
-                          }
-                          return null;
-                        },
-                        style: Theme.of(context).textTheme.labelLarge!,
-                        value: selectFund,
-                        decoration: InputDecoration(
-                            helperText: '',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            hintText: 'Select To Sheme',
-                            labelText: 'Select To Sheme'),
-                        onChanged: (String? newValue) {},
-                        items: listfund.map((String items) {
-                          return DropdownMenuItem<String>(
-                            value: items,
-                            child: Text(items),
-                          );
-                        }).toList(),
-                      )
-                    : const SizedBox(),
-                VerticalSpacer(1.h),
-                DropdownButtonFormField<String>(
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (value) {
-                    if (value == null) {
-                      return 'Please select Folio';
-                    }
-                    return null;
-                  },
-                  style: Theme.of(context).textTheme.labelLarge!,
-                  value: selectFund,
-                  decoration: InputDecoration(
-                      helperText: '',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      hintText: 'Select Folio',
-                      labelText: 'Select Folio'),
-                  onChanged: (String? newValue) {},
-                  items: listfund.map((String items) {
-                    return DropdownMenuItem<String>(
-                      value: items,
-                      child: Text(items),
-                    );
-                  }).toList(),
-                ),
-                VerticalSpacer(1.h),
-                DropdownButtonFormField<String>(
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (value) {
-                    if (value == null) {
-                      return 'Please select Redeem By';
-                    }
-                    return null;
-                  },
-                  style: Theme.of(context).textTheme.labelLarge!,
-                  value: selectFund,
-                  decoration: InputDecoration(
-                      helperText: '',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      hintText: 'Redeem By',
-                      labelText: 'Redeem By'),
-                  onChanged: (String? newValue) {},
-                  items: listfund.map((String items) {
-                    return DropdownMenuItem<String>(
-                      value: items,
-                      child: Text(items),
-                    );
-                  }).toList(),
-                ),
-                VerticalSpacer(1.h),
-                TextFormField(
-                  // controller:
-                  //     schemeController.installmentController,
-                  // readOnly: true,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  // controller: kycController.banknameController,
-                  style: Theme.of(context).textTheme.labelLarge!,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter amount';
-                    }
-                    if (!RegExp(r'^[0-9\s\-&.,]+$').hasMatch(value)) {
-                      return 'Please enter a valid amount';
-                    }
-                    return null;
-                  },
-
-                  decoration: InputDecoration(
-                    prefix: const Text('₹ '),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    hintText: 'Enter the amount',
-                    labelText: 'Enter the amount',
-                  ),
-                ),
-                VerticalSpacer(2.h),
-                ButtonWidget(
-                  btName: 'Submit',
-                  onTap: () {},
-                )
-              ],
-            ),
+              );
+            }),
           ));
     });
   }
