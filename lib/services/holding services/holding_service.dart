@@ -133,15 +133,24 @@ class HoldingServices {
     }
   }
 
-  Future<void> transactionSwitch(BuildContext context) async {
+  Future<bool> transactionSwitch(
+      BuildContext context,
+      String transactionType,
+      String amcCode,
+      String folio,
+      String redeemBy,
+      String amount,
+      String sourceproductCode,
+      String targetCode) async {
     String token = await SecureStorage.readToken('token');
     String userId = await SecureStorage.readToken('userId');
     String url = '${ApiEndpoint.baseUrl}/api/v1/switch/transaction';
     String iin = await SecureStorage.readToken('customerId');
+    String phonenumber = await SecureStorage.readToken('phoneNumber');
 
     Map<String, dynamic> payload = {
-      "transaction": "switch",
-      "phonenumber": "8098994900",
+      "transaction": transactionType,
+      "phonenumber": phonenumber,
       "service_request": {
         "iin": iin,
         "poa": "N",
@@ -161,16 +170,16 @@ class HoldingServices {
       "child": [
         {
           "childtrans": {
-            "amc": "Y",
-            "folio": "1000476713",
-            "source_product_code": "LGR",
+            "amc": amcCode,
+            "folio": folio,
+            "source_product_code": sourceproductCode,
             "source_ft_acc_no": "",
-            "target_product_code": "105G",
+            "target_product_code": targetCode,
             "target_ft_acc_no": "",
             "reinvest": "Z",
-            "amt_unit_type": "Amount",
-            "amt_unit": "1000",
-            "all_units": "N",
+            "amt_unit_type": redeemBy,
+            "amt_unit": amount,
+            "all_units": redeemBy == 'Amount' ? 'N' : 'Y',
             "input_ref_no": ""
           }
         }
@@ -190,21 +199,26 @@ class HoldingServices {
       if (jsonResponse['status'] == 200) {
         // reportDetailsModel = ReportDetailsModel.fromJson(jsonResponse);
         // return reportDetailsModel;
+        return true;
       } else if (jsonResponse['status'] == 500) {
         if (context.mounted) {
           showSnackBar(context, jsonResponse['message']);
+          return false;
         }
         // return null;
       }
     } on SocketException {
       if (context.mounted) {
         showSnackBar(context, 'No Internet Connection');
+        return false;
       }
       // return null;
     } catch (e) {
       logger.d(' report failed with an exception$e');
+      return false;
       // return null;
     }
+    return false;
     // return null;
   }
 }

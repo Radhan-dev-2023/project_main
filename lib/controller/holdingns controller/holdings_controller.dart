@@ -1,11 +1,16 @@
 import 'dart:developer';
 
+import 'package:finfresh_mobile/model/product%20code%20model/product_code_model.dart';
 import 'package:finfresh_mobile/model/report%20details%20modal/report_details_model.dart';
+import 'package:finfresh_mobile/model/top%20performing%20model/top_performing_mutual_fund.dart';
 import 'package:finfresh_mobile/model/transaction%20report%20model/transaction_report_model.dart';
 import 'package:finfresh_mobile/services/holding%20services/holding_service.dart';
+import 'package:finfresh_mobile/services/kyc/master_services.dart';
 import 'package:finfresh_mobile/services/refersh%20token/refersh_token.dart';
+import 'package:finfresh_mobile/services/scheme%20services/scheme_services.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
@@ -73,6 +78,7 @@ class HoldingsController extends ChangeNotifier {
     redeemValue = null;
     redeemBy = null;
     amountController.clear();
+    selectvalue = null;
     notifyListeners();
   }
 
@@ -92,6 +98,7 @@ class HoldingsController extends ChangeNotifier {
         await refershTokenService.postRefershTocken(context);
         reportDetailsModel =
             await holdingServices.fetchReprot(context, isinNumber, trxnumber);
+        getTopMfsFRomPeriod(context, 'All');
         if (reportDetailsModel != null) {
           log('hi');
           var purchaseDetails = reportDetailsModel?.result?.purchaseDetails;
@@ -109,6 +116,7 @@ class HoldingsController extends ChangeNotifier {
       } else {
         reportDetailsModel =
             await holdingServices.fetchReprot(context, isinNumber, trxnumber);
+        getTopMfsFRomPeriod(context, 'All');
         if (reportDetailsModel != null) {
           log('hi');
           var purchaseDetails = reportDetailsModel?.result?.purchaseDetails;
@@ -136,6 +144,12 @@ class HoldingsController extends ChangeNotifier {
     currentindex = index;
     log('curent$currentindex');
     notifyListeners();
+  }
+
+  MasterService masterService = MasterService();
+  ProductCodeModel? productCodeModel;
+  Future<void> getProductCode(String inisinumber) async {
+    productCodeModel = await masterService.getProductCode(inisinumber);
   }
 
   bool loadingmail = false;
@@ -173,7 +187,7 @@ class HoldingsController extends ChangeNotifier {
   }
 
   bool loadingSwicth = false;
-  Future<void> switchTransaction(context) async {
+  Future<bool> switchTransaction(context) async {
     loadingSwicth = true;
     notifyListeners();
     try {
@@ -182,18 +196,108 @@ class HoldingsController extends ChangeNotifier {
       if (isTokenExpired) {
         await refershTokenService.postRefershTocken(context);
 
-        await holdingServices.transactionSwitch(context);
-        loadingSwicth = false;
-        notifyListeners();
+        bool result = await holdingServices.transactionSwitch(
+          context,
+          redeemValue ?? '',
+          productCodeModel?.product?.amcCode ?? '',
+          foliovalue ?? '',
+          redeemBy ?? '',
+          amountController.text,
+          '',
+          productCodeModel?.product?.productCode ?? '',
+        );
+        if (result) {
+          loadingSwicth = false;
+          notifyListeners();
+          return true;
+        } else {
+          loadingSwicth = false;
+          notifyListeners();
+          return false;
+        }
       } else {
-        await holdingServices.transactionSwitch(context);
-        loadingSwicth = false;
-        notifyListeners();
+        bool result = await holdingServices.transactionSwitch(
+          context,
+          redeemValue ?? '',
+          productCodeModel?.product?.amcCode ?? '',
+          foliovalue ?? '',
+          redeemBy ?? '',
+          amountController.text,
+          '',
+          productCodeModel?.product?.productCode ?? '',
+        );
+        if (result) {
+          loadingSwicth = false;
+          notifyListeners();
+          return true;
+        } else {
+          loadingSwicth = false;
+          notifyListeners();
+          return false;
+        }
       }
     } catch (e) {
       logger.d('report failed with an exception$e');
       loadingSwicth = false;
       notifyListeners();
+      return false;
     }
+  }
+
+  TextEditingController searchController = TextEditingController();
+  SchemeServices schemeServices = SchemeServices();
+  String returntoBackend = '3Y';
+  ListElement? selectvalue;
+  void changeSelectValue(value) {
+    selectvalue = value;
+    notifyListeners();
+  }
+
+  List<ListElement> filteredListForAllFunds = [];
+  TopPerformingMutualFundModel? topPerformingMutualFundModel;
+  Future<void> getTopMfs(context, String category) async {
+    filteredListForAllFunds.clear();
+
+    try {
+      topPerformingMutualFundModel = await schemeServices
+          .topPerformingMutualFund(context, category, returntoBackend);
+
+      filteredListForAllFunds.addAll(topPerformingMutualFundModel?.list ?? []);
+
+      loading = false;
+      notifyListeners();
+      log(topPerformingMutualFundModel.toString());
+    } catch (e) {
+      logger.d('Exception in top MFs$e');
+      loading = false;
+      notifyListeners();
+    }
+    loading = false;
+    notifyListeners();
+  }
+
+  Future<void> getTopMfsFRomPeriod(context, String category) async {
+    log('calling top mfs');
+    filteredListForAllFunds.clear();
+
+    log('categort$category ,retunrs$returntoBackend');
+
+    try {
+      topPerformingMutualFundModel = await schemeServices
+          .topPerformingMutualFund(context, category, returntoBackend);
+
+      filteredListForAllFunds.addAll(topPerformingMutualFundModel?.list ?? []);
+      // await topPicks(context);
+
+      loading = false;
+      notifyListeners();
+      log(topPerformingMutualFundModel.toString());
+    } catch (e) {
+      logger.d('Exception in top MFs$e');
+      loading = false;
+      notifyListeners();
+    }
+    loading = false;
+    notifyListeners();
   }
 }

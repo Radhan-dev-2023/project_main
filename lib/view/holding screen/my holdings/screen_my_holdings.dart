@@ -1,12 +1,17 @@
 import 'dart:developer';
 
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:finfresh_mobile/controller/holdingns%20controller/holdings_controller.dart';
+import 'package:finfresh_mobile/model/top%20performing%20model/top_performing_mutual_fund.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
+import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/stock_detail_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -414,8 +419,7 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
   }
 
   void showmodelsheet(String value, String fundname) {
-    List<String> listfund = ['a', 'b', 'c'];
-    String? selectFund;
+    Brightness brightness = MediaQuery.of(context).platformBrightness;
     scaffoldStateholdings.currentState?.showBottomSheet(
         // context: context,
         (BuildContext context) {
@@ -457,34 +461,175 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                           ),
                     ),
                     VerticalSpacer(2.h),
+                    // value == 'Switch'
+                    //     ? DropdownButtonFormField<String>(
+                    //         autovalidateMode:
+                    //             AutovalidateMode.onUserInteraction,
+                    //         validator: (value) {
+                    //           if (value == null) {
+                    //             return 'Please select To Sheme';
+                    //           }
+                    //           return null;
+                    //         },
+                    //         style: Theme.of(context).textTheme.labelLarge!,
+                    //         value: selectFund,
+                    //         decoration: InputDecoration(
+                    //             helperText: '',
+                    //             border: OutlineInputBorder(
+                    //                 borderRadius: BorderRadius.circular(10)),
+                    //             hintText: 'Select To Sheme',
+                    //             labelText: 'Select To Sheme'),
+                    //         onChanged: (String? newValue) {},
+                    //         items: listfund.map((String items) {
+                    //           return DropdownMenuItem<String>(
+                    //             value: items,
+                    //             child: Text(items),
+                    //           );
+                    //         }).toList(),
+                    //       )
+                    //     : const SizedBox(),
                     value == 'Switch'
-                        ? DropdownButtonFormField<String>(
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            validator: (value) {
-                              if (value == null) {
-                                return 'Please select To Sheme';
-                              }
-                              return null;
-                            },
-                            style: Theme.of(context).textTheme.labelLarge!,
-                            value: selectFund,
-                            decoration: InputDecoration(
-                                helperText: '',
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10)),
-                                hintText: 'Select To Sheme',
-                                labelText: 'Select To Sheme'),
-                            onChanged: (String? newValue) {},
-                            items: listfund.map((String items) {
-                              return DropdownMenuItem<String>(
-                                value: items,
-                                child: Text(items),
-                              );
-                            }).toList(),
+                        ? Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: brightness == Brightness.dark
+                                      ? Colors.white
+                                      : Colors.black),
+                              borderRadius: BorderRadius.circular(8),
+                              color: brightness == Brightness.light
+                                  ? Colors.transparent
+                                  : const Color(0xFF0E1330),
+                            ),
+                            height: 65,
+                            // width: 120,
+                            width: double.infinity,
+                            child: Center(
+                              child: DropdownButton2<ListElement>(
+                                value: holdingsController.selectvalue,
+
+                                underline: Container(
+                                  height: 0,
+                                ),
+                                isExpanded: true,
+                                // iconStyleData: const IconStyleData(
+                                //   icon: Icon(
+                                //     Icons.keyboard_arrow_down,
+                                //     size: 16,
+                                //   ),
+                                //   // iconEnabledColor: BaseColors.primaryColor,
+                                // ),
+                                hint: const Text(
+                                  'Select To Scheme',
+                                  // style: BaseFonts.headline4(fontSize: 15, color: BaseColors.greyColor),
+                                ),
+                                items: holdingsController
+                                    .filteredListForAllFunds
+                                    .map((item) {
+                                  return DropdownMenuItem<ListElement>(
+                                    value: item,
+                                    enabled: false,
+                                    child: StatefulBuilder(
+                                      builder: (context, menuSetState) {
+                                        // final isSelected = selectedItems.contains(item);
+                                        return InkWell(
+                                          onTap: () {
+                                            // isSelected ? selectedItems.remove(item) : selectedItems.add(item);
+                                            // isSelected ? totalSelectedItems.remove(item) : totalSelectedItems.add(item);
+
+                                            // logger.d("Items - ${selectedItems.map((e) => e.toMap()).toList()}");
+                                            log('hi');
+                                            holdingsController.searchController
+                                                .text = item.schemeAmfi!;
+                                            holdingsController
+                                                .changeSelectValue(item);
+                                            holdingsController
+                                                .getProductCode(item.isinNo!);
+                                            Navigator.pop(context);
+                                            setState(() {});
+                                            menuSetState(() {});
+                                          },
+                                          child: Text(
+                                            item.schemeAmfi!, // Assuming `fundName` is a property of `topPerformingMutualFundModel`
+                                            // style: BaseFonts.subHead(
+                                            //   fontSize: 15,
+                                            //   color: isDarkTheme
+                                            //       ? BaseColors.backgroundColor
+                                            //       : BaseColors.black,
+                                            // ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  );
+                                }).toList(),
+                                // value: selectedItems.isEmpty ? null : selectedItems.last,
+                                onChanged: (value) {
+                                  log(value.toString());
+                                },
+                                buttonStyleData: const ButtonStyleData(
+                                  padding: EdgeInsets.symmetric(horizontal: 16),
+                                  height: 40,
+                                  width: double.infinity,
+                                ),
+                                dropdownStyleData: const DropdownStyleData(
+                                  maxHeight: 400,
+                                  width: double.infinity,
+                                ),
+                                menuItemStyleData: const MenuItemStyleData(
+                                  height: 50,
+                                ),
+                                dropdownSearchData: DropdownSearchData(
+                                  searchController:
+                                      holdingsController.searchController,
+                                  searchInnerWidgetHeight: 60,
+                                  searchInnerWidget: Container(
+                                    height: 50,
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 10),
+                                    padding: const EdgeInsets.only(
+                                      top: 8,
+                                      bottom: 4,
+                                      right: 8,
+                                      left: 8,
+                                    ),
+                                    child: TextFormField(
+                                      expands: true,
+                                      maxLines: null,
+                                      controller:
+                                          holdingsController.searchController,
+                                      decoration: InputDecoration(
+                                        // fillColor: isDarkTheme ? BaseColors.greyColor.withOpacity(0.2) : null,
+                                        isDense: true,
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                          horizontal: 10,
+                                          vertical: 8,
+                                        ),
+                                        hintText: 'Search for Scheme...',
+                                        // hintStyle: BaseFonts.headline4(fontSize: 15, color: BaseColors.greyColor),
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  searchMatchFn: (item, searchValue) {
+                                    return item.value!.schemeAmfi!
+                                        .toLowerCase()
+                                        .contains(searchValue.toLowerCase());
+                                  },
+                                ),
+                                onMenuStateChange: (isOpen) {
+                                  if (!isOpen) {
+                                    holdingsController.searchController.clear();
+                                  }
+                                },
+                              ),
+                            ),
                           )
                         : const SizedBox(),
-                    VerticalSpacer(1.h),
+                    VerticalSpacer(2.5.h),
                     DropdownButtonFormField<String>(
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
@@ -581,7 +726,12 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                               if (holdingsController
                                   .formKeyforSwitch.currentState!
                                   .validate()) {
-                                holdingsController.switchTransaction(context);
+                                if (holdingsController.selectvalue != null) {
+                                  holdingsController.switchTransaction(context);
+                                } else {
+                                  showFlushbar(
+                                      context, 'Please Select a Scheme');
+                                }
                               }
                             },
                           )
