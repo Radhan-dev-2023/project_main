@@ -1,7 +1,9 @@
 import 'dart:developer';
 
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
 import 'package:finfresh_mobile/controller/holdingns%20controller/holdings_controller.dart';
+import 'package:finfresh_mobile/model/productList%20model/product_list_model.dart';
 import 'package:finfresh_mobile/model/top%20performing%20model/top_performing_mutual_fund.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
@@ -40,6 +42,8 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
     Provider.of<HoldingsController>(context, listen: false)
         .fetchReportDetails(context, widget.isinNumber, widget.trxnumber);
     Provider.of<HoldingsController>(context, listen: false).currentindex = 0;
+    Provider.of<HoldingsController>(context, listen: false)
+        .getSourceProductCode(context, widget.isinNumber);
   }
 
   @override
@@ -420,6 +424,8 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
 
   void showmodelsheet(String value, String fundname) {
     Brightness brightness = MediaQuery.of(context).platformBrightness;
+    final dashboardController =
+        Provider.of<DashBoardController>(context, listen: false);
     scaffoldStateholdings.currentState?.showBottomSheet(
         // context: context,
         (BuildContext context) {
@@ -504,7 +510,7 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                             // width: 120,
                             width: double.infinity,
                             child: Center(
-                              child: DropdownButton2<ListElement>(
+                              child: DropdownButton2<ProductList>(
                                 value: holdingsController.selectvalue,
 
                                 underline: Container(
@@ -525,7 +531,7 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                                 items: holdingsController
                                     .filteredListForAllFunds
                                     .map((item) {
-                                  return DropdownMenuItem<ListElement>(
+                                  return DropdownMenuItem<ProductList>(
                                     value: item,
                                     enabled: false,
                                     child: StatefulBuilder(
@@ -539,17 +545,17 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                                             // logger.d("Items - ${selectedItems.map((e) => e.toMap()).toList()}");
                                             log('hi');
                                             holdingsController.searchController
-                                                .text = item.schemeAmfi!;
+                                                .text = item.productLongName!;
                                             holdingsController
                                                 .changeSelectValue(item);
                                             holdingsController
-                                                .getProductCode(item.isinNo!);
+                                                .getProductCode(item.isin!);
                                             Navigator.pop(context);
                                             setState(() {});
                                             menuSetState(() {});
                                           },
                                           child: Text(
-                                            item.schemeAmfi!, // Assuming `fundName` is a property of `topPerformingMutualFundModel`
+                                            item.productLongName!, // Assuming `fundName` is a property of `topPerformingMutualFundModel`
                                             // style: BaseFonts.subHead(
                                             //   fontSize: 15,
                                             //   color: isDarkTheme
@@ -615,7 +621,7 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                                     ),
                                   ),
                                   searchMatchFn: (item, searchValue) {
-                                    return item.value!.schemeAmfi!
+                                    return item.value!.productLongName!
                                         .toLowerCase()
                                         .contains(searchValue.toLowerCase());
                                   },
@@ -722,15 +728,57 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                         ? const LoadingButton()
                         : ButtonWidget(
                             btName: 'Submit',
-                            onTap: () {
+                            onTap: () async {
                               if (holdingsController
                                   .formKeyforSwitch.currentState!
                                   .validate()) {
-                                if (holdingsController.selectvalue != null) {
-                                  holdingsController.switchTransaction(context);
+                                if (holdingsController.redeemValue ==
+                                    'Switch') {
+                                  if (holdingsController.selectvalue != null) {
+                                    bool result = await holdingsController
+                                        .switchTransaction(context);
+                                    if (result) {
+                                      if (context.mounted) {
+                                        holdingsController.fetchReportDetails(
+                                            context,
+                                            widget.isinNumber,
+                                            widget.trxnumber);
+                                        holdingsController.clearValue();
+                                        Navigator.pop(context);
+                                      }
+                                    }
+                                  } else {
+                                    showFlushbar(
+                                        context, 'Please Select a Scheme');
+                                  }
                                 } else {
-                                  showFlushbar(
-                                      context, 'Please Select a Scheme');
+                                  bool result = await holdingsController
+                                      .redeemTransaction(
+                                          context,
+                                          dashboardController
+                                                  .dashBoardModel
+                                                  ?.result
+                                                  ?.data
+                                                  ?.bank
+                                                  ?.bankName ??
+                                              '',
+                                          dashboardController
+                                                  .dashBoardModel
+                                                  ?.result
+                                                  ?.data
+                                                  ?.bank
+                                                  ?.ifscCode ??
+                                              '');
+                                  if (result) {
+                                    if (context.mounted) {
+                                      holdingsController.fetchReportDetails(
+                                          context,
+                                          widget.isinNumber,
+                                          widget.trxnumber);
+                                      holdingsController.clearValue();
+                                      Navigator.pop(context);
+                                    }
+                                  }
                                 }
                               }
                             },

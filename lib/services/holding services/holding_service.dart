@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:finfresh_mobile/model/productList%20model/product_list_model.dart';
 import 'package:finfresh_mobile/model/report%20details%20modal/report_details_model.dart';
 import 'package:finfresh_mobile/model/transaction%20report%20model/transaction_report_model.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
@@ -77,6 +78,40 @@ class HoldingServices {
       if (jsonResponse['status'] == 200) {
         reportDetailsModel = ReportDetailsModel.fromJson(jsonResponse);
         return reportDetailsModel;
+      } else if (jsonResponse['status'] == 500) {
+        if (context.mounted) {
+          showSnackBar(context, jsonResponse['message']);
+        }
+        return null;
+      }
+    } on SocketException {
+      if (context.mounted) {
+        showSnackBar(context, 'No Internet Connection');
+      }
+      return null;
+    } catch (e) {
+      logger.d(' report failed with an exception$e');
+      return null;
+    }
+    return null;
+  }
+
+  Future<ProductListModel?> listProductWithAmc(
+    BuildContext context,
+    String amcCode,
+  ) async {
+    ProductListModel productListModel = ProductListModel();
+    String url = '${ApiEndpoint.baseUrl}/v1/products/amc/$amcCode';
+
+    try {
+      http.Response response = await http.get(
+        Uri.parse(url),
+      );
+      log('response of listwithamc == ${response.body}');
+      Map<String, dynamic> jsonResponse = json.decode(response.body);
+      if (jsonResponse['status'] == 200) {
+        productListModel = ProductListModel.fromJson(jsonResponse);
+        return productListModel;
       } else if (jsonResponse['status'] == 500) {
         if (context.mounted) {
           showSnackBar(context, jsonResponse['message']);
@@ -176,8 +211,9 @@ class HoldingServices {
             "source_ft_acc_no": "",
             "target_product_code": targetCode,
             "target_ft_acc_no": "",
-            "reinvest": "Z",
-            "amt_unit_type": redeemBy,
+            "source_reinvest": "Z",
+            "target_reinvest": "Z",
+            "amt_unit_type": redeemBy == 'Amount' ? 'Amount' : 'Unit',
             "amt_unit": amount,
             "all_units": redeemBy == 'Amount' ? 'N' : 'Y',
             "input_ref_no": ""
@@ -185,6 +221,7 @@ class HoldingServices {
         }
       ]
     };
+
     log('payload ===$payload');
     try {
       http.Response response = await http.post(Uri.parse(url),
@@ -195,12 +232,106 @@ class HoldingServices {
           },
           body: jsonEncode(payload));
       logger.d('response switch == ${response.body}');
+      log('statusCode===${response.statusCode}');
       Map<String, dynamic> jsonResponse = json.decode(response.body);
       if (jsonResponse['status'] == 200) {
         // reportDetailsModel = ReportDetailsModel.fromJson(jsonResponse);
         // return reportDetailsModel;
         return true;
-      } else if (jsonResponse['status'] == 500) {
+      } else if (jsonResponse['code'] == 500) {
+        if (context.mounted) {
+          showSnackBar(context, jsonResponse['message']);
+          return false;
+        }
+        // return null;
+      }
+    } on SocketException {
+      if (context.mounted) {
+        showSnackBar(context, 'No Internet Connection');
+        return false;
+      }
+      // return null;
+    } catch (e) {
+      logger.d(' report failed with an exception$e');
+      return false;
+      // return null;
+    }
+    return false;
+    // return null;
+  }
+
+  Future<bool> transactionRedeem(
+    BuildContext context,
+    String transactionType,
+    String amcCode,
+    String folio,
+    String redeemBy,
+    String amount,
+    String sourceproductCode,
+    String bankName,
+    String ifscCode,
+  ) async {
+    String token = await SecureStorage.readToken('token');
+    String userId = await SecureStorage.readToken('userId');
+    String url = '${ApiEndpoint.baseUrl}/api/v1/switch/transaction';
+    String iin = await SecureStorage.readToken('customerId');
+    String phonenumber = await SecureStorage.readToken('phoneNumber');
+    String accNumber = await SecureStorage.readToken('bankAccNumber');
+    // String ifscCode = await SecureStorage.readToken('ifscCode');
+    // String bankName = await SecureStorage.readToken('bankCode');
+    log('ifsccode===$ifscCode,bankname ===$bankName');
+
+    Map<String, dynamic> payload = {
+      "transaction": transactionType,
+      "phonenumber": phonenumber,
+      "service_request": {
+        "iin": iin,
+        "poa": "N",
+        "poa_bank_trxn_type": "",
+        "trxn_acceptance": "OL",
+        "dp_id": "",
+        "acc_no": accNumber,
+        "bank_name": bankName,
+        "ifsc_code": ifscCode,
+        "remarks": "",
+        "trxn_initiator": "",
+        "trans_count": "1",
+        "investor_auth_log": ""
+      },
+      "child": [
+        {
+          "childtrans": {
+            "amc": amcCode,
+            "folio": folio,
+            "product_code": sourceproductCode,
+            "ft_acc_no": "",
+            "amt_unit_type": redeemBy == 'Amount' ? 'Amount' : 'Unit',
+            "amt_unit": amount,
+            "all_units": redeemBy == 'Amount' ? 'N' : 'Y',
+            "reinvest": "N",
+            "input_ref_no": ""
+          }
+        }
+      ]
+    };
+
+    log('payload ===$payload');
+    try {
+      http.Response response = await http.post(Uri.parse(url),
+          headers: {
+            'Authorization': 'Bearer $token',
+            'x-key': userId,
+            'Content-Type': 'application/json',
+          },
+          body: jsonEncode(payload));
+      logger.d('response switch == ${response.body}');
+      log('statusCode===${response.statusCode}');
+      Map<String, dynamic> jsonResponse = json.decode(response.body);
+      if (jsonResponse['status'] == 200) {
+        // reportDetailsModel = ReportDetailsModel.fromJson(jsonResponse);
+        // return reportDetailsModel;
+        return true;
+      } else if (jsonResponse['code'] == 500) {
         if (context.mounted) {
           showSnackBar(context, jsonResponse['message']);
           return false;
