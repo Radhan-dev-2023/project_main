@@ -524,8 +524,14 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                                 //   ),
                                 //   // iconEnabledColor: BaseColors.primaryColor,
                                 // ),
-                                hint: const Text(
+                                hint: Text(
                                   'Select To Scheme',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                          fontSize: 16.sp,
+                                          fontWeight: FontWeight.w500),
                                   // style: BaseFonts.headline4(fontSize: 15, color: BaseColors.greyColor),
                                 ),
                                 items: holdingsController
@@ -574,7 +580,7 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                                 },
                                 buttonStyleData: const ButtonStyleData(
                                   padding: EdgeInsets.symmetric(horizontal: 16),
-                                  height: 40,
+                                  height: 50,
                                   width: double.infinity,
                                 ),
                                 dropdownStyleData: const DropdownStyleData(
@@ -612,7 +618,10 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                                           vertical: 8,
                                         ),
                                         hintText: 'Search for Scheme...',
-                                        // hintStyle: BaseFonts.headline4(fontSize: 15, color: BaseColors.greyColor),
+                                        hintStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(),
                                         border: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(8),
