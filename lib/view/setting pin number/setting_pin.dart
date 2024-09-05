@@ -19,7 +19,7 @@ class ScreenSetPinNumber extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Brightness brightness = MediaQuery.of(context).platformBrightness;
-    final pinController = Provider.of<PinController>(context, listen: false);
+    final pinController = Provider.of<PinController>(context);
     final biometricLoginController = Provider.of<BiometricLogin>(context);
 
     final defaultPinTheme = PinTheme(
