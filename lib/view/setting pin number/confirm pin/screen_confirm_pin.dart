@@ -143,6 +143,7 @@ class ScreenConfirmPinNumber extends StatelessWidget {
                     Navigator.pop(context);
                     Provider.of<KycController>(context, listen: false)
                         .updatePagenumber('1');
+                    pinController.setPin();
                     biometricLoginController.buttonEnabled == true ||
                             biometricLoginController.isPinEmpty == true
                         ? Navigator.pushAndRemoveUntil(

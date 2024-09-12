@@ -7,6 +7,7 @@ import 'package:finfresh_mobile/model/productList%20model/product_list_model.dar
 import 'package:finfresh_mobile/model/top%20performing%20model/top_performing_mutual_fund.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
+import 'package:finfresh_mobile/view/holding%20screen/screen_holdings.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/stock_detail_screen.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_button_widget.dart';
@@ -44,6 +45,7 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
     Provider.of<HoldingsController>(context, listen: false).currentindex = 0;
     Provider.of<HoldingsController>(context, listen: false)
         .getSourceProductCode(context, widget.isinNumber);
+    Provider.of<HoldingsController>(context, listen: false).clearValue();
   }
 
   @override
@@ -242,7 +244,8 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                               onChanged: (value) {
                                 holdingController
                                     .updateRedeemValue(value ?? '');
-                                showmodelsheet(value ?? '', widget.productname);
+                                showmodelsheet(value ?? '', widget.productname,
+                                    brightness);
                                 // holdingController.sendMailToClinet(
                                 //   Provider.of<DashBoardController>(
                                 //         context,
@@ -292,7 +295,7 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                                               },
                                               child: Container(
                                                 height: 3.h,
-                                                width: 25.w,
+                                                width: 26.w,
                                                 decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -422,11 +425,10 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
     );
   }
 
-  void showmodelsheet(String value, String fundname) {
-    Brightness brightness = MediaQuery.of(context).platformBrightness;
+  void showmodelsheet(String value, String fundname, Brightness brightness) {
     final dashboardController =
         Provider.of<DashBoardController>(context, listen: false);
-    scaffoldStateholdings.currentState?.showBottomSheet(
+    scaffoldStateholdings.currentState?.showBottomSheet(enableDrag: false,
         // context: context,
         (BuildContext context) {
       return Container(
@@ -498,9 +500,10 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                         ? Container(
                             decoration: BoxDecoration(
                               border: Border.all(
-                                  color: brightness == Brightness.dark
-                                      ? Colors.white
-                                      : Colors.black),
+                                color: brightness == Brightness.light
+                                    ? Colors.black
+                                    : Colors.white,
+                              ),
                               borderRadius: BorderRadius.circular(8),
                               color: brightness == Brightness.light
                                   ? Colors.transparent
@@ -530,7 +533,7 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                                       .textTheme
                                       .bodyMedium!
                                       .copyWith(
-                                          fontSize: 16.sp,
+                                          fontSize: 16.4.sp,
                                           fontWeight: FontWeight.w500),
                                   // style: BaseFonts.headline4(fontSize: 15, color: BaseColors.greyColor),
                                 ),
@@ -656,11 +659,13 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                       style: Theme.of(context).textTheme.labelLarge!,
                       value: holdingsController.foliovalue,
                       decoration: InputDecoration(
-                          helperText: '',
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          hintText: 'Select Folio',
-                          labelText: 'Select Folio'),
+                        helperText: '',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        hintText: 'Select Folio',
+                        labelText: 'Select Folio',
+                        labelStyle: Theme.of(context).textTheme.labelLarge!,
+                      ),
                       onChanged: (String? newValue) {
                         holdingsController.updateFolio(newValue);
                       },
@@ -683,11 +688,13 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                       style: Theme.of(context).textTheme.labelLarge!,
                       value: holdingsController.redeemBy,
                       decoration: InputDecoration(
-                          helperText: '',
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          hintText: 'Redeem By',
-                          labelText: 'Redeem By'),
+                        helperText: '',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        hintText: '${holdingsController.redeemValue} By',
+                        labelText: '${holdingsController.redeemValue} By',
+                        labelStyle: Theme.of(context).textTheme.labelLarge!,
+                      ),
                       onChanged: (String? newValue) {
                         holdingsController.updateRadeemBy(newValue);
                       },
@@ -730,6 +737,8 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                             borderRadius: BorderRadius.circular(10)),
                         hintText: 'Enter the amount',
                         labelText: 'Enter the amount',
+                        labelStyle: Theme.of(context).textTheme.labelLarge!,
+                        hintStyle: Theme.of(context).textTheme.labelLarge!,
                       ),
                     ),
                     VerticalSpacer(2.h),
@@ -748,12 +757,25 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                                         .switchTransaction(context);
                                     if (result) {
                                       if (context.mounted) {
-                                        holdingsController.fetchReportDetails(
-                                            context,
-                                            widget.isinNumber,
-                                            widget.trxnumber);
                                         holdingsController.clearValue();
                                         Navigator.pop(context);
+                                        Navigator.pop(context);
+                                        Provider.of<HoldingsController>(context,
+                                                listen: false)
+                                            .fetchTransactionReport(context);
+                                        // Navigator.pushReplacement(
+                                        //   context,
+                                        //   MaterialPageRoute(
+                                        //     builder: (context) =>
+                                        //         const ScreenHoldings(),
+                                        //   ),
+                                        // );
+                                        // holdingsController.fetchReportDetails(
+                                        //     context,
+                                        //     widget.isinNumber,
+                                        //     widget.trxnumber);
+                                        // holdingsController.clearValue();
+                                        // Navigator.pop(context);
                                       }
                                     }
                                   } else {
@@ -780,12 +802,18 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                                               '');
                                   if (result) {
                                     if (context.mounted) {
-                                      holdingsController.fetchReportDetails(
-                                          context,
-                                          widget.isinNumber,
-                                          widget.trxnumber);
                                       holdingsController.clearValue();
                                       Navigator.pop(context);
+                                      Navigator.pop(context);
+                                      Provider.of<HoldingsController>(context,
+                                              listen: false)
+                                          .fetchTransactionReport(context);
+                                      // holdingsController.fetchReportDetails(
+                                      //     context,
+                                      //     widget.isinNumber,
+                                      //     widget.trxnumber);
+                                      // holdingsController.clearValue();
+                                      // Navigator.pop(context);
                                     }
                                   }
                                 }

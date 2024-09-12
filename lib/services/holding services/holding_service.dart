@@ -169,20 +169,24 @@ class HoldingServices {
   }
 
   Future<bool> transactionSwitch(
-      BuildContext context,
-      String transactionType,
-      String amcCode,
-      String folio,
-      String redeemBy,
-      String amount,
-      String sourceproductCode,
-      String targetCode) async {
+    BuildContext context,
+    String transactionType,
+    String amcCode,
+    String folio,
+    String redeemBy,
+    String amount,
+    String sourceproductCode,
+    String targetCode,
+    String sourceReinvestmentproductcode,
+    String tergetReinvestmentProductCode,
+  ) async {
     String token = await SecureStorage.readToken('token');
     String userId = await SecureStorage.readToken('userId');
     String url = '${ApiEndpoint.baseUrl}/api/v1/switch/transaction';
     String iin = await SecureStorage.readToken('customerId');
     String phonenumber = await SecureStorage.readToken('phoneNumber');
-
+    log('sourceinvestment coe ==$sourceReinvestmentproductcode');
+    log('targetreinvetment ==$tergetReinvestmentProductCode');
     Map<String, dynamic> payload = {
       "transaction": transactionType,
       "phonenumber": phonenumber,
@@ -211,8 +215,12 @@ class HoldingServices {
             "source_ft_acc_no": "",
             "target_product_code": targetCode,
             "target_ft_acc_no": "",
-            "source_reinvest": "Z",
-            "target_reinvest": "Z",
+            "source_reinvest": sourceReinvestmentproductcode == 'X'
+                ? 'Y'
+                : sourceReinvestmentproductcode,
+            "target_reinvest": tergetReinvestmentProductCode == 'X'
+                ? 'Y'
+                : tergetReinvestmentProductCode,
             "amt_unit_type": redeemBy == 'Amount' ? 'Amount' : 'Unit',
             "amt_unit": amount,
             "all_units": redeemBy == 'Amount' ? 'N' : 'Y',
@@ -239,6 +247,12 @@ class HoldingServices {
         // return reportDetailsModel;
         return true;
       } else if (jsonResponse['code'] == 500) {
+        if (context.mounted) {
+          showSnackBar(context, jsonResponse['message']);
+          return false;
+        }
+        // return null;
+      } else if (jsonResponse['code'] == 504) {
         if (context.mounted) {
           showSnackBar(context, jsonResponse['message']);
           return false;
@@ -332,6 +346,12 @@ class HoldingServices {
         // return reportDetailsModel;
         return true;
       } else if (jsonResponse['code'] == 500) {
+        if (context.mounted) {
+          showSnackBar(context, jsonResponse['message']);
+          return false;
+        }
+        // return null;
+      } else if (jsonResponse['code'] == 504) {
         if (context.mounted) {
           showSnackBar(context, jsonResponse['message']);
           return false;

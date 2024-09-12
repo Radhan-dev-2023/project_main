@@ -155,6 +155,7 @@ class HoldingsController extends ChangeNotifier {
   }
 
   String? sourceProductCode;
+  String? sourceReinvestment;
   ProductListModel? productListModel;
   Future<void> getSourceProductCode(context, String inisinumber) async {
     filteredListForAllFunds.clear();
@@ -163,7 +164,9 @@ class HoldingsController extends ChangeNotifier {
         context, productCodeModel?.product?.amcCode ?? '');
     filteredListForAllFunds.addAll(productListModel?.product?.reversed ?? []);
     sourceProductCode = productCodeModel?.product?.productCode;
+    sourceReinvestment = productCodeModel?.product?.reinvestTag;
     log(sourceProductCode ?? "");
+    log(sourceReinvestment ?? "");
   }
 
   bool loadingmail = false;
@@ -219,6 +222,8 @@ class HoldingsController extends ChangeNotifier {
           amountController.text,
           sourceProductCode ?? '',
           productCodeModel?.product?.productCode ?? '',
+          sourceReinvestment ?? '',
+          productCodeModel?.product?.reinvestTag ?? '',
         );
         if (result) {
           loadingSwicth = false;
@@ -239,6 +244,8 @@ class HoldingsController extends ChangeNotifier {
           amountController.text,
           sourceProductCode ?? '',
           productCodeModel?.product?.productCode ?? '',
+          sourceReinvestment ?? '',
+          productCodeModel?.product?.reinvestTag ?? '',
         );
         if (result) {
           loadingSwicth = false;
