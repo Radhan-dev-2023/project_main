@@ -284,6 +284,7 @@ class HoldingServices {
     String sourceproductCode,
     String bankName,
     String ifscCode,
+    String sourceReinvestmentCode,
   ) async {
     String token = await SecureStorage.readToken('token');
     String userId = await SecureStorage.readToken('userId');
@@ -320,9 +321,10 @@ class HoldingServices {
             "product_code": sourceproductCode,
             "ft_acc_no": "",
             "amt_unit_type": redeemBy == 'Amount' ? 'Amount' : 'Unit',
-            "amt_unit": amount,
+            "amt_unit": amount.isEmpty ? '' : amount,
             "all_units": redeemBy == 'Amount' ? 'N' : 'Y',
-            "reinvest": "N",
+            "reinvest":
+                sourceReinvestmentCode == 'X' ? 'Y' : sourceReinvestmentCode,
             "input_ref_no": ""
           }
         }

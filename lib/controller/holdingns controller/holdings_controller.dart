@@ -288,6 +288,7 @@ class HoldingsController extends ChangeNotifier {
           productCodeModel?.product?.productCode ?? '',
           bankname,
           ifscCode,
+          productCodeModel?.product?.reinvestTag ?? '',
         );
         if (result) {
           loadingSwicth = false;
@@ -309,6 +310,7 @@ class HoldingsController extends ChangeNotifier {
           productCodeModel?.product?.productCode ?? '',
           bankname,
           ifscCode,
+          productCodeModel?.product?.reinvestTag ?? '',
         );
         if (result) {
           loadingSwicth = false;

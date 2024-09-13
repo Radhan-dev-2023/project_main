@@ -9,6 +9,7 @@ import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
 import 'package:finfresh_mobile/view/holding%20screen/screen_holdings.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/stock_detail_screen.dart';
+import 'package:finfresh_mobile/view/stock%20details%20screen/widgets/overview_in_tabbar.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_button_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
@@ -231,6 +232,10 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                               isExpanded: true,
                               underline: Container(
                                 height: 0,
+                              ),
+                              hint: CustomTextWidget(
+                                text: 'Options',
+                                fontSize: Adaptive.w(4),
                               ),
                               items: holdingController.radeemList
                                   .map((String items) {
@@ -707,38 +712,45 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                       }).toList(),
                     ),
                     VerticalSpacer(1.h),
-                    TextFormField(
-                      controller: holdingsController.amountController,
 
-                      // readOnly: true,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      // controller: kycController.banknameController,
-                      style: Theme.of(context).textTheme.labelLarge!,
-                      validator: (value) {
-                        double? totalAmount = double.tryParse(holdingsController
-                                .reportDetailsModel?.result!.totalAmount!
-                                .replaceAll(RegExp(r'[₹,]'), '') ??
-                            '');
+                    Visibility(
+                      visible: holdingsController.redeemBy == 'All Units'
+                          ? false
+                          : true,
+                      child: TextFormField(
+                        controller: holdingsController.amountController,
 
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter amount';
-                        } else if (double.parse(value) > totalAmount!) {
-                          return 'Enter amount less than ₹$totalAmount ';
-                        }
-                        if (!RegExp(r'^[0-9\s\-&.,]+$').hasMatch(value)) {
-                          return 'Please enter a valid amount';
-                        }
-                        return null;
-                      },
+                        // readOnly: true,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        // controller: kycController.banknameController,
+                        style: Theme.of(context).textTheme.labelLarge!,
+                        validator: (value) {
+                          double? totalAmount = double.tryParse(
+                              holdingsController
+                                      .reportDetailsModel?.result!.totalAmount!
+                                      .replaceAll(RegExp(r'[₹,]'), '') ??
+                                  '');
 
-                      decoration: InputDecoration(
-                        prefix: const Text('₹ '),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        hintText: 'Enter the amount',
-                        labelText: 'Enter the amount',
-                        labelStyle: Theme.of(context).textTheme.labelLarge!,
-                        hintStyle: Theme.of(context).textTheme.labelLarge!,
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter amount';
+                          } else if (double.parse(value) > totalAmount!) {
+                            return 'Enter amount less than ₹$totalAmount ';
+                          }
+                          if (!RegExp(r'^[0-9\s\-&.,]+$').hasMatch(value)) {
+                            return 'Please enter a valid amount';
+                          }
+                          return null;
+                        },
+
+                        decoration: InputDecoration(
+                          prefix: const Text('₹ '),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          hintText: 'Enter the amount',
+                          labelText: 'Enter the amount',
+                          labelStyle: Theme.of(context).textTheme.labelLarge!,
+                          hintStyle: Theme.of(context).textTheme.labelLarge!,
+                        ),
                       ),
                     ),
                     VerticalSpacer(2.h),
@@ -757,12 +769,16 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                                         .switchTransaction(context);
                                     if (result) {
                                       if (context.mounted) {
-                                        holdingsController.clearValue();
+                                        // holdingsController.clearValue();
+                                        // Navigator.pop(context);
+
                                         Navigator.pop(context);
-                                        Navigator.pop(context);
-                                        Provider.of<HoldingsController>(context,
-                                                listen: false)
-                                            .fetchTransactionReport(context);
+                                        alertDialogue(
+                                            context,
+                                            holdingsController.redeemValue ??
+                                                '',
+                                            holdingsController);
+
                                         // Navigator.pushReplacement(
                                         //   context,
                                         //   MaterialPageRoute(
@@ -802,12 +818,16 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
                                               '');
                                   if (result) {
                                     if (context.mounted) {
-                                      holdingsController.clearValue();
+                                      // holdingsController.clearValue();
                                       Navigator.pop(context);
-                                      Navigator.pop(context);
-                                      Provider.of<HoldingsController>(context,
-                                              listen: false)
-                                          .fetchTransactionReport(context);
+                                      alertDialogue(
+                                          context,
+                                          holdingsController.redeemValue ?? '',
+                                          holdingsController);
+                                      // Navigator.pop(context);
+                                      // Provider.of<HoldingsController>(context,
+                                      //         listen: false)
+                                      //     .fetchTransactionReport(context);
                                       // holdingsController.fetchReportDetails(
                                       //     context,
                                       //     widget.isinNumber,
@@ -826,5 +846,57 @@ class _ScreenMyHoldingsState extends State<ScreenMyHoldings> {
             }),
           ));
     });
+  }
+
+  Future<dynamic> alertDialogue(
+    BuildContext context,
+    String value,
+    holdingsController,
+  ) {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          // title: const Text('Add Fingerprint'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              VerticalSpacer(2.h),
+              CustomTextWidget(
+                text:
+                    "Your $value has been done. To proceed further, authorize using the link, you receive through SMS",
+                fontSize: 16.sp,
+              ),
+            ],
+          ),
+          actions: [
+            Container(
+              height: 5.h,
+              width: 15.w,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.sp),
+                color: const Color(0xFF4D84BD),
+              ),
+              child: Center(
+                child: TextButton(
+                  onPressed: () {
+                    holdingsController.clearValue();
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    Provider.of<HoldingsController>(context, listen: false)
+                        .fetchTransactionReport(context);
+                  },
+                  child: const Text(
+                    'OK',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
