@@ -16,7 +16,7 @@ class AuthController extends ChangeNotifier {
   bool otploading = false;
   bool otploadingforlogin = false;
   DbFunctions dbFunctions = DbFunctions();
-
+  bool ischeked = false;
   UserRegisterService userRegisterService = UserRegisterService();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -40,6 +40,11 @@ class AuthController extends ChangeNotifier {
     iscliked = false;
     notifyListeners();
     return isRegistered;
+  }
+
+  void changeChecked(bool value) {
+    ischeked = value;
+    notifyListeners();
   }
 
   Future<bool> generateOtp(context) async {

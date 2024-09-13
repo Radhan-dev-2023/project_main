@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:finfresh_mobile/controller/auth/auth_controller.dart';
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
+import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
 import 'package:finfresh_mobile/view/otp%20screen/screen_otp.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
@@ -87,6 +88,19 @@ class ScreenEnterPhoneNumber extends StatelessWidget {
                         return null;
                       },
                     ),
+                    Row(
+                      children: [
+                        Checkbox(
+                          checkColor: Colors.white,
+                          activeColor: const Color(0xFF4D84BD),
+                          value: authcontroller.ischeked,
+                          onChanged: (newValue) {
+                            authcontroller.changeChecked(newValue!);
+                          },
+                        ),
+                        const Text('Accept Terms And Condition')
+                      ],
+                    ),
                     VerticalSpacer(20.h),
                   ],
                 ),
@@ -104,19 +118,24 @@ class ScreenEnterPhoneNumber extends StatelessWidget {
                   kycController.email = authcontroller.emailController.text;
                   log('phone numb ${kycController.phonenumber} ,emial=${kycController.email}');
                   if (authcontroller.formKeyForPhone.currentState!.validate()) {
-                    bool result = await authcontroller.userRegister(context);
+                    if (authcontroller.ischeked == true) {
+                      bool result = await authcontroller.userRegister(context);
 
-                    if (result == true) {
-                      authcontroller.addPhonenumber();
-                      // ignore: use_build_context_synchronously
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              const ScreenOtp(title: 'signup'),
-                        ),
-                      );
+                      if (result == true) {
+                        authcontroller.addPhonenumber();
+                        // ignore: use_build_context_synchronously
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const ScreenOtp(title: 'signup'),
+                          ),
+                        );
+                      } else {
+                        logger.d('Something went wrong');
+                      }
                     } else {
-                      logger.d('Something went wrong');
+                      showFlushbar(context,
+                          "You must accept the terms and conditions to proceed.");
                     }
                   }
                 },
