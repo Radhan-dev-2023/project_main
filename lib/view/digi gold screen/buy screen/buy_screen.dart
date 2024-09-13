@@ -201,7 +201,7 @@ class _ScreenBuyState extends State<ScreenBuy>
                       //     .calculate();
 
                       _checkoutPro.openCheckoutScreen(payUPaymentParams: {
-                        PayUPaymentParamKey.key: "TB7WBn",
+                        PayUPaymentParamKey.key: "ijiPG7",
                         PayUPaymentParamKey.amount:
                             goldController.buygoldrateController.text,
                         PayUPaymentParamKey.productInfo: "Payu",
@@ -214,7 +214,7 @@ class _ScreenBuyState extends State<ScreenBuy>
                         PayUPaymentParamKey.phone: dashBordController
                                 .dashBoardModel?.result?.data?.phoneNumber ??
                             '',
-                        PayUPaymentParamKey.environment: "1",
+                        PayUPaymentParamKey.environment: "0",
                         // String - "0" for Production and "1" for Test
                         PayUPaymentParamKey.transactionId:
                             goldController.transactionid,
