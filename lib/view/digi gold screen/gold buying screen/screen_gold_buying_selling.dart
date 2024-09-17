@@ -63,29 +63,154 @@ class _ScreenGoldBuyingAndSellingState
                       Stack(
                         children: [
                           Container(
-                            color: const Color(0xFF2D5D5F),
-                            height: Adaptive.h(40),
+                            // Color(0xFF2D5D5F)
+                            // color: goldController.goldselecteed
+                            //     ? const Color(0xFFF7BF05)
+                            //     : const Color(0xFFE3E3E3),
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: goldController.goldselecteed
+                                    ? [
+                                        const Color(0xFFF7BF05),
+                                        const Color(0xFFF7BF05)
+                                      ]
+                                    : [
+                                        const Color(0xFFE3E3E3),
+                                        const Color(0xFFC5c5c5),
+                                      ],
+                                begin: Alignment
+                                    .topLeft, // Starting point of the gradient
+                                end: Alignment
+                                    .bottomRight, // Ending point of the gradient
+                              ),
+                            ),
+                            height: Adaptive.h(33),
                             width: MediaQuery.of(context).size.width,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  '₹${goldController.goldvalue ?? ''}/mg',
-                                  style: TextStyle(
-                                    fontSize: 23.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    letterSpacing: 3.sp,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  VerticalSpacer(5.h),
+                                  Container(
+                                    height: Adaptive.h(5),
+                                    width: Adaptive.w(52),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                        Adaptive.sp(15),
+                                      ),
+                                      color: Colors.white,
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(3.0),
+                                      child: Row(
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              goldController
+                                                  .changeGoldSelected(context);
+                                            },
+                                            child: Container(
+                                              height: Adaptive.h(5),
+                                              width: Adaptive.w(25),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        10.sp),
+                                                color: goldController
+                                                        .goldselecteed
+                                                    ? const Color(0xFFF7BF05)
+                                                    : Colors.transparent,
+                                              ),
+                                              child: Center(
+                                                child: Text(
+                                                  'Gold',
+                                                  style: TextStyle(
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: goldController
+                                                            .goldselecteed
+                                                        ? Colors.white
+                                                        : Colors.black,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              goldController
+                                                  .changeSilverSelected(
+                                                      context);
+                                            },
+                                            child: Container(
+                                              height: Adaptive.h(5),
+                                              width: Adaptive.w(25),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        10.sp),
+                                                color: goldController
+                                                        .silverSelected
+                                                    ? const Color(0xFFE3E3E3)
+                                                    : Colors.transparent,
+                                              ),
+                                              child: Center(
+                                                child: Text(
+                                                  'Silver',
+                                                  style: TextStyle(
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: goldController
+                                                            .silverSelected
+                                                        ? Colors.white
+                                                        : Colors.black,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
-                                ),
-                                VerticalSpacer(1.h),
-                                const Text(
-                                  'Current gold buying price\n (exclusive 3% of Gst)',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                VerticalSpacer(5.h),
-                              ],
+                                  VerticalSpacer(1.5.h),
+                                  Text(
+                                    '₹${goldController.goldvalue ?? ''}/mg',
+                                    style: TextStyle(
+                                      fontSize: 23.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                      letterSpacing: 1,
+                                    ),
+                                  ),
+                                  VerticalSpacer(1.h),
+                                  Text(
+                                    goldController.goldselecteed
+                                        ? 'Current gold buying price\n (exclusive 3% of Gst)'
+                                        : 'Current silver buying price\n (exclusive 3% of Gst)',
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
+                                  VerticalSpacer(1.h),
+                                  Text(
+                                    'Current value',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18.sp,
+                                    ),
+                                  ),
+                                  // VerticalSpacer(1.h),
+                                  Text(
+                                    goldController.formattedValue,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           goldController.isCompletedGoldPurchase == 'true'
@@ -105,62 +230,64 @@ class _ScreenGoldBuyingAndSellingState
                                 )
                         ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.all(15.sp),
-                        child: SizedBox(
-                          height: Adaptive.h(18),
-                          width: MediaQuery.of(context).size.width,
-                          child: Card(
-                            color: const Color(0xFF2D5D5F),
-                            child: Row(
-                              children: [
-                                HorizontalSpacer(3.w),
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(15.sp),
-                                  child: Image.asset(
-                                    'assets/images/goldimagein.jpg',
-                                    height: Adaptive.h(14),
-                                    width: Adaptive.w(31),
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                                HorizontalSpacer(22.w),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    VerticalSpacer(4.h),
-                                    Text(
-                                      'Current value',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18.sp,
-                                      ),
-                                    ),
-                                    VerticalSpacer(1.h),
-                                    Text(
-                                      goldController.formattedValue,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20.sp,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    VerticalSpacer(1.h),
-                                    // Text(
-                                    //   '20 % profit',
-                                    //   style: TextStyle(
-                                    //     color: Colors.white,
-                                    //     fontSize: 18.sp,
-                                    //   ),
-                                    // ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: EdgeInsets.all(15.sp),
+                      //   child: SizedBox(
+                      //     height: Adaptive.h(18),
+                      //     width: MediaQuery.of(context).size.width,
+                      //     child: Card(
+                      //       color: goldController.goldselecteed
+                      //           ? const Color(0xFFF7BF05)
+                      //           : const Color(0xFFE3E3E3),
+                      //       child: Row(
+                      //         children: [
+                      //           HorizontalSpacer(3.w),
+                      //           ClipRRect(
+                      //             borderRadius: BorderRadius.circular(15.sp),
+                      //             child: Image.asset(
+                      //               'assets/images/goldimagein.jpg',
+                      //               height: Adaptive.h(14),
+                      //               width: Adaptive.w(31),
+                      //               fit: BoxFit.fill,
+                      //             ),
+                      //           ),
+                      //           HorizontalSpacer(22.w),
+                      //           Column(
+                      //             crossAxisAlignment: CrossAxisAlignment.end,
+                      //             children: [
+                      //               VerticalSpacer(4.h),
+                      //               Text(
+                      //                 'Current value',
+                      //                 style: TextStyle(
+                      //                   color: Colors.white,
+                      //                   fontSize: 18.sp,
+                      //                 ),
+                      //               ),
+                      //               VerticalSpacer(1.h),
+                      //               Text(
+                      //                 goldController.formattedValue,
+                      //                 style: TextStyle(
+                      //                   color: Colors.white,
+                      //                   fontSize: 20.sp,
+                      //                   fontWeight: FontWeight.bold,
+                      //                 ),
+                      //                 overflow: TextOverflow.ellipsis,
+                      //               ),
+                      //               VerticalSpacer(1.h),
+                      //               // Text(
+                      //               //   '20 % profit',
+                      //               //   style: TextStyle(
+                      //               //     color: Colors.white,
+                      //               //     fontSize: 18.sp,
+                      //               //   ),
+                      //               // ),
+                      //             ],
+                      //           )
+                      //         ],
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                       goldController.goldlistingmodel == null
                           ? SizedBox(
                               height: Adaptive.h(22),
@@ -186,6 +313,8 @@ class _ScreenGoldBuyingAndSellingState
                                             ?.res
                                             ?.transactions?[index]
                                             .amount);
+                                    bool isExpanded =
+                                        goldController.isExpandedList[index];
                                     // goldController.sum = value;
                                     return Card(
                                       child: Column(
@@ -232,97 +361,42 @@ class _ScreenGoldBuyingAndSellingState
                                                   children: [
                                                     Row(
                                                       children: [
-                                                        Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Text(
-                                                              'Amount ',
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .copyWith(
-                                                                    fontSize:
-                                                                        14.5.sp,
-                                                                  ),
-                                                            ),
-                                                            SizedBox(
-                                                                height: 0.8.h),
-                                                            Text(
-                                                              'Gst ',
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .copyWith(
-                                                                    fontSize:
-                                                                        14.5.sp,
-                                                                  ),
-                                                            ),
-                                                            SizedBox(
-                                                                height: 0.8.h),
-                                                            Text(
-                                                              'Total ',
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .copyWith(
-                                                                    fontSize:
-                                                                        14.5.sp,
-                                                                  ),
-                                                            ),
-                                                          ],
+                                                        Visibility(
+                                                          visible: isExpanded,
+                                                          child: Text(
+                                                            'Amount ',
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyMedium!
+                                                                .copyWith(
+                                                                  fontSize:
+                                                                      14.5.sp,
+                                                                ),
+                                                          ),
                                                         ),
-                                                        Column(
-                                                          children: [
-                                                            Text(
-                                                              ': ',
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .copyWith(
-                                                                    fontSize:
-                                                                        14.5.sp,
-                                                                  ),
-                                                            ),
-                                                            SizedBox(
-                                                                height: 0.8.h),
-                                                            Text(
-                                                              ': ',
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .copyWith(
-                                                                    fontSize:
-                                                                        14.5.sp,
-                                                                  ),
-                                                            ),
-                                                            SizedBox(
-                                                                height: 0.8.h),
-                                                            Text(
-                                                              ': ',
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .copyWith(
-                                                                    fontSize:
-                                                                        14.5.sp,
-                                                                  ),
-                                                            ),
-                                                          ],
+                                                        HorizontalSpacer(1.w),
+                                                        Visibility(
+                                                          visible: isExpanded,
+                                                          child: Text(
+                                                            ': ',
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyMedium!
+                                                                .copyWith(
+                                                                  fontSize:
+                                                                      14.5.sp,
+                                                                ),
+                                                          ),
                                                         ),
-                                                        Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .end,
-                                                          children: [
-                                                            Text(
+                                                        HorizontalSpacer(2.w),
+                                                        Visibility(
+                                                          visible: isExpanded,
+                                                          child: SizedBox(
+                                                            width:
+                                                                Adaptive.w(14),
+                                                            child: Text(
                                                               ' ₹ ${value.toStringAsFixed(2)}',
                                                               style: Theme.of(
                                                                       context)
@@ -335,10 +409,54 @@ class _ScreenGoldBuyingAndSellingState
                                                                         FontWeight
                                                                             .w400,
                                                                   ),
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              textAlign:
+                                                                  TextAlign.end,
                                                             ),
-                                                            SizedBox(
-                                                                height: 0.8.h),
-                                                            Text(
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Visibility(
+                                                          visible: isExpanded,
+                                                          child: Text(
+                                                            'Gst ',
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyMedium!
+                                                                .copyWith(
+                                                                  fontSize:
+                                                                      14.5.sp,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                        HorizontalSpacer(1.w),
+                                                        Visibility(
+                                                          visible: isExpanded,
+                                                          child: Text(
+                                                            ': ',
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyMedium!
+                                                                .copyWith(
+                                                                  fontSize:
+                                                                      14.5.sp,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                        HorizontalSpacer(4.w),
+                                                        Visibility(
+                                                          visible: isExpanded,
+                                                          child: SizedBox(
+                                                            width:
+                                                                Adaptive.w(12),
+                                                            child: Text(
                                                               ' ₹ ${gst.toStringAsFixed(2)}',
                                                               style: Theme.of(
                                                                       context)
@@ -351,51 +469,117 @@ class _ScreenGoldBuyingAndSellingState
                                                                         FontWeight
                                                                             .w400,
                                                                   ),
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              textAlign:
+                                                                  TextAlign.end,
                                                             ),
-                                                            SizedBox(
-                                                                height: 0.8.h),
-                                                            Text(
-                                                              ' ₹ ${goldController.goldlistingmodel?.res?.transactions?[index].amount}',
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          'Total ',
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .copyWith(
+                                                                    fontSize:
+                                                                        14.5.sp,
+                                                                  ),
+                                                        ),
+                                                        HorizontalSpacer(1.w),
+                                                        Text(
+                                                          ': ',
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .copyWith(
+                                                                    fontSize:
+                                                                        14.5.sp,
+                                                                  ),
+                                                        ),
+                                                        SizedBox(
+                                                          width: Adaptive.w(16),
+                                                          child: Text(
+                                                            ' ₹ ${goldController.goldlistingmodel?.res?.transactions?[index].amount}',
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyMedium!
+                                                                .copyWith(
+                                                                  fontSize:
+                                                                      14.5.sp,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                ),
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            textAlign:
+                                                                TextAlign.end,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.bottomRight,
+                                                      child: Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .end,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .end,
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    right:
+                                                                        15.sp),
+                                                            child: Text(
+                                                              'Bought ${goldController.goldlistingmodel?.res?.transactions?[index].purchasedGold.toStringAsFixed(2)} mg gold',
                                                               style: Theme.of(
                                                                       context)
                                                                   .textTheme
                                                                   .bodyMedium!
                                                                   .copyWith(
                                                                     fontSize:
-                                                                        14.5.sp,
+                                                                        15.5.sp,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w400,
                                                                   ),
                                                             ),
-                                                          ],
-                                                        ),
-                                                      ],
+                                                          ),
+                                                          InkWell(
+                                                            onTap: () {
+                                                              goldController
+                                                                  .toggleExpansion(
+                                                                      index);
+                                                            },
+                                                            child: Icon(isExpanded
+                                                                ? Icons
+                                                                    .expand_less
+                                                                : Icons
+                                                                    .expand_more),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
                                                   ],
                                                 ),
                                               ],
                                             ),
                                           ),
-                                          VerticalSpacer(1.h),
-                                          Padding(
-                                            padding:
-                                                EdgeInsets.only(right: 15.sp),
-                                            child: Align(
-                                              alignment: Alignment.bottomRight,
-                                              child: Text(
-                                                'Bought ${goldController.goldlistingmodel?.res?.transactions?[index].purchasedGold.toStringAsFixed(2)} mg gold',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyMedium!
-                                                    .copyWith(
-                                                      fontSize: 15.5.sp,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                    ),
-                                              ),
-                                            ),
-                                          ),
+                                          VerticalSpacer(0.5.h),
                                           VerticalSpacer(1.h),
                                         ],
                                       ),
@@ -769,7 +953,9 @@ class _ScreenGoldBuyingAndSellingState
                               if (goldController.goldvalue == null) {
                                 showFlushbar(
                                   context,
-                                  'The gold buy rate is not added',
+                                  goldController.goldselecteed
+                                      ? 'The gold buy rate is not added'
+                                      : 'The silver buy rate is not added',
                                 );
                               } else {
                                 Navigator.push(
@@ -803,7 +989,9 @@ class _ScreenGoldBuyingAndSellingState
                               if (goldController.sellrate == null) {
                                 showFlushbar(
                                   context,
-                                  'The gold sell rate is not added',
+                                  goldController.goldselecteed
+                                      ? 'The gold sell rate is not added'
+                                      : 'The silver sell rate is not added',
                                 );
                               } else {
                                 Navigator.push(

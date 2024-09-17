@@ -11,12 +11,12 @@ import 'package:http/http.dart' as http;
 import '../../utilities/constant/snackbar.dart';
 
 class DigiGoldService {
-  Future<num?> getDigiGoldRate(context) async {
+  Future<num?> getDigiGoldRate(context, String value) async {
     String token = await SecureStorage.readToken('token');
     String userId = await SecureStorage.readToken('userId');
     log(userId);
     log(token);
-    String url = '${ApiEndpoint.baseUrl}/api/v1/getgoldrate/purchase';
+    String url = '${ApiEndpoint.baseUrl}/api/v1/getrate/purchase/$value';
     try {
       http.Response response = await http.get(
         Uri.parse(url),
@@ -48,12 +48,12 @@ class DigiGoldService {
     return null;
   }
 
-  Future<num?> getsellGoldRate(context) async {
+  Future<num?> getsellGoldRate(context, String value) async {
     String token = await SecureStorage.readToken('token');
     String userId = await SecureStorage.readToken('userId');
     log(userId);
     log(token);
-    String url = '${ApiEndpoint.baseUrl}/api/v1/getgoldrate/sell';
+    String url = '${ApiEndpoint.baseUrl}/api/v1/getrate/sell/$value';
     try {
       http.Response response = await http.get(
         Uri.parse(url),
@@ -127,10 +127,10 @@ class DigiGoldService {
   }
 
   Future<bool> sellGold(context, dynamic goldsellRate, dynamic soldMg,
-      dynamic amount, String name, String phonenumber) async {
+      dynamic amount, String name, String phonenumber, String value) async {
     String token = await SecureStorage.readToken('token');
     String userId = await SecureStorage.readToken('userId');
-    String iin = await SecureStorage.readToken('customerId');
+    // String iin = await SecureStorage.readToken('customerId');
     log(userId);
     log(token);
     String url = '${ApiEndpoint.baseUrl}/api/v1/sellgold';
@@ -141,7 +141,8 @@ class DigiGoldService {
       "soldmg": soldMg,
       "amount": amount,
       "firstname": name,
-      "mobile_no": phonenumber
+      "mobile_no": phonenumber,
+      "metal_type": value,
     };
     log('payload =$payload');
     try {
@@ -181,6 +182,7 @@ class DigiGoldService {
   GoldSellListingModel sellListingModel = GoldSellListingModel();
   Future<GoldSellListingModel?> getSellGoldList(
     context,
+    String value,
   ) async {
     String token = await SecureStorage.readToken('token');
     String userId = await SecureStorage.readToken('userId');
@@ -193,6 +195,7 @@ class DigiGoldService {
 
     Map<String, dynamic> payload = {
       "mobile_no": phonenumber,
+      "metal_type": value
     };
     log('payload =$payload');
     try {

@@ -15,6 +15,7 @@ class GoldSaveTransactionService {
     double goldrate,
     double purchasedGold,
     dynamic response,
+    String value,
     context,
   ) async {
     // log('calling${response['payuResponse']['id']}');
@@ -34,6 +35,7 @@ class GoldSaveTransactionService {
       "id": responseMap['id'],
       "iin": iin,
       "goldrate": goldrate,
+      "metal_type": value,
       "purchasedGold": purchasedGold.toStringAsFixed(4),
       "mode": responseMap['mode'].toString(),
       "status": responseMap['status'].toString(),
@@ -101,13 +103,13 @@ class GoldSaveTransactionService {
     return false;
   }
 
-  Future<GolListingModel?> getGoldList(context) async {
+  Future<GolListingModel?> getGoldList(context, String value) async {
     String token = await SecureStorage.readToken('token');
     String userId = await SecureStorage.readToken('userId');
     String iin = await SecureStorage.readToken('customerId');
     String phonenumber = await SecureStorage.readToken('phoneNumber');
     String url =
-        '${ApiEndpoint.baseUrl}/api/v1/$phonenumber/getgoldTransaction';
+        '${ApiEndpoint.baseUrl}/api/v1/$phonenumber/getgoldTransaction/$value';
     log('iin$iin');
     try {
       http.Response response = await http.get(

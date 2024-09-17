@@ -39,8 +39,24 @@ class _ScreenListingGoldState extends State<ScreenListingGold> {
                       Stack(
                         children: [
                           Container(
-                            color: const Color(0xFF2D5D5F),
-                            height: Adaptive.h(40),
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: goldController.goldselecteed
+                                    ? [
+                                        const Color(0xFFF7BF05),
+                                        const Color(0xFFF7BF05)
+                                      ]
+                                    : [
+                                        const Color(0xFFE3E3E3),
+                                        const Color(0xFFC5c5c5),
+                                      ],
+                                begin: Alignment
+                                    .topLeft, // Starting point of the gradient
+                                end: Alignment
+                                    .bottomRight, // Ending point of the gradient
+                              ),
+                            ),
+                            height: Adaptive.h(30),
                             width: MediaQuery.of(context).size.width,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -56,12 +72,31 @@ class _ScreenListingGoldState extends State<ScreenListingGold> {
                                   ),
                                 ),
                                 VerticalSpacer(1.h),
-                                const Text(
-                                  'Current gold selling price',
+                                Text(
+                                  goldController.goldselecteed
+                                      ? 'Current gold selling price'
+                                      : 'Current silver selling price',
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(color: Colors.white),
+                                  style: const TextStyle(color: Colors.white),
                                 ),
-                                VerticalSpacer(5.h),
+                                VerticalSpacer(1.h),
+                                Text(
+                                  'Current value',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18.sp,
+                                  ),
+                                ),
+                                // VerticalSpacer(1.h),
+                                Text(
+                                  goldController.formattedValue,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ],
                             ),
                           ),
@@ -80,62 +115,62 @@ class _ScreenListingGoldState extends State<ScreenListingGold> {
                           )
                         ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.all(15.sp),
-                        child: SizedBox(
-                          height: Adaptive.h(18),
-                          width: MediaQuery.of(context).size.width,
-                          child: Card(
-                            color: const Color(0xFF2D5D5F),
-                            child: Row(
-                              children: [
-                                HorizontalSpacer(3.w),
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(15.sp),
-                                  child: Image.asset(
-                                    'assets/images/goldimagein.jpg',
-                                    height: Adaptive.h(14),
-                                    width: Adaptive.w(31),
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                                HorizontalSpacer(22.w),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    VerticalSpacer(4.h),
-                                    Text(
-                                      'Current value',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18.sp,
-                                      ),
-                                    ),
-                                    VerticalSpacer(1.h),
-                                    Text(
-                                      goldController.formattedValue,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20.sp,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    VerticalSpacer(1.h),
-                                    // Text(
-                                    //   '20 % profit',
-                                    //   style: TextStyle(
-                                    //     color: Colors.white,
-                                    //     fontSize: 18.sp,
-                                    //   ),
-                                    // ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: EdgeInsets.all(15.sp),
+                      //   child: SizedBox(
+                      //     height: Adaptive.h(18),
+                      //     width: MediaQuery.of(context).size.width,
+                      //     child: Card(
+                      //       color: const Color(0xFF2D5D5F),
+                      //       child: Row(
+                      //         children: [
+                      //           HorizontalSpacer(3.w),
+                      //           ClipRRect(
+                      //             borderRadius: BorderRadius.circular(15.sp),
+                      //             child: Image.asset(
+                      //               'assets/images/goldimagein.jpg',
+                      //               height: Adaptive.h(14),
+                      //               width: Adaptive.w(31),
+                      //               fit: BoxFit.fill,
+                      //             ),
+                      //           ),
+                      //           HorizontalSpacer(22.w),
+                      //           Column(
+                      //             crossAxisAlignment: CrossAxisAlignment.end,
+                      //             children: [
+                      //               VerticalSpacer(4.h),
+                      //               Text(
+                      //                 'Current value',
+                      //                 style: TextStyle(
+                      //                   color: Colors.white,
+                      //                   fontSize: 18.sp,
+                      //                 ),
+                      //               ),
+                      //               VerticalSpacer(1.h),
+                      //               Text(
+                      //                 goldController.formattedValue,
+                      //                 style: TextStyle(
+                      //                   color: Colors.white,
+                      //                   fontSize: 20.sp,
+                      //                   fontWeight: FontWeight.bold,
+                      //                 ),
+                      //                 overflow: TextOverflow.ellipsis,
+                      //               ),
+                      //               VerticalSpacer(1.h),
+                      //               // Text(
+                      //               //   '20 % profit',
+                      //               //   style: TextStyle(
+                      //               //     color: Colors.white,
+                      //               //     fontSize: 18.sp,
+                      //               //   ),
+                      //               // ),
+                      //             ],
+                      //           )
+                      //         ],
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                       goldController.sellGoldListingModel == null
                           ? SizedBox(
                               height: Adaptive.h(22),
