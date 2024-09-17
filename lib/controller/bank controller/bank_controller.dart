@@ -6,11 +6,14 @@ import 'package:finfresh_mobile/model/bank%20details%20model/bank_details_model.
 import 'package:finfresh_mobile/model/bank%20list%20model/bank_list_model.dart';
 import 'package:finfresh_mobile/services/add%20additional%20bank%20service/additional_bank_service.dart';
 import 'package:finfresh_mobile/services/get%20bank%20details/get_bank_details.dart';
+import 'package:finfresh_mobile/services/refersh%20token/refersh_token.dart';
 import 'package:finfresh_mobile/utilities/constant/logger.dart';
+import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image/image.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image/src/image/image.dart' as img;
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:path_provider/path_provider.dart';
 
 class BankController extends ChangeNotifier {
@@ -92,21 +95,53 @@ class BankController extends ChangeNotifier {
   Future<bool> bankAdding(context, String flag) async {
     loadingBank = true;
     notifyListeners();
-    bool result = await bankService.addAdditionalBank(
-      accountController.text,
-      flag == 'I' ? accountypeToBackend ?? '' : acctypeTobackend,
-      ifscController.text,
-      bankCodeForCustomer,
-      proofValueTobackend,
-      branchNameController.text,
-      context,
-      flag,
-    );
-    if (result == true) {
-      loadingBank = false;
-      notifyListeners();
-      return true;
-    } else {
+    try {
+      String token = await SecureStorage.readToken('token');
+      bool isTokenExpired = JwtDecoder.isExpired(token);
+      if (isTokenExpired) {
+        await refershTokenService.postRefershTocken(context);
+        bool result = await bankService.addAdditionalBank(
+          accountController.text,
+          flag == 'I' ? accountypeToBackend ?? '' : acctypeTobackend,
+          ifscController.text,
+          bankCodeForCustomer,
+          proofValueTobackend,
+          branchNameController.text,
+          context,
+          flag,
+        );
+        if (result == true) {
+          loadingBank = false;
+          notifyListeners();
+          return true;
+        } else {
+          loadingBank = false;
+          notifyListeners();
+          return false;
+        }
+      } else {
+        bool result = await bankService.addAdditionalBank(
+          accountController.text,
+          flag == 'I' ? accountypeToBackend ?? '' : acctypeTobackend,
+          ifscController.text,
+          bankCodeForCustomer,
+          proofValueTobackend,
+          branchNameController.text,
+          context,
+          flag,
+        );
+        if (result == true) {
+          loadingBank = false;
+          notifyListeners();
+          return true;
+        } else {
+          loadingBank = false;
+          notifyListeners();
+          return false;
+        }
+      }
+    } catch (e) {
+      logger.d('adding bank failed with an exception$e');
       loadingBank = false;
       notifyListeners();
       return false;
@@ -125,21 +160,53 @@ class BankController extends ChangeNotifier {
   ) async {
     loadingBankdelete = true;
     notifyListeners();
-    bool result = await bankService.addAdditionalBank(
-      account,
-      accType,
-      ifsc,
-      bank,
-      proof,
-      branch,
-      context,
-      "D",
-    );
-    if (result == true) {
-      loadingBankdelete = false;
-      notifyListeners();
-      return true;
-    } else {
+    try {
+      String token = await SecureStorage.readToken('token');
+      bool isTokenExpired = JwtDecoder.isExpired(token);
+      if (isTokenExpired) {
+        await refershTokenService.postRefershTocken(context);
+        bool result = await bankService.addAdditionalBank(
+          account,
+          accType,
+          ifsc,
+          bank,
+          proof,
+          branch,
+          context,
+          "D",
+        );
+        if (result == true) {
+          loadingBankdelete = false;
+          notifyListeners();
+          return true;
+        } else {
+          loadingBankdelete = false;
+          notifyListeners();
+          return false;
+        }
+      } else {
+        bool result = await bankService.addAdditionalBank(
+          account,
+          accType,
+          ifsc,
+          bank,
+          proof,
+          branch,
+          context,
+          "D",
+        );
+        if (result == true) {
+          loadingBankdelete = false;
+          notifyListeners();
+          return true;
+        } else {
+          loadingBankdelete = false;
+          notifyListeners();
+          return false;
+        }
+      }
+    } catch (e) {
+      logger.d('falied with an exception$e');
       loadingBankdelete = false;
       notifyListeners();
       return false;
@@ -177,15 +244,25 @@ class BankController extends ChangeNotifier {
     notifyListeners();
   }
 
+  RefershTokenService refershTokenService = RefershTokenService();
   bool loadingbankList = false;
   BankListingModel? bankListingModel;
   Future<void> getBankList(context) async {
     loadingbankList = true;
     // notifyListeners();
     try {
-      bankListingModel = await bankService.bankListing(context);
-      loadingbankList = false;
-      notifyListeners();
+      String token = await SecureStorage.readToken('token');
+      bool isTokenExpired = JwtDecoder.isExpired(token);
+      if (isTokenExpired) {
+        await refershTokenService.postRefershTocken(context);
+        bankListingModel = await bankService.bankListing(context);
+        loadingbankList = false;
+        notifyListeners();
+      } else {
+        bankListingModel = await bankService.bankListing(context);
+        loadingbankList = false;
+        notifyListeners();
+      }
     } catch (e) {
       logger.d('Get bank list failed with an exception$e');
       loadingbankList = false;
@@ -198,19 +275,39 @@ class BankController extends ChangeNotifier {
     loadingDefault = true;
     notifyListeners();
     try {
-      bool result = await bankService.setupDefaultBank(
-        context,
-        bankListingModel?.bank![index].iin ?? '',
-        bankListingModel?.bank![index].accNo ?? '',
-        bankListingModel?.bank![index].bankName ?? '',
-      );
-      if (result == true) {
-        getBankList(context);
-        loadingDefault = false;
-        notifyListeners();
+      String token = await SecureStorage.readToken('token');
+      bool isTokenExpired = JwtDecoder.isExpired(token);
+      if (isTokenExpired) {
+        await refershTokenService.postRefershTocken(context);
+        bool result = await bankService.setupDefaultBank(
+          context,
+          bankListingModel?.bank![index].iin ?? '',
+          bankListingModel?.bank![index].accNo ?? '',
+          bankListingModel?.bank![index].bankName ?? '',
+        );
+        if (result == true) {
+          getBankList(context);
+          loadingDefault = false;
+          notifyListeners();
+        } else {
+          loadingDefault = false;
+          notifyListeners();
+        }
       } else {
-        loadingDefault = false;
-        notifyListeners();
+        bool result = await bankService.setupDefaultBank(
+          context,
+          bankListingModel?.bank![index].iin ?? '',
+          bankListingModel?.bank![index].accNo ?? '',
+          bankListingModel?.bank![index].bankName ?? '',
+        );
+        if (result == true) {
+          getBankList(context);
+          loadingDefault = false;
+          notifyListeners();
+        } else {
+          loadingDefault = false;
+          notifyListeners();
+        }
       }
     } catch (e) {
       logger.d('change bank failed with an exception$e');
@@ -282,20 +379,41 @@ class BankController extends ChangeNotifier {
     bankProofUpload = true;
     notifyListeners();
     try {
-      bool result = await bankService.uploadBankProof(
-        compressedImage!.path,
-        accountController.text,
-        bankCodeForCustomer,
-        context,
-      );
-      if (result == true) {
-        bankProofUpload = false;
-        notifyListeners();
-        return true;
+      String token = await SecureStorage.readToken('token');
+      bool isTokenExpired = JwtDecoder.isExpired(token);
+      if (isTokenExpired) {
+        await refershTokenService.postRefershTocken(context);
+        bool result = await bankService.uploadBankProof(
+          compressedImage!.path,
+          accountController.text,
+          bankCodeForCustomer,
+          context,
+        );
+        if (result == true) {
+          bankProofUpload = false;
+          notifyListeners();
+          return true;
+        } else {
+          bankProofUpload = false;
+          notifyListeners();
+          return false;
+        }
       } else {
-        bankProofUpload = false;
-        notifyListeners();
-        return false;
+        bool result = await bankService.uploadBankProof(
+          compressedImage!.path,
+          accountController.text,
+          bankCodeForCustomer,
+          context,
+        );
+        if (result == true) {
+          bankProofUpload = false;
+          notifyListeners();
+          return true;
+        } else {
+          bankProofUpload = false;
+          notifyListeners();
+          return false;
+        }
       }
     } catch (e) {
       bankProofUpload = false;
