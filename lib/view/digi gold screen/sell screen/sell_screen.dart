@@ -134,16 +134,28 @@ class ScreenSellGold extends StatelessWidget {
                         goldController.calculateSellAmount();
 
                         bool result = await goldController.sellGold(
-                            context,
-                            dashboardController
-                                    .dashBoardModel?.result?.data?.name ??
-                                '',
-                            dashboardController.dashBoardModel?.result?.data
-                                    ?.phoneNumber ??
-                                '');
+                          context,
+                          dashboardController
+                                  .dashBoardModel?.result?.data?.name ??
+                              '',
+                          dashboardController
+                                  .dashBoardModel?.result?.data?.phoneNumber ??
+                              '',
+                          dashboardController
+                                  .dashBoardModel?.result?.data?.email ??
+                              "",
+                        );
                         if (result == true) {
                           goldController.sellgoldrateController.clear();
-                          goldController.getSellGoldListing(context);
+                          goldController.getSellGoldListing(
+                              context,
+                              Provider.of<DashBoardController>(context,
+                                          listen: false)
+                                      .dashBoardModel
+                                      ?.result
+                                      ?.data
+                                      ?.email ??
+                                  '');
                           Navigator.pop(context);
                         }
                       }

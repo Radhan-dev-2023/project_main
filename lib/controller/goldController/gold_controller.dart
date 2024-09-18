@@ -27,20 +27,20 @@ class GoldController extends ChangeNotifier {
   }
 
   bool goldselecteed = true;
-  void changeGoldSelected(context) {
+  void changeGoldSelected(context, String email) {
     silverSelected = false;
     goldselecteed = true;
     valuetoBackend = 'gold';
-    getGoldrate(context);
+    getGoldrate(context, email);
     notifyListeners();
   }
 
   bool silverSelected = false;
-  void changeSilverSelected(context) {
+  void changeSilverSelected(context, String email) {
     goldselecteed = false;
     silverSelected = true;
     valuetoBackend = 'silver';
-    getGoldrate(context);
+    getGoldrate(context, email);
     notifyListeners();
   }
 
@@ -129,7 +129,7 @@ class GoldController extends ChangeNotifier {
   //   }
   // }
   String valuetoBackend = 'gold';
-  Future<void> getGoldrate(context) async {
+  Future<void> getGoldrate(context, String email) async {
     formattedValue = '';
     isloading = true;
     // notifyListeners();
@@ -140,7 +140,7 @@ class GoldController extends ChangeNotifier {
         await refershTokenService.postRefershTocken(context);
         goldvalue = await service.getDigiGoldRate(context, valuetoBackend);
         sellrate = await service.getsellGoldRate(context, valuetoBackend);
-        await goldListing(context);
+        await goldListing(context, email);
         initializeExpansionState();
         if (sellrate != null) {
           dynamic value = goldlistingmodel?.res?.total * sellrate;
@@ -157,7 +157,7 @@ class GoldController extends ChangeNotifier {
       } else {
         goldvalue = await service.getDigiGoldRate(context, valuetoBackend);
         sellrate = await service.getsellGoldRate(context, valuetoBackend);
-        await goldListing(context);
+        await goldListing(context, email);
         initializeExpansionState();
         if (sellrate != null) {
           dynamic value = goldlistingmodel?.res?.total * sellrate;
@@ -317,19 +317,19 @@ class GoldController extends ChangeNotifier {
   }
 
   GolListingModel? goldlistingmodel;
-  Future<void> goldListing(context) async {
+  Future<void> goldListing(context, String email) async {
     try {
       String token = await SecureStorage.readToken('token');
       bool isTokenExpired = JwtDecoder.isExpired(token);
       if (isTokenExpired) {
         await refershTokenService.postRefershTocken(context);
-        goldlistingmodel =
-            await goldSaveTransaction.getGoldList(context, valuetoBackend);
+        goldlistingmodel = await goldSaveTransaction.getGoldList(
+            context, valuetoBackend, email);
 
         notifyListeners();
       } else {
-        goldlistingmodel =
-            await goldSaveTransaction.getGoldList(context, valuetoBackend);
+        goldlistingmodel = await goldSaveTransaction.getGoldList(
+            context, valuetoBackend, email);
         notifyListeners();
       }
     } catch (e) {
@@ -345,7 +345,8 @@ class GoldController extends ChangeNotifier {
   }
 
   bool selbuttonClicked = false;
-  Future<bool> sellGold(context, String name, String phoneNumber) async {
+  Future<bool> sellGold(
+      context, String name, String phoneNumber, String email) async {
     selbuttonClicked = true;
     notifyListeners();
     try {
@@ -362,6 +363,7 @@ class GoldController extends ChangeNotifier {
           name,
           phoneNumber,
           valuetoBackend,
+          email,
         );
         selbuttonClicked = false;
         notifyListeners();
@@ -375,6 +377,7 @@ class GoldController extends ChangeNotifier {
           name,
           phoneNumber,
           valuetoBackend,
+          email,
         );
 
         selbuttonClicked = false;
@@ -395,7 +398,7 @@ class GoldController extends ChangeNotifier {
 
   GoldSellListingModel? sellGoldListingModel;
   bool sellListingLoading = false;
-  Future<void> getSellGoldListing(context) async {
+  Future<void> getSellGoldListing(context, String email) async {
     sellListingLoading = true;
     notifyListeners();
     try {
@@ -404,14 +407,14 @@ class GoldController extends ChangeNotifier {
       if (isTokenExpired) {
         await refershTokenService.postRefershTocken(context);
         sellGoldListingModel =
-            await service.getSellGoldList(context, valuetoBackend);
+            await service.getSellGoldList(context, valuetoBackend, email);
 
         notifyListeners();
         sellListingLoading = false;
         notifyListeners();
       } else {
         sellGoldListingModel =
-            await service.getSellGoldList(context, valuetoBackend);
+            await service.getSellGoldList(context, valuetoBackend, email);
         notifyListeners();
         sellListingLoading = false;
         notifyListeners();

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
 import 'package:finfresh_mobile/controller/goldController/gold_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/digi%20gold%20screen/sell%20screen/sell_screen.dart';
@@ -21,8 +22,14 @@ class _ScreenListingGoldState extends State<ScreenListingGold> {
   @override
   void initState() {
     super.initState();
-    Provider.of<GoldController>(context, listen: false)
-        .getSellGoldListing(context);
+    Provider.of<GoldController>(context, listen: false).getSellGoldListing(
+        context,
+        Provider.of<DashBoardController>(context, listen: false)
+                .dashBoardModel
+                ?.result
+                ?.data
+                ?.email ??
+            '');
   }
 
   @override
@@ -31,7 +38,14 @@ class _ScreenListingGoldState extends State<ScreenListingGold> {
     return Scaffold(
       body: Consumer<GoldController>(builder: (context, goldController, _) {
         return RefreshIndicator(
-          onRefresh: () => goldController.getSellGoldListing(context),
+          onRefresh: () => goldController.getSellGoldListing(
+              context,
+              Provider.of<DashBoardController>(context, listen: false)
+                      .dashBoardModel
+                      ?.result
+                      ?.data
+                      ?.email ??
+                  ''),
           color: const Color(0xFFF7BF05),
           child: SingleChildScrollView(
             child: goldController.sellListingLoading == true
@@ -174,7 +188,9 @@ class _ScreenListingGoldState extends State<ScreenListingGold> {
                       //     ),
                       //   ),
                       // ),
-                      goldController.sellGoldListingModel!.result!.isEmpty
+                      goldController.sellGoldListingModel == null ||
+                              goldController
+                                  .sellGoldListingModel!.result!.isEmpty
                           ? SizedBox(
                               height: Adaptive.h(22),
                               child: const Center(

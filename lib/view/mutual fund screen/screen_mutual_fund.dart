@@ -196,8 +196,8 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
                       wigetInTrailing: const SizedBox(),
                     ),
                     VerticalSpacer(2.h),
-                    const FundsWidget(),
-                    VerticalSpacer(2.h),
+                    // const FundsWidget(),
+                    // VerticalSpacer(2.h),
                     Text(
                       'Goals',
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(

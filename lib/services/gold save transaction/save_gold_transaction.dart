@@ -103,14 +103,15 @@ class GoldSaveTransactionService {
     return false;
   }
 
-  Future<GolListingModel?> getGoldList(context, String value) async {
+  Future<GolListingModel?> getGoldList(
+      context, String value, String email) async {
     String token = await SecureStorage.readToken('token');
     String userId = await SecureStorage.readToken('userId');
-    String iin = await SecureStorage.readToken('customerId');
-    String phonenumber = await SecureStorage.readToken('phoneNumber');
+    // String iin = await SecureStorage.readToken('customerId');
+
     String url =
-        '${ApiEndpoint.baseUrl}/api/v1/$phonenumber/getgoldTransaction/$value';
-    log('iin$iin');
+        '${ApiEndpoint.baseUrl}/api/v1/$email/getgoldTransaction/$value';
+    log('iin$email');
     try {
       http.Response response = await http.get(
         Uri.parse(url),

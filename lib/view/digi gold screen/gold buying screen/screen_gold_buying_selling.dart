@@ -29,7 +29,14 @@ class _ScreenGoldBuyingAndSellingState
   void initState() {
     super.initState();
     Provider.of<GoldController>(context, listen: false).isCompleted();
-    Provider.of<GoldController>(context, listen: false).getGoldrate(context);
+    Provider.of<GoldController>(context, listen: false).getGoldrate(
+        context,
+        Provider.of<DashBoardController>(context, listen: false)
+                .dashBoardModel
+                ?.result
+                ?.data
+                ?.email ??
+            '');
   }
 
   @override
@@ -49,8 +56,14 @@ class _ScreenGoldBuyingAndSellingState
       body: RefreshIndicator(
         onRefresh: () async {
           Provider.of<GoldController>(context, listen: false).isCompleted();
-          Provider.of<GoldController>(context, listen: false)
-              .getGoldrate(context);
+          Provider.of<GoldController>(context, listen: false).getGoldrate(
+              context,
+              Provider.of<DashBoardController>(context, listen: false)
+                      .dashBoardModel
+                      ?.result
+                      ?.data
+                      ?.email ??
+                  '');
         },
         color: const Color(0xFFF7BF05),
         child: SingleChildScrollView(
@@ -107,8 +120,16 @@ class _ScreenGoldBuyingAndSellingState
                                         children: [
                                           InkWell(
                                             onTap: () {
-                                              goldController
-                                                  .changeGoldSelected(context);
+                                              goldController.changeGoldSelected(
+                                                  context,
+                                                  Provider.of<DashBoardController>(
+                                                              context,
+                                                              listen: false)
+                                                          .dashBoardModel
+                                                          ?.result
+                                                          ?.data
+                                                          ?.email ??
+                                                      '');
                                             },
                                             child: Container(
                                               height: Adaptive.h(5),
@@ -139,9 +160,16 @@ class _ScreenGoldBuyingAndSellingState
                                           ),
                                           InkWell(
                                             onTap: () {
-                                              goldController
-                                                  .changeSilverSelected(
-                                                      context);
+                                              goldController.changeSilverSelected(
+                                                  context,
+                                                  Provider.of<DashBoardController>(
+                                                              context,
+                                                              listen: false)
+                                                          .dashBoardModel
+                                                          ?.result
+                                                          ?.data
+                                                          ?.email ??
+                                                      '');
                                             },
                                             child: Container(
                                               height: Adaptive.h(5),
@@ -290,8 +318,9 @@ class _ScreenGoldBuyingAndSellingState
                       //     ),
                       //   ),
                       // ),
-                      goldController
-                              .goldlistingmodel!.res!.transactions!.isEmpty
+                      goldController.goldlistingmodel == null ||
+                              goldController
+                                  .goldlistingmodel!.res!.transactions!.isEmpty
                           ? SizedBox(
                               height: Adaptive.h(22),
                               child: const Center(
@@ -904,9 +933,17 @@ class _ScreenGoldBuyingAndSellingState
                                                                     context);
                                                         if (result == true) {
                                                           // ignore: use_build_context_synchronously
-                                                          goldController
-                                                              .getGoldrate(
-                                                                  context);
+                                                          goldController.getGoldrate(
+                                                              context,
+                                                              Provider.of<DashBoardController>(
+                                                                          context,
+                                                                          listen:
+                                                                              false)
+                                                                      .dashBoardModel
+                                                                      ?.result
+                                                                      ?.data
+                                                                      ?.email ??
+                                                                  '');
                                                           // ignore: use_build_context_synchronously
                                                           Navigator.pop(
                                                               context);

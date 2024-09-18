@@ -126,8 +126,15 @@ class DigiGoldService {
     return false;
   }
 
-  Future<bool> sellGold(context, dynamic goldsellRate, dynamic soldMg,
-      dynamic amount, String name, String phonenumber, String value) async {
+  Future<bool> sellGold(
+      context,
+      dynamic goldsellRate,
+      dynamic soldMg,
+      dynamic amount,
+      String name,
+      String phonenumber,
+      String value,
+      String email) async {
     String token = await SecureStorage.readToken('token');
     String userId = await SecureStorage.readToken('userId');
     // String iin = await SecureStorage.readToken('customerId');
@@ -143,6 +150,7 @@ class DigiGoldService {
       "firstname": name,
       "mobile_no": phonenumber,
       "metal_type": value,
+      "email": email,
     };
     log('payload =$payload');
     try {
@@ -183,20 +191,18 @@ class DigiGoldService {
   Future<GoldSellListingModel?> getSellGoldList(
     context,
     String value,
+    String email,
   ) async {
     String token = await SecureStorage.readToken('token');
     String userId = await SecureStorage.readToken('userId');
     String iin = await SecureStorage.readToken('customerId');
-    String phonenumber = await SecureStorage.readToken('phoneNumber');
+    // String email = await SecureStorage.readToken('email');
     log(userId);
     log(token);
     log(iin);
     String url = '${ApiEndpoint.baseUrl}/api/v1/soldgoldSearch';
 
-    Map<String, dynamic> payload = {
-      "mobile_no": phonenumber,
-      "metal_type": value
-    };
+    Map<String, dynamic> payload = {"email": email, "metal_type": value};
     log('payload =$payload');
     try {
       http.Response response = await http.post(
