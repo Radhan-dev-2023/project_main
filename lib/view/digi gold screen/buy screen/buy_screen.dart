@@ -53,8 +53,9 @@ class _ScreenBuyState extends State<ScreenBuy>
                 colors: goldController.goldselecteed
                     ? [const Color(0xFFF7BF05), const Color(0xFFF7BF05)]
                     : [
-                       const Color.fromARGB(255, 179, 178, 178),
-                        const Color(0xFFD0D0D0),
+                        const Color(0xFFA3A3A3),
+                        const Color(0xFFA3A3A3),
+                        // const Color(0xFFD0D0D0),
                       ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -85,7 +86,7 @@ class _ScreenBuyState extends State<ScreenBuy>
                     child: Text(
                       goldController.goldselecteed
                           ? 'Buying from Finfresh \n 99.99% pure 24K gold'
-                          : 'Buying from Finfresh \n 99.9% pure Sterling Silver',
+                          : 'Buying from Finfresh 99.9% \npure Sterling Silver',
                       style: const TextStyle(
                         color: Colors.white,
                       ),
