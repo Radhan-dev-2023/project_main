@@ -38,225 +38,261 @@ class _ScreenBuyState extends State<ScreenBuy>
     final dashBordController = Provider.of<DashBoardController>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF2D5D5F),
-        iconTheme: IconThemeData(color: Colors.white),
-      ),
-      backgroundColor: const Color(0xFF2D5D5F),
+      // appBar: AppBar(
+      //   backgroundColor: Color(0xFF2D5D5F),
+      //   iconTheme: IconThemeData(color: Colors.white),
+      // ),
+      // backgroundColor: const Color(0xFF2D5D5F),
       body: SingleChildScrollView(
         child: Consumer<GoldController>(builder: (context, goldController, _) {
-          return Form(
-            key: goldController.formKey,
-            child: Column(
-              children: [
-                VerticalSpacer(20.h),
-                const Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Buying from Finfresh \n 99.99% pure 24K gold',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                VerticalSpacer(5.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '₹ ',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 20.sp,
-                      ),
-                    ),
-                    SizedBox(
-                      width: Adaptive.w(30),
-                      child: TextFormField(
-                        controller: goldController.buygoldrateController,
-                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 20.sp,
-                            ),
-
-                        // validator: (value) {
-                        //   if (value!.isEmpty) {
-                        //     return '';
-                        //   }
-                        //   return null;
-                        // },
-                        // autovalidateMode: AutovalidateMode.onUserInteraction,
-                        // validator: (value) {
-                        //   if (value == null || value.isEmpty) {
-                        //     return 'field is required';
-                        //   }
-                        //   if (!RegExp(r"^[A-Za-z]{4}[a-zA-Z0-9]{7}$").hasMatch(value)) {
-                        //     return 'Invalid IFSC code';
-                        //   }
-                        //   return null;
-                        // },
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Color(0xFF2D5D5F),
-                          border: InputBorder.none,
-                          hintText: '0',
-                          hintStyle: TextStyle(
+          return Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: goldController.goldselecteed
+                    ? [const Color(0xFFF7BF05), const Color(0xFFF7BF05)]
+                    : [
+                       const Color.fromARGB(255, 179, 178, 178),
+                        const Color(0xFFD0D0D0),
+                      ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+            ),
+            child: Form(
+              key: goldController.formKey,
+              child: Column(
+                children: [
+                  VerticalSpacer(Adaptive.h(5)),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0),
+                    child: Align(
+                        alignment: Alignment.topLeft,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Icon(
+                            Icons.arrow_back,
                             color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 21.sp,
                           ),
-                          focusedBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent),
-                          ),
-                        ),
-                        keyboardType: TextInputType.number,
+                        )),
+                  ),
+                  VerticalSpacer(15.h),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      goldController.goldselecteed
+                          ? 'Buying from Finfresh \n 99.99% pure 24K gold'
+                          : 'Buying from Finfresh \n 99.9% pure Sterling Silver',
+                      style: const TextStyle(
+                        color: Colors.white,
                       ),
+                      textAlign: TextAlign.center,
                     ),
-                  ],
-                ),
-                VerticalSpacer(5.h),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  ),
+                  VerticalSpacer(5.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      InkWell(
-                        onTap: () {
-                          goldController.buygoldrateController.text = '201';
-                        },
-                        child: Container(
-                          height: Adaptive.h(5),
-                          width: Adaptive.w(26),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20.sp),
-                              border: Border.all(color: Colors.white)),
-                          child: const Center(
-                            child: Text(
-                              '201',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
+                      Text(
+                        '₹ ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 20.sp,
                         ),
                       ),
-                      InkWell(
-                        onTap: () {
-                          goldController.buygoldrateController.text = '501';
-                        },
-                        child: Container(
-                          height: Adaptive.h(5),
-                          width: Adaptive.w(26),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20.sp),
-                              border: Border.all(color: Colors.white)),
-                          child: const Center(
-                            child: Text(
-                              '501',
-                              style: TextStyle(color: Colors.white),
+                      SizedBox(
+                        width: Adaptive.w(30),
+                        child: TextFormField(
+                          controller: goldController.buygoldrateController,
+                          style:
+                              Theme.of(context).textTheme.labelLarge!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: 20.sp,
+                                  ),
+
+                          // validator: (value) {
+                          //   if (value!.isEmpty) {
+                          //     return '';
+                          //   }
+                          //   return null;
+                          // },
+                          // autovalidateMode: AutovalidateMode.onUserInteraction,
+                          // validator: (value) {
+                          //   if (value == null || value.isEmpty) {
+                          //     return 'field is required';
+                          //   }
+                          //   if (!RegExp(r"^[A-Za-z]{4}[a-zA-Z0-9]{7}$").hasMatch(value)) {
+                          //     return 'Invalid IFSC code';
+                          //   }
+                          //   return null;
+                          // },
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.transparent,
+                            border: InputBorder.none,
+                            hintText: '0',
+                            hintStyle: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 21.sp,
+                            ),
+                            focusedBorder: const UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent),
                             ),
                           ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          goldController.buygoldrateController.text = '1001';
-                        },
-                        child: Container(
-                          height: Adaptive.h(5),
-                          width: Adaptive.w(26),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20.sp),
-                              border: Border.all(color: Colors.white)),
-                          child: const Center(
-                            child: Text(
-                              '1001',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
+                          keyboardType: TextInputType.number,
                         ),
                       ),
                     ],
                   ),
-                ),
-                VerticalSpacer(5.h),
-                Text(
-                  'Price ₹ ${goldController.goldvalue}/mg (exclusive of 3% GST)',
-                  style: const TextStyle(
-                    color: Colors.white,
+                  VerticalSpacer(5.h),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            goldController.buygoldrateController.text = '201';
+                          },
+                          child: Container(
+                            height: Adaptive.h(5),
+                            width: Adaptive.w(26),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.sp),
+                                border: Border.all(color: Colors.white)),
+                            child: const Center(
+                              child: Text(
+                                '201',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            goldController.buygoldrateController.text = '501';
+                          },
+                          child: Container(
+                            height: Adaptive.h(5),
+                            width: Adaptive.w(26),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.sp),
+                                border: Border.all(color: Colors.white)),
+                            child: const Center(
+                              child: Text(
+                                '501',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            goldController.buygoldrateController.text = '1001';
+                          },
+                          child: Container(
+                            height: Adaptive.h(5),
+                            width: Adaptive.w(26),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.sp),
+                                border: Border.all(color: Colors.white)),
+                            child: const Center(
+                              child: Text(
+                                '1001',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  textAlign: TextAlign.center,
-                ),
-                VerticalSpacer(15.h),
-                InkWell(
-                  onTap: () async {
-                    log('${dashBordController.dashBoardModel?.result?.data?.phoneNumber}');
-                    if (goldController.buygoldrateController.text.isNotEmpty) {
-                      //"TB7WBn"test,
-                      // ijiPG7 prod
-                      goldController.generateSSID();
-                      goldController.calulateWithGstAmount();
-                      // Provider.of<GoldController>(context, listen: false)
-                      //     .calculate();
+                  VerticalSpacer(5.h),
+                  Text(
+                    'Price ₹ ${goldController.goldvalue}/mg (exclusive of 3% GST)',
+                    style: const TextStyle(
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  VerticalSpacer(15.h),
+                  InkWell(
+                    onTap: () async {
+                      log('${dashBordController.dashBoardModel?.result?.data?.phoneNumber}');
+                      if (goldController
+                          .buygoldrateController.text.isNotEmpty) {
+                        //"TB7WBn"test,
+                        // ijiPG7 prod
+                        goldController.generateSSID();
+                        goldController.calulateWithGstAmount();
+                        // Provider.of<GoldController>(context, listen: false)
+                        //     .calculate();
 
-                      _checkoutPro.openCheckoutScreen(payUPaymentParams: {
-                        PayUPaymentParamKey.key: "TB7WBn",
-                        PayUPaymentParamKey.amount:
-                            goldController.buygoldrateController.text,
-                        PayUPaymentParamKey.productInfo: "Payu",
-                        PayUPaymentParamKey.firstName: dashBordController
-                                .dashBoardModel?.result?.data?.name ??
-                            '',
-                        PayUPaymentParamKey.email: dashBordController
-                                .dashBoardModel?.result?.data?.email ??
-                            "",
-                        PayUPaymentParamKey.phone: dashBordController
-                                .dashBoardModel?.result?.data?.phoneNumber ??
-                            '',
-                        PayUPaymentParamKey.environment: "1",
-                        // String - "0" for Production and "1" for Test
-                        PayUPaymentParamKey.transactionId:
-                            goldController.transactionid,
-                        // transactionId Cannot be null or empty and should be unique for each transaction. Maximum allowed length is 25 characters. It cannot contain special characters like: -_/
-                        PayUPaymentParamKey.userCredential: ":1000",
-                        //  Format: <merchantKey>:<userId> ... UserId is any id/email/phone number to uniquely identify the user.
-                        PayUPaymentParamKey.android_surl:
-                            "https://cbjs.payu.in/sdk/success",
-                        PayUPaymentParamKey.android_furl:
-                            "https://cbjs.payu.in/sdk/failure",
-                        PayUPaymentParamKey.ios_surl:
-                            "https://cbjs.payu.in/sdk/success",
-                        PayUPaymentParamKey.ios_furl:
-                            "https://cbjs.payu.in/sdk/failure",
-                      }, payUCheckoutProConfig: {
-                        PayUCheckoutProConfigKeys.merchantName: "PayU",
-                      });
-                    } else {
-                      showFlushbar(context, 'Please enter amount');
-                    }
+                        _checkoutPro.openCheckoutScreen(payUPaymentParams: {
+                          PayUPaymentParamKey.key: "TB7WBn",
+                          PayUPaymentParamKey.amount:
+                              goldController.buygoldrateController.text,
+                          PayUPaymentParamKey.productInfo: "Payu",
+                          PayUPaymentParamKey.firstName: dashBordController
+                                  .dashBoardModel?.result?.data?.name ??
+                              '',
+                          PayUPaymentParamKey.email: dashBordController
+                                  .dashBoardModel?.result?.data?.email ??
+                              "",
+                          PayUPaymentParamKey.phone: dashBordController
+                                  .dashBoardModel?.result?.data?.phoneNumber ??
+                              '',
+                          PayUPaymentParamKey.environment: "1",
+                          // String - "0" for Production and "1" for Test
+                          PayUPaymentParamKey.transactionId:
+                              goldController.transactionid,
+                          // transactionId Cannot be null or empty and should be unique for each transaction. Maximum allowed length is 25 characters. It cannot contain special characters like: -_/
+                          PayUPaymentParamKey.userCredential: ":1000",
+                          //  Format: <merchantKey>:<userId> ... UserId is any id/email/phone number to uniquely identify the user.
+                          PayUPaymentParamKey.android_surl:
+                              "https://cbjs.payu.in/sdk/success",
+                          PayUPaymentParamKey.android_furl:
+                              "https://cbjs.payu.in/sdk/failure",
+                          PayUPaymentParamKey.ios_surl:
+                              "https://cbjs.payu.in/sdk/success",
+                          PayUPaymentParamKey.ios_furl:
+                              "https://cbjs.payu.in/sdk/failure",
+                        }, payUCheckoutProConfig: {
+                          PayUCheckoutProConfigKeys.merchantName: "PayU",
+                        });
+                      } else {
+                        showFlushbar(context, 'Please enter amount');
+                      }
 
-                    // PayUPayment();
-                  },
-                  child: Container(
-                    height: Adaptive.h(5),
-                    width: Adaptive.w(25),
-                    decoration: BoxDecoration(
+                      // PayUPayment();
+                    },
+                    child: Container(
+                      height: Adaptive.h(5),
+                      width: Adaptive.w(25),
+                      decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20.sp),
                         // color: Color(0xFF2D5D5F),
-                        color: const Color(0xFFF7BF05)),
-                    child: const Center(
-                      child: Text(
-                        'Buy',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF2D5D5F),
+                        color: Colors.white,
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'Buy',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF2D5D5F),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         }),

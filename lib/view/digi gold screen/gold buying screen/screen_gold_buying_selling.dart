@@ -75,8 +75,9 @@ class _ScreenGoldBuyingAndSellingState
                                         const Color(0xFFF7BF05)
                                       ]
                                     : [
-                                        const Color(0xFFE3E3E3),
-                                        const Color(0xFFC5c5c5),
+                                        const Color.fromARGB(
+                                            255, 179, 178, 178),
+                                        const Color(0xFFD0D0D0),
                                       ],
                                 begin: Alignment
                                     .topLeft, // Starting point of the gradient
@@ -151,7 +152,8 @@ class _ScreenGoldBuyingAndSellingState
                                                         10.sp),
                                                 color: goldController
                                                         .silverSelected
-                                                    ? const Color(0xFFE3E3E3)
+                                                    ? const Color.fromARGB(
+                                                        255, 197, 193, 193)
                                                     : Colors.transparent,
                                               ),
                                               child: Center(
@@ -288,7 +290,8 @@ class _ScreenGoldBuyingAndSellingState
                       //     ),
                       //   ),
                       // ),
-                      goldController.goldlistingmodel == null
+                      goldController
+                              .goldlistingmodel!.res!.transactions!.isEmpty
                           ? SizedBox(
                               height: Adaptive.h(22),
                               child: const Center(
@@ -333,7 +336,10 @@ class _ScreenGoldBuyingAndSellingState
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      'Buying Gold',
+                                                      goldController
+                                                              .goldselecteed
+                                                          ? 'Buying Gold'
+                                                          : 'Buying Silver',
                                                       style: Theme.of(context)
                                                           .textTheme
                                                           .bodyMedium!
@@ -545,7 +551,7 @@ class _ScreenGoldBuyingAndSellingState
                                                                     right:
                                                                         15.sp),
                                                             child: Text(
-                                                              'Bought ${goldController.goldlistingmodel?.res?.transactions?[index].purchasedGold.toStringAsFixed(2)} mg gold',
+                                                              'Bought ${goldController.goldlistingmodel?.res?.transactions?[index].purchasedGold.toStringAsFixed(2)} mg ${goldController.valuetoBackend}',
                                                               style: Theme.of(
                                                                       context)
                                                                   .textTheme

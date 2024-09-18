@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:finfresh_mobile/controller/goldController/gold_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/digi%20gold%20screen/sell%20screen/sell_screen.dart';
@@ -18,7 +20,6 @@ class ScreenListingGold extends StatefulWidget {
 class _ScreenListingGoldState extends State<ScreenListingGold> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Provider.of<GoldController>(context, listen: false)
         .getSellGoldListing(context);
@@ -26,6 +27,7 @@ class _ScreenListingGoldState extends State<ScreenListingGold> {
 
   @override
   Widget build(BuildContext context) {
+    log('listing model in gold${Provider.of<GoldController>(context, listen: false).sellGoldListingModel?.toJson()}');
     return Scaffold(
       body: Consumer<GoldController>(builder: (context, goldController, _) {
         return RefreshIndicator(
@@ -47,8 +49,9 @@ class _ScreenListingGoldState extends State<ScreenListingGold> {
                                         const Color(0xFFF7BF05)
                                       ]
                                     : [
-                                        const Color(0xFFE3E3E3),
-                                        const Color(0xFFC5c5c5),
+                                        const Color.fromARGB(
+                                            255, 179, 178, 178),
+                                        const Color(0xFFD0D0D0),
                                       ],
                                 begin: Alignment
                                     .topLeft, // Starting point of the gradient
@@ -171,7 +174,7 @@ class _ScreenListingGoldState extends State<ScreenListingGold> {
                       //     ),
                       //   ),
                       // ),
-                      goldController.sellGoldListingModel == null
+                      goldController.sellGoldListingModel!.result!.isEmpty
                           ? SizedBox(
                               height: Adaptive.h(22),
                               child: const Center(
