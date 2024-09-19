@@ -219,7 +219,10 @@ class _ScreenListingGoldState extends State<ScreenListingGold> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               CustomTextWidget(
-                                                text: 'Sold Gold',
+                                                text:
+                                                    goldController.goldselecteed
+                                                        ? 'Sold Gold'
+                                                        : 'Sold Silver',
                                                 fontSize: 15.5.sp,
                                                 letterSpacing: 2.sp,
                                               ),

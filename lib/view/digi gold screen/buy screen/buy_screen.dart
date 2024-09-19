@@ -96,6 +96,7 @@ class _ScreenBuyState extends State<ScreenBuy>
                   VerticalSpacer(5.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         '₹ ',
@@ -165,12 +166,20 @@ class _ScreenBuyState extends State<ScreenBuy>
                             height: Adaptive.h(5),
                             width: Adaptive.w(26),
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20.sp),
-                                border: Border.all(color: Colors.white)),
+                              borderRadius: BorderRadius.circular(20.sp),
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 2,
+                              ),
+                            ),
                             child: const Center(
                               child: Text(
                                 '201',
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 19,
+                                ),
                               ),
                             ),
                           ),
@@ -183,12 +192,20 @@ class _ScreenBuyState extends State<ScreenBuy>
                             height: Adaptive.h(5),
                             width: Adaptive.w(26),
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20.sp),
-                                border: Border.all(color: Colors.white)),
+                              borderRadius: BorderRadius.circular(20.sp),
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 2,
+                              ),
+                            ),
                             child: const Center(
                               child: Text(
                                 '501',
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 19,
+                                ),
                               ),
                             ),
                           ),
@@ -201,12 +218,20 @@ class _ScreenBuyState extends State<ScreenBuy>
                             height: Adaptive.h(5),
                             width: Adaptive.w(26),
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20.sp),
-                                border: Border.all(color: Colors.white)),
+                              borderRadius: BorderRadius.circular(20.sp),
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 2,
+                              ),
+                            ),
                             child: const Center(
                               child: Text(
                                 '1001',
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 19,
+                                ),
                               ),
                             ),
                           ),
