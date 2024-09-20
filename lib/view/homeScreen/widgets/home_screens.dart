@@ -2,12 +2,9 @@ import 'package:finfresh_mobile/controller/achController/ach_controller.dart';
 import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
-import 'package:finfresh_mobile/view/fatcha%20registration/fatcha_registeration.dart';
-import 'package:finfresh_mobile/view/holding%20screen/screen_holdings.dart';
 import 'package:finfresh_mobile/view/homeScreen/widgets/attension_widget.dart';
 import 'package:finfresh_mobile/view/homeScreen/widgets/fatch_attension_widget.dart';
 import 'package:finfresh_mobile/view/homeScreen/widgets/portfolio_mutual_fund.dart';
-import 'package:finfresh_mobile/view/homeScreen/widgets/roundChart.dart';
 import 'package:finfresh_mobile/view/homeScreen/widgets/six_mutual_fund_widget.dart';
 import 'package:finfresh_mobile/view/kyc/uploading%20proofs/upload%20bank%20proof/upload_bank_proof.dart';
 import 'package:finfresh_mobile/view/webview/screen_webview.dart';
@@ -582,7 +579,7 @@ class _ScreenHomeState extends State<ScreenHome> {
                         //   ),
                         // ),
                         // : RoundChartWidget(),
-                        VerticalSpacer(2.h),
+                        // VerticalSpacer(2.h),
                         Text(
                           'Funds',
                           style:

@@ -75,6 +75,18 @@ class AchController extends ChangeNotifier {
     }
   }
 
+  void itialdataForFeilds() {
+    DateTime now = DateTime.now();
+
+    // Format the date as 'DD-MMM-YYYY'
+
+    fromdateController.text = DateFormat('dd-MMM-yyyy').format(now);
+    todateController.text = '31-Dec-2999';
+    updateCancelValue("Yes");
+    amountController.text = '100000';
+    updateProcessMode('eMandate');
+  }
+
   bool visibilty = true;
   bool loadingAch = false;
   String result = '';
@@ -84,8 +96,8 @@ class AchController extends ChangeNotifier {
     loadingAch = true;
     notifyListeners();
     try {
-    String token = await SecureStorage.readToken('token');
-    bool isTokenExpired = JwtDecoder.isExpired(token);
+      String token = await SecureStorage.readToken('token');
+      bool isTokenExpired = JwtDecoder.isExpired(token);
       if (isTokenExpired) {
         await refershTokenService.postRefershTocken(context);
         result = await achService.achMadateRegister(
@@ -154,13 +166,12 @@ class AchController extends ChangeNotifier {
   AchHistoryModel? achHistoryModel;
   bool historyLoading = false;
   Future<void> getAchHistoy(context, String status) async {
-    
     historyLoading = true;
     notifyListeners();
 
     try {
       String token = await SecureStorage.readToken('token');
-    bool isTokenExpired = JwtDecoder.isExpired(token);
+      bool isTokenExpired = JwtDecoder.isExpired(token);
       if (isTokenExpired) {
         await refershTokenService.postRefershTocken(context);
         achHistoryModel =

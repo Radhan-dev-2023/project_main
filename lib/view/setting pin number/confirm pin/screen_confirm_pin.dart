@@ -86,7 +86,7 @@ class ScreenConfirmPinNumber extends StatelessWidget {
                   const LogoWidget(),
                   VerticalSpacer(8.h),
                   Text(
-                    'Confirm Finfresh PIN',
+                    'Re-Confirm Your Finfresh PIN',
                     style: Theme.of(context)
                         .textTheme
                         .labelLarge!

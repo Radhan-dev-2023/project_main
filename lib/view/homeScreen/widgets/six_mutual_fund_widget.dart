@@ -27,64 +27,6 @@ class SixMutualFundWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    children: [
-                      SizedBox(
-                        child: SizedBox(
-                          height: Adaptive.h(7.5),
-                          width: Adaptive.w(17.5),
-                          child: CircleAvatar(
-                            // radius: 10,
-                            // shape: RoundedRectangleBorder(
-                            //   borderRadius: BorderRadius.circular(27.sp),
-                            // ),
-                            // elevation: 0,
-                            backgroundColor:
-                                platformBrightness == Brightness.light
-                                    ? const Color(0xFFD8E2DC).withOpacity(0.3)
-                                    : const Color(0xFFD8E2DC),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                VerticalSpacer(1.h),
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const TopMfsScreen(
-                                          category: 'Index Fund',
-                                          appbarname: 'Index Fund',
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  child: Collectionwidget(
-                                    image: 'assets/images/indexfund.png',
-                                    // image:
-                                    //     'assets/images/fundsicons/indexfordash.png',
-                                    color: platformBrightness ==
-                                            Brightness.light
-                                        ? const Color.fromARGB(255, 89, 94, 91)
-                                            .withOpacity(0.5)
-                                        : const Color.fromARGB(255, 89, 94, 91)
-                                            .withOpacity(0.7),
-                                  ),
-                                ),
-                                VerticalSpacer(1.h),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      VerticalSpacer(1.h),
-                      Text('Index Fund',
-                          style: TextStyle(
-                            fontSize: 14.5.sp,
-                          )),
-                    ],
-                  ),
                   SizedBox(
                     child: Column(
                       children: [
@@ -298,12 +240,6 @@ class SixMutualFundWidget extends StatelessWidget {
                           )),
                     ],
                   ),
-                ],
-              ),
-              VerticalSpacer(4.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
                   SizedBox(
                     child: Column(
                       children: [
@@ -370,6 +306,12 @@ class SixMutualFundWidget extends StatelessWidget {
                       ],
                     ),
                   ),
+                ],
+              ),
+              VerticalSpacer(4.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
                   Column(
                     children: [
                       SizedBox(
@@ -503,6 +445,64 @@ class SixMutualFundWidget extends StatelessWidget {
                       ),
                       VerticalSpacer(1.h),
                       Text('Small Cap',
+                          style: TextStyle(
+                            fontSize: 14.5.sp,
+                          )),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      SizedBox(
+                        child: SizedBox(
+                          height: Adaptive.h(7.5),
+                          width: Adaptive.w(17.5),
+                          child: CircleAvatar(
+                            // radius: 10,
+                            // shape: RoundedRectangleBorder(
+                            //   borderRadius: BorderRadius.circular(27.sp),
+                            // ),
+                            // elevation: 0,
+                            backgroundColor:
+                                platformBrightness == Brightness.light
+                                    ? const Color(0xFFD8E2DC).withOpacity(0.3)
+                                    : const Color(0xFFD8E2DC),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                VerticalSpacer(1.h),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const TopMfsScreen(
+                                          category: 'Index Fund',
+                                          appbarname: 'Index Fund',
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Collectionwidget(
+                                    image: 'assets/images/indexfund.png',
+                                    // image:
+                                    //     'assets/images/fundsicons/indexfordash.png',
+                                    color: platformBrightness ==
+                                            Brightness.light
+                                        ? const Color.fromARGB(255, 89, 94, 91)
+                                            .withOpacity(0.5)
+                                        : const Color.fromARGB(255, 89, 94, 91)
+                                            .withOpacity(0.7),
+                                  ),
+                                ),
+                                VerticalSpacer(1.h),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      VerticalSpacer(1.h),
+                      Text('Index Fund',
                           style: TextStyle(
                             fontSize: 14.5.sp,
                           )),

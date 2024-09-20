@@ -93,7 +93,7 @@ class WigetForTopPIcksAndGoals extends StatelessWidget {
                                     fontWeight: FontWeight.w400,
                                     letterSpacing: 3.sp,
                                   ),
-                          maxLines: 2,
+                          maxLines: 3,
                         ),
                         trailing: Container(
                           height: Adaptive.h(3.5),

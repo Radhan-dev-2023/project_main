@@ -1,7 +1,4 @@
 import 'package:finfresh_mobile/view/ach%20history/screen_ach_history.dart';
-import 'package:finfresh_mobile/view/ach%20registrarion/ach_registeration.dart';
-import 'package:finfresh_mobile/view/fatcha%20registration/fatcha_registeration.dart';
-import 'package:finfresh_mobile/view/listing%20of%20banks/screen_listing_of_banks.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -17,137 +14,44 @@ class Registrationwidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ListTile(
-          leading: Image.asset(
-            'assets/images/settingsicon/system-uicons_clipboard-notes.png',
-            color: platformBrightness == Brightness.light
-                ? Colors.black
-                : Colors.white,
-            height: Adaptive.h(4),
-            width: Adaptive.w(6),
-            fit: BoxFit.fill,
-          ),
-          // title: Text(
-          //   'ACH Mandate',
-          //   style: Theme.of(context).textTheme.labelLarge!.copyWith(
-          //         fontSize: 17.sp,
-          //         fontWeight: FontWeight.w400,
-          //         letterSpacing: 3.sp,
-          //       ),
-          // ),
-          // trailing: Icon(
-          //   Icons.arrow_forward_ios,
-          //   size: 15.sp,
-          //   color: Colors.grey,
-          // ),
-          title: Text(
-            'ACH Mandate Registration',
-            style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                  fontSize: 17.sp,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 3.sp,
-                ),
-          ),
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ScreenAchRegistration(),
-                ));
-          },
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: 18.sp),
-          child: const Divider(
-            height: 1,
-            color: Color.fromARGB(255, 219, 217, 217),
-            thickness: 1,
-          ),
-        ),
-        ListTile(
-          leading: Image.asset(
-            'assets/images/settingsicon/ph_bank-light.png',
-            color: platformBrightness == Brightness.light
-                ? Colors.black
-                : Colors.white,
-            height: Adaptive.h(4),
-            width: Adaptive.w(6),
-          ),
-          // title: Text(
-          //   'Bank Details',
-          //   style: Theme.of(context).textTheme.labelLarge!.copyWith(
-          //         fontSize: 17.sp,
-          //         fontWeight: FontWeight.w400,
-          //         letterSpacing: 3.sp,
-          //       ),
-          // ),
-          title: Text(
-            'Banks Details',
-            style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                  fontSize: 17.sp,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 3.sp,
-                ),
-          ),
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ScreenListingOfBanks(),
-                ));
-          },
-          // trailing: Icon(
-          //   Icons.arrow_forward_ios,
-          //   size: 15.sp,
-          //   color: Colors.grey,
-          // ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: 18.sp),
-          child: const Divider(
-            height: 1,
-            color: Color.fromARGB(255, 219, 217, 217),
-            thickness: 1,
-          ),
-        ),
-        ListTile(
-          leading: Image.asset(
-            'assets/images/settingsicon/ph_note-light.png',
-            color: platformBrightness == Brightness.light
-                ? Colors.black
-                : Colors.white,
-            height: Adaptive.h(4),
-            width: Adaptive.w(6),
-          ),
-          // title: Text(
-          //   'FATCA',
-          //   style: Theme.of(context).textTheme.labelLarge!.copyWith(
-          //         fontSize: 17.sp,
-          //         fontWeight: FontWeight.w400,
-          //         letterSpacing: 3.sp,
-          //       ),
-          // ),
-          title: Text(
-            'FATCA Registration',
-            style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                  fontSize: 17.sp,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 3.sp,
-                ),
-          ),
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ScreenFatchaRegistration(),
-                ));
-          },
-          // trailing: Icon(
-          //   Icons.arrow_forward_ios,
-          //   size: 15.sp,
-          //   color: Colors.grey,
-          // ),
-        ),
+        // ListTile(
+        //   leading: Image.asset(
+        //     'assets/images/settingsicon/ph_note-light.png',
+        //     color: platformBrightness == Brightness.light
+        //         ? Colors.black
+        //         : Colors.white,
+        //     height: Adaptive.h(4),
+        //     width: Adaptive.w(6),
+        //   ),
+        //   // title: Text(
+        //   //   'FATCA',
+        //   //   style: Theme.of(context).textTheme.labelLarge!.copyWith(
+        //   //         fontSize: 17.sp,
+        //   //         fontWeight: FontWeight.w400,
+        //   //         letterSpacing: 3.sp,
+        //   //       ),
+        //   // ),
+        //   title: Text(
+        //     'FATCA Registration',
+        //     style: Theme.of(context).textTheme.labelLarge!.copyWith(
+        //           fontSize: 17.sp,
+        //           fontWeight: FontWeight.w400,
+        //           letterSpacing: 3.sp,
+        //         ),
+        //   ),
+        //   onTap: () {
+        //     Navigator.push(
+        //         context,
+        //         MaterialPageRoute(
+        //           builder: (context) => const ScreenFatchaRegistration(),
+        //         ));
+        //   },
+        //   // trailing: Icon(
+        //   //   Icons.arrow_forward_ios,
+        //   //   size: 15.sp,
+        //   //   color: Colors.grey,
+        //   // ),
+        // ),
         Padding(
           padding: EdgeInsets.only(left: 18.sp),
           child: const Divider(
@@ -167,7 +71,7 @@ class Registrationwidget extends StatelessWidget {
             width: Adaptive.w(6),
           ),
           title: Text(
-            'ACH',
+            'Mandate',
             style: Theme.of(context).textTheme.labelLarge!.copyWith(
                   fontSize: 17.sp,
                   fontWeight: FontWeight.w400,

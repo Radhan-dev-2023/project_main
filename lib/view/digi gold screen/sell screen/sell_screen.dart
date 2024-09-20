@@ -26,7 +26,7 @@ class ScreenSellGold extends StatelessWidget {
                 colors: goldController.goldselecteed
                     ? [const Color(0xFFF7BF05), const Color(0xFFF7BF05)]
                     : [
-                        const Color.fromARGB(255, 179, 178, 178),
+                        const Color(0xFF939391),
                         const Color(0xFFD0D0D0),
                       ],
                 begin: Alignment.topCenter,
@@ -105,7 +105,7 @@ class ScreenSellGold extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Mg',
+                      goldController.goldselecteed ? 'Mg' : 'g',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,

@@ -1,6 +1,4 @@
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
-import 'package:finfresh_mobile/model/holding%20nature%20model/holding_nature_model.dart';
-import 'package:finfresh_mobile/model/tax%20status%20model/tax_status_model.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
 import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
@@ -146,7 +144,13 @@ class _ScreenTaxStatusState extends State<ScreenTaxStatus> {
                       //     ),
                       //   ),
                       // ),
-                      VerticalSpacer(3.h),
+                      VerticalSpacer(2.h),
+                      Text(
+                        'Account Holding Nature ',
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontSize: 17.sp, fontWeight: FontWeight.w400),
+                      ),
+                      VerticalSpacer(2.h),
                       Container(
                         decoration: BoxDecoration(
                           border: Border.all(

@@ -1,5 +1,4 @@
 import 'package:finfresh_mobile/controller/achController/ach_controller.dart';
-import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/webview/screen_webview.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
@@ -33,25 +32,25 @@ class ScreenAchRegistration extends StatelessWidget {
               key: achController.formkeyForAch,
               child: Column(
                 children: [
-                  VerticalSpacer(2.h),
-                  TextFormField(
-                    controller: achController.microController,
-                    style: Theme.of(context).textTheme.labelLarge!,
-                    // autovalidateMode: AutovalidateMode.onUserInteraction,
-                    // validator: (value) {
-                    //   if (value == null || value.isEmpty) {
-                    //     return 'Please Enter MICR Number';
-                    //   }
-                    //   return null;
-                    // },
-                    decoration: InputDecoration(
-                      // filled: true,
-                      // fillColor: const Color(0xFF0E1330),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      hintText: 'Enter MICR Number',
-                    ),
-                  ),
+                  // VerticalSpacer(2.h),
+                  // TextFormField(
+                  //   controller: achController.microController,
+                  //   style: Theme.of(context).textTheme.labelLarge!,
+                  //   // autovalidateMode: AutovalidateMode.onUserInteraction,
+                  //   // validator: (value) {
+                  //   //   if (value == null || value.isEmpty) {
+                  //   //     return 'Please Enter MICR Number';
+                  //   //   }
+                  //   //   return null;
+                  //   // },
+                  //   decoration: InputDecoration(
+                  //     // filled: true,
+                  //     // fillColor: const Color(0xFF0E1330),
+                  //     border: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(10)),
+                  //     hintText: 'Enter MICR Number',
+                  //   ),
+                  // ),
                   VerticalSpacer(2.h),
                   DropdownButtonFormField<String>(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -63,8 +62,12 @@ class ScreenAchRegistration extends StatelessWidget {
                     },
                     style: Theme.of(context).textTheme.labelLarge!,
                     value: achController.cancelvalue,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       hintText: 'Select Until Cancelled',
+                      label: Text(
+                        'Select Until Cancelled',
+                        style: Theme.of(context).textTheme.labelLarge!,
+                      ),
                     ),
                     onChanged: (String? newValue) {
                       achController.updateCancelValue(newValue ?? '');
@@ -105,12 +108,13 @@ class ScreenAchRegistration extends StatelessWidget {
                       return null;
                     },
                     decoration: InputDecoration(
-                      // filled: true,
-                      // fillColor: const Color(0xFF0E1330),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      hintText: 'Enter Amount',
-                    ),
+                        // filled: true,
+                        // fillColor: const Color(0xFF0E1330),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        hintText: 'Enter Amount',
+                        label: Text('Enter Amount',
+                            style: Theme.of(context).textTheme.labelLarge!)),
                   ),
                   VerticalSpacer(2.h),
                   DropdownButtonFormField<String>(
@@ -123,9 +127,12 @@ class ScreenAchRegistration extends StatelessWidget {
                     },
                     style: Theme.of(context).textTheme.labelLarge!,
                     value: achController.processmodevalue,
-                    decoration: const InputDecoration(
-                      hintText: 'Select Process Mode',
-                    ),
+                    decoration: InputDecoration(
+                        hintText: 'Select Process Mode',
+                        label: Text(
+                          'Select Process Mode',
+                          style: Theme.of(context).textTheme.labelLarge!,
+                        )),
                     onChanged: (String? newValue) {
                       achController.updateProcessMode(newValue!);
                     },
@@ -149,9 +156,10 @@ class ScreenAchRegistration extends StatelessWidget {
                     },
                     style: Theme.of(context).textTheme.labelLarge!,
                     value: achController.channelvalue,
-                    decoration: const InputDecoration(
-                      hintText: 'Select Channel Type',
-                    ),
+                    decoration: InputDecoration(
+                        hintText: 'Select Channel Type',
+                        label: Text('Select Channel Type',
+                            style: Theme.of(context).textTheme.labelLarge!)),
                     onChanged: (String? newValue) {
                       achController.updateChannelType(newValue!);
                     },
@@ -264,6 +272,10 @@ class CustomDateWidget extends StatelessWidget {
       decoration: InputDecoration(
         // prefix: const Text('+91'),
         hintText: hittext,
+        label: Text(
+          hittext,
+          style: Theme.of(context).textTheme.labelLarge!,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.sp),
         ),

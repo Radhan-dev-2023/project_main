@@ -20,7 +20,7 @@ class FilterService {
     String userId = await SecureStorage.readToken('userId');
 
     Map<String, dynamic> payload = {"iin": iin, "type": type, "status": status};
-
+    log('payload in transactions : $payload');
     try {
       http.Response response = await http.post(
         Uri.parse(url),

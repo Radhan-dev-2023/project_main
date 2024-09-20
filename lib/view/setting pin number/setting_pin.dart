@@ -109,7 +109,7 @@ class ScreenSetPinNumber extends StatelessWidget {
                       : Text(
                           biometricLoginController.buttonEnabled == true
                               ? 'Reset Finfresh PIN'
-                              : 'Enter Finfresh PIN',
+                              : 'Please Set Your Finfresh PIN',
                           style: Theme.of(context)
                               .textTheme
                               .labelLarge!

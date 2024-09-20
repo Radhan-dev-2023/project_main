@@ -108,6 +108,7 @@ flutter:
     - assets/images/toppicks/
     - assets/images/settingsicon/
     - assets/images/goldimages/
+    - assets/images/profile/
     - assets/lottie/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

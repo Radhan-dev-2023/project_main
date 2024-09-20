@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:finfresh_mobile/model/dash%20Board%20Model/dash_board_model.dart';
 import 'package:finfresh_mobile/model/summary%20model/summary_model.dart';
@@ -26,7 +27,7 @@ class DasBoardService {
           'Content-Type': 'application/json',
         },
       );
-      logger.d('response dashBoard details == ${response.body}');
+      log('response dashBoard details == ${response.body}');
       Map<String, dynamic> jsonResponse = json.decode(response.body);
       if (jsonResponse['result']['status'] == 200) {
         dashBoardModel = DashBoardModel.fromJson(jsonResponse);

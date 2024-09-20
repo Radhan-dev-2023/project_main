@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 class TopMFsController extends ChangeNotifier {
+  final ScrollController scrollController = ScrollController();
   int currentIndex = 0;
   void changeCurrentIndex(int index) {
     currentIndex = index;
@@ -223,11 +224,11 @@ class TopMFsController extends ChangeNotifier {
     }
   }
 
-  void callinginInit(context) {
+  void callinginInit(context, category) {
     queryController.clear();
     returns = '3 year';
     returntoBackend = '3y';
-    getTopMfsFRomPeriod(context, 'All');
+    getTopMfsFRomPeriod(context, category);
     // getSchemeAllCategory(context);
   }
 

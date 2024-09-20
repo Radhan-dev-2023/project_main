@@ -301,23 +301,69 @@ class Result {
   int? status;
   String? message;
   Data? data;
+  Customer? customer;
 
   Result({
     this.status,
     this.message,
     this.data,
+    this.customer,
   });
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
         status: json["status"],
         message: json["message"],
         data: Data.fromJson(json["data"]),
+        customer: json["customer"] == null
+            ? null
+            : Customer.fromJson(json["customer"]),
       );
 
   Map<String, dynamic> toJson() => {
         "status": status,
         "message": message,
         "data": data!.toJson(),
+        "customer": customer?.toJson(),
+      };
+}
+
+class Customer {
+  String? id;
+  String? addr1;
+  String? addr2;
+  String? addr3;
+  String? city;
+  String? state;
+  String? pincode;
+
+  Customer({
+    this.id,
+    this.addr1,
+    this.addr2,
+    this.addr3,
+    this.city,
+    this.state,
+    this.pincode,
+  });
+
+  factory Customer.fromJson(Map<String, dynamic> json) => Customer(
+        id: json["_id"],
+        addr1: json["addr1"],
+        addr2: json["addr2"],
+        addr3: json["addr3"],
+        city: json["city"],
+        state: json["state"],
+        pincode: json["pincode"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "addr1": addr1,
+        "addr2": addr2,
+        "addr3": addr3,
+        "city": city,
+        "state": state,
+        "pincode": pincode,
       };
 }
 

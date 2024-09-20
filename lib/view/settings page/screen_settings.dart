@@ -4,12 +4,10 @@ import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_
 import 'package:finfresh_mobile/controller/goldController/gold_controller.dart';
 import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
-import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
 import 'package:finfresh_mobile/view/onboarding%20screen/on_boarding_view_screen.dart';
+import 'package:finfresh_mobile/view/screen%20profile/screen_profile.dart';
 import 'package:finfresh_mobile/view/settings%20page/widget/terms_and_condition.dart';
-import 'package:finfresh_mobile/view/stock%20details%20screen/widgets/overview_in_tabbar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -26,7 +24,6 @@ class ScreenSettings extends StatefulWidget {
 class _ScreenSettingsState extends State<ScreenSettings> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Provider.of<DashBoardController>(context, listen: false)
         .fringerprintCheck();
@@ -81,10 +78,10 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                                     .copyWith(
                                       fontSize: 19.sp,
                                     )),
-                            VerticalSpacer(0.5.h),
-                            Text(
-                                ' +91 ${dashBoardController.dashBoardModel?.result?.data?.phoneNumber ?? ''}',
-                                style: Theme.of(context).textTheme.labelLarge!),
+                            // VerticalSpacer(0.5.h),
+                            // Text(
+                            //     ' +91 ${dashBoardController.dashBoardModel?.result?.data?.phoneNumber ?? ''}',
+                            //     style: Theme.of(context).textTheme.labelLarge!),
                           ],
                         ),
                       ),
@@ -320,6 +317,7 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                     //     );
                     //   },
                     // ),
+
                     Padding(
                       padding: EdgeInsets.only(left: 18.sp),
                       child: const Divider(
@@ -365,6 +363,40 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                       ),
                     ),
                     ListTile(
+                      leading: Image.asset(
+                        'assets/images/profile/p1.png',
+                        height: Adaptive.h(4),
+                        width: Adaptive.w(6),
+                        color: platformBrightness == Brightness.light
+                            ? Colors.black
+                            : Colors.white,
+                      ),
+                      title: Text(
+                        'Profile',
+                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                              fontSize: 17.sp,
+                              fontWeight: FontWeight.w400,
+                              letterSpacing: 3.sp,
+                            ),
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ScreenProfile(),
+                          ),
+                        );
+                      },
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 18.sp),
+                      child: const Divider(
+                        height: 1,
+                        color: Color.fromARGB(255, 219, 217, 217),
+                        thickness: 1,
+                      ),
+                    ),
+                    ListTile(
                       leading: const Icon(
                         Icons.fingerprint,
                       ),
@@ -396,110 +428,7 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                       ),
                       onTap: () {},
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 18.sp),
-                      child: const Divider(
-                        height: 1,
-                        color: Color.fromARGB(255, 219, 217, 217),
-                        thickness: 1,
-                      ),
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.delete_forever_outlined,
-                        color: platformBrightness == Brightness.light
-                            ? Colors.black
-                            : Colors.white,
-                      ),
-                      title: Text(
-                        'Delete Account',
-                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                              fontSize: 17.sp,
-                              fontWeight: FontWeight.w400,
-                              letterSpacing: 3.sp,
-                            ),
-                      ),
-                      // subtitle: Text(
-                      //   'Delete your account',
-                      //   style: Theme.of(context)
-                      //       .textTheme
-                      //       .labelLarge!
-                      //       .copyWith(color: Colors.grey),
-                      // ),
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text("Account Deletion"),
-                              content: const Text(
-                                  "Are you sure you want to delete your account? This action cannot be undone."),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: const CustomTextWidget(
-                                    text: "Cancel",
-                                    // fontWeight: FontWeight.bold,
-                                    color: Color(0xFF4D84BD),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).pop(false);
-                                  },
-                                ),
-                                TextButton(
-                                  child: dashBoardController.loadingPage == true
-                                      ? const CupertinoActivityIndicator(
-                                          color: Color(0xFF4D84BD),
-                                        )
-                                      : const CustomTextWidget(
-                                          text: "Delete",
-                                          // fontWeight: FontWeight.bold,
-                                          color: Color(0xFF4D84BD),
-                                        ),
-                                  onPressed: () async {
-                                    bool result = await dashBoardController
-                                        .deleteaccount(context);
-                                    if (result == true) {
-                                      // settingsController.image = null;
-
-                                      SecureStorage.clearSecureStoragevalue(
-                                          'token');
-                                      SecureStorage.clearSecureStoragevalue(
-                                          'username');
-                                      SecureStorage.clearSecureStoragevalue(
-                                          'iin');
-                                      Provider.of<BiometricLogin>(context,
-                                              listen: false)
-                                          .changeButtonEnabled(false);
-                                      Provider.of<GoldController>(context,
-                                              listen: false)
-                                          .formattedValue = '';
-                                      Provider.of<DashBoardController>(context,
-                                              listen: false)
-                                          .currentIndex = 2;
-                                      Navigator.pushAndRemoveUntil(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const BoardingViewScreen(),
-                                        ),
-                                        (route) => false,
-                                      );
-                                      Provider.of<AuthController>(context,
-                                              listen: false)
-                                          .clearTheControllerValue();
-                                      showFlushbar(
-                                        context,
-                                        "Account deleted successfully",
-                                      );
-                                    }
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      },
-                    ),
+                    
                   ],
                 );
               }),

@@ -24,16 +24,16 @@ class PortfolioWidget extends StatelessWidget {
         );
       },
       child: SizedBox(
-        height: 50.h,
+        height: 40.h,
         width: double.infinity,
         child: Consumer<DashBoardController>(
             builder: (context, dashBoardController, _) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              VerticalSpacer(7.h),
+              // VerticalSpacer(7.h),
               const RoundChartWidget(),
-              VerticalSpacer(9.h),
+              VerticalSpacer(8.h),
               Text(
                 dashBoardController.summaryModel?.result?.totalAmount ?? '',
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(

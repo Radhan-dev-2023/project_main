@@ -1,7 +1,6 @@
 import 'package:finfresh_mobile/controller/top%20MFs%20controller/top_mfs_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/view/all%20mutual%20fund/screen_all_mutual_fund.dart';
-import 'package:finfresh_mobile/view/mutual%20fund%20screen/widgets/funds_widget.dart';
 import 'package:finfresh_mobile/view/mutual%20fund%20screen/widgets/goals_screen.dart';
 import 'package:finfresh_mobile/view/mutual%20fund%20screen/widgets/widget_for_toppicks_goals.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/stock_detail_screen.dart';
@@ -25,7 +24,7 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
     super.initState();
     Provider.of<TopMFsController>(context, listen: false).indexForFunds = 0;
     Provider.of<TopMFsController>(context, listen: false)
-        .callinginInit(context);
+        .callinginInit(context, 'Equity: Sectoral-Infrastructure');
   }
 
   @override
@@ -80,6 +79,7 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
                               topMfsController.changeFundindex(0);
                             },
                             child: Container(
+                              width: Adaptive.w(35),
                               height: Adaptive.h(4.5),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15.sp),
@@ -108,6 +108,7 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
                               topMfsController.changeFundindex(1);
                             },
                             child: Container(
+                              width: Adaptive.w(35),
                               height: Adaptive.h(4.5),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15.sp),
@@ -136,6 +137,7 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
                               topMfsController.changeFundindex(2);
                             },
                             child: Container(
+                              width: Adaptive.w(35),
                               height: Adaptive.h(4.5),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15.sp),
@@ -164,6 +166,7 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
                               topMfsController.changeFundindex(3);
                             },
                             child: Container(
+                              width: Adaptive.w(35),
                               height: Adaptive.h(4.5),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15.sp),
@@ -314,7 +317,7 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
                     ),
                     VerticalSpacer(2.h),
                     SizedBox(
-                      height: Adaptive.h(75),
+                      // height: Adaptive.h(75),
                       child: ListView.separated(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
@@ -466,7 +469,7 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
                     //     ),
                     //   ),
                     // ),
-                    VerticalSpacer(10.h)
+                    VerticalSpacer(1.h)
                   ],
                 );
               }

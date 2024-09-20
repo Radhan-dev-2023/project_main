@@ -5,6 +5,7 @@ import 'package:finfresh_mobile/view/add%20additional%20bank/screen_add_addition
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -69,15 +70,19 @@ class _ScreenListingOfBanksState extends State<ScreenListingOfBanks> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          'Bank Name : ${bankController.bankListingModel?.bank?[index].bankName ?? ''}',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .copyWith(
-                                                fontSize: 17.5.sp,
-                                                fontWeight: FontWeight.w600,
-                                              ),
+                                        SizedBox(
+                                          width: Adaptive.w(70),
+                                          child: Text(
+                                            'Bank Name : ${bankController.bankListingModel?.bank?[index].bankDetails?.bankName ?? ''} ',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .copyWith(
+                                                  fontSize: 17.5.sp,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                            overflow: TextOverflow.visible,
+                                          ),
                                         ),
                                         // HorizontalSpacer(29.w),
                                         // InkWell(
@@ -242,7 +247,7 @@ class _ScreenListingOfBanksState extends State<ScreenListingOfBanks> {
                                           .bodyMedium!
                                           .copyWith(
                                             fontSize: 17.5.sp,
-                                            fontWeight: FontWeight.w600,
+                                            fontWeight: FontWeight.w500,
                                           ),
                                     ),
                                     VerticalSpacer(1.h),
@@ -253,7 +258,7 @@ class _ScreenListingOfBanksState extends State<ScreenListingOfBanks> {
                                           .bodyMedium!
                                           .copyWith(
                                             fontSize: 17.5.sp,
-                                            fontWeight: FontWeight.w600,
+                                            fontWeight: FontWeight.w500,
                                           ),
                                     ),
                                     VerticalSpacer(1.h),
@@ -264,7 +269,7 @@ class _ScreenListingOfBanksState extends State<ScreenListingOfBanks> {
                                           .bodyMedium!
                                           .copyWith(
                                             fontSize: 17.5.sp,
-                                            fontWeight: FontWeight.w600,
+                                            fontWeight: FontWeight.w500,
                                           ),
                                     ),
                                     VerticalSpacer(1.h),

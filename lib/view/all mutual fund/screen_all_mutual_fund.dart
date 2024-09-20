@@ -2,13 +2,10 @@ import 'dart:developer';
 
 import 'package:finfresh_mobile/controller/top%20MFs%20controller/top_mfs_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
-import 'package:finfresh_mobile/view/all%20mutual%20fund/widget/search_feild.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/stock_detail_screen.dart';
 import 'package:finfresh_mobile/view/top%20mfs/widget/duration_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -27,7 +24,7 @@ class _ScreenAllMutualFundState extends State<ScreenAllMutualFund> {
     super.initState();
     log('calling init');
     Provider.of<TopMFsController>(context, listen: false)
-        .callinginInit(context);
+        .callinginInit(context, 'All');
     Provider.of<TopMFsController>(context, listen: false)
         .getSchemeAllCategory(context);
   }
@@ -317,11 +314,12 @@ class _ScreenAllMutualFundState extends State<ScreenAllMutualFund> {
                                                           .textTheme
                                                           .bodyMedium!
                                                           .copyWith(
-                                                              fontSize: 16.sp,
-                                                              // fontWeight:
-                                                              //     FontWeight.w500,
-                                                              color:const Color(
-                                                                  0xFF222222)),
+                                                            fontSize: 16.sp,
+                                                            // fontWeight:
+                                                            //     FontWeight.w500,
+                                                            color: const Color(
+                                                                0xFFF7BF05),
+                                                          ),
                                                       overflow:
                                                           TextOverflow.visible,
                                                     ),

@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final bankListingModel = bankListingModelFromJson(jsonString);
-
 import 'dart:convert';
 
 BankListingModel bankListingModelFromJson(String str) =>
@@ -22,22 +18,21 @@ class BankListingModel {
   factory BankListingModel.fromJson(Map<String, dynamic> json) =>
       BankListingModel(
         status: json["status"],
-        bank:
-            List<BankList>.from(json["bank"].map((x) => BankList.fromJson(x))),
+        bank: json["bank"] == null
+            ? []
+            : List<BankList>.from(
+                json["bank"]!.map((x) => BankList.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "status": status,
-        "bank": List<dynamic>.from(bank!.map((x) => x.toJson())),
+        "bank": bank == null
+            ? []
+            : List<dynamic>.from(bank!.map((x) => x.toJson())),
       };
 }
 
 class BankList {
-  dynamic status;
-  dynamic modeOfActivation;
-  dynamic impsStatus;
-  dynamic matchStatus;
-  dynamic rejectedReason;
   String? id;
   String? processFlag;
   String? iin;
@@ -56,14 +51,15 @@ class BankList {
   String? proofOfAccount;
   String? userid;
   bool? defaultbank;
+  dynamic status;
+  dynamic modeOfActivation;
+  dynamic impsStatus;
+  dynamic matchStatus;
+  dynamic rejectedReason;
   int? v;
+  BankDetails? bankDetails;
 
   BankList({
-    this.status,
-    this.modeOfActivation,
-    this.impsStatus,
-    this.matchStatus,
-    this.rejectedReason,
     this.id,
     this.processFlag,
     this.iin,
@@ -82,15 +78,16 @@ class BankList {
     this.proofOfAccount,
     this.userid,
     this.defaultbank,
+    this.status,
+    this.modeOfActivation,
+    this.impsStatus,
+    this.matchStatus,
+    this.rejectedReason,
     this.v,
+    this.bankDetails,
   });
 
   factory BankList.fromJson(Map<String, dynamic> json) => BankList(
-        status: json["status"],
-        modeOfActivation: json["mode_of_activation"],
-        impsStatus: json["imps_status"],
-        matchStatus: json["match_status"],
-        rejectedReason: json["rejected_reason"],
         id: json["_id"],
         processFlag: json["process_flag"],
         iin: json["iin"],
@@ -109,15 +106,18 @@ class BankList {
         proofOfAccount: json["proof_of_account"],
         userid: json["userid"],
         defaultbank: json["defaultbank"],
+        status: json["status"],
+        modeOfActivation: json["mode_of_activation"],
+        impsStatus: json["imps_status"],
+        matchStatus: json["match_status"],
+        rejectedReason: json["rejected_reason"],
         v: json["__v"],
+        bankDetails: json["bankDetails"] == null
+            ? null
+            : BankDetails.fromJson(json["bankDetails"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "status": status,
-        "mode_of_activation": modeOfActivation,
-        "imps_status": impsStatus,
-        "match_status": matchStatus,
-        "rejected_reason": rejectedReason,
         "_id": id,
         "process_flag": processFlag,
         "iin": iin,
@@ -136,6 +136,52 @@ class BankList {
         "proof_of_account": proofOfAccount,
         "userid": userid,
         "defaultbank": defaultbank,
+        "status": status,
+        "mode_of_activation": modeOfActivation,
+        "imps_status": impsStatus,
+        "match_status": matchStatus,
+        "rejected_reason": rejectedReason,
         "__v": v,
+        "bankDetails": bankDetails?.toJson(),
+      };
+}
+
+class BankDetails {
+  String? id;
+  String? bankCode;
+  String? bankName;
+  String? allowAch;
+  String? lastModifiedDate;
+  String? allowEmandateDebitcard;
+  String? allowEmandateNetbanking;
+
+  BankDetails({
+    this.id,
+    this.bankCode,
+    this.bankName,
+    this.allowAch,
+    this.lastModifiedDate,
+    this.allowEmandateDebitcard,
+    this.allowEmandateNetbanking,
+  });
+
+  factory BankDetails.fromJson(Map<String, dynamic> json) => BankDetails(
+        id: json["_id"],
+        bankCode: json["BANK_CODE"],
+        bankName: json["BANK_NAME"],
+        allowAch: json["ALLOW_ACH"],
+        lastModifiedDate: json["LAST_MODIFIED_DATE"],
+        allowEmandateDebitcard: json["ALLOW_EMANDATE_DEBITCARD"],
+        allowEmandateNetbanking: json["ALLOW_EMANDATE_NETBANKING"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "BANK_CODE": bankCode,
+        "BANK_NAME": bankName,
+        "ALLOW_ACH": allowAch,
+        "LAST_MODIFIED_DATE": lastModifiedDate,
+        "ALLOW_EMANDATE_DEBITCARD": allowEmandateDebitcard,
+        "ALLOW_EMANDATE_NETBANKING": allowEmandateNetbanking,
       };
 }

@@ -106,6 +106,7 @@ class GoldController extends ChangeNotifier {
   dynamic sellrate;
 
   String formattedValue = '';
+  String totelMg = '';
   RefershTokenService refershTokenService = RefershTokenService();
   dynamic goldvalue;
   bool isloading = false;
@@ -131,6 +132,7 @@ class GoldController extends ChangeNotifier {
   String valuetoBackend = 'gold';
   Future<void> getGoldrate(context, String email) async {
     formattedValue = '';
+    totelMg = '';
     isloading = true;
     // notifyListeners();
     try {
@@ -142,8 +144,10 @@ class GoldController extends ChangeNotifier {
         sellrate = await service.getsellGoldRate(context, valuetoBackend);
         await goldListing(context, email);
         initializeExpansionState();
+        totelMg = goldlistingmodel?.res?.total ?? ' ';
         if (sellrate != null) {
           dynamic value = goldlistingmodel?.res?.total * sellrate;
+
           log('valuee =$value');
           formattedValue = '₹ ${value.toStringAsFixed(2)}';
           log('formtted value ===$formattedValue');

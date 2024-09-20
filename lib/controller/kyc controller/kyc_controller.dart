@@ -184,6 +184,7 @@ class KycController extends ChangeNotifier {
     stateMasterDetail = value;
     stateValue = stateMasterDetail?.stateName ?? '';
     stateCode = stateMasterDetail?.stateCode;
+    log('state code${stateMasterDetail?.stateCode}');
     notifyListeners();
   }
 
@@ -2116,6 +2117,10 @@ class KycController extends ChangeNotifier {
       stateMasterDetail?.stateName =
           pincodeModel!.masterDetails!.state ?? 'State';
       cityController.text = pincodeModel!.masterDetails!.district ?? '';
+      stateMasterDetail = stateModel?.masterDetails?.firstWhere(
+        (state) => state.stateName == '${pincodeModel!.masterDetails!.state}',
+      );
+      updateStatevalue(stateMasterDetail);
 
       notifyListeners();
     } else {

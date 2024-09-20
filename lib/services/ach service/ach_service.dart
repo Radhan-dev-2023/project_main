@@ -33,7 +33,7 @@ class AchService {
         ? {
             "phonenumber": phoneNumber,
             "iin": iin,
-            "micr_no": micro,
+            "micr_no": micro.isEmpty ? '' : micro,
             "uc": uc,
             "ach_fromdate": fromdate,
             "ach_todate": todate,

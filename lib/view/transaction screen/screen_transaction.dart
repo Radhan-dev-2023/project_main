@@ -688,6 +688,30 @@ class ScreeenTranscations extends StatelessWidget {
                                           const Text('Lumpsum'),
                                         ],
                                       ),
+                                      Row(
+                                        children: [
+                                          Checkbox(
+                                            checkColor: Colors.white,
+                                            activeColor:
+                                                const Color(0xFF4D84BD),
+                                            value: false,
+                                            onChanged: (value) {},
+                                          ),
+                                          const Text('STP'),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Checkbox(
+                                            checkColor: Colors.white,
+                                            activeColor:
+                                                const Color(0xFF4D84BD),
+                                            value: false,
+                                            onChanged: (value) {},
+                                          ),
+                                          const Text('SWP'),
+                                        ],
+                                      ),
                                     ],
                                   ),
                                 ),

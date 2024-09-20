@@ -99,7 +99,7 @@ class FilterController extends ChangeNotifier {
       } else {
         fliterModel =
             await filterService.fetchFilterdata(typeList, statusList, context);
-        filteredList = fliterModel?.result ?? [];
+        filteredList = fliterModel?.result?.reversed.toList() ?? [];
         log('filtere list =${filteredList.toList()}');
         filterPageLoading = false;
         notifyListeners();

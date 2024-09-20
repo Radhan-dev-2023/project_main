@@ -53,8 +53,8 @@ class _ScreenBuyState extends State<ScreenBuy>
                 colors: goldController.goldselecteed
                     ? [const Color(0xFFF7BF05), const Color(0xFFF7BF05)]
                     : [
-                        const Color(0xFFA3A3A3),
-                        const Color(0xFFA3A3A3),
+                        const Color(0xFF939391),
+                        const Color(0xFFD0D0D0),
                         // const Color(0xFFD0D0D0),
                       ],
                 begin: Alignment.topCenter,

@@ -1,7 +1,6 @@
 import 'package:finfresh_mobile/controller/kyc%20controller/kyc_controller.dart';
 import 'package:finfresh_mobile/model/state%20model/state_model.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
-import 'package:finfresh_mobile/utilities/constant/snackbar.dart';
 import 'package:finfresh_mobile/view/kyc/nri%20address/nri_address_screen.dart';
 import 'package:finfresh_mobile/view/kyc/parent%20details%20adding/adding_parent_details.dart';
 import 'package:finfresh_mobile/view/widgets/custom_button_widget.dart';
@@ -23,7 +22,6 @@ class _ScreenAddressState extends State<ScreenAddress> {
     Provider.of<KycController>(context, listen: false).updatePagenumber('5');
     Provider.of<KycController>(context, listen: false).stateMasterDetail = null;
     Provider.of<KycController>(context, listen: false).fetchState();
-    // TODO: implement initState
     super.initState();
   }
 
@@ -114,6 +112,37 @@ class _ScreenAddressState extends State<ScreenAddress> {
                         hintText: 'Address 3'),
                   ),
                   VerticalSpacer(3.h),
+                  SizedBox(
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      controller: kycController.pinCodeController,
+                      style: Theme.of(context).textTheme.labelLarge!,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      onChanged: (value) {
+                        if (value.isNotEmpty) {
+                          kycController.getStateAndDistrict(value, context);
+                        }
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Enter the pincode';
+                        }
+                        if (!RegExp(r'^\d{6}$').hasMatch(value)) {
+                          return 'Invalid Pincode';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                          helperText: '',
+                          // filled: true,
+                          // fillColor: const Color(0xFF0E1330),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          hintText: 'Pincode'),
+                    ),
+                  ),
+
                   // Row(
                   //   mainAxisSize: MainAxisSize.min,
                   //   children: [
@@ -205,66 +234,26 @@ class _ScreenAddressState extends State<ScreenAddress> {
                   //   ),
                   // ),
                   VerticalSpacer(3.h),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(
-                        // height: 60,
-                        width: 50.w,
-                        child: TextFormField(
-                          controller: kycController.countryController,
-                          style: Theme.of(context).textTheme.labelLarge!,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Enter the country name';
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                            helperText: '',
-                            // filled: true,
-                            // fillColor: const Color(0xFF0E1330),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            hintText: 'Country',
-                          ),
-                        ),
+                  SizedBox(
+                    child: TextFormField(
+                      controller: kycController.countryController,
+                      style: Theme.of(context).textTheme.labelLarge!,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Enter the country name';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        helperText: '',
+                        // filled: true,
+                        // fillColor: const Color(0xFF0E1330),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        hintText: 'Country',
                       ),
-                      HorizontalSpacer(5.w),
-                      SizedBox(
-                        // height: 60,
-                        width: 37.w,
-                        child: TextFormField(
-                          keyboardType: TextInputType.number,
-                          controller: kycController.pinCodeController,
-                          style: Theme.of(context).textTheme.labelLarge!,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          onChanged: (value) {
-                            if (value.isNotEmpty) {
-                              kycController.getStateAndDistrict(value, context);
-                            }
-                          },
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Enter the pincode';
-                            }
-                            if (!RegExp(r'^\d{6}$').hasMatch(value)) {
-                              return 'Invalid Pincode';
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                              helperText: '',
-                              // filled: true,
-                              // fillColor: const Color(0xFF0E1330),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              hintText: 'Pincode'),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -341,14 +330,13 @@ class _ScreenAddressState extends State<ScreenAddress> {
                             if (kycController.addressFormkey.currentState!
                                 .validate()) {
                               // if (kycController.stateValue != "State") {
-                                kycController.addAddress();
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const ScreenNriAdress(),
-                                  ),
-                                );
+                              kycController.addAddress();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const ScreenNriAdress(),
+                                ),
+                              );
                               // } else {
                               //   showSnackBar(context,
                               //       'Enter the All The Mandatory Fields');
