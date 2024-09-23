@@ -5,6 +5,7 @@ import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
 import 'package:finfresh_mobile/view/digi%20gold%20screen/buy%20screen/buy_screen.dart';
 import 'package:finfresh_mobile/view/digi%20gold%20screen/sell%20gold%20listing%20screen/screen_sellgold_listing.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -194,6 +195,7 @@ class _ScreenGoldBuyingAndSellingState
                                     ),
                                   ),
                                 ),
+
                                 VerticalSpacer(1.5.h),
                                 Text(
                                   goldController.goldselecteed
@@ -215,22 +217,87 @@ class _ScreenGoldBuyingAndSellingState
                                   style: const TextStyle(color: Colors.white),
                                 ),
                                 VerticalSpacer(1.h),
-                                Text(
-                                  'Current value',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18.sp,
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 8.0,
+                                    right: 8.0,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      HorizontalSpacer(Adaptive.w(11)),
+                                      SizedBox(
+                                        width: Adaptive.w(30),
+                                        child: Text(
+                                          'Current value',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18.sp,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.start,
+                                        ),
+                                      ),
+                                      HorizontalSpacer(Adaptive.w(10)),
+                                      SizedBox(
+                                        width: Adaptive.w(30),
+                                        child: Text(
+                                          goldController.goldselecteed
+                                              ? 'Total Mg'
+                                              : "Total g",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18.sp,
+                                          ),
+                                          textAlign: TextAlign.start,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 // VerticalSpacer(1.h),
-                                Text(
-                                  goldController.formattedValue,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20.sp,
-                                    fontWeight: FontWeight.bold,
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 8.0,
+                                    right: 8.0,
                                   ),
-                                  overflow: TextOverflow.ellipsis,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      HorizontalSpacer(Adaptive.w(11)),
+                                      SizedBox(
+                                        width: Adaptive.w(30),
+                                        child: Text(
+                                          goldController.formattedValue,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20.sp,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.start,
+                                        ),
+                                      ),
+                                      HorizontalSpacer(Adaptive.w(10)),
+                                      SizedBox(
+                                        width: Adaptive.w(30),
+                                        child: Text(
+                                          goldController
+                                                  .goldlistingmodel?.res?.total
+                                                  .toStringAsFixed(2) ??
+                                              '0.0',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20.sp,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.start,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -250,7 +317,29 @@ class _ScreenGoldBuyingAndSellingState
                                     color: Colors.white,
                                   ),
                                 ),
-                              )
+                              ),
+                        Positioned(
+                          top: 29.sp,
+                          right: 14.sp,
+                          child: Container(
+                            width: Adaptive.w(20),
+                            height: Adaptive.h(5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(14.sp),
+                              color: Colors.black,
+                            ),
+                            child: Center(
+                              child: Text(
+                                goldController.goldselecteed ? '24 Kt' : '999',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 19,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                     // Padding(
