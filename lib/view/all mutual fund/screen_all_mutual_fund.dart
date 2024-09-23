@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:finfresh_mobile/controller/top%20MFs%20controller/top_mfs_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
+import 'package:finfresh_mobile/view/all%20mutual%20fund/widget/category_toggle_widget.dart';
 import 'package:finfresh_mobile/view/stock%20details%20screen/stock_detail_screen.dart';
 import 'package:finfresh_mobile/view/top%20mfs/widget/duration_widget.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
@@ -23,6 +24,7 @@ class _ScreenAllMutualFundState extends State<ScreenAllMutualFund> {
   void initState() {
     super.initState();
     log('calling init');
+    Provider.of<TopMFsController>(context, listen: false).currentIndex = 0;
     Provider.of<TopMFsController>(context, listen: false)
         .callinginInit(context, 'All');
     Provider.of<TopMFsController>(context, listen: false)
@@ -178,6 +180,7 @@ class _ScreenAllMutualFundState extends State<ScreenAllMutualFund> {
                               letterSpacing: 3.sp,
                             ),
                       ),
+                      const CategoryToggleWidget(),
                       DurationButton(
                         category: topMfsController
                             .categoryList[topMfsController.currentIndex],

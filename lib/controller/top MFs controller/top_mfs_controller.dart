@@ -16,6 +16,7 @@ class TopMFsController extends ChangeNotifier {
   int currentIndex = 0;
   void changeCurrentIndex(int index) {
     currentIndex = index;
+    pageControllerForCategoryToggleButton.jumpToPage(index);
     notifyListeners();
   }
 
@@ -39,6 +40,8 @@ class TopMFsController extends ChangeNotifier {
   ];
   String returntoBackend = '3Y';
   final PageController pageController = PageController(initialPage: 4);
+  final PageController pageControllerForCategoryToggleButton =
+      PageController(initialPage: 0);
 
   void changeValueinDuration(String value) {
     returns = value;
