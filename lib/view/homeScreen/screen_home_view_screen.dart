@@ -4,6 +4,7 @@ import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_
 import 'package:finfresh_mobile/controller/goldController/gold_controller.dart';
 import 'package:finfresh_mobile/view/digi%20gold%20screen/digi_gold_screen.dart';
 import 'package:finfresh_mobile/view/digi%20gold%20screen/gold%20buying%20screen/screen_gold_buying_selling.dart';
+import 'package:finfresh_mobile/view/expense%20summary/screen_expense_summary.dart';
 import 'package:finfresh_mobile/view/homeScreen/widgets/home_screens.dart';
 import 'package:finfresh_mobile/view/mutual%20fund%20screen/screen_mutual_fund.dart';
 import 'package:finfresh_mobile/view/settings%20page/screen_settings.dart';
@@ -57,7 +58,7 @@ class _ScreenHomeViewState extends State<ScreenHomeView> {
           ? const ScreenGoldBuyingAndSelling()
           : const ScreenDigiGold(),
       const ScreenHome(),
-      const ScreeenTranscations(),
+      const FinanceUI(),
       const ScreenSettings()
     ];
     List<BottomBarItem> bottomList = [
