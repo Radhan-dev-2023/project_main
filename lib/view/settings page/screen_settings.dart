@@ -5,6 +5,7 @@ import 'package:finfresh_mobile/controller/goldController/gold_controller.dart';
 import 'package:finfresh_mobile/controller/login%20pin%20controller/login_pin_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/secure_storage.dart';
+import 'package:finfresh_mobile/view/expense%20summary/screen_expense_summary.dart';
 import 'package:finfresh_mobile/view/onboarding%20screen/on_boarding_view_screen.dart';
 import 'package:finfresh_mobile/view/screen%20profile/screen_profile.dart';
 import 'package:finfresh_mobile/view/settings%20page/widget/terms_and_condition.dart';
@@ -177,6 +178,40 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                     //     thickness: 1,
                     //   ),
                     // ),
+                    ListTile(
+                      leading: Image.asset(
+                        'assets/images/settingsicon/Group (3).png',
+                        height: Adaptive.h(4),
+                        width: Adaptive.w(6),
+                        color: platformBrightness == Brightness.light
+                            ? Colors.black
+                            : Colors.white,
+                      ),
+
+                      // title: Text(
+                      //   'Email',
+                      //   style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                      //         fontSize: 17.sp,
+                      //         fontWeight: FontWeight.w400,
+                      //         letterSpacing: 3.sp,
+                      //       ),
+                      // ),
+                      title: Text(
+                        'Expanse summary',
+                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                              fontSize: 17.sp,
+                              fontWeight: FontWeight.w400,
+                              letterSpacing: 3.sp,
+                            ),
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const FinanceUI(),
+                            ));
+                      },
+                    ),
                     ListTile(
                       leading: Image.asset(
                         'assets/images/settingsicon/Group (3).png',
@@ -428,7 +463,6 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                       ),
                       onTap: () {},
                     ),
-                    
                   ],
                 );
               }),

@@ -2,6 +2,7 @@ import 'package:finfresh_mobile/controller/achController/ach_controller.dart';
 import 'package:finfresh_mobile/controller/auth/auth_controller.dart';
 import 'package:finfresh_mobile/controller/bank%20controller/bank_controller.dart';
 import 'package:finfresh_mobile/controller/dash%20board%20controller/dash_board_controller.dart';
+import 'package:finfresh_mobile/controller/expense%20summary%20controller/expense_summary_controller.dart';
 import 'package:finfresh_mobile/controller/fatcha%20registration/fatcha_registration.dart';
 import 'package:finfresh_mobile/controller/filter%20controller/filter_controller.dart';
 import 'package:finfresh_mobile/controller/goldController/gold_controller.dart';
@@ -107,6 +108,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => GoldController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ExpenseSummaryController(),
         ),
       ],
       child: ResponsiveSizer(builder: (context, orientation, screenType) {
