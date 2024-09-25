@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:finfresh_mobile/model/report%20details%20modal/report_details_model.dart';
+import 'package:finfresh_mobile/model/report%20summary%20model/report_summary_model.dart';
 import 'package:finfresh_mobile/model/status%20check%20model/status_check_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
@@ -101,25 +103,10 @@ class ExpenseServices {
       );
 
       print('fetchStatusCheck-------->>> ${response.body}');
-
+      log('response of status check ===${response.statusCode}');
       if (response.statusCode == 200) {
-        /* if(statusCheck.isNotEmpty&&statusCheck[0].status?.txnStatus?[0].code=="ReportGenerated")*/
-        //final statusResponseData = jsonDecode(response.body);
         statusCheckResponse = StatusCheck.fromJson(json.decode(response.body));
-        // if (statusCheckResponse.success == true &&
-        //     statusCheckResponse.status?.txnStatus?.first.code ==
-        //         'ReportGenerated' /*statusCheck[0].status?.txnStatus?[0].code == "ReportGenerated"*/) {
-        //   //  if(statusCheck.isNotEmpty&&statusCheck[0].status?.txnStatus?[0].code=="ReportGenerated"){
 
-        //   print(
-        //       "Status Check txn_id: ${statusCheckResponse.status?.txnStatus?.first.txnId ?? ''}");
-
-        //   _txn_id = statusCheckResponse.status?.txnStatus?.first.txnId ?? '';
-        //   // final txnId = statusResponseData['responseData']['txn_id'];
-        // } else {
-        //   showFlushbar(
-        //       context, 'Status Check Failed Due to:${response.statusCode}');
-        // }
         return statusCheckResponse;
       }
       // else {
@@ -147,12 +134,11 @@ class ExpenseServices {
     } catch (error) {
       showFlushbar(context, 'Status Check Exception: $error');
       return null;
-    } finally {
-      return null;
     }
   }
 
-  Future<void> retrieveReportAPI(context) async {
+  ReportSummaryModel reportSummaryModel = ReportSummaryModel();
+  Future<ReportSummaryModel?> retrieveReportAPI(context) async {
     String phoneNumber = await SecureStorage.readToken('phoneNumber');
     String userId = await SecureStorage.readToken('userId');
     String token = await SecureStorage.readToken('token');
@@ -177,34 +163,27 @@ class ExpenseServices {
 
       if (response.statusCode == 200) {
         log('retrieveReportAPI-------->>> ${response.body}');
-        // reportDataModel = ReportDataHiveModel.fromJson(response.body);
-
-        // if (reportDataModel.success == true) {
-        //   await _deleteReportData();
-        //   await storeReportDataAndExpireTime(reportDataModel);
-        //   notifyListeners();
-        // } else {
-        //   showSnackBar(
-        //       'Report Retrieval Server responded with status: ${response.statusCode}');
-        // }
-        // final reportResponseData = jsonDecode(response.body);
-        // if (_reportModelData?.success == false) {
-        //   showSnackBar(
-        //       'Report Retrieval Failed status is ${_reportModelData?.success}');
-        // }
+        reportSummaryModel =
+            ReportSummaryModel.fromJson(json.decode(response.body));
+        return reportSummaryModel;
       } else {
         showFlushbar(context,
             'Report Retrieval Server responded with status: ${response.statusCode}');
+        return null;
       }
     } on SocketException catch (_) {
       showFlushbar(context, 'Network error: Unable to connect to the server.');
+      return null;
     } on FormatException catch (_) {
       showFlushbar(
           context, 'Format Execption:Unable to connect to the server.');
+      return null;
     } on PlatformException catch (_) {
       showFlushbar(context, 'PlatformException :Please Check the Permissions.');
+      return null;
     } catch (error) {
       showFlushbar(context, 'Report Retrieval Exception: $error');
+      return null;
     } finally {}
   }
 }

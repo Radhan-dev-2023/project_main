@@ -3,8 +3,10 @@ import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
 import 'package:finfresh_mobile/view/expense%20summary/widgets/screen_webviewforexpense.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -21,7 +23,13 @@ class _FinanceUIState extends State<FinanceUI> {
   void initState() {
     super.initState();
     Provider.of<ExpenseSummaryController>(context, listen: false).monthAsign();
-    function();
+    if (Provider.of<ExpenseSummaryController>(context, listen: false)
+            .isfetched ==
+        false) {
+      function();
+    } else {
+      print('Already fetched');
+    }
   }
 
   void function() async {
@@ -95,6 +103,9 @@ class _FinanceUIState extends State<FinanceUI> {
                         onChanged: (DateTime? value) {
                           if (value != null) {
                             controller.changeValue(value);
+                            controller.filterListBasedonMonth(
+                                controller.currentindex,
+                                controller.selectedMonth?.month);
                             Navigator.pop(context);
                           }
                         },
@@ -139,15 +150,61 @@ class _FinanceUIState extends State<FinanceUI> {
                       ),
                       trailing: Radio(
                         activeColor: Colors.black,
-                        value: controller.intialStringforRadio,
-                        groupValue: controller.sortList,
+                        value: controller.sortList[index],
+                        groupValue: controller.intialStringforRadio,
                         onChanged: (value) {
                           if (value != null) {
                             controller.changeofSort(value);
+
                             Navigator.pop(context);
                           }
                         },
                       ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showBankList(
+      BuildContext context, ExpenseSummaryController controller) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Column(
+          // mainAxisSize: MainAxisSize.min,
+          children: [
+            VerticalSpacer(1.h),
+            Text('Select Bank'),
+            Expanded(
+              child: ListView.builder(
+                padding: EdgeInsets.all(10.0),
+                itemCount:
+                    controller.reportSummaryModel?.reportData?.banks?.length ??
+                        0,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 8.0), // Add vertical padding
+                    child: ListTile(
+                      onTap: () {
+                        controller.changeBank(index);
+                        Navigator.pop(context);
+                      },
+                      title: Text(
+                        controller.reportSummaryModel?.reportData?.banks?[index]
+                                .bank ??
+                            '',
+                        textAlign: TextAlign.left,
+                      ),
+                      subtitle: Text(controller.reportSummaryModel?.reportData
+                              ?.banks?[index].accounts?[index].accountNumber ??
+                          ''),
                     ),
                   );
                 },
@@ -196,191 +253,305 @@ class _FinanceUIState extends State<FinanceUI> {
             ? const LoadingWidget()
             : Container(
                 margin: EdgeInsets.all(15.sp),
-                child: Column(
-                  children: [
-                    // Date Picker Row
-                    // Padding(
-                    //   padding: const EdgeInsets.all(8.0),
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.center,
-                    //     children: [
-                    //       IconButton(
-                    //         icon: Icon(Icons.arrow_left),
-                    //         onPressed: () =>
-                    //             _changeMonth(-1), // Decrease the date by 1 day
-                    //       ),
-
-                    //       // Date Button with Calendar Icon
-                    //       ElevatedButton.icon(
-                    //         onPressed: () {},
-                    //         icon: Icon(Icons.calendar_today),
-                    //         label: Text(monthFormat
-                    //             .format(selectedDate)), // Display formatted date
-                    //       ),
-
-                    //       // Right arrow
-                    //       IconButton(
-                    //         icon: Icon(Icons.arrow_right),
-                    //         onPressed: () =>
-                    //             _changeMonth(1), // Increase the date by 1 day
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                    // Circular Chart
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Axis Bank',
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                        ),
-                        Text(
-                          'Balance',
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'xxxxx035',
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                        ),
-                        Text(
-                          '₹ 1008',
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                        ),
-                      ],
-                    ),
-                    VerticalSpacer(1.h),
-                    SizedBox(
-                      height: 200,
-                      child: PieChart(
-                        PieChartData(
-                          sections: [
-                            PieChartSectionData(
-                                value: 95.3,
-                                color: Colors.teal,
-                                title: "95.3%"),
-                            PieChartSectionData(
-                                value: 1.5, color: Colors.pink, title: "1.5%"),
-                            PieChartSectionData(
-                                value: 1.5,
-                                color: Colors.yellow,
-                                title: "1.5%"),
-                            PieChartSectionData(
-                                value: 1.3, color: Colors.green, title: "1.3%"),
-                          ],
-                        ),
-                      ),
-                    ),
-                    VerticalSpacer(Adaptive.h(2)),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Income",
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                        ),
-                        Text(
-                          "Expense",
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                        ),
-                      ],
-                    ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "₹ 1234567",
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                        ),
-                        Text(
-                          "₹ 123456",
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                        ),
-                      ],
-                    ),
-                    VerticalSpacer(Adaptive.h(2)),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Transactions",
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            _showSortPicker(context, controller);
-                          },
-                          child: Icon(
-                            Icons.sort,
-                            size: Adaptive.h(3),
-                          ),
-                        )
-                      ],
-                    ),
-                    VerticalSpacer(Adaptive.h(2)),
-                    SizedBox(
-                      height: Adaptive.h(42),
-                      child: ListView.separated(
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              // tileColor: Colors.white,
-                              leading: Icon(Icons.person),
-                              title: Text('Expense Name ${index + 1}'),
-                              subtitle: Text(
-                                '24/Sept/2024',
-                                style: TextStyle(color: Colors.grey),
+                child: controller.isReportLoading
+                    ? const LoadingWidget()
+                    : controller.reportSummaryModel == null ||
+                            controller.listofMonths.isEmpty
+                        ? const Center(
+                            child: Text(
+                              "No data found for this month",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.red,
                               ),
-                              trailing: Text('₹100${index + 1}'),
-                            );
-                          },
-                          separatorBuilder: (context, index) =>
-                              VerticalSpacer(Adaptive.h(1)),
-                          itemCount: 10),
-                    ),
-                  ],
-                ),
+                              textAlign: TextAlign.center,
+                            ),
+                          )
+                        : SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    _showBankList(context, controller);
+                                  },
+                                  child: SizedBox(
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              controller
+                                                      .reportSummaryModel
+                                                      ?.reportData
+                                                      ?.banks?[0]
+                                                      .bank ??
+                                                  '',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .copyWith(
+                                                    fontSize: 16.sp,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                            ),
+                                            Text(
+                                              'Balance',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .copyWith(
+                                                    fontSize: 16.sp,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              controller
+                                                      .reportSummaryModel
+                                                      ?.reportData
+                                                      ?.banks?[controller
+                                                          .currentindex]
+                                                      .accounts?[controller
+                                                          .currentindex]
+                                                      .accountNumber ??
+                                                  '',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .copyWith(
+                                                    fontSize: 16.sp,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                            ),
+                                            SizedBox(
+                                              width: Adaptive.w(37),
+                                              child: Text(
+                                                controller
+                                                        .reportSummaryModel
+                                                        ?.reportData
+                                                        ?.banks?[controller
+                                                            .currentindex]
+                                                        .accounts?[controller
+                                                            .currentindex]
+                                                        .currentBalance ??
+                                                    '',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .copyWith(
+                                                      fontSize: 16.sp,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                overflow: TextOverflow.visible,
+                                                textAlign: TextAlign.right,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                VerticalSpacer(Adaptive.h(2)),
+                                SizedBox(
+                                  height: 200,
+                                  child: PieChart(
+                                    PieChartData(
+                                      sections: [
+                                        PieChartSectionData(
+                                          value: controller.totalincome,
+                                          color:
+                                              Colors.teal, // Color for income
+                                          title:
+                                              "${controller.incomePercentage.toStringAsFixed(1)}%",
+                                          titleStyle: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        PieChartSectionData(
+                                          value: controller.totalExpense,
+                                          color:
+                                              Colors.red, // Color for expenses
+                                          title:
+                                              "${controller.expensePercentage.toStringAsFixed(1)}%",
+                                          titleStyle: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                VerticalSpacer(Adaptive.h(2)),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    SizedBox(
+                                      width: Adaptive.w(37),
+                                      child: Text(
+                                        "Income",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                        textAlign: TextAlign.center,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: Adaptive.w(37),
+                                      child: Text(
+                                        "Expense",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                        textAlign: TextAlign.center,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    SizedBox(
+                                      width: Adaptive.w(37),
+                                      child: Text(
+                                        "₹ ${controller.totalincome.abs().toStringAsFixed(0)}",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: Adaptive.w(37),
+                                      child: Text(
+                                        "₹ ${controller.totalExpense.abs().toStringAsFixed(0)}",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                VerticalSpacer(Adaptive.h(2)),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Transactions",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .copyWith(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        _showSortPicker(context, controller);
+                                      },
+                                      child: Icon(
+                                        Icons.sort,
+                                        size: Adaptive.h(3),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                VerticalSpacer(Adaptive.h(2)),
+                                SizedBox(
+                                  height: Adaptive.h(40),
+                                  child: controller.listofMonths.isEmpty
+                                      ? const Center(
+                                          child: Text('No data found'),
+                                        )
+                                      : ListView.separated(
+                                          itemBuilder: (context, index) {
+                                            return ListTile(
+                                              // tileColor: Colors.white,
+                                              leading: controller
+                                                  .getCategoryIcon(controller
+                                                      .listofMonths[index]
+                                                      .category),
+                                              title: Text(controller
+                                                  .listofMonths[index]
+                                                  .narration),
+                                              subtitle: Text(
+                                                controller.listofMonths[index]
+                                                    .transactionTimestamp
+                                                    .toString()
+                                                    .substring(0, 10),
+                                                style: const TextStyle(
+                                                    color: Colors.grey),
+                                              ),
+                                              trailing: Text(
+                                                controller
+                                                    .listofMonths[index].amount
+                                                    .toString(),
+                                                // '${controller.reportSummaryModel?.reportData?.banks?[controller.currentindex].accounts?[controller.currentindex].transactions?[index].amount ?? 0.0}',
+                                                style: TextStyle(
+                                                    fontSize: 19,
+                                                    color: (controller
+                                                                    .listofMonths[
+                                                                        index]
+                                                                    .amount ??
+                                                                0) <
+                                                            0
+                                                        ? Colors.red
+                                                        : Colors.green),
+                                              ),
+                                            );
+                                          },
+                                          separatorBuilder: (context, index) =>
+                                              VerticalSpacer(Adaptive.h(1)),
+                                          itemCount:
+                                              controller.listofMonths.length),
+                                  //  controller
+                                  //         .reportSummaryModel
+                                  //         ?.reportData
+                                  //         ?.banks?[controller.currentindex]
+                                  //         .accounts?[controller.currentindex]
+                                  //         .transactions
+                                  //         ?.length ??
+                                  //     0
+                                ),
+                              ],
+                            ),
+                          ),
               ),
       );
     });

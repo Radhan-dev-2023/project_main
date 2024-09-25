@@ -27,7 +27,7 @@ class _ScreenWebviewForExpense extends State<ScreenWebviewForExpense> {
       ..setBackgroundColor(const Color(0x00000000))
       ..setNavigationDelegate(
         NavigationDelegate(
-          onPageFinished: (String url) {
+          onPageFinished: (String url) async {
             // debugPrint('Page finished loading: $url');
             if (url.contains(
                 "https://webhookandredirecturl.onrender.com/return-url")) {
@@ -52,12 +52,21 @@ class _ScreenWebviewForExpense extends State<ScreenWebviewForExpense> {
                     );
                   },
                 );
-                Provider.of<ExpenseSummaryController>(context, listen: false)
-                    .fetchStatusCheck(context)
-                    .then((_) {
+                bool resul = await Provider.of<ExpenseSummaryController>(
+                        context,
+                        listen: false)
+                    .fetchStatusCheck(context);
+                if (resul) {
                   Navigator.pop(context);
                   Navigator.pop(context);
-                });
+                } else {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                }
+                //     .then((_) {
+                //   Navigator.pop(context);
+                //   Navigator.pop(context);
+                // });
               }
             }
           },
