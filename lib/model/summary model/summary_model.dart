@@ -20,12 +20,12 @@ class SummaryModel {
 
   factory SummaryModel.fromJson(Map<String, dynamic> json) => SummaryModel(
         status: json["status"],
-        result: Result.fromJson(json["result"]),
+        result: json["result"] != null ? Result.fromJson(json["result"]) : null,
       );
 
   Map<String, dynamic> toJson() => {
         "status": status,
-        "result": result!.toJson(),
+        "result": result?.toJson(),
       };
 }
 
@@ -36,6 +36,8 @@ class Result {
   String? totalAmount;
   dynamic growth;
   String? pendingAmount;
+  Gold? gold;
+  Silver? silver;
 
   Result({
     this.netInvestment,
@@ -44,6 +46,8 @@ class Result {
     this.totalAmount,
     this.growth,
     this.pendingAmount,
+    this.gold,
+    this.silver,
   });
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
@@ -53,6 +57,8 @@ class Result {
         totalAmount: json["total_amount"],
         growth: json["growth"],
         pendingAmount: json["pending_amount"],
+        gold: json["gold"] != null ? Gold.fromJson(json["gold"]) : null,
+        silver: json["silver"] != null ? Silver.fromJson(json["silver"]) : null,
       );
 
   Map<String, dynamic> toJson() => {
@@ -62,5 +68,55 @@ class Result {
         "total_amount": totalAmount,
         "growth": growth,
         "pending_amount": pendingAmount,
+        "gold": gold?.toJson(),
+        "silver": silver?.toJson(),
+      };
+}
+
+class Gold {
+  String? totalInvested;
+  String? totalAmount;
+  double? totalGain;
+
+  Gold({
+    this.totalInvested,
+    this.totalAmount,
+    this.totalGain,
+  });
+
+  factory Gold.fromJson(Map<String, dynamic> json) => Gold(
+        totalInvested: json["totalInvested"],
+        totalAmount: json["totalAmount"],
+        totalGain: json["totalGain"]?.toDouble(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "totalInvested": totalInvested,
+        "totalAmount": totalAmount,
+        "totalGain": totalGain,
+      };
+}
+
+class Silver {
+  String? totalInvested;
+  String? totalAmount;
+  double? totalGain;
+
+  Silver({
+    this.totalInvested,
+    this.totalAmount,
+    this.totalGain,
+  });
+
+  factory Silver.fromJson(Map<String, dynamic> json) => Silver(
+        totalInvested: json["totalInvested"],
+        totalAmount: json["totalAmount"],
+        totalGain: json["totalGain"]?.toDouble(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "totalInvested": totalInvested,
+        "totalAmount": totalAmount,
+        "totalGain": totalGain,
       };
 }

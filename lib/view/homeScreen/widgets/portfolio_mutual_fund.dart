@@ -35,7 +35,18 @@ class PortfolioWidget extends StatelessWidget {
               const RoundChartWidget(),
               VerticalSpacer(8.h),
               Text(
-                dashBoardController.summaryModel?.result?.totalAmount ?? '',
+                dashBoardController.indexForButtonForGraph == 0
+                    ? dashBoardController.summaryModel?.result?.totalAmount ??
+                        ''
+                    : dashBoardController.indexForButtonForGraph == 1
+                        ? dashBoardController
+                                .summaryModel?.result?.gold?.totalAmount ??
+                            ''
+                        : dashBoardController.indexForButtonForGraph == 2
+                            ? dashBoardController.summaryModel?.result?.silver
+                                    ?.totalAmount ??
+                                ''
+                            : 'No Data Available',
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.bold,
@@ -59,9 +70,21 @@ class PortfolioWidget extends StatelessWidget {
                         ),
                         VerticalSpacer(1.h),
                         Text(
-                          dashBoardController
-                                  .summaryModel?.result?.netInvestment ??
-                              '',
+                          dashBoardController.indexForButtonForGraph == 0
+                              ? dashBoardController
+                                      .summaryModel?.result?.netInvestment ??
+                                  ''
+                              : dashBoardController.indexForButtonForGraph == 1
+                                  ? dashBoardController.summaryModel?.result
+                                          ?.gold?.totalInvested ??
+                                      ''
+                                  : dashBoardController
+                                              .indexForButtonForGraph ==
+                                          2
+                                      ? dashBoardController.summaryModel?.result
+                                              ?.silver?.totalInvested ??
+                                          ''
+                                      : 'No Data Available',
                           style:
                               Theme.of(context).textTheme.bodyMedium!.copyWith(
                                     fontWeight: FontWeight.bold,
@@ -83,9 +106,23 @@ class PortfolioWidget extends StatelessWidget {
                         ),
                         VerticalSpacer(1.h),
                         Text(
-                          dashBoardController
-                                  .summaryModel?.result?.netEquityGains ??
-                              '',
+                          dashBoardController.indexForButtonForGraph == 0
+                              ? dashBoardController
+                                      .summaryModel?.result?.netEquityGains ??
+                                  ''
+                              : dashBoardController.indexForButtonForGraph == 1
+                                  ? dashBoardController.summaryModel?.result
+                                          ?.gold?.totalGain!
+                                          .toStringAsFixed(2) ??
+                                      ''
+                                  : dashBoardController
+                                              .indexForButtonForGraph ==
+                                          2
+                                      ? dashBoardController.summaryModel?.result
+                                              ?.silver?.totalGain!
+                                              .toStringAsFixed(2) ??
+                                          ''
+                                      : 'No Data Available',
                           style:
                               Theme.of(context).textTheme.bodyMedium!.copyWith(
                                     fontWeight: FontWeight.bold,

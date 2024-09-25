@@ -18,6 +18,17 @@ class DashBoardController extends ChangeNotifier {
   RefershTokenService refershTokenService = RefershTokenService();
   int currentIndex = 2;
   bool isSwitched = false;
+  double totalAmount = 0.0;
+  double gain = 0.0;
+  double invest = 0.0;
+  dynamic percetageforinvest;
+  dynamic prectageForGain;
+  int indexForButtonForGraph = 0;
+  void changeindexOfButtonForGraph(int index) {
+    indexForButtonForGraph = index;
+    notifyListeners();
+  }
+
   void changeToogle() async {
     isSwitched = !isSwitched;
     notifyListeners();
@@ -43,7 +54,7 @@ class DashBoardController extends ChangeNotifier {
     // refershTokenService.postRefershTocken(context);
 
     loadingDashboard = true;
-
+    indexForButtonForGraph = 0;
     // notifyListeners();
 
     try {
@@ -63,7 +74,7 @@ class DashBoardController extends ChangeNotifier {
               'bankcode', dashBoardModel?.result?.data?.bank?.bankName ?? '');
           SecureStorage.addToken(
               'customerId', dashBoardModel?.result?.data?.iin ?? '');
-          await getSummary(context);
+          await getSummary(context, dashBoardModel?.result?.data?.email ?? '');
           loadingDashboard = false;
           notifyListeners();
         }
@@ -83,7 +94,7 @@ class DashBoardController extends ChangeNotifier {
           'customerId',
           dashBoardModel?.result?.data?.iin ?? '',
         );
-        await getSummary(context);
+        await getSummary(context, dashBoardModel?.result?.data?.email ?? '');
         loadingDashboard = false;
         notifyListeners();
       }
@@ -103,22 +114,21 @@ class DashBoardController extends ChangeNotifier {
 
   SummaryModel? summaryModel;
   // List<dynamic> summaryResilt = [];
-  Future<void> getSummary(context) async {
-    
+  Future<void> getSummary(context, String email) async {
     // loadingDashboard = true;
 
     // notifyListeners();
     try {
       String token = await SecureStorage.readToken('token');
-    bool isTokenExpired = JwtDecoder.isExpired(token);
+      bool isTokenExpired = JwtDecoder.isExpired(token);
       if (isTokenExpired) {
         await refershTokenService.postRefershTocken(context);
-        summaryModel = await dashBoardService.fetchSummary(context);
+        summaryModel = await dashBoardService.fetchSummary(context, email);
 
         loadingDashboard = false;
         notifyListeners();
       } else {
-        summaryModel = await dashBoardService.fetchSummary(context);
+        summaryModel = await dashBoardService.fetchSummary(context, email);
         loadingDashboard = false;
         notifyListeners();
       }

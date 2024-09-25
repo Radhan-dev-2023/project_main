@@ -45,14 +45,14 @@ class DasBoardService {
     return null;
   }
 
-  Future<SummaryModel?> fetchSummary(context) async {
+  Future<SummaryModel?> fetchSummary(context, String email) async {
     SummaryModel summaryModel = SummaryModel();
     String token = await SecureStorage.readToken('token');
     String userId = await SecureStorage.readToken('userId');
     String url = '${ApiEndpoint.baseUrl}/api/v1/transactionsummary';
     String iin = await SecureStorage.readToken('customerId');
 
-    Map<String, dynamic> payload = {"iin": iin};
+    Map<String, dynamic> payload = {"iin": iin, "email": email};
     try {
       http.Response response = await http.post(Uri.parse(url),
           headers: {
@@ -61,7 +61,7 @@ class DasBoardService {
             'Content-Type': 'application/json',
           },
           body: jsonEncode(payload));
-      logger.d('response summary == ${response.body}');
+      log('response summary == ${response.body}');
       Map<String, dynamic> jsonResponse = json.decode(response.body);
       if (jsonResponse['status'] == 200) {
         summaryModel = SummaryModel.fromJson(jsonResponse);
