@@ -24,30 +24,87 @@ class RoundChartWidget extends StatelessWidget {
 
     return Consumer<DashBoardController>(
         builder: (context, dashBoardController, child) {
-      double totalAmount = double.parse(dashBoardController
-          .summaryModel!.result!.totalAmount!
-          .replaceAll('₹', '')
-          .replaceAll(',', ''));
-      double gain = double.parse(dashBoardController
-          .summaryModel!.result!.netEquityGains!
-          .replaceAll('₹', '')
-          .replaceAll(',', ''));
-      double invest = double.parse(dashBoardController
-          .summaryModel!.result!.netInvestment!
-          .replaceAll('₹', '')
-          .replaceAll(',', ''));
-      // double total = double.parse(dashBoardController
-      //     .summaryModel!.result!.totalAmount!
-      //     .replaceAll('₹', '')
-      //     .replaceAll(',', ''));
-      // dynamic percentage = (gain / invest) * 100;
-      dynamic percetageforinvest = (invest / totalAmount) * 100;
-      dynamic prectageForGain = (gain / totalAmount) * 100;
+      if (dashBoardController.indexForButtonForGraph == 0) {
+        dashBoardController.totalAmount = double.parse(dashBoardController
+            .summaryModel!.result!.totalAmount!
+            .replaceAll('₹', '')
+            .replaceAll(',', ''));
+        dashBoardController.gain = double.parse(dashBoardController
+            .summaryModel!.result!.netEquityGains!
+            .replaceAll('₹', '')
+            .replaceAll(',', ''));
+        dashBoardController.invest = double.parse(dashBoardController
+            .summaryModel!.result!.netInvestment!
+            .replaceAll('₹', '')
+            .replaceAll(',', ''));
+        // double total = double.parse(dashBoardController
+        //     .summaryModel!.result!.totalAmount!
+        //     .replaceAll('₹', '')
+        //     .replaceAll(',', ''));
+        // dynamic percentage = (gain / invest) * 100;
+        dashBoardController.percetageforinvest =
+            (dashBoardController.invest / dashBoardController.totalAmount) *
+                100;
+        dashBoardController.prectageForGain =
+            (dashBoardController.gain / dashBoardController.totalAmount) * 100;
 
-      log('percetageforinvest :$percetageforinvest,$prectageForGain ');
-      bool isLoss = prectageForGain < 0;
-      if (isLoss) {
-        prectageForGain = 0.0;
+        // log('percetageforinvest :$percetageforinvest,$prectageForGain ');
+        bool isLoss = dashBoardController.prectageForGain < 0;
+        if (isLoss) {
+          dashBoardController.prectageForGain = 0.0;
+        }
+      } else if (dashBoardController.indexForButtonForGraph == 1) {
+        dashBoardController.totalAmount = double.parse(dashBoardController
+            .summaryModel!.result!.gold!.totalAmount!
+            .replaceAll(',', ''));
+        dashBoardController.gain =
+            dashBoardController.summaryModel!.result!.gold!.totalGain!;
+
+        dashBoardController.invest = double.parse(dashBoardController
+            .summaryModel!.result!.gold!.totalInvested!
+            .replaceAll(',', ''));
+        // double total = double.parse(dashBoardController
+        //     .summaryModel!.result!.totalAmount!
+        //     .replaceAll('₹', '')
+        //     .replaceAll(',', ''));
+        // dynamic percentage = (gain / invest) * 100;
+        dashBoardController.percetageforinvest =
+            (dashBoardController.invest / dashBoardController.totalAmount) *
+                100;
+        dashBoardController.prectageForGain =
+            (dashBoardController.gain / dashBoardController.totalAmount) * 100;
+
+        // log('percetageforinvest :$percetageforinvest,$prectageForGain ');
+        bool isLoss = dashBoardController.prectageForGain < 0;
+        if (isLoss) {
+          dashBoardController.prectageForGain = 0.0;
+        }
+      } else if (dashBoardController.indexForButtonForGraph == 3) {
+        dashBoardController.totalAmount = double.parse(dashBoardController
+            .summaryModel!.result!.silver!.totalAmount!
+            .replaceAll(',', ''));
+        dashBoardController.gain =
+            dashBoardController.summaryModel!.result!.silver!.totalGain!;
+
+        dashBoardController.invest = double.parse(dashBoardController
+            .summaryModel!.result!.silver!.totalInvested!
+            .replaceAll(',', ''));
+        // double total = double.parse(dashBoardController
+        //     .summaryModel!.result!.totalAmount!
+        //     .replaceAll('₹', '')
+        //     .replaceAll(',', ''));
+        // dynamic percentage = (gain / invest) * 100;
+        dashBoardController.percetageforinvest =
+            (dashBoardController.invest / dashBoardController.totalAmount) *
+                100;
+        dashBoardController.prectageForGain =
+            (dashBoardController.gain / dashBoardController.totalAmount) * 100;
+
+        // log('percetageforinvest :$percetageforinvest,$prectageForGain ');
+        bool isLoss = dashBoardController.prectageForGain < 0;
+        if (isLoss) {
+          dashBoardController.prectageForGain = 0.0;
+        }
       }
       // dynamic totelper = (total / totalAmount) * 100;
       return Column(
@@ -61,8 +118,9 @@ class RoundChartWidget extends StatelessWidget {
                   sectionsSpace: 0,
                   sections: [
                     PieChartSectionData(
-                      value: percetageforinvest,
-                      title: '${percetageforinvest.toStringAsFixed(2)}%',
+                      value: dashBoardController.percetageforinvest,
+                      title:
+                          '${dashBoardController.percetageforinvest.toStringAsFixed(2)}%',
                       color: const Color(0xFFFFC700),
                       radius: 40,
                       titleStyle: TextStyle(
@@ -73,8 +131,9 @@ class RoundChartWidget extends StatelessWidget {
                     ),
                     PieChartSectionData(
                       // showTitle: false,
-                      value: prectageForGain,
-                      title: '${prectageForGain.toStringAsFixed(2)}%',
+                      value: dashBoardController.prectageForGain,
+                      title:
+                          '${dashBoardController.prectageForGain.toStringAsFixed(2)}%',
                       color: const Color(0xFF6C8FF8),
                       radius: 40,
                       titleStyle: TextStyle(

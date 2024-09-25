@@ -37,7 +37,7 @@ class ExpenseSummaryController extends ChangeNotifier {
     formattMonth = DateFormat('MMM yy').format(selectedMonth!);
   }
 
-  List<String> sortList = ['Current', 'High to Low', 'Low to High'];
+  List<String> sortList = ['Recent', 'High to Low', 'Low to High'];
   String intialStringforRadio = 'High to Low';
   void changeValue(value) {
     selectedMonth = value; // Set the selected month
@@ -55,7 +55,7 @@ class ExpenseSummaryController extends ChangeNotifier {
     } else if (value == 'Low to High') {
       listofMonths.sort((a, b) => a.amount.compareTo(b.amount));
       notifyListeners();
-    } else if (value == 'Current') {
+    } else if (value == 'Recent') {
       listofMonths.sort(
           (a, b) => b.transactionTimestamp.compareTo(a.transactionTimestamp));
       notifyListeners();
@@ -174,6 +174,7 @@ class ExpenseSummaryController extends ChangeNotifier {
 
   void changeBank(index) {
     currentindex = index;
+    filterListBasedonMonth(index, selectedMonth?.month);
     notifyListeners();
   }
 
