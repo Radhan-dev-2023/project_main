@@ -545,10 +545,17 @@ class _ScreenHomeState extends State<ScreenHome> {
                               Adaptive.w(2),
                             ),
                             GestureDetector(
-                              onTap: () {
-                                dashBoardController
-                                    .changeindexOfButtonForGraph(1);
-                              },
+                              onTap: dashBoardController
+                                          .summaryModel?.result?.gold ==
+                                      null
+                                  ? () {
+                                      showFlushbar(
+                                          context, 'Gold not yet purchased');
+                                    }
+                                  : () {
+                                      dashBoardController
+                                          .changeindexOfButtonForGraph(1);
+                                    },
                               child: Container(
                                 height: Adaptive.h(4),
                                 width: Adaptive.w(20),
@@ -589,10 +596,17 @@ class _ScreenHomeState extends State<ScreenHome> {
                               Adaptive.w(2),
                             ),
                             GestureDetector(
-                              onTap: () {
-                                dashBoardController
-                                    .changeindexOfButtonForGraph(2);
-                              },
+                              onTap: dashBoardController
+                                          .summaryModel?.result?.silver ==
+                                      null
+                                  ? () {
+                                      showFlushbar(
+                                          context, 'Silver not yet purchased');
+                                    }
+                                  : () {
+                                      dashBoardController
+                                          .changeindexOfButtonForGraph(2);
+                                    },
                               child: Container(
                                 height: Adaptive.h(4),
                                 width: Adaptive.w(20),

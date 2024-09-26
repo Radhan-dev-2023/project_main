@@ -79,7 +79,7 @@ class RoundChartWidget extends StatelessWidget {
         if (isLoss) {
           dashBoardController.prectageForGain = 0.0;
         }
-      } else if (dashBoardController.indexForButtonForGraph == 3) {
+      } else if (dashBoardController.indexForButtonForGraph == 2) {
         dashBoardController.totalAmount = double.parse(dashBoardController
             .summaryModel!.result!.silver!.totalAmount!
             .replaceAll(',', ''));
@@ -89,18 +89,14 @@ class RoundChartWidget extends StatelessWidget {
         dashBoardController.invest = double.parse(dashBoardController
             .summaryModel!.result!.silver!.totalInvested!
             .replaceAll(',', ''));
-        // double total = double.parse(dashBoardController
-        //     .summaryModel!.result!.totalAmount!
-        //     .replaceAll('₹', '')
-        //     .replaceAll(',', ''));
-        // dynamic percentage = (gain / invest) * 100;
+
         dashBoardController.percetageforinvest =
             (dashBoardController.invest / dashBoardController.totalAmount) *
                 100;
         dashBoardController.prectageForGain =
             (dashBoardController.gain / dashBoardController.totalAmount) * 100;
 
-        // log('percetageforinvest :$percetageforinvest,$prectageForGain ');
+        log('percetageforinvest :${dashBoardController.percetageforinvest},${dashBoardController.prectageForGain}');
         bool isLoss = dashBoardController.prectageForGain < 0;
         if (isLoss) {
           dashBoardController.prectageForGain = 0.0;
