@@ -160,11 +160,13 @@ class ExpenseServices {
       );
 
       print('retrieveReportAPI-------->>> ${response.body}');
-
+      log('response statuscode reportapi------>>>>> ${response.statusCode}');
       if (response.statusCode == 200) {
         log('retrieveReportAPI-------->>> ${response.body}');
-        reportSummaryModel =
-            ReportSummaryModel.fromJson(json.decode(response.body));
+        Map<String, dynamic> jsonResponse = json.decode(response.body);
+        log('jsonresponse ${jsonResponse}');
+        reportSummaryModel = ReportSummaryModel.fromJson(jsonResponse);
+        log('asigned value to model $reportSummaryModel');
         return reportSummaryModel;
       } else {
         showFlushbar(context,
@@ -173,17 +175,21 @@ class ExpenseServices {
       }
     } on SocketException catch (_) {
       showFlushbar(context, 'Network error: Unable to connect to the server.');
+
       return null;
-    } on FormatException catch (_) {
+    } on FormatException catch (e) {
       showFlushbar(
           context, 'Format Execption:Unable to connect to the server.');
+      log('exception FormatException--------->>>>.$e');
       return null;
-    } on PlatformException catch (_) {
+    } on PlatformException catch (e) {
       showFlushbar(context, 'PlatformException :Please Check the Permissions.');
+      log('exception platform--------->>>>.$e');
       return null;
     } catch (error) {
       showFlushbar(context, 'Report Retrieval Exception: $error');
+      log('exception--------->>>>. $error');
       return null;
-    } finally {}
+    }
   }
 }

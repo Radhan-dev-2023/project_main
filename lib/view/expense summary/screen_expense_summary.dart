@@ -1,6 +1,7 @@
 import 'package:finfresh_mobile/controller/expense%20summary%20controller/expense_summary_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
+import 'package:finfresh_mobile/view/expense%20summary/widgets/alert_widget.dart';
 import 'package:finfresh_mobile/view/expense%20summary/widgets/screen_webviewforexpense.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,31 +24,19 @@ class _FinanceUIState extends State<FinanceUI> {
   void initState() {
     super.initState();
     Provider.of<ExpenseSummaryController>(context, listen: false).monthAsign();
-    if (Provider.of<ExpenseSummaryController>(context, listen: false)
-            .isfetched ==
-        false) {
-      function();
-    } else {
-      print('Already fetched');
-    }
+    Provider.of<ExpenseSummaryController>(context, listen: false)
+        .changevisibleInInit(true);
+    // if (Provider.of<ExpenseSummaryController>(context, listen: false)
+    //         .isfetched ==
+    //     false) {
+    //   // function();
+    // } else {
+    //   print('Already fetched');
+    // }
   }
 
   void function() async {
-    String? url =
-        await Provider.of<ExpenseSummaryController>(context, listen: false)
-            .generateUrl(context);
-    print('----------->>>>>url $url');
-    if (url != null) {
-      showFlushbar(context, 'You will need to complete Digitap Verification');
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => ScreenWebviewForExpense(url: url)),
-      );
-    } else {
-      showFlushbar(context, "Failed to Digitap Verification");
-    }
+    
   }
 
 // void _changeMonth(int months) {
@@ -231,493 +220,539 @@ class _FinanceUIState extends State<FinanceUI> {
 
         body: controller.isLoading
             ? const LoadingWidget()
-            : Container(
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/images/back.png'),
-                        fit: BoxFit.fill)),
-                child: controller.isReportLoading
-                    ? const LoadingWidget()
-                    : controller.reportSummaryModel == null ||
-                            controller.listofMonths.isEmpty
-                        ? const Center(
-                            child: Text(
-                              "No data found for this month",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.red,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          )
-                        : SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                VerticalSpacer(Adaptive.h(2.5)),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 15, right: 15, top: 15),
-                                  child: SizedBox(
-                                    height: Adaptive.h(3.5),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        const Text(
-                                          'Expenses',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 19,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            _showMonthPicker(
-                                                context, controller);
-                                          },
-                                          child: Container(
-                                            height: Adaptive.h(4),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              border: Border.all(
-                                                  color: Colors.white),
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 7, right: 5),
-                                              child: Row(
-                                                children: [
-                                                  Text(
-                                                    controller.formattMonth,
-                                                    style: const TextStyle(
-                                                      color: Colors.white,
-                                                    ),
-                                                  ),
-                                                  HorizontalSpacer(
-                                                      Adaptive.w(0)),
-                                                  const Icon(
-                                                    Icons.arrow_drop_down,
-                                                    color: Colors.white,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+            : Stack(
+                children: [
+                  Container(
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/back.png'),
+                            fit: BoxFit.fill)),
+                    child: controller.isReportLoading
+                        ? const LoadingWidget()
+                        : controller.reportSummaryModel == null ||
+                                controller.listofMonths.isEmpty
+                            ? const Center(
+                                child: Text(
+                                  "No data found for this month",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.red,
                                   ),
+                                  textAlign: TextAlign.center,
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(15),
-                                  child: SizedBox(
-                                    child: Column(
-                                      children: [
-                                        InkWell(
-                                          onTap: () {
-                                            _showBankList(context, controller);
-                                          },
-                                          child: SizedBox(
-                                            child: Column(
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      controller
-                                                              .reportSummaryModel
-                                                              ?.reportData
-                                                              ?.banks?[0]
-                                                              .bank ??
-                                                          '',
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodyMedium!
-                                                          .copyWith(
-                                                            fontSize: 16.sp,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: Colors.white,
-                                                          ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      controller
-                                                              .reportSummaryModel
-                                                              ?.reportData
-                                                              ?.banks?[controller
-                                                                  .currentindex]
-                                                              .accounts?[controller
-                                                                  .currentindex]
-                                                              .accountNumber ??
-                                                          '',
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodyMedium!
-                                                          .copyWith(
-                                                            fontSize: 16.sp,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: Colors.white,
-                                                          ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        VerticalSpacer(Adaptive.h(2)),
-                                        Row(
+                              )
+                            : SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    VerticalSpacer(Adaptive.h(2.5)),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 15, right: 15, top: 15),
+                                      child: SizedBox(
+                                        height: Adaptive.h(3.5),
+                                        child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Container(
-                                              height: Adaptive.h(12),
-                                              width: Adaptive.w(35),
-                                              decoration: BoxDecoration(
+                                            const Text(
+                                              'Expenses',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 19,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                _showMonthPicker(
+                                                    context, controller);
+                                              },
+                                              child: Container(
+                                                height: Adaptive.h(4),
+                                                decoration: BoxDecoration(
                                                   borderRadius:
-                                                      BorderRadius.circular(15),
-                                                  gradient:
-                                                      const LinearGradient(
-                                                          colors: [
-                                                        Color(0xFF4D84BD),
-                                                        Color.fromARGB(
-                                                            255, 147, 192, 240),
-                                                      ])),
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 15),
-                                                      child: Container(
-                                                        height: Adaptive.h(3),
-                                                        width: Adaptive.w(8),
-                                                        decoration:
-                                                            BoxDecoration(
+                                                      BorderRadius.circular(10),
+                                                  border: Border.all(
+                                                      color: Colors.white),
+                                                ),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 7, right: 5),
+                                                  child: Row(
+                                                    children: [
+                                                      Text(
+                                                        controller.formattMonth,
+                                                        style: const TextStyle(
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                      HorizontalSpacer(
+                                                          Adaptive.w(0)),
+                                                      const Icon(
+                                                        Icons.arrow_drop_down,
+                                                        color: Colors.white,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(15),
+                                      child: SizedBox(
+                                        child: Column(
+                                          children: [
+                                            InkWell(
+                                              onTap: () {
+                                                _showBankList(
+                                                    context, controller);
+                                              },
+                                              child: SizedBox(
+                                                child: Column(
+                                                  children: [
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          controller
+                                                                  .reportSummaryModel
+                                                                  ?.reportData
+                                                                  ?.banks?[0]
+                                                                  .bank ??
+                                                              '',
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .copyWith(
+                                                                    fontSize:
+                                                                        16.sp,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: Colors
+                                                                        .white,
+                                                                  ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          controller
+                                                                  .reportSummaryModel
+                                                                  ?.reportData
+                                                                  ?.banks?[
+                                                                      controller
+                                                                          .currentindex]
+                                                                  .accounts?[
+                                                                      controller
+                                                                          .currentindex]
+                                                                  .accountNumber ??
+                                                              '',
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .copyWith(
+                                                                    fontSize:
+                                                                        16.sp,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: Colors
+                                                                        .white,
+                                                                  ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            VerticalSpacer(Adaptive.h(2)),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Container(
+                                                  height: Adaptive.h(12),
+                                                  width: Adaptive.w(35),
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15),
+                                                      gradient:
+                                                          const LinearGradient(
+                                                              colors: [
+                                                            Color(0xFF4CAF50),
+                                                            Color(0xFFA0EEC0),
+                                                          ])),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Align(
+                                                        alignment: Alignment
+                                                            .centerLeft,
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  left: 15),
+                                                          child: Container(
+                                                            height:
+                                                                Adaptive.h(3),
+                                                            width:
+                                                                Adaptive.w(8),
+                                                            decoration: BoxDecoration(
                                                                 shape: BoxShape
                                                                     .circle,
                                                                 color: Colors
                                                                     .white
                                                                     .withOpacity(
                                                                         0.7)),
-                                                        child: Center(
-                                                          child:
-                                                              Transform.rotate(
-                                                            angle: 4,
-                                                            child: Icon(
-                                                              Icons
-                                                                  .arrow_upward,
-                                                              color:
-                                                                  Colors.white,
-                                                              size:
-                                                                  Adaptive.h(2),
+                                                            child: Center(
+                                                              child: Transform
+                                                                  .rotate(
+                                                                angle: 4,
+                                                                child: Icon(
+                                                                  Icons
+                                                                      .arrow_upward,
+                                                                  color: Colors
+                                                                      .white,
+                                                                  size: Adaptive
+                                                                      .h(2),
+                                                                ),
+                                                              ),
                                                             ),
                                                           ),
                                                         ),
                                                       ),
-                                                    ),
+                                                      VerticalSpacer(
+                                                          Adaptive.h(0.5)),
+                                                      SizedBox(
+                                                        width: Adaptive.w(30),
+                                                        child: Text(
+                                                          "Income",
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .bodyMedium!
+                                                              .copyWith(
+                                                                  fontSize: 17,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color: Colors
+                                                                      .white),
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ),
+                                                      VerticalSpacer(
+                                                          Adaptive.h(0.5)),
+                                                      SizedBox(
+                                                        width: Adaptive.w(30),
+                                                        child: Text(
+                                                          "₹ ${controller.totalincome.abs().toStringAsFixed(0)}",
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .bodyMedium!
+                                                              .copyWith(
+                                                                  fontSize: 18,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  color: Colors
+                                                                      .white),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                  VerticalSpacer(
-                                                      Adaptive.h(0.5)),
-                                                  SizedBox(
-                                                    width: Adaptive.w(30),
-                                                    child: Text(
-                                                      "Income",
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodyMedium!
-                                                          .copyWith(
-                                                              fontSize: 17,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color:
-                                                                  Colors.white),
-                                                      textAlign: TextAlign.left,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
-                                                  ),
-                                                  VerticalSpacer(
-                                                      Adaptive.h(0.5)),
-                                                  SizedBox(
-                                                    width: Adaptive.w(30),
-                                                    child: Text(
-                                                      "₹ ${controller.totalincome.abs().toStringAsFixed(0)}",
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodyMedium!
-                                                          .copyWith(
-                                                              fontSize: 18,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color:
-                                                                  Colors.white),
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      textAlign: TextAlign.left,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Container(
-                                              height: Adaptive.h(12),
-                                              width: Adaptive.w(35),
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                  gradient:
-                                                      const LinearGradient(
-                                                          colors: [
-                                                        Color.fromARGB(
-                                                            255, 245, 78, 66),
-                                                        Color.fromARGB(
-                                                            255, 243, 142, 135),
-                                                      ])),
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 15),
-                                                      child: Container(
-                                                        height: Adaptive.h(3),
-                                                        width: Adaptive.w(8),
-                                                        decoration:
-                                                            BoxDecoration(
+                                                ),
+                                                Container(
+                                                  height: Adaptive.h(12),
+                                                  width: Adaptive.w(35),
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15),
+                                                      gradient:
+                                                          const LinearGradient(
+                                                              colors: [
+                                                            Color(0xFFF2994A),
+                                                            Color(0xFFFBC2A3),
+                                                          ])),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Align(
+                                                        alignment: Alignment
+                                                            .centerLeft,
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  left: 15),
+                                                          child: Container(
+                                                            height:
+                                                                Adaptive.h(3),
+                                                            width:
+                                                                Adaptive.w(8),
+                                                            decoration: BoxDecoration(
                                                                 shape: BoxShape
                                                                     .circle,
                                                                 color: Colors
                                                                     .white
                                                                     .withOpacity(
                                                                         0.7)),
-                                                        child: Center(
-                                                          child: Icon(
-                                                            Icons.arrow_outward,
-                                                            color: Colors.white,
-                                                            size: Adaptive.h(2),
+                                                            child: Center(
+                                                              child: Icon(
+                                                                Icons
+                                                                    .arrow_outward,
+                                                                color: Colors
+                                                                    .white,
+                                                                size:
+                                                                    Adaptive.h(
+                                                                        2),
+                                                              ),
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
-                                                    ),
+                                                      VerticalSpacer(
+                                                          Adaptive.h(0.5)),
+                                                      SizedBox(
+                                                        width: Adaptive.w(30),
+                                                        child: Text(
+                                                          "Expense",
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .bodyMedium!
+                                                              .copyWith(
+                                                                  fontSize: 17,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color: Colors
+                                                                      .white),
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ),
+                                                      VerticalSpacer(
+                                                          Adaptive.h(0.5)),
+                                                      SizedBox(
+                                                        width: Adaptive.w(30),
+                                                        child: Text(
+                                                          "₹ ${controller.totalExpense.abs().toStringAsFixed(0)}",
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .bodyMedium!
+                                                              .copyWith(
+                                                                  fontSize: 18,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  color: Colors
+                                                                      .white),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                  VerticalSpacer(
-                                                      Adaptive.h(0.5)),
-                                                  SizedBox(
-                                                    width: Adaptive.w(30),
-                                                    child: Text(
-                                                      "Expense",
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodyMedium!
-                                                          .copyWith(
-                                                              fontSize: 17,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color:
-                                                                  Colors.white),
-                                                      textAlign: TextAlign.left,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
-                                                  ),
-                                                  VerticalSpacer(
-                                                      Adaptive.h(0.5)),
-                                                  SizedBox(
-                                                    width: Adaptive.w(30),
-                                                    child: Text(
-                                                      "₹ ${controller.totalExpense.abs().toStringAsFixed(0)}",
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodyMedium!
-                                                          .copyWith(
-                                                              fontSize: 18,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color:
-                                                                  Colors.white),
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      textAlign: TextAlign.left,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        VerticalSpacer(Adaptive.h(2)),
-                                        SizedBox(
-                                          height: 200,
-                                          child: PieChart(
-                                            PieChartData(
-                                              sections: [
-                                                PieChartSectionData(
-                                                  value: controller.totalincome,
-                                                  color: const Color(
-                                                      0xFF4D84BD), // Color for income
-                                                  title:
-                                                      "${controller.incomePercentage.toStringAsFixed(1)}%",
-                                                  titleStyle: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w500),
-                                                ),
-                                                PieChartSectionData(
-                                                  value:
-                                                      controller.totalExpense,
-                                                  color: Colors
-                                                      .red, // Color for expenses
-                                                  title:
-                                                      "${controller.expensePercentage.toStringAsFixed(1)}%",
-                                                  titleStyle: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w500),
                                                 ),
                                               ],
                                             ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                VerticalSpacer(Adaptive.h(2.5)),
-                                Container(
-                                  decoration: const BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(30),
-                                        topRight: Radius.circular(30),
-                                      ),
-                                      color: Colors.white),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(15),
-                                    child: Column(
-                                      children: [
-                                        VerticalSpacer(
-                                          Adaptive.h(2.5),
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "Transactions",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .copyWith(
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.black),
-                                            ),
-                                            GestureDetector(
-                                              onTap: () {
-                                                _showSortPicker(
-                                                    context, controller);
-                                              },
-                                              child: Icon(
-                                                Icons.sort,
-                                                size: Adaptive.h(3),
-                                                color: Colors.black,
+                                            VerticalSpacer(Adaptive.h(2)),
+                                            SizedBox(
+                                              height: 200,
+                                              child: PieChart(
+                                                PieChartData(
+                                                  sections: [
+                                                    PieChartSectionData(
+                                                      value: controller
+                                                          .totalincome,
+                                                      color: const Color(
+                                                          0xFF4CAF50), // Color for income
+                                                      title:
+                                                          "${controller.incomePercentage.toStringAsFixed(1)}%",
+                                                      titleStyle:
+                                                          const TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                    ),
+                                                    PieChartSectionData(
+                                                      value: controller
+                                                          .totalExpense,
+                                                      color: Color(
+                                                          0xFFF2994A), // Color for expenses
+                                                      title:
+                                                          "${controller.expensePercentage.toStringAsFixed(1)}%",
+                                                      titleStyle:
+                                                          const TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
-                                            )
+                                            ),
                                           ],
                                         ),
-                                        SizedBox(
-                                          child: ListView.separated(
-                                              shrinkWrap: true,
-                                              physics:
-                                                  const NeverScrollableScrollPhysics(),
-                                              itemBuilder: (context, index) {
-                                                return ListTile(
-                                                  leading: controller
-                                                      .getCategoryIcon(
-                                                          controller
-                                                              .listofMonths[
-                                                                  index]
-                                                              .category),
-                                                  title: Text(
-                                                    controller
-                                                        .listofMonths[index]
-                                                        .narration,
-                                                    style: const TextStyle(
-                                                        color: Colors.black),
-                                                  ),
-                                                  subtitle: Text(
-                                                    controller
-                                                        .listofMonths[index]
-                                                        .transactionTimestamp
-                                                        .toString()
-                                                        .substring(0, 10),
-                                                    style: const TextStyle(
-                                                        color: Colors.grey),
-                                                  ),
-                                                  trailing: Text(
-                                                    controller
-                                                        .listofMonths[index]
-                                                        .amount
-                                                        .toString(),
-                                                    // '${controller.reportSummaryModel?.reportData?.banks?[controller.currentindex].accounts?[controller.currentindex].transactions?[index].amount ?? 0.0}',
-                                                    style: TextStyle(
-                                                        fontSize: 19,
-                                                        color: (controller
-                                                                        .listofMonths[
-                                                                            index]
-                                                                        .amount ??
-                                                                    0) <
-                                                                0
-                                                            ? Colors.red
-                                                            : Colors.green),
-                                                  ),
-                                                );
-                                              },
-                                              separatorBuilder:
-                                                  (context, index) =>
-                                                      VerticalSpacer(
-                                                        Adaptive.h(0.5),
-                                                      ),
-                                              itemCount: controller
-                                                  .listofMonths.length),
-                                        ),
-                                      ],
+                                      ),
                                     ),
-                                  ),
+                                    VerticalSpacer(Adaptive.h(2.5)),
+                                    Container(
+                                      decoration: const BoxDecoration(
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(30),
+                                            topRight: Radius.circular(30),
+                                          ),
+                                          color: Colors.white),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(15),
+                                        child: Column(
+                                          children: [
+                                            VerticalSpacer(
+                                              Adaptive.h(2.5),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "Transactions",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .copyWith(
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                ),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    _showSortPicker(
+                                                        context, controller);
+                                                  },
+                                                  child: Icon(
+                                                    Icons.sort,
+                                                    size: Adaptive.h(3),
+                                                    color: Colors.black,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              child: ListView.separated(
+                                                  shrinkWrap: true,
+                                                  physics:
+                                                      const NeverScrollableScrollPhysics(),
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return ListTile(
+                                                      leading: controller
+                                                          .getCategoryIcon(
+                                                              controller
+                                                                  .listofMonths[
+                                                                      index]
+                                                                  .category),
+                                                      title: Text(
+                                                        controller
+                                                            .listofMonths[index]
+                                                            .narration,
+                                                        style: const TextStyle(
+                                                            color:
+                                                                Colors.black),
+                                                      ),
+                                                      subtitle: Text(
+                                                        controller
+                                                            .listofMonths[index]
+                                                            .transactionTimestamp
+                                                            .toString()
+                                                            .substring(0, 10),
+                                                        style: const TextStyle(
+                                                            color: Colors.grey),
+                                                      ),
+                                                      trailing: Text(
+                                                        controller
+                                                            .listofMonths[index]
+                                                            .amount
+                                                            .toString(),
+                                                        // '${controller.reportSummaryModel?.reportData?.banks?[controller.currentindex].accounts?[controller.currentindex].transactions?[index].amount ?? 0.0}',
+                                                        style: TextStyle(
+                                                            fontSize: 19,
+                                                            color: (controller
+                                                                            .listofMonths[index]
+                                                                            .amount ??
+                                                                        0) <
+                                                                    0
+                                                                ? Colors.red
+                                                                : Colors.green),
+                                                      ),
+                                                    );
+                                                  },
+                                                  separatorBuilder:
+                                                      (context, index) =>
+                                                          VerticalSpacer(
+                                                            Adaptive.h(0.5),
+                                                          ),
+                                                  itemCount: controller
+                                                      .listofMonths.length),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ),
+                              ),
+                  ),
+                  Visibility(
+                      visible: controller.isVisible ?? false,
+                      child: Center(child: CustomInputContainer())),
+                ],
               ),
       );
     });

@@ -17,8 +17,10 @@ import '../../services/expense services/expense_services.dart';
 class ExpenseSummaryController extends ChangeNotifier {
   RefershTokenService refershTokenService = RefershTokenService();
   ExpenseServices expenseServices = ExpenseServices();
+  TextEditingController phoneController = TextEditingController();
+  final GlobalKey<FormState> formKeyInExpense = GlobalKey<FormState>();
   DateTime? selectedMonth;
-  String formattMonth = ''; // Holds the currently selected month
+  String formattMonth = '';
   int? selectedYear;
   String? _txn_id;
   bool _isReportLoading = false;
@@ -30,6 +32,17 @@ class ExpenseSummaryController extends ChangeNotifier {
   double totalincome = 0.0;
   double totalExpense = 0.0;
   double totalTransactions = 0.0;
+  bool _isVisible = true;
+  bool? get isVisible => _isVisible;
+  void changevisibleInButton(bool value) {
+    _isVisible = value;
+    notifyListeners();
+  }
+
+  void changevisibleInInit(bool value) {
+    _isVisible = value;
+  }
+
   void monthAsign() {
     selectedYear = DateTime.now().year;
     selectedMonth = DateTime.now();
@@ -193,12 +206,21 @@ class ExpenseSummaryController extends ChangeNotifier {
         await refershTokenService.postRefershTocken(context);
         reportSummaryModel = await expenseServices.retrieveReportAPI(context);
         filterListBasedonMonth(currentindex, selectedMonth?.month);
-        _isfetched = true;
+        log('report summary ===${reportSummaryModel}');
         notifyListeners();
+        if (reportSummaryModel != null) {
+          _isfetched = true;
+          notifyListeners();
+        }
       } else {
         reportSummaryModel = await expenseServices.retrieveReportAPI(context);
         filterListBasedonMonth(currentindex, selectedMonth?.month);
-        _isfetched = true;
+        log('report summary ===${reportSummaryModel}');
+        notifyListeners();
+        if (reportSummaryModel != null) {
+          _isfetched = true;
+          notifyListeners();
+        }
         notifyListeners();
       }
     } on SocketException catch (_) {

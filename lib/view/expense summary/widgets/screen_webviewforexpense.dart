@@ -28,7 +28,6 @@ class _ScreenWebviewForExpense extends State<ScreenWebviewForExpense> {
       ..setNavigationDelegate(
         NavigationDelegate(
           onPageFinished: (String url) async {
-            // debugPrint('Page finished loading: $url');
             if (url.contains(
                 "https://webhookandredirecturl.onrender.com/return-url")) {
               if (mounted) {
@@ -52,17 +51,27 @@ class _ScreenWebviewForExpense extends State<ScreenWebviewForExpense> {
                     );
                   },
                 );
-                bool resul = await Provider.of<ExpenseSummaryController>(
+                bool result = await Provider.of<ExpenseSummaryController>(
                         context,
                         listen: false)
                     .fetchStatusCheck(context);
-                if (resul) {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                } else {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
+
+                await Future.delayed(const Duration(milliseconds: 200));
+                if (mounted) {
+                  if (Navigator.canPop(context)) {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  }
                 }
+
+                // Navigator.pop(context);
+                // if (resul) {
+                //   Navigator.pop(context);
+                // } else {
+                //   if (Navigator.canPop(context)) {
+                //     Navigator.pop(context);
+                //   }
+                // }
                 //     .then((_) {
                 //   Navigator.pop(context);
                 //   Navigator.pop(context);
