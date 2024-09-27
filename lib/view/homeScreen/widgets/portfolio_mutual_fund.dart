@@ -144,9 +144,21 @@ class PortfolioWidget extends StatelessWidget {
                         ),
                         VerticalSpacer(1.h),
                         Text(
-                          dashBoardController
-                                  .summaryModel?.result?.totalAmount ??
-                              '',
+                          dashBoardController.indexForButtonForGraph == 0
+                              ? dashBoardController
+                                      .summaryModel?.result?.totalAmount ??
+                                  ''
+                              : dashBoardController.indexForButtonForGraph == 1
+                                  ? dashBoardController.summaryModel?.result
+                                          ?.gold?.totalAmount ??
+                                      ''
+                                  : dashBoardController
+                                              .indexForButtonForGraph ==
+                                          2
+                                      ? dashBoardController.summaryModel?.result
+                                              ?.silver?.totalAmount ??
+                                          ''
+                                      : 'No Data Available',
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
