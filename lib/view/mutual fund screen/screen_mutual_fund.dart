@@ -77,13 +77,17 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
                           InkWell(
                             onTap: () {
                               topMfsController.changeFundindex(0);
+
+                              topMfsController
+                                  .changeFundCategory('SIP under 500');
                             },
                             child: Container(
                               width: Adaptive.w(35),
                               height: Adaptive.h(4.5),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15.sp),
-                                color: topMfsController.indexForFunds == 0
+                                color: topMfsController.selectedCategoryName ==
+                                        'SIP under 500'
                                     ? const Color(0xFF33BEFB)
                                     : const Color(0xFFDFF5FF),
                               ),
@@ -94,9 +98,11 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
                                   child: CustomTextWidget(
                                     text: 'Sip Under 500',
                                     fontSize: 16.sp,
-                                    color: topMfsController.indexForFunds == 0
-                                        ? Colors.white
-                                        : Colors.black,
+                                    color:
+                                        topMfsController.selectedCategoryName ==
+                                                'SIP under 500'
+                                            ? Colors.white
+                                            : Colors.black,
                                   ),
                                 ),
                               ),
@@ -106,13 +112,16 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
                           InkWell(
                             onTap: () {
                               topMfsController.changeFundindex(1);
+                              topMfsController
+                                  .changeFundCategory("Finfresh picks");
                             },
                             child: Container(
                               width: Adaptive.w(35),
                               height: Adaptive.h(4.5),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15.sp),
-                                color: topMfsController.indexForFunds == 1
+                                color: topMfsController.selectedCategoryName ==
+                                        'Finfresh picks'
                                     ? const Color(0xFF33BEFB)
                                     : const Color(0xFFDFF5FF),
                               ),
@@ -123,9 +132,11 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
                                   child: CustomTextWidget(
                                     text: 'Finfresh Pick',
                                     fontSize: 16.sp,
-                                    color: topMfsController.indexForFunds == 1
-                                        ? Colors.white
-                                        : Colors.black,
+                                    color:
+                                        topMfsController.selectedCategoryName ==
+                                                'Finfresh picks'
+                                            ? Colors.white
+                                            : Colors.black,
                                   ),
                                 ),
                               ),
@@ -135,13 +146,16 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
                           InkWell(
                             onTap: () {
                               topMfsController.changeFundindex(2);
+                              topMfsController.changeFundCategory(
+                                  'Tax Saving in Top picks');
                             },
                             child: Container(
                               width: Adaptive.w(35),
                               height: Adaptive.h(4.5),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15.sp),
-                                color: topMfsController.indexForFunds == 2
+                                color: topMfsController.selectedCategoryName ==
+                                        'Tax Saving in Top picks'
                                     ? const Color(0xFF33BEFB)
                                     : const Color(0xFFDFF5FF),
                               ),
@@ -152,9 +166,11 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
                                   child: CustomTextWidget(
                                     text: 'Tax Savings',
                                     fontSize: 16.sp,
-                                    color: topMfsController.indexForFunds == 2
-                                        ? Colors.white
-                                        : Colors.black,
+                                    color:
+                                        topMfsController.selectedCategoryName ==
+                                                'Tax Saving in Top picks'
+                                            ? Colors.white
+                                            : Colors.black,
                                   ),
                                 ),
                               ),
@@ -164,13 +180,15 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
                           InkWell(
                             onTap: () {
                               topMfsController.changeFundindex(3);
+                              topMfsController.changeFundCategory('Sectoral');
                             },
                             child: Container(
                               width: Adaptive.w(35),
                               height: Adaptive.h(4.5),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15.sp),
-                                color: topMfsController.indexForFunds == 3
+                                color: topMfsController.selectedCategoryName ==
+                                        'Sectoral'
                                     ? const Color(0xFF33BEFB)
                                     : const Color(0xFFDFF5FF),
                               ),
@@ -181,9 +199,11 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
                                   child: CustomTextWidget(
                                     text: 'Sectoral',
                                     fontSize: 16.sp,
-                                    color: topMfsController.indexForFunds == 3
-                                        ? Colors.white
-                                        : Colors.black,
+                                    color:
+                                        topMfsController.selectedCategoryName ==
+                                                'Sectoral'
+                                            ? Colors.white
+                                            : Colors.black,
                                   ),
                                 ),
                               ),
@@ -194,8 +214,8 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
                     ),
                     VerticalSpacer(1.h),
                     WigetForTopPIcksAndGoals(
-                      listname: topMfsController.topPicksModel?.result
-                          ?.funds![topMfsController.indexForFunds],
+                      listname:
+                          topMfsController.getSelectedCategory()?.fundList,
                       wigetInTrailing: const SizedBox(),
                     ),
                     VerticalSpacer(2.h),
@@ -222,12 +242,18 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
                         itemBuilder: (BuildContext context, int index) {
                           return InkWell(
                             onTap: () {
+                              topMfsController.changeFundCategoryGolas(
+                                  topMfsController.categoryListForGoals[index]);
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => ScreenGolas(
                                       heading: topMfsController.item[index],
                                       image: topMfsController.imageList[index],
+                                      listname: topMfsController
+                                              .getSelectedCategoryGoals()
+                                              ?.fundList ??
+                                          [],
                                     ),
                                   ));
                             },

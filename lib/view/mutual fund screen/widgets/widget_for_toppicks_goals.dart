@@ -7,7 +7,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 class WigetForTopPIcksAndGoals extends StatelessWidget {
   // final String title;
-  final Fund? listname;
+  final List<FundList>? listname;
   final Widget wigetInTrailing;
   // final List<String> imageList;
   // final List<String>? isinList;
@@ -57,7 +57,7 @@ class WigetForTopPIcksAndGoals extends StatelessWidget {
                       child: ListTile(
                         contentPadding:
                             EdgeInsets.only(left: 15.sp, right: 12.sp),
-                        leading: listname?.fundList?[index].image == null
+                        leading: listname?[index].image == null
                             ? CircleAvatar(
                                 radius: 29,
                                 backgroundColor: Colors.white,
@@ -71,7 +71,7 @@ class WigetForTopPIcksAndGoals extends StatelessWidget {
                                 height: 6.h,
                                 width: 11.w,
                                 child: Image.network(
-                                  listname?.fundList?[index].image ?? '',
+                                  listname?[index].image ?? '',
                                   errorBuilder: (context, error, stackTrace) {
                                     return CircleAvatar(
                                       radius: 29,
@@ -86,7 +86,7 @@ class WigetForTopPIcksAndGoals extends StatelessWidget {
                                 ),
                               ),
                         title: Text(
-                          listname?.fundList?[index].fundName ?? '',
+                          listname?[index].fundName ?? '',
                           style:
                               Theme.of(context).textTheme.labelLarge!.copyWith(
                                     fontSize: 15.7.sp,
@@ -118,12 +118,9 @@ class WigetForTopPIcksAndGoals extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => StockDetailsScreen(
-                                  scheme:
-                                      listname?.fundList?[index].fundName ?? '',
-                                  isinNumber:
-                                      listname?.fundList?[index].isin ?? '',
-                                  category:
-                                      listname?.fundList?[index].category ?? '',
+                                  scheme: listname?[index].fundName ?? '',
+                                  isinNumber: listname?[index].isin ?? '',
+                                  category: listname?[index].category ?? '',
                                 ),
                               ));
                         },
