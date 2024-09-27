@@ -24,20 +24,19 @@ class _FinanceUIState extends State<FinanceUI> {
   void initState() {
     super.initState();
     Provider.of<ExpenseSummaryController>(context, listen: false).monthAsign();
-    Provider.of<ExpenseSummaryController>(context, listen: false)
-        .changevisibleInInit(true);
-    // if (Provider.of<ExpenseSummaryController>(context, listen: false)
-    //         .isfetched ==
-    //     false) {
-    //   // function();
-    // } else {
-    //   print('Already fetched');
-    // }
+
+    if (Provider.of<ExpenseSummaryController>(context, listen: false)
+            .isfetched ==
+        false) {
+      // function();
+      Provider.of<ExpenseSummaryController>(context, listen: false)
+          .changevisibleInInit(true);
+    } else {
+      print('Already fetched');
+    }
   }
 
-  void function() async {
-    
-  }
+  void function() async {}
 
 // void _changeMonth(int months) {
 //   setState(() {

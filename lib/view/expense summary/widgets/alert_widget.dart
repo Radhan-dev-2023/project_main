@@ -20,13 +20,16 @@ class CustomInputContainer extends StatefulWidget {
 class _CustomInputContainerState extends State<CustomInputContainer> {
   @override
   Widget build(BuildContext context) {
+    Brightness brightness = Theme.of(context).brightness;
     return Consumer<ExpenseSummaryController>(
         builder: (context, controller, _) {
       return Container(
         width: Adaptive.w(90),
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: brightness == Brightness.dark
+              ? const Color(0xFF060B27)
+              : Colors.white,
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
@@ -42,25 +45,24 @@ class _CustomInputContainerState extends State<CustomInputContainer> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Close button in the top-right corner
-              Align(
-                alignment: Alignment.topRight,
-                child: IconButton(
-                  icon: const Icon(Icons.close),
-                  onPressed: () {
-                    controller.changevisibleInButton(false);
-                    // Add your close logic here
-                  },
-                ),
-              ),
-
-              // Text label
-              const Text(
-                "Enter Phone Number",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Enter Phone Number",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () {
+                      controller.changevisibleInButton(false);
+                      // Add your close logic here
+                    },
+                  ),
+                ],
               ),
               const SizedBox(height: 20),
 
@@ -90,6 +92,12 @@ class _CustomInputContainerState extends State<CustomInputContainer> {
                   }
                   return null;
                 },
+              ),
+              const Text(
+                "Proceed to track your expense and money flow.You will be asked to enter OTP in the next screen",
+                style: TextStyle(
+                  fontSize: 16,
+                ),
               ),
               const SizedBox(height: 15),
 
