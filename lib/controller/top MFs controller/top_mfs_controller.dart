@@ -13,6 +13,8 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 
 class TopMFsController extends ChangeNotifier {
   final ScrollController scrollController = ScrollController();
+  String selectedCategoryName = '';
+  String selectedCategoryNameForGoals = '';
   int currentIndex = 0;
   void changeCurrentIndex(int index) {
     currentIndex = index;
@@ -24,6 +26,40 @@ class TopMFsController extends ChangeNotifier {
   void changeFundindex(int index) {
     indexForFunds = index;
     notifyListeners();
+  }
+
+  void changeFundCategory(String categoryName) {
+    selectedCategoryName = categoryName;
+    getSelectedCategory();
+    notifyListeners();
+  }
+
+  Fund? getSelectedCategory() {
+    if (topPicksModel?.result?.funds == null) return null;
+
+    return topPicksModel!.result!.funds!.firstWhere(
+      (fund) => fund.fundCategoryName == selectedCategoryName,
+    );
+  }
+
+  List<String> categoryListForGoals = [
+    'Tax saving in Goals',
+    'Three year',
+    'Three to Five years',
+    'Five plus years'
+  ];
+  void changeFundCategoryGolas(String categoryName) {
+    selectedCategoryNameForGoals = categoryName;
+    getSelectedCategory();
+    notifyListeners();
+  }
+
+  FundGoal? getSelectedCategoryGoals() {
+    if (goalsModel?.result?.funds == null) return null;
+
+    return goalsModel!.result!.funds!.firstWhere(
+      (fund) => fund.fundCategoryName == selectedCategoryNameForGoals,
+    );
   }
 
   String returns = '3 year';
@@ -232,6 +268,7 @@ class TopMFsController extends ChangeNotifier {
     returns = '3 year';
     returntoBackend = '3y';
     getTopMfsFRomPeriod(context, category);
+    changeFundCategory('SIP under 500');
     // getSchemeAllCategory(context);
   }
 
