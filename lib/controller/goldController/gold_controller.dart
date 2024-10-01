@@ -105,7 +105,7 @@ class GoldController extends ChangeNotifier {
 
   dynamic sellrate;
 
-  String formattedValue = '';
+  dynamic formattedValue = '';
   String totelMg = '';
   RefershTokenService refershTokenService = RefershTokenService();
   dynamic goldvalue;
@@ -130,6 +130,13 @@ class GoldController extends ChangeNotifier {
   //   }
   // }
   String valuetoBackend = 'gold';
+  bool isfetched = false;
+  void changeisFetched() {
+    isfetched = false;
+    notifyListeners();
+  }
+
+  bool showingnodata = false;
   Future<void> getGoldrate(context, String email) async {
     formattedValue = '';
     totelMg = '';
@@ -142,39 +149,38 @@ class GoldController extends ChangeNotifier {
         await refershTokenService.postRefershTocken(context);
         goldvalue = await service.getDigiGoldRate(context, valuetoBackend);
         sellrate = await service.getsellGoldRate(context, valuetoBackend);
-        await goldListing(context, email);
-        initializeExpansionState();
-        totelMg = goldlistingmodel?.res?.total ?? ' ';
-        if (sellrate != null) {
-          dynamic value = goldlistingmodel?.res?.total * sellrate;
+        log('goldvalue $goldvalue');
+        log('sellrate $sellrate');
+        // if (sellrate != null) {
+        //   dynamic value = goldlistingmodel?.res?.total * sellrate;
 
-          log('valuee =$value');
-          formattedValue = '₹ ${value.toStringAsFixed(2)}';
-          log('formtted value ===$formattedValue');
-          notifyListeners();
-          isloading = false;
-          notifyListeners();
-        }
+        //   log('valuee =$value');
+        //   formattedValue = '₹ ${value.toStringAsFixed(2)}';
+        //   log('formtted value ===$formattedValue');
+
+        //   notifyListeners();
+        //   isfetched = true;
+        //   isloading = false;
+        //   notifyListeners();
+        // }
         notifyListeners();
         isloading = false;
+        goldListingLoading = true;
         notifyListeners();
+
+        await goldListing(context, email);
       } else {
         goldvalue = await service.getDigiGoldRate(context, valuetoBackend);
         sellrate = await service.getsellGoldRate(context, valuetoBackend);
-        await goldListing(context, email);
-        initializeExpansionState();
-        if (sellrate != null) {
-          dynamic value = goldlistingmodel?.res?.total * sellrate;
-          log('valuee =$value');
-          formattedValue = '₹ ${value.toStringAsFixed(2)}';
-          log('formtted value ===$formattedValue');
-          notifyListeners();
-          isloading = false;
-          notifyListeners();
-        }
-        notifyListeners();
+        log('goldvalue $goldvalue');
+        log('sellrate $sellrate');
+        // initializeExpansionState();
+        isfetched = true;
         isloading = false;
+        goldListingLoading = true;
         notifyListeners();
+
+        await goldListing(context, email);
       }
     } catch (e) {
       logger.d('get gold rate failed with an eception$e');
@@ -321,6 +327,7 @@ class GoldController extends ChangeNotifier {
   }
 
   GolListingModel? goldlistingmodel;
+  bool goldListingLoading = false;
   Future<void> goldListing(context, String email) async {
     try {
       String token = await SecureStorage.readToken('token');
@@ -329,15 +336,45 @@ class GoldController extends ChangeNotifier {
         await refershTokenService.postRefershTocken(context);
         goldlistingmodel = await goldSaveTransaction.getGoldList(
             context, valuetoBackend, email);
+        initializeExpansionState();
+        // totelMg = goldlistingmodel?.res?.total;
+        if (sellrate != null) {
+          log('selrate ===$sellrate');
+          dynamic value = goldlistingmodel?.res?.total * sellrate;
+          log('valuee =$value');
+          formattedValue = '₹ ${value.toStringAsFixed(2)}';
+
+          log('formtted value ===$formattedValue');
+          notifyListeners();
+          goldListingLoading = false;
+          showingnodata = true;
+          notifyListeners();
+        }
+        goldListingLoading = false;
 
         notifyListeners();
       } else {
         goldlistingmodel = await goldSaveTransaction.getGoldList(
             context, valuetoBackend, email);
+        initializeExpansionState();
+        // totelMg = goldlistingmodel?.res?.total;
+        if (sellrate != null) {
+          log('enter');
+          dynamic value = goldlistingmodel?.res?.total * sellrate;
+          log('valuee =$value');
+          formattedValue = '₹ ${value.toStringAsFixed(2)}';
+
+          log('formtted value ===$formattedValue');
+          showingnodata = true;
+          notifyListeners();
+        }
+        goldListingLoading = false;
         notifyListeners();
       }
     } catch (e) {
       log('failed with exception$e');
+      goldListingLoading = false;
+      notifyListeners();
     }
   }
 

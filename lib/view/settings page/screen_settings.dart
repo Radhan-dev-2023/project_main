@@ -207,7 +207,6 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                               letterSpacing: 3.sp,
                             ),
                       ),
-                      onTap: () {},
                     ),
 
                     // Padding(
@@ -354,7 +353,6 @@ class _ScreenSettingsState extends State<ScreenSettings> {
                               letterSpacing: 3.sp,
                             ),
                       ),
-                      onTap: () {},
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 18.sp),

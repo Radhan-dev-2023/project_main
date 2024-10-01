@@ -115,7 +115,7 @@ class DrawerWidget extends StatelessWidget {
               Provider.of<TopMFsController>(context, listen: false)
                   .returntoBackend = '3y';
               Provider.of<TopMFsController>(context, listen: false)
-                  .getTopMfsFRomPeriod(context, 'All');
+                  .getTopMfsFRomPeriod(context, 'All', 'All Mutual fund');
             },
           ),
           ListTile(

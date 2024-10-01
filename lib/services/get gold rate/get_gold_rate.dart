@@ -12,6 +12,7 @@ import '../../utilities/constant/snackbar.dart';
 
 class DigiGoldService {
   Future<num?> getDigiGoldRate(context, String value) async {
+    final stopwatch = Stopwatch()..start();
     String token = await SecureStorage.readToken('token');
     String userId = await SecureStorage.readToken('userId');
     log(userId);
@@ -32,6 +33,8 @@ class DigiGoldService {
         log('manu');
         // dashBoardModel = DashBoardModel.fromJson(jsonResponse);
         num rate = jsonResponse["rate"];
+        stopwatch.stop();
+        log('API call took ${stopwatch.elapsedMilliseconds} ms');
         // return dashBoajdModel;
         return rate;
       } else if (jsonResponse['result']['status'] == 500) {
@@ -49,6 +52,7 @@ class DigiGoldService {
   }
 
   Future<num?> getsellGoldRate(context, String value) async {
+    final stopwatch = Stopwatch()..start();
     String token = await SecureStorage.readToken('token');
     String userId = await SecureStorage.readToken('userId');
     log(userId);
@@ -70,6 +74,8 @@ class DigiGoldService {
         // dashBoardModel = DashBoardModel.fromJson(jsonResponse);
         num rate = jsonResponse["rate"];
         // return dashBoajdModel;
+        stopwatch.stop();
+        log('API call tookin sell rate ${stopwatch.elapsedMilliseconds} ms');
         return rate;
       } else if (jsonResponse['status'] == 500) {
         showSnackBar(context, jsonResponse['message']);

@@ -25,8 +25,9 @@ class _ScreenAllMutualFundState extends State<ScreenAllMutualFund> {
     super.initState();
     log('calling init');
     Provider.of<TopMFsController>(context, listen: false).currentIndex = 0;
+
     Provider.of<TopMFsController>(context, listen: false)
-        .callinginInit(context, 'All');
+        .callinginInit(context, 'All', 'All Mutual fund');
     Provider.of<TopMFsController>(context, listen: false)
         .getSchemeAllCategory(context);
   }
@@ -74,8 +75,10 @@ class _ScreenAllMutualFundState extends State<ScreenAllMutualFund> {
                                       onChanged: (bool? value) {
                                         if (value != null) {
                                           snapshot.changeCurrentIndex(index);
-                                          snapshot.getTopMfsFRomPeriod(context,
-                                              snapshot.categoryList[index]);
+                                          snapshot.getTopMfsFRomPeriod(
+                                              context,
+                                              snapshot.categoryList[index],
+                                              'All Mutual fund');
                                         } else {
                                           snapshot.changeCurrentIndex(-1);
                                         }

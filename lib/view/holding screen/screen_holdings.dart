@@ -19,8 +19,11 @@ class _ScreenHoldingsState extends State<ScreenHoldings> {
   @override
   void initState() {
     super.initState();
-    Provider.of<HoldingsController>(context, listen: false)
-        .fetchTransactionReport(context);
+    if (Provider.of<HoldingsController>(context, listen: false).isFetched ==
+        false) {
+      Provider.of<HoldingsController>(context, listen: false)
+          .fetchTransactionReport(context);
+    }
   }
 
   @override

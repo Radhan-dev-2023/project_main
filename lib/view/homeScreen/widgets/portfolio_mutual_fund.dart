@@ -15,14 +15,17 @@ class PortfolioWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Brightness platformBrightness = MediaQuery.of(context).platformBrightness;
     return InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const ScreenHoldings(),
-          ),
-        );
-      },
+      onTap:
+          Provider.of<DashBoardController>(context).indexForButtonForGraph == 0
+              ? () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ScreenHoldings(),
+                    ),
+                  );
+                }
+              : () {},
       child: SizedBox(
         height: 40.h,
         width: double.infinity,
@@ -85,10 +88,13 @@ class PortfolioWidget extends StatelessWidget {
                                               ?.silver?.totalInvested ??
                                           ''
                                       : 'No Data Available',
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: const Color(0xFFFFC700),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: dashBoardController.graphColor
+                                  // color: const Color(0xFFFFC700),
                                   ),
                         ),
                       ],
@@ -123,11 +129,14 @@ class PortfolioWidget extends StatelessWidget {
                                               .toStringAsFixed(2) ??
                                           ''
                                       : 'No Data Available',
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: const Color(0xFF6C8FF8),
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                fontWeight: FontWeight.bold,
+                                color:
+                                    getColorBasedOnValue(dashBoardController),
+                              ),
                         ),
                       ],
                     ),
@@ -149,15 +158,23 @@ class PortfolioWidget extends StatelessWidget {
                                       .summaryModel?.result?.totalAmount ??
                                   ''
                               : dashBoardController.indexForButtonForGraph == 1
-                                  ? dashBoardController.summaryModel?.result
-                                          ?.gold?.totalAmount ??
-                                      ''
+                                  ? double.parse(dashBoardController
+                                              .summaryModel
+                                              ?.result
+                                              ?.gold
+                                              ?.totalAmount ??
+                                          '')
+                                      .toStringAsFixed(2)
                                   : dashBoardController
                                               .indexForButtonForGraph ==
                                           2
-                                      ? dashBoardController.summaryModel?.result
-                                              ?.silver?.totalAmount ??
-                                          ''
+                                      ? double.parse(dashBoardController
+                                                  .summaryModel!
+                                                  .result!
+                                                  .silver!
+                                                  .totalAmount ??
+                                              '')
+                                          .toStringAsFixed(2)
                                       : 'No Data Available',
                           style: Theme.of(context)
                               .textTheme
@@ -175,6 +192,7 @@ class PortfolioWidget extends StatelessWidget {
                   ],
                 ),
               ),
+
               // Padding(
               //   padding: const EdgeInsets.all(0),
               //   child: Row(
@@ -219,5 +237,26 @@ class PortfolioWidget extends StatelessWidget {
         }),
       ),
     );
+  }
+
+  Color getColorBasedOnValue(dashBoardController) {
+    double value = 0.0; // Default value
+
+    // Fetch the value based on the selected button
+    if (dashBoardController.indexForButtonForGraph == 0) {
+      var netEquityGains =
+          dashBoardController.summaryModel?.result?.netEquityGains;
+      value = netEquityGains is String
+          ? double.tryParse(netEquityGains) ?? 0.0
+          : netEquityGains ?? 0.0;
+    } else if (dashBoardController.indexForButtonForGraph == 1) {
+      value = dashBoardController.summaryModel?.result?.gold?.totalGain ?? 0.0;
+    } else if (dashBoardController.indexForButtonForGraph == 2) {
+      value =
+          dashBoardController.summaryModel?.result?.silver?.totalGain ?? 0.0;
+    }
+
+    // Return the color based on the value
+    return value < 0 ? Colors.red : const Color(0xFF4CAF50);
   }
 }

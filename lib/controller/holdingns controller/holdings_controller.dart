@@ -20,9 +20,9 @@ class HoldingsController extends ChangeNotifier {
   RefershTokenService refershTokenService = RefershTokenService();
   TransactionReport? transactionReport;
   bool loadingHoldingpage = true;
+  bool isFetched = false;
   Future<void> fetchTransactionReport(context) async {
     loadingHoldingpage = true;
-    notifyListeners();
     try {
       String token = await SecureStorage.readToken('token');
       bool isTokenExpired = JwtDecoder.isExpired(token);
@@ -31,11 +31,13 @@ class HoldingsController extends ChangeNotifier {
         transactionReport =
             await holdingServices.fetchTranscationReprot(context);
         loadingHoldingpage = false;
+        isFetched = true;
         notifyListeners();
       } else {
         transactionReport =
             await holdingServices.fetchTranscationReprot(context);
         loadingHoldingpage = false;
+        isFetched = true;
         notifyListeners();
       }
     } catch (e) {

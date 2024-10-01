@@ -3,8 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class CategoryToggleWidget extends StatelessWidget {
+class CategoryToggleWidget extends StatefulWidget {
   const CategoryToggleWidget({super.key});
+
+  @override
+  State<CategoryToggleWidget> createState() => _CategoryToggleWidgetState();
+}
+
+class _CategoryToggleWidgetState extends State<CategoryToggleWidget> {
+  @override
+  void initState() {
+    final durationProvider =
+        Provider.of<TopMFsController>(context, listen: false);
+    durationProvider.pageControllerForCategoryToggleButton =
+        PageController(initialPage: durationProvider.currentIndex);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +51,8 @@ class CategoryToggleWidget extends StatelessWidget {
               child: PageView.builder(
                 onPageChanged: (value) {
                   topMfsController.changeCurrentIndex(value);
-                  topMfsController.getTopMfsFRomPeriod(
-                      context, topMfsController.categoryList[value]);
+                  topMfsController.getTopMfsFRomPeriod(context,
+                      topMfsController.categoryList[value], 'All Mutual fund');
                   // topMfsController
                   //     .changeValueinDuration(topMfsController.dataList[value]);
                   // topMfsController.getTopMfsFRomPeriod(context, category);

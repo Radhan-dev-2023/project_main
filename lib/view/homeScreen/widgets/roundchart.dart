@@ -117,7 +117,9 @@ class RoundChartWidget extends StatelessWidget {
                       value: dashBoardController.percetageforinvest,
                       title:
                           '${dashBoardController.percetageforinvest.toStringAsFixed(2)}%',
-                      color: const Color(0xFFFFC700),
+                      // color: const Color(0xFFFFC700),
+                      // color: const Color(0xFF4A90E2),
+                      color: dashBoardController.graphColor,
                       radius: 40,
                       titleStyle: TextStyle(
                         color: Colors.white,
@@ -130,7 +132,8 @@ class RoundChartWidget extends StatelessWidget {
                       value: dashBoardController.prectageForGain,
                       title:
                           '${dashBoardController.prectageForGain.toStringAsFixed(2)}%',
-                      color: const Color(0xFF6C8FF8),
+                      // color: const Color(0xFF6C8FF8),
+                      color: const Color(0xFF4CAF50),
                       radius: 40,
                       titleStyle: TextStyle(
                         color: Colors.white,

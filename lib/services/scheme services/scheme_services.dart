@@ -125,6 +125,7 @@ class SchemeServices {
 
   Future<TopPerformingMutualFundModel?> topPerformingMutualFund(
       context, String category, String period) async {
+    final stopwatch = Stopwatch()..start();
     log('calling');
     log('caaterrororo$category');
     String url =
@@ -139,10 +140,12 @@ class SchemeServices {
       log('Scheme topperforming == ${response.body}');
       Map<String, dynamic> jsonResponse = json.decode(response.body);
       if (jsonResponse['status'] == 200) {
+        log('API call took all mutual funds ${stopwatch.elapsedMilliseconds} ms');
         log('completed in top p');
         topPerformingMutualFundModel =
             TopPerformingMutualFundModel.fromJson(jsonResponse);
-        log('hi${topPerformingMutualFundModel}');
+        log('API call took all mutual funds ${stopwatch.elapsedMilliseconds} ms');
+        // log('hi${topPerformingMutualFundModel}');
         return topPerformingMutualFundModel;
       } else if (jsonResponse['status'] == 500) {
         // showSnackBar(context, jsonResponse['result']['message']);

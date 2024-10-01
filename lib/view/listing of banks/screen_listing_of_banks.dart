@@ -1,11 +1,9 @@
 import 'package:finfresh_mobile/controller/bank%20controller/bank_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
-import 'package:finfresh_mobile/view/add%20additional%20bank/edit%20bank/edit_bank.dart';
 import 'package:finfresh_mobile/view/add%20additional%20bank/screen_add_additional_bank.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -20,7 +18,10 @@ class _ScreenListingOfBanksState extends State<ScreenListingOfBanks> {
   @override
   void initState() {
     super.initState();
-    Provider.of<BankController>(context, listen: false).getBankList(context);
+    if (Provider.of<BankController>(context, listen: false).isFetched ==
+        false) {
+      Provider.of<BankController>(context, listen: false).getBankList(context);
+    }
   }
 
   @override

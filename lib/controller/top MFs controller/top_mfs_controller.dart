@@ -74,12 +74,13 @@ class TopMFsController extends ChangeNotifier {
     '5 year',
     '10 year'
   ];
+  int indexforDuration = 4;
   String returntoBackend = '3Y';
-  final PageController pageController = PageController(initialPage: 4);
-  final PageController pageControllerForCategoryToggleButton =
-      PageController(initialPage: 0);
+  // final PageController pageController = PageController(initialPage:indexforDuration);
+  late PageController pageControllerForCategoryToggleButton;
 
-  void changeValueinDuration(String value) {
+  void changeValueinDuration(String value, int index) {
+    indexforDuration = index;
     returns = value;
     notifyListeners();
     if (returns == '1 month') {
@@ -145,7 +146,10 @@ class TopMFsController extends ChangeNotifier {
 
   TopPicksModel? topPicksModel;
   bool lodingList = false;
-  Future<void> getTopMfsFRomPeriod(context, String category) async {
+  bool isfetched = false;
+  bool isFetchedAllFundsScreen = false;
+  Future<void> getTopMfsFRomPeriod(
+      context, String category, String screen) async {
     log('calling top mfs');
     filteredListForAllFunds.clear();
     lodingList = true;
@@ -160,7 +164,15 @@ class TopMFsController extends ChangeNotifier {
       await topPicks(context);
 
       lodingList = false;
+
       notifyListeners();
+      if (screen == 'Mutual fund') {
+        isfetched = true;
+        notifyListeners();
+      } else if (screen == 'All Mutual fund') {
+        isFetchedAllFundsScreen = true;
+        notifyListeners();
+      }
       log(topPerformingMutualFundModel.toString());
     } catch (e) {
       logger.d('Exception in top MFs$e');
@@ -263,11 +275,11 @@ class TopMFsController extends ChangeNotifier {
     }
   }
 
-  void callinginInit(context, category) {
+  void callinginInit(context, category, String screen) {
     queryController.clear();
     returns = '3 year';
     returntoBackend = '3y';
-    getTopMfsFRomPeriod(context, category);
+    getTopMfsFRomPeriod(context, category, screen);
     changeFundCategory('SIP under 500');
     // getSchemeAllCategory(context);
   }

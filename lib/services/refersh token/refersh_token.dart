@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 
 class RefershTokenService {
   Future<bool> postRefershTocken(context) async {
+    final stopwatch = Stopwatch()..start();
     String userId = await SecureStorage.readToken('userId');
     String refreshToken = await SecureStorage.readToken('refreshToken');
     log('refresh tocke  $refreshToken');
@@ -34,6 +35,7 @@ class RefershTokenService {
         SecureStorage.addToken('token', jsonResponse['result']['token']);
         SecureStorage.addToken(
             'refreshToken', jsonResponse['result']['refreshToken']);
+        log('API call took in referesh ${stopwatch.elapsedMilliseconds} ms');
         return true;
       }
     } on SocketException {

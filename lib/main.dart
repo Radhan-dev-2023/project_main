@@ -17,6 +17,7 @@ import 'package:finfresh_mobile/controller/top%20fund%20controller/top_fund_cont
 import 'package:finfresh_mobile/controller/uploading%20proofs/uploading_proof_controller.dart';
 import 'package:finfresh_mobile/db/model/investors_data_model.dart';
 import 'package:finfresh_mobile/utilities/theme/theme.dart';
+import 'package:finfresh_mobile/view/sign%20in/sign_in_screen.dart';
 import 'package:finfresh_mobile/view/splash%20Screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,6 +25,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+
+import 'aggregator/Model/report.dart';
+import 'aggregator/Screens/provider_class.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,11 +38,21 @@ Future<void> main() async {
   await Hive.initFlutter();
   if (!Hive.isAdapterRegistered(InvestorModelAdapter().typeId)) {
     Hive.registerAdapter(InvestorModelAdapter());
+
+    ///////newly added adapters for the AGGREGATOR
+
+    Hive.registerAdapter(ReportDataHiveModelAdapter());
+    Hive.registerAdapter(ReportDataAdapter());
+    Hive.registerAdapter(AccountAdapter());
+    Hive.registerAdapter(BankAdapter());
+    Hive.registerAdapter(CustomerInfoAdapter());
+    Hive.registerAdapter(HolderAdapter());
+    Hive.registerAdapter(AccountTransactionAdapter());
   }
   await requestPermissions();
   runApp(const MyApp());
 }
-
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 Future<void> requestPermissions() async {
   final statuses = await [
     Permission.camera,
@@ -112,9 +126,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => ExpenseSummaryController(),
         ),
+        ChangeNotifierProvider(create: (context) => TransactionProvider()),
       ],
       child: ResponsiveSizer(builder: (context, orientation, screenType) {
+
         return MaterialApp(
+
+          navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
 
           theme: isDarkMode ? AppTheme.darkTheme : AppTheme.lightTheme,

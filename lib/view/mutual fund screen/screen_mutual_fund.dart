@@ -23,8 +23,11 @@ class _ScreenMutualFundState extends State<ScreenMutualFund> {
   void initState() {
     super.initState();
     Provider.of<TopMFsController>(context, listen: false).indexForFunds = 0;
-    Provider.of<TopMFsController>(context, listen: false)
-        .callinginInit(context, 'Equity: Sectoral-Infrastructure');
+    if (Provider.of<TopMFsController>(context, listen: false).isfetched ==
+        false) {
+      Provider.of<TopMFsController>(context, listen: false).callinginInit(
+          context, 'Equity: Sectoral-Infrastructure', 'Mutual fund');
+    }
   }
 
   @override

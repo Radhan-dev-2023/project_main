@@ -4,12 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class DurationButton extends StatelessWidget {
+class DurationButton extends StatefulWidget {
   final String category;
   const DurationButton({
     super.key,
     required this.category,
   });
+
+  @override
+  State<DurationButton> createState() => _DurationButtonState();
+}
+
+class _DurationButtonState extends State<DurationButton> {
+  late PageController pageController;
+  @override
+  void initState() {
+    pageController = PageController(
+        initialPage: Provider.of<TopMFsController>(context, listen: false)
+            .indexforDuration);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +33,8 @@ class DurationButton extends StatelessWidget {
           children: [
             InkWell(
               onTap: () {
-                if (topMfsController.pageController.page!.round() > 0) {
-                  topMfsController.pageController.previousPage(
+                if (pageController.page!.round() > 0) {
+                  pageController.previousPage(
                       duration: const Duration(milliseconds: 300),
                       curve: Curves.ease);
                   // topMfsController.getTopMfsFRomPeriod(context, category);
@@ -38,11 +52,12 @@ class DurationButton extends StatelessWidget {
               width: Adaptive.w(15),
               child: PageView.builder(
                 onPageChanged: (value) {
-                  topMfsController
-                      .changeValueinDuration(topMfsController.dataList[value]);
-                  topMfsController.getTopMfsFRomPeriod(context, category);
+                  topMfsController.changeValueinDuration(
+                      topMfsController.dataList[value], value);
+                  topMfsController.getTopMfsFRomPeriod(
+                      context, widget.category, 'All Mutual fund');
                 },
-                controller: topMfsController.pageController,
+                controller: pageController,
                 itemCount: topMfsController.dataList.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
@@ -59,14 +74,14 @@ class DurationButton extends StatelessWidget {
             // HorizontalSpacer(1.w),
             InkWell(
               onTap: () {
-                if (topMfsController.pageController.page! <
+                if (pageController.page! <
                     topMfsController.dataList.length - 1) {
-                  topMfsController.pageController.nextPage(
+                  pageController.nextPage(
                       duration: const Duration(milliseconds: 300),
                       curve: Curves.ease);
                 } else {
                   // If at last index, go back to the first index
-                  topMfsController.pageController.jumpToPage(0);
+                  pageController.jumpToPage(0);
                 }
               },
               child: const Icon(

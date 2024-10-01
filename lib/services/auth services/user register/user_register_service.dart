@@ -88,10 +88,12 @@ class UserRegisterService {
       if (jsonResponse['result']['status'] == 200) {
         log('kerriii');
         return true;
-      } else if (jsonResponse['result']['status'] == 1001 &&
+      }
+      else if (jsonResponse['result']['status'] == 1001 &&
           jsonResponse['result']['message'] == "user not found") {
         showSnackBar(context, jsonResponse['result']['message']);
-      } else if (jsonResponse['result']['status'] == 1001) {
+      }
+      else if (jsonResponse['result']['status'] == 1001) {
         showSnackBar(context, jsonResponse['result']['message']);
       }
     } on SocketException {

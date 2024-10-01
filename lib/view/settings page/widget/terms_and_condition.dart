@@ -171,14 +171,17 @@ class TermsAndCondition extends StatelessWidget {
           ),
         ),
         ListTile(
-          leading: Image.asset(
-            'assets/images/settingsicon/Profile.png',
-            color: platformBrightness == Brightness.light
-                ? Colors.black
-                : Colors.white,
-            // color: Colors.white,
-            height: Adaptive.h(4),
-            width: Adaptive.w(6),
+          leading: Padding(
+            padding: const EdgeInsets.all(6.5),
+            child: Image.asset(
+              'assets/images/settingsicon/Profile.png',
+              color: platformBrightness == Brightness.light
+                  ? Colors.black
+                  : Colors.white,
+              // color: Colors.white,
+              height: Adaptive.h(4),
+              width: Adaptive.w(6),
+            ),
           ),
           title: Text(
             'Customer Support',

@@ -81,6 +81,7 @@ class FilterController extends ChangeNotifier {
 
   RefershTokenService refershTokenService = RefershTokenService();
   bool filterPageLoading = false;
+  bool isFetched = false;
   Future<void> getfilter(context) async {
     filteredList.clear();
     filterPageLoading = true;
@@ -95,6 +96,7 @@ class FilterController extends ChangeNotifier {
         filteredList = fliterModel?.result?.reversed.toList() ?? [];
         log('filtere list =$filteredList');
         filterPageLoading = false;
+        isFetched = true;
         notifyListeners();
       } else {
         fliterModel =
@@ -102,6 +104,7 @@ class FilterController extends ChangeNotifier {
         filteredList = fliterModel?.result?.reversed.toList() ?? [];
         log('filtere list =${filteredList.toList()}');
         filterPageLoading = false;
+        isFetched = true;
         notifyListeners();
       }
     } catch (e) {

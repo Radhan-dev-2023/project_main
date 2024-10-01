@@ -58,7 +58,6 @@ class ScreenProfile extends StatelessWidget {
                         letterSpacing: 3.sp,
                       ),
                 ),
-                onTap: () {},
               ),
               Padding(
                 padding: EdgeInsets.only(left: 18.sp),
@@ -95,7 +94,6 @@ class ScreenProfile extends StatelessWidget {
                         letterSpacing: 3.sp,
                       ),
                 ),
-                onTap: () {},
               ),
               Padding(
                 padding: EdgeInsets.only(left: 18.sp),
@@ -131,7 +129,6 @@ class ScreenProfile extends StatelessWidget {
                         letterSpacing: 3.sp,
                       ),
                 ),
-                onTap: () {},
               ),
               Padding(
                 padding: EdgeInsets.only(left: 18.sp),

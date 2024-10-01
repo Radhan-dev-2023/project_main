@@ -10,6 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
+import '../../../aggregator/Screens/investmore_screen.dart';
+import '../../../aggregator/widgets/offerslider.dart';
+
+
 class ScreenGoldBuyingAndSelling extends StatefulWidget {
   const ScreenGoldBuyingAndSelling({super.key});
 
@@ -87,12 +91,12 @@ class _ScreenGoldBuyingAndSellingState
                                       const Color(0xFFD0D0D0),
                                     ],
                               begin: Alignment
-                                  .topLeft, // Starting point of the gradient
+                                  .topLeft,
                               end: Alignment
-                                  .bottomRight, // Ending point of the gradient
+                                  .bottomRight,
                             ),
                           ),
-                          height: Adaptive.h(33),
+                          height: Adaptive.h(43),
                           width: MediaQuery.of(context).size.width,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -919,7 +923,7 @@ class _ScreenGoldBuyingAndSellingState
                     //                 ?.res?.transactions?.length ??
                     //             0),
                     //   ),
-                    VerticalSpacer(13.6.h),
+                    VerticalSpacer(14.6.h),
 
                     // VerticalSpacer(15.h),
                   ],
@@ -1008,10 +1012,13 @@ class _ScreenGoldBuyingAndSellingState
                 HorizontalSpacer(5.w),
               ],
             ),
-            VerticalSpacer(Adaptive.h(15)),
+            VerticalSpacer(Adaptive.h(10)),
           ],
         );
       }),
     );
   }
 }
+
+
+

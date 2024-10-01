@@ -24,7 +24,6 @@ class ScreenOtp extends StatefulWidget {
 class _ScreenOtpState extends State<ScreenOtp> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Provider.of<AuthController>(context, listen: false).startTimer();
   }
@@ -103,7 +102,7 @@ class _ScreenOtpState extends State<ScreenOtp> {
                   ),
                   VerticalSpacer(2.h),
                   Text(
-                    'Enter the otp recieved via call',
+                    'Enter the otp recieved via SMS',
                     style: Theme.of(context)
                         .textTheme
                         .labelMedium!

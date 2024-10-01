@@ -6,18 +6,35 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class ScreeenTranscations extends StatelessWidget {
+class ScreeenTranscations extends StatefulWidget {
   const ScreeenTranscations({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<ScreeenTranscations> createState() => _ScreeenTranscationsState();
+}
+
+class _ScreeenTranscationsState extends State<ScreeenTranscations> {
+  @override
+  void initState() {
+    if (Provider.of<FilterController>(context, listen: false).isFetched ==
+        false) {
+      function();
+    }
+    super.initState();
+  }
+
+  Future<void> function() async {
     final filterController =
         Provider.of<FilterController>(context, listen: false);
+    filterController.resetFilter();
+    await filterController.getfilter(context);
+  }
 
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      filterController.resetFilter();
-      await filterController.getfilter(context);
-    });
+  @override
+  Widget build(BuildContext context) {
+    // WidgetsBinding.instance.addPostFrameCallback((_) async {
+
+    // });
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
@@ -688,30 +705,30 @@ class ScreeenTranscations extends StatelessWidget {
                                           const Text('Lumpsum'),
                                         ],
                                       ),
-                                      Row(
-                                        children: [
-                                          Checkbox(
-                                            checkColor: Colors.white,
-                                            activeColor:
-                                                const Color(0xFF4D84BD),
-                                            value: false,
-                                            onChanged: (value) {},
-                                          ),
-                                          const Text('STP'),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Checkbox(
-                                            checkColor: Colors.white,
-                                            activeColor:
-                                                const Color(0xFF4D84BD),
-                                            value: false,
-                                            onChanged: (value) {},
-                                          ),
-                                          const Text('SWP'),
-                                        ],
-                                      ),
+                                      // Row(
+                                      //   children: [
+                                      //     Checkbox(
+                                      //       checkColor: Colors.white,
+                                      //       activeColor:
+                                      //           const Color(0xFF4D84BD),
+                                      //       value: false,
+                                      //       onChanged: (value) {},
+                                      //     ),
+                                      //     const Text('STP'),
+                                      //   ],
+                                      // ),
+                                      // Row(
+                                      //   children: [
+                                      //     Checkbox(
+                                      //       checkColor: Colors.white,
+                                      //       activeColor:
+                                      //           const Color(0xFF4D84BD),
+                                      //       value: false,
+                                      //       onChanged: (value) {},
+                                      //     ),
+                                      //     const Text('SWP'),
+                                      //   ],
+                                      // ),
                                     ],
                                   ),
                                 ),

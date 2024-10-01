@@ -105,6 +105,7 @@ class GoldSaveTransactionService {
 
   Future<GolListingModel?> getGoldList(
       context, String value, String email) async {
+    final stopwatch = Stopwatch()..start();
     String token = await SecureStorage.readToken('token');
     String userId = await SecureStorage.readToken('userId');
     // String iin = await SecureStorage.readToken('customerId');
@@ -127,7 +128,7 @@ class GoldSaveTransactionService {
         log('goldlisting completed');
         // dashBoardModel = DashBoardModel.fromJson(jsonResponse);
         golListingModel = GolListingModel.fromJson(jsonResponse);
-
+        log('API call took in gold listing ${stopwatch.elapsedMilliseconds} ms');
         return golListingModel;
       } else if (jsonResponse['status'] == 500) {
         showSnackBar(context, jsonResponse['message']);

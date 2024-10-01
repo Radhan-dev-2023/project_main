@@ -1,3 +1,4 @@
+import 'package:finfresh_mobile/aggregator/Screens/waiting_screen.dart';
 import 'package:finfresh_mobile/controller/expense%20summary%20controller/expense_summary_controller.dart';
 import 'package:finfresh_mobile/utilities/constant/app_size.dart';
 import 'package:finfresh_mobile/utilities/constant/flushbar.dart';
@@ -11,6 +12,10 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+
+import '../../aggregator/Screens/home_screen.dart';
+import '../../aggregator/Screens/provider_class.dart';
+import '../../aggregator/Screens/retrieve_report_screen.dart';
 
 class FinanceUI extends StatefulWidget {
   const FinanceUI({super.key});
@@ -749,8 +754,24 @@ class _FinanceUIState extends State<FinanceUI> {
                               ),
                   ),
                   Visibility(
-                      visible: controller.isVisible ?? false,
-                      child: Center(child: CustomInputContainer())),
+                    visible: controller.isVisible ?? false,
+                    child: /*Center(child: MobileNumberEntry())*/
+                    Consumer<TransactionProvider>(
+                      builder: (context, provider, child) {
+                        if (provider.isReportLoading) {
+                          return const Scaffold(
+                            body: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          );
+                        } else if (provider.phoneNumber?.isEmpty ?? true) {
+                          return  const HomeScreen();
+                        } else {
+                          return const RetrieveReportScreen();
+                        }
+                      },
+                    ),
+                  ),
                 ],
               ),
       );

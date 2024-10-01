@@ -13,6 +13,7 @@ class DasBoardService {
   Future<DashBoardModel?> getDashBoardDetails(
     context,
   ) async {
+    final stopwatch = Stopwatch()..start();
     DashBoardModel dashBoardModel = DashBoardModel();
     String token = await SecureStorage.readToken('token');
     String userId = await SecureStorage.readToken('userId');
@@ -31,7 +32,7 @@ class DasBoardService {
       Map<String, dynamic> jsonResponse = json.decode(response.body);
       if (jsonResponse['result']['status'] == 200) {
         dashBoardModel = DashBoardModel.fromJson(jsonResponse);
-
+        log('API call took in dashboard ${stopwatch.elapsedMilliseconds} ms');
         return dashBoardModel;
       } else if (jsonResponse['result']['status'] == 500) {
         showSnackBar(context, jsonResponse['result']['message']);

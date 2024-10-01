@@ -10,7 +10,6 @@ import 'package:finfresh_mobile/view/kyc/uploading%20proofs/upload%20bank%20proo
 import 'package:finfresh_mobile/view/webview/screen_webview.dart';
 import 'package:finfresh_mobile/view/widgets/custom_loading_widget.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +34,10 @@ class _ScreenHomeState extends State<ScreenHome> {
     Provider.of<AchController>(context, listen: false).clickchangeButton =
         false;
     Provider.of<DashBoardController>(context, listen: false).getusername();
-    function();
+    if (Provider.of<DashBoardController>(context, listen: false).isfetched ==
+        false) {
+      function();
+    }
   }
 
   @override
@@ -498,155 +500,165 @@ class _ScreenHomeState extends State<ScreenHome> {
                           }),
                         ),
                         VerticalSpacer(2.h),
-                        Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                dashBoardController
-                                    .changeindexOfButtonForGraph(0);
-                              },
-                              child: Container(
-                                height: Adaptive.h(4),
-                                width: Adaptive.w(25),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                    border: Border.all(
-                                        color: dashBoardController
-                                                    .indexForButtonForGraph ==
-                                                0
-                                            ? const Color(0xFF4D84BD)
-                                            : platformBrightness ==
-                                                    Brightness.dark
-                                                ? Colors.white
-                                                : Colors.black),
-                                    color: dashBoardController
-                                                .indexForButtonForGraph ==
-                                            0
-                                        ? const Color(0xFF4D84BD)
-                                        : Colors.transparent),
-                                child: Center(
-                                  child: Text(
-                                    'Mutual Fund',
-                                    style: TextStyle(
-                                      color: dashBoardController
-                                                  .indexForButtonForGraph ==
-                                              0
-                                          ? Colors.white
-                                          : platformBrightness ==
-                                                  Brightness.dark
-                                              ? Colors.white
-                                              : Colors.black,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            HorizontalSpacer(
-                              Adaptive.w(2),
-                            ),
-                            GestureDetector(
-                              onTap: dashBoardController
-                                          .summaryModel?.result?.gold ==
-                                      null
-                                  ? () {
-                                      showFlushbar(
-                                          context, 'Gold not yet purchased');
-                                    }
-                                  : () {
+                        dashBoardController.summaryModel?.result == null
+                            ? const SizedBox()
+                            : Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
                                       dashBoardController
-                                          .changeindexOfButtonForGraph(1);
+                                          .changeindexOfButtonForGraph(
+                                              0, const Color(0xFF4A90E2));
                                     },
-                              child: Container(
-                                height: Adaptive.h(4),
-                                width: Adaptive.w(20),
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: dashBoardController
-                                                    .indexForButtonForGraph ==
-                                                1
-                                            ? const Color(0xFFF7BF05)
-                                            : platformBrightness ==
-                                                    Brightness.dark
+                                    child: Container(
+                                      height: Adaptive.h(4),
+                                      width: Adaptive.w(25),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          border: Border.all(
+                                              color: dashBoardController
+                                                          .indexForButtonForGraph ==
+                                                      0
+                                                  ? const Color(0xFF4D84BD)
+                                                  : platformBrightness ==
+                                                          Brightness.dark
+                                                      ? Colors.white
+                                                      : Colors.black),
+                                          color: dashBoardController
+                                                      .indexForButtonForGraph ==
+                                                  0
+                                              ? const Color(0xFF4D84BD)
+                                              : Colors.transparent),
+                                      child: Center(
+                                        child: Text(
+                                          'Mutual Fund',
+                                          style: TextStyle(
+                                            color: dashBoardController
+                                                        .indexForButtonForGraph ==
+                                                    0
                                                 ? Colors.white
-                                                : Colors.black),
-                                    borderRadius: BorderRadius.circular(15),
-                                    color: dashBoardController
-                                                .indexForButtonForGraph ==
-                                            1
-                                        ? const Color(0xFFF7BF05)
-                                        : Colors.transparent),
-                                child: Center(
-                                  child: Text(
-                                    'Gold',
-                                    style: TextStyle(
-                                      color: dashBoardController
-                                                  .indexForButtonForGraph ==
-                                              1
-                                          ? Colors.white
-                                          : platformBrightness ==
-                                                  Brightness.dark
-                                              ? Colors.white
-                                              : Colors.black,
+                                                : platformBrightness ==
+                                                        Brightness.dark
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            ),
-                            HorizontalSpacer(
-                              Adaptive.w(2),
-                            ),
-                            GestureDetector(
-                              onTap: dashBoardController
-                                          .summaryModel?.result?.silver ==
-                                      null
-                                  ? () {
-                                      showFlushbar(
-                                          context, 'Silver not yet purchased');
-                                    }
-                                  : () {
-                                      dashBoardController
-                                          .changeindexOfButtonForGraph(2);
-                                    },
-                              child: Container(
-                                height: Adaptive.h(4),
-                                width: Adaptive.w(20),
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: dashBoardController
-                                                    .indexForButtonForGraph ==
-                                                2
-                                            ? const Color.fromARGB(
-                                                255, 197, 194, 194)
-                                            : platformBrightness ==
-                                                    Brightness.dark
+                                  HorizontalSpacer(
+                                    Adaptive.w(2),
+                                  ),
+                                  GestureDetector(
+                                    onTap: dashBoardController
+                                                .summaryModel?.result?.gold ==
+                                            null
+                                        ? () {
+                                            showFlushbar(context,
+                                                'Gold not yet purchased');
+                                          }
+                                        : () {
+                                            dashBoardController
+                                                .changeindexOfButtonForGraph(
+                                                    1, const Color(0xFFF7BF05));
+                                          },
+                                    child: Container(
+                                      height: Adaptive.h(4),
+                                      width: Adaptive.w(20),
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: dashBoardController
+                                                          .indexForButtonForGraph ==
+                                                      1
+                                                  ? const Color(0xFFF7BF05)
+                                                  : platformBrightness ==
+                                                          Brightness.dark
+                                                      ? Colors.white
+                                                      : Colors.black),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          color: dashBoardController
+                                                      .indexForButtonForGraph ==
+                                                  1
+                                              ? const Color(0xFFF7BF05)
+                                              : Colors.transparent),
+                                      child: Center(
+                                        child: Text(
+                                          'Gold',
+                                          style: TextStyle(
+                                            color: dashBoardController
+                                                        .indexForButtonForGraph ==
+                                                    1
                                                 ? Colors.white
-                                                : Colors.black),
-                                    borderRadius: BorderRadius.circular(15),
-                                    color: dashBoardController
-                                                .indexForButtonForGraph ==
-                                            2
-                                        ? const Color.fromARGB(
-                                            255, 197, 194, 194)
-                                        : Colors.transparent),
-                                child: Center(
-                                  child: Text(
-                                    'Silver',
-                                    style: TextStyle(
-                                      color: dashBoardController
-                                                  .indexForButtonForGraph ==
-                                              2
-                                          ? Colors.white
-                                          : platformBrightness ==
-                                                  Brightness.dark
-                                              ? Colors.white
-                                              : Colors.black,
+                                                : platformBrightness ==
+                                                        Brightness.dark
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
+                                  HorizontalSpacer(
+                                    Adaptive.w(2),
+                                  ),
+                                  GestureDetector(
+                                    onTap: dashBoardController
+                                                .summaryModel?.result?.silver ==
+                                            null
+                                        ? () {
+                                            showFlushbar(context,
+                                                'Silver not yet purchased');
+                                          }
+                                        : () {
+                                            dashBoardController
+                                                .changeindexOfButtonForGraph(
+                                                    2,
+                                                    const Color.fromARGB(
+                                                        255, 197, 194, 194));
+                                          },
+                                    child: Container(
+                                      height: Adaptive.h(4),
+                                      width: Adaptive.w(20),
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: dashBoardController
+                                                          .indexForButtonForGraph ==
+                                                      2
+                                                  ? const Color.fromARGB(
+                                                      255, 197, 194, 194)
+                                                  : platformBrightness ==
+                                                          Brightness.dark
+                                                      ? Colors.white
+                                                      : Colors.black),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          color: dashBoardController
+                                                      .indexForButtonForGraph ==
+                                                  2
+                                              ? const Color.fromARGB(
+                                                  255, 197, 194, 194)
+                                              : Colors.transparent),
+                                      child: Center(
+                                        child: Text(
+                                          'Silver',
+                                          style: TextStyle(
+                                            color: dashBoardController
+                                                        .indexForButtonForGraph ==
+                                                    2
+                                                ? Colors.white
+                                                : platformBrightness ==
+                                                        Brightness.dark
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
-                        ),
                         VerticalSpacer(3.h),
                         dashBoardController.summaryModel?.result == null
                             ? SizedBox(

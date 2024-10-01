@@ -60,8 +60,8 @@ class Res {
 }
 
 class Transaction {
-  String? iin;
-  double? goldrate;
+  dynamic iin;
+  dynamic goldrate;
   dynamic purchasedGold;
   DateTime? addedon;
   dynamic amount;

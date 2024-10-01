@@ -24,8 +24,10 @@ class DashBoardController extends ChangeNotifier {
   dynamic percetageforinvest;
   dynamic prectageForGain;
   int indexForButtonForGraph = 0;
-  void changeindexOfButtonForGraph(int index) {
+  Color graphColor = const Color(0xFF4A90E2);
+  void changeindexOfButtonForGraph(int index, color) {
     indexForButtonForGraph = index;
+    graphColor = color;
     notifyListeners();
   }
 
@@ -50,6 +52,7 @@ class DashBoardController extends ChangeNotifier {
     }
   }
 
+  bool isfetched = false;
   Future<void> getDashBoardDetails(context) async {
     // refershTokenService.postRefershTocken(context);
 
@@ -76,6 +79,7 @@ class DashBoardController extends ChangeNotifier {
               'customerId', dashBoardModel?.result?.data?.iin ?? '');
           await getSummary(context, dashBoardModel?.result?.data?.email ?? '');
           loadingDashboard = false;
+          isfetched = true;
           notifyListeners();
         }
         loadingDashboard = false;
@@ -95,6 +99,7 @@ class DashBoardController extends ChangeNotifier {
           dashBoardModel?.result?.data?.iin ?? '',
         );
         await getSummary(context, dashBoardModel?.result?.data?.email ?? '');
+        isfetched = true;
         loadingDashboard = false;
         notifyListeners();
       }

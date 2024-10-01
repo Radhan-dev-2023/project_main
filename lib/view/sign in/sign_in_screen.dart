@@ -54,53 +54,56 @@ class ScreenSignin extends StatelessWidget {
               margin: EdgeInsets.all(15.sp),
               child: Form(
                 key: authController.formKeyforlogin,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const LogoWidget(),
-                    VerticalSpacer(7.h),
-                    Text(
-                      biometricLoginController.buttonEnabled == true
-                          ? 'Enter phone number for reset PIN'
-                          : 'Enter phone number',
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          fontSize: 19.sp, fontWeight: FontWeight.w400),
-                    ),
-                    VerticalSpacer(2.h),
-                    Text(
-                      'A verification code will be sent to this number',
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelMedium!
-                          .copyWith(color: Colors.grey, fontSize: 15.sp),
-                    ),
-                    VerticalSpacer(2.h),
-                    TextFormField(
-                      style: Theme.of(context).textTheme.labelLarge!,
-                      maxLength: 10,
-                      keyboardType: TextInputType.number,
-                      controller: authController.phonenumberControllerforlogin,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      decoration: const InputDecoration(
-                        // fillColor: const Color(0xFF0E1330),
-                        // filled: true,
-                        prefix: Text('+91'),
-                        hintText: 'Enter Phone Number',
-                       
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const LogoWidget(),
+                      VerticalSpacer(7.h),
+                      Text(
+                        biometricLoginController.buttonEnabled == true
+                            ? 'Enter phone number for reset PIN'
+                            : 'Enter phone number',
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontSize: 19.sp, fontWeight: FontWeight.w400),
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter a phone number';
-                        }
+                      VerticalSpacer(2.h),
+                      Text(
+                        'A verification code will be sent to this number',
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelMedium!
+                            .copyWith(color: Colors.grey, fontSize: 15.sp),
+                      ),
+                      VerticalSpacer(2.h),
+                      TextFormField(
+                        style: Theme.of(context).textTheme.labelLarge!,
+                        maxLength: 10,
+                        keyboardType: TextInputType.number,
+                        controller:
+                            authController.phonenumberControllerforlogin,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        decoration: const InputDecoration(
+                          // fillColor: const Color(0xFF0E1330),
+                          // filled: true,
+                          prefix: Text('+91'),
+                          hintText: 'Enter Phone Number',
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a phone number';
+                          }
 
-                        if (!RegExp(r'^\d{10}$').hasMatch(value)) {
-                          return 'Please enter a valid 10-digit phone number';
-                        }
-                        return null;
-                      },
-                    ),
-                    VerticalSpacer(20.h),
-                  ],
+                          if (!RegExp(r'^\d{10}$').hasMatch(value)) {
+                            return 'Please enter a valid 10-digit phone number';
+                          }
+                          return null;
+                        },
+                      ),
+                      VerticalSpacer(20.h),
+                    ],
+                  ),
                 ),
               ),
             ),

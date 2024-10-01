@@ -247,6 +247,7 @@ class BankController extends ChangeNotifier {
   RefershTokenService refershTokenService = RefershTokenService();
   bool loadingbankList = false;
   BankListingModel? bankListingModel;
+  bool isFetched = false;
   Future<void> getBankList(context) async {
     loadingbankList = true;
     // notifyListeners();
@@ -257,10 +258,12 @@ class BankController extends ChangeNotifier {
         await refershTokenService.postRefershTocken(context);
         bankListingModel = await bankService.bankListing(context);
         loadingbankList = false;
+        isFetched = true;
         notifyListeners();
       } else {
         bankListingModel = await bankService.bankListing(context);
         loadingbankList = false;
+        isFetched = true;
         notifyListeners();
       }
     } catch (e) {
